@@ -1,4 +1,4 @@
-{ pkgs, config, secrets, ... }:
+{ pkgs, config, secrets, inputs, ... }:
   let
     # TODO: fix lib
     lib = pkgs.lib;
@@ -82,7 +82,7 @@
     in (listToAttrs [
       # (makeACMEProxy ["gitlab"] "http://unix:/run/gitlab/gitlab-workhorse.socket" {})
       (makeACMEProxy ["plex"] "http://localhost:${s ports.plex}" {})
-      (makeACMEHost ["www"] { root = "/data/www"; })
+      (makeACMEHost ["www"] { root = "${inputs.website.defaultPackage.${pkgs.system}}/"; })
       (makeACMEProxy ["matrix"] "http://localhost:${s ports.matrix.listener}" {})
       (makeACMEProxy ["git"] "http://localhost:${s ports.gitea}" {})
       (makeClientCertHost ["cache"] { root = "/var/lib/nix-cache"; })

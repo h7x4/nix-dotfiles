@@ -14,6 +14,12 @@
       flake = false;
     };
 
+    website = {
+      url = "git+https://git.nani.wtf/h7x4/nani.wtf?ref=main";
+      # url = "path:/home/h7x4/git/nani.wtf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Nix expressions and keys (TODO: move keys to another solution like agenix)
     # which should be kept from the main repo for privacy reasons.
     #
@@ -25,7 +31,15 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, secrets, dotfiles, ... }: let
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    secrets,
+    dotfiles,
+    website,
+    ...
+  }: let
     system = "x86_64-linux";
 
     pkgs = import nixpkgs {
@@ -43,9 +57,10 @@
       secrets = secrets.outputs.default;
       colorTheme = import ./common/colors.nix;
       inputs = {
-        home-manager = home-manager;
-        secrets = secrets;
-        dotfiles = dotfiles;
+        inherit home-manager;
+        inherit dotfiles;
+        inherit website;
+        inherit secrets;
       };
     };
 

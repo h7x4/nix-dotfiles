@@ -16,6 +16,21 @@
         "type": "github"
       }
     },
+    "flake-utils": {
+      "locked": {
+        "lastModified": 1644229661,
+        "narHash": "sha256-1YdnJAsNy69bpcjuoKdOYQX0YxZBiCYZo4Twxerqv7k=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "3cecb5b042f7f209c56ffd8371b2711a290ec797",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -57,7 +72,8 @@
         "dotfiles": "dotfiles",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "secrets": "secrets"
+        "secrets": "secrets",
+        "website": "website"
       }
     },
     "secrets": {
@@ -67,17 +83,36 @@
         ]
       },
       "locked": {
-        "lastModified": 1647943275,
-        "narHash": "sha256-uSrGOtugLzyoyOtE1Bzv0HdlO1OJIl+rzoAZbxKP43c=",
-        "ref": "main",
-        "rev": "c76aa71028beca7f8c44adc6e6881b88843b4bb9",
-        "revCount": 20,
+        "lastModified": 1647911882,
+        "narHash": "sha256-4bwjEIgkbF9/G0MP69iV03OLU3V+GzKGKcKvzhdg8Jk=",
         "type": "git",
         "url": "file:///home/h7x4/git/nix-secrets"
       },
       "original": {
         "type": "git",
         "url": "file:///home/h7x4/git/nix-secrets"
+      }
+    },
+    "website": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1647647976,
+        "narHash": "sha256-rFEloIIRTB43w4/ox9/6H+zpXu0zEEW7Ri3pmx/o35A=",
+        "ref": "main",
+        "rev": "1030977dfd0c861e186b3b142cbb161feaa0c32e",
+        "revCount": 51,
+        "type": "git",
+        "url": "https://git.nani.wtf/h7x4/nani.wtf"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "https://git.nani.wtf/h7x4/nani.wtf"
       }
     }
   },
