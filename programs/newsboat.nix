@@ -7,7 +7,7 @@ in {
     enable = true;
     autoReload = true;
     maxItems = 50;
-    browser = defaultBrowser;
+    browser = ''"${defaultBrowser}"'';
     extraConfig = lib.strings.concatStringsSep "\n" [
       ''
         macro m set browser "${videoViewer}"; open-in-browser ; set browser "${defaultBrowser}"
