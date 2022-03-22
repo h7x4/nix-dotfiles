@@ -9,7 +9,7 @@
       ./services/nginx.nix
       # ./services/dokuwiki.nix
       # ./services/gitlab
-      ./services/gitea.nix
+      ./services/gitea
       ./services/jitsi.nix
       # ./services/openldap.nix
       ./services/plex.nix

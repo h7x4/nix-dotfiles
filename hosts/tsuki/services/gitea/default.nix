@@ -1,4 +1,15 @@
 {config, pkgs, lib, secrets, ...}:
+let
+
+  # TODO: Include monokai
+
+  # pkgs.writeTextFile 
+  # {
+  #   name = "monokai.css";
+  #   text = '''';
+
+  # }
+in
 {
   security.pam.services."gitea".unixAuth = true;
 
@@ -18,7 +29,6 @@
     cookieSecure = true;
     rootUrl = "https://git.nani.wtf/";
     domain = "git.nani.wtf";
-    # # TODO: move to secrets
     httpPort = secrets.ports.gitea;
     disableRegistration = true;
 
@@ -31,12 +41,21 @@
         BUILTIN_SSH_SERVER_USER="git";
       };
 
-      ui.DEFAULT_THEME = "arc-green";
+      ui = {
+        DEFAULT_THEME = "arc-green";
+        THEMES = lib.strings.concatStringsSep "," [
+          "gitea"
+          "arc-green"
+          # "monokai"
+        ];
+      };
       indexer.REPO_INDEXER_ENABLED = true;
       mailer = {
         ENABLED = true;
         FROM = "gitea@nani.wtf";
       };
+
+      # TODO: fix
 
       # markup = let
       #   docutils = pkgs.python37.withPackages (ps: with ps; [
