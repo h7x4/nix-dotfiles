@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{pkgs, inputs, ...}:
 {
   programs.rofi = {
     enable = true;
@@ -14,7 +14,7 @@
     # ];
 
     font = "Droid Sans 12";
-    theme = ../../general/.config/rofi/themes/blank.rasi;
+    theme = "${inputs.dotfiles}/general/.config/rofi/themes/blank.rasi";
 
     extraConfig = {
       modi = "window,run,drun,ssh,windowcd";

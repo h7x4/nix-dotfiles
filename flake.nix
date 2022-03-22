@@ -8,6 +8,11 @@
       url = "github:nix-community/home-manager/release-21.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    
+    dotfiles = {
+      url = "github:h7x4abk3g/dotfiles";
+      flake = false;
+    };
 
     # Nix expressions and keys (TODO: move keys to another solution like agenix)
     # which should be kept from the main repo for privacy reasons.
@@ -20,7 +25,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, secrets, ... }: let
+  outputs = { self, nixpkgs, home-manager, secrets, dotfiles, ... }: let
     system = "x86_64-linux";
 
     pkgs = import nixpkgs {
@@ -37,6 +42,11 @@
     specialArgs = {
       secrets = secrets.outputs.default;
       colorTheme = import ./common/colors.nix;
+      inputs = {
+        home-manager = home-manager;
+        secrets = secrets;
+        dotfiles = dotfiles;
+      };
     };
 
   in {
@@ -82,6 +92,7 @@
     in {
       Tsuki = nixSys "tsuki" {};
       Eisei = nixSys "eisei" {};
+      kasei = nixSys "kasei" {};
     };
 
   };
