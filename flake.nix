@@ -100,7 +100,6 @@
 
           imports = [
             ./home.nix
-            secrets.outputs.nixosModule
           ];
         };
       };

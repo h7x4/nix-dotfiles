@@ -1,4 +1,4 @@
-{ pkgs, machineVars, ... } @ args: let
+{ pkgs, machineVars, inputs, ... } @ args: let
   inherit (pkgs) lib;
   inherit (pkgs.lib) mkForce mkIf optionals;
   graphics = !machineVars.headless;
@@ -17,6 +17,7 @@ in {
     ./programs/tmux.nix
     ./programs/zsh
 
+    inputs.secrets.outputs.nixosModule
   ] ++ optionals graphics [
     ./misc/mimetypes.nix
 

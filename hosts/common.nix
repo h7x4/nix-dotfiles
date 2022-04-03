@@ -113,7 +113,7 @@ in {
     # TODO: figure out why specialArgs isn't accessible from the root home file.
     users.h7x4 = import ../home.nix {
       inherit pkgs;
-      inherit (specialArgs) machineVars;
+      inherit (specialArgs) machineVars inputs;
     };
   };
 
