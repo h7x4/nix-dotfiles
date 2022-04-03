@@ -8,8 +8,11 @@
     keyMode = "vi";
     prefix = "C-a";
     plugins = with pkgs.tmuxPlugins; [
+      copycat
       fingers
       fpp
+      jump
+      open
       pain-control
       prefix-highlight
       sidebar
