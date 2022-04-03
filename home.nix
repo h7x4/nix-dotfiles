@@ -9,7 +9,7 @@
 
     ./programs/alacritty.nix
     ./programs/comma.nix
-    ./programs/emacs.nix
+    ./programs/emacs
     ./programs/gh.nix
     ./programs/git.nix
     ./programs/ncmpcpp.nix
