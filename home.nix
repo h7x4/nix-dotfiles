@@ -19,6 +19,7 @@
     ./programs/rofi.nix
     ./programs/tmux.nix
     ./programs/vscode.nix
+    ./programs/xmonad
     ./programs/zathura.nix
     ./programs/zsh
 
