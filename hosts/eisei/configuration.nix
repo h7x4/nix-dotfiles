@@ -25,8 +25,6 @@ in {
     };
   };
 
-  time.timeZone = "Europe/Oslo";
-
   networking = {
     hostName = "Eisei";
     networkmanager.enable = true;
@@ -45,8 +43,6 @@ in {
   };
 
   i18n = {
-    defaultLocale = "en_US.UTF-8";
-
     inputMethod = {
       enabled = "fcitx";
       fcitx.engines = with pkgs.fcitx-engines; [ mozc ];
@@ -59,11 +55,6 @@ in {
     #     fcitx5-gtk
     #   ];
     # };
-  };
-
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = "us";
   };
 
   services = {
@@ -106,20 +97,11 @@ in {
 
   hardware.bluetooth.enable = true;
 
-  nixpkgs.config = {
-    allowUnfree = true;
-  };
-
   nix = {
     distributedBuilds = true;
-    package = pkgs.nixFlakes;
     binaryCaches = [
       "https://cache.nixos.org/"
     ];
-    extraOptions = ''
-      experimental-features = nix-command flakes
-	    builders-use-substitutes = true
-    '';
 
     buildMachines = [
       {
@@ -139,94 +121,21 @@ in {
 
   };
 
-  users.users.h7x4 = {
-    isNormalUser = true;
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-      "docker"
-      "disk"
-      "audio"
-      "video"
-      "libvirtd"
-      "input"
-    ];
-    shell = pkgs.zsh;
-  };
+  users.users.h7x4.extraGroups = [
+    "wheel"
+    "networkmanager"
+    "docker"
+    "disk"
+    "audio"
+    "video"
+    "libvirtd"
+    "input"
+  ];
 
-  environment = {
-    variables = {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
-    };
-
-    systemPackages = with pkgs; [
-      wget
-      haskellPackages.xmobar
-    ];
-
-    shells = with pkgs; [
-      bashInteractive
-      zsh
-      dash
-    ];
-
-    etc = {
-      # TODO: move this out of etc, and reference it directly in sudo config.
-      sudoLecture = {
-        target = "sudo.lecture";
-        text = lib.termColors.front.red "Be careful or something, idk...\n";
-      };
-
-      currentSystemPackages = {
-        target = "current-system-packages";
-        text = let
-          inherit (lib.strings) concatStringsSep;
-          inherit (lib.lists) sort;
-          inherit (lib.trivial) lessThan;
-          packages = map (p: "${p.name}") config.environment.systemPackages;
-          sortedUnique = sort lessThan (lib.unique packages);
-        in concatStringsSep "\n" sortedUnique;
-      };
-    };
-  };
-
-  fonts = {
-    enableDefaultFonts = true;
-
-    fonts = with pkgs; [
-      cm_unicode
-      dejavu_fonts
-      fira-code
-      fira-code-symbols
-      powerline-fonts
-      iosevka
-      symbola
-      corefonts
-      ipaexfont
-      ipafont
-      liberation_ttf
-      migmix
-      noto-fonts
-      noto-fonts-cjk
-      noto-fonts-emoji
-      open-sans
-      source-han-sans
-      source-sans
-      ubuntu_font_family
-      victor-mono
-      (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
-    ];
-
-    fontconfig = {
-      defaultFonts = {
-        serif = [ "Droid Sans Serif" "Ubuntu" ];
-        sansSerif = [ "Droid Sans" "Ubuntu" ];
-        monospace = [ "Fira Code" "Ubuntu" ];
-        emoji = [ "Noto Sans Emoji" ];
-      };
-    };
-  };
+  environment.systemPackages = with pkgs; [
+    wget
+    haskellPackages.xmobar
+  ];
 
   programs = {
     dconf.enable = true;
@@ -269,16 +178,9 @@ in {
     };
   };
 
-  security.sudo.extraConfig = ''
-    Defaults    lecture = always
-    Defaults    lecture_file = /etc/${config.environment.etc.sudoLecture.target}
-  '';
-
   virtualisation = {
     docker.enable = true;
     libvirtd.enable = true;
   };
-
-  system.stateVersion = "21.11";
 }
 

@@ -1,11 +1,9 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, specialArgs, ... }:
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-
-      ../../pluggables/tools/programming.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../pluggables/tools/programming.nix
+  ];
 
   systemd.targets = {
     sleep.enable = false;
@@ -14,14 +12,10 @@
     hybrid-sleep.enable = false;
   };
 
-  nix.package = pkgs.nixFlakes;
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
-
   # security.pam.services.login.unixAuth = true;
 
   boot.loader = {
+    efi.canTouchEfiVariables = false;
     grub = {
       enable = true;
       version = 2;
@@ -30,11 +24,7 @@
       device = "nodev";
       efiInstallAsRemovable = true;
     };
-    # efi.efiSysMountPoint = "/boot/efi";
-    # efi.canTouchEfiVariables = true;
   };
-
-  time.timeZone = "Europe/Oslo";
 
   networking = {
     hostName = "kasei";
@@ -50,8 +40,6 @@
   };
 
   i18n = {
-    defaultLocale = "en_US.UTF-8";
-
     inputMethod = {
       enabled = "fcitx";
       fcitx.engines = with pkgs.fcitx-engines; [ mozc ];
@@ -65,126 +53,36 @@
     #   ];
     # };
   };
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = "us";
-  };
 
-  # services = {
-  #   openssh = {
-  #     enable = true;
-  #     passwordAuthentication = false;
-  #     challengeResponseAuthentication = false;
-  #     permitRootLogin = "no";
-  #   };
-  #   printing.enable = true;
-  #   cron = {
-  #     enable = true;
-  #     systemCronJobs = [
-  #   #     "*/5 * * * *      root    date >> /tmp/cron.log"
-  #     ];
-  #   };
-  # };
-
-  users.users = {
-    h7x4 = {
-      isNormalUser = true;
-      extraGroups = [
-        "wheel"
-        "networkmanager"
-        "docker"
-        "audio"
-        "video"
-        "disk"
-        "libvirtd"
-        "input"
-      ];
-      shell = pkgs.zsh;
-    };
-  };
+  users.users.h7x4.extraGroups = [
+    "wheel"
+    "networkmanager"
+    "docker"
+    "audio"
+    "video"
+    "disk"
+    "libvirtd"
+    "input"
+  ];
 
   environment = {
-    variables = {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
+    shellAliases = {
+      fixscreen = "xrandr --output DP-4 --mode 1920x1080 --pos 0x0 -r 144 --output DVI-D-1 --primary --mode 1920x1080 --pos 1920x0 -r 60";
     };
 
     systemPackages = with pkgs; [
       wget
       haskellPackages.xmobar
     ];
-
-    shells = with pkgs; [
-      bashInteractive
-      zsh
-      dash
-    ];
-
-    etc = {
-      sudoLecture = {
-        target = "sudo.lecture";
-        text = "[31mBe careful or something, idk...[m\n";
-      };
-
-      "resolv.conf" = with lib; with pkgs; {
-        source = writeText "resolv.conf" ''
-          ${concatStringsSep "\n" (map (ns: "nameserver ${ns}") config.networking.nameservers)}
-          options edns0
-        '';
-      };
-
-      currentSystemPackages = {
-        target = "current-system-packages";
-        text = let
-          inherit (lib.strings) concatStringsSep;
-          inherit (lib.lists) sort;
-          inherit (lib.trivial) lessThan;
-          packages = map (p: "${p.name}") config.environment.systemPackages;
-          sortedUnique = sort lessThan (lib.unique packages);
-        in concatStringsSep "\n" sortedUnique;
-      };
-    };
-  };
-
-  fonts = {
-    enableDefaultFonts = true;
-
-    fonts = with pkgs; [
-      cm_unicode
-      dejavu_fonts
-      fira-code
-      fira-code-symbols
-      powerline-fonts
-      iosevka
-      symbola
-      corefonts
-      ipaexfont
-      ipafont
-      liberation_ttf
-      migmix
-      noto-fonts
-      noto-fonts-cjk
-      noto-fonts-emoji
-      open-sans
-      source-han-sans
-      source-sans
-      ubuntu_font_family
-      victor-mono
-      (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
-    ];
-
-    fontconfig = {
-      defaultFonts = {
-        serif = [ "Droid Sans Serif" "Ubuntu" ];
-        sansSerif = [ "Droid Sans" "Ubuntu" ];
-        monospace = [ "Fira Code" "Ubuntu" ];
-        emoji = [ "Noto Sans Emoji" ];
-      };
-    };
   };
 
   services = {
-    openssh.enable = true;
+    openssh = {
+      enable = true;
+      passwordAuthentication = false;
+      challengeResponseAuthentication = false;
+      permitRootLogin = "no";
+    };
     gnome.gnome-keyring.enable = true;
     printing.enable = true;
     dbus = {
@@ -261,17 +159,10 @@
     };
   };
 
-  security.sudo.extraConfig = ''
-    Defaults    lecture = always
-    Defaults    lecture_file = /etc/${config.environment.etc.sudoLecture.target} 
-  '';
-
   virtualisation = {
     docker.enable = true;
     libvirtd.enable = true;
   };
-
-  system.stateVersion = "21.11";
 }
 
 
