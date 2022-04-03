@@ -24,11 +24,11 @@
     };
 
   fileSystems."/data" =
-    { device = "/dev/disk/by-uuid/d9fd4a61-3d62-40b9-bbdb-67d925b66074";
-      fsType = "ext4";
+    { device = "/dev/disk/by-label/data1";
+      fsType = "btrfs";
     };
 
-  fileSystems."/data/sdb" =
+  fileSystems."/data/disks/data2" =
     { device = "/dev/disk/by-uuid/7afc5f6b-947a-4c86-a5b5-dfefe42899c0";
       fsType = "ext4";
     };
