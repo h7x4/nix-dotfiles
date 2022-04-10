@@ -5,25 +5,42 @@
     beets
     biber
     python39Packages.bpython
+    broot
     castnow
+    cheat
+    cli-visualizer
+    cloc
     czkawka
+    delta
     diskonaut
     diskus
     docker
+    dogdns
     du-dust
+    duf
+    duff
+    epr
     fd
     ffmpeg
+    glances
+    googler
     # gpgtui
+    gping
     graphviz
     hck
     hexyl
+    httpie
+    icdiff
     imagemagick
+    ipcalc
     jq
     kepubify
+    keymapviz
     lastpass-cli
     lazydocker
     lolcat
     manix
+    mcfly
     mdcat
     mdp
     mediainfo
@@ -33,23 +50,41 @@
     mkvtoolnix
     mmv
     mps-youtube
+    mtr
     neofetch
+    nix-diff
+    nix-index
+    nix-output-monitor
+    nix-tree
+    nix-zsh-completions
+    nixops
     nmap
     ouch
     pandoc
     python3
+    rclone
     ripgrep
     rsync
     rust-motd
     sc-im
+    sd
     slack-term
+    taskwarrior
+    taskwarrior-tui
+    tea
     tealdeer
+    terminal-parrot
+    termtosvg
     # tv-renamer
     toilet
     tokei
+    tsukae
+    unpaper
     w3m
     waifu2x-converter-cpp
+    watchexec
     wavemon
+    wiki-tui
     youtube-dl
 
     # Needed for VSCode liveshare
@@ -92,11 +127,16 @@
       pulseaudio
       pulsemixer
       scrcpy
+      shellcheck
       slack
+      sublime3
       sxiv
+      synapse-admin
       tagainijisho
       teams
       tenacity
+      transcribe
+      wireshark
       xcalib
       xclip
       xdotool
@@ -105,6 +145,7 @@
       xfce.thunar-dropbox-plugin
       xfce.thunar-media-tags-plugin
       xfce.thunar-volman
+      # xsnow # Wait until christmas
       yuzu-mainline
       zeal
       zoom-us
@@ -116,7 +157,10 @@
       desmume
       minecraft
       osu-lazer
+      retroarchFull
+      steam
       steam-tui
+      stepmania
       taisei
     ]
   );

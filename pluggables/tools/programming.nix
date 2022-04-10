@@ -18,6 +18,9 @@
     ghcid
     haskellPackages.Cabal_3_6_2_0
     maven
+    nixfmt
+    nixpkgs-fmt
+    # nixpkgs-hammering
     nodePackages.node2nix
     nodePackages.npm
     nodePackages.sass
@@ -29,6 +32,10 @@
     rustc
     rustc
     rustup
+    sqlcheck
+    sqlint
+    sqlite
+    sqlite-web
   ];
 }
 
