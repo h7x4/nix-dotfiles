@@ -104,12 +104,14 @@
       copyq
       darktable
       discord
+      element-desktop
       fcitx
       geogebra
       gnome.gnome-font-viewer
       google-chrome
       inkscape
       insomnia
+      iwgtk
       kid3
       koreader
       krita
@@ -131,7 +133,6 @@
       slack
       sublime3
       sxiv
-      synapse-admin
       tagainijisho
       teams
       tenacity
