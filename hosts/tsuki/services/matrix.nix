@@ -1,6 +1,6 @@
-{config, pkgs, lib, secrets, ...}: {
+{ config, pkgs, lib, secrets, ... }: {
 
-  # configure synapse to point users to coturn
+  # TODO: configure synapse to point users to coturn
   services.matrix-synapse = {
     enable = true;
     turn_uris = let 
@@ -12,6 +12,8 @@
 
     server_name = "nani.wtf";
     public_baseurl = "https://matrix.nani.wtf";
+
+    registration_shared_secret = secrets.keys.matrix.registration-shared-secret;
 
     enable_metrics = true;
 
@@ -42,6 +44,14 @@
       password = "synapse";
     };
 
+    # TODO: Figure out a way to do this declaratively.
+    #       The files need to be owned by matrix-synapse
+    app_service_config_files = [
+      "/var/lib/matrix-synapse/discord-registration.yaml"
+      # (pkgs.writeText "facebook-registrations.yaml" (builtins.toJSON config.services.mautrix-facebook.registrationData))
+      "/var/lib/matrix-synapse/facebook-registration.yaml"
+    ];
+
     # redis.enabled = true;
 
     # settings = {
@@ -53,13 +63,132 @@
 
   services.redis.enable = true;
 
-  # enable coturn
+  services.mx-puppet-discord = {
+    enable = true;
+    settings = {
+
+      bridge = {
+        bindAddress = "localhost";
+        domain = "nani.wtf";
+        # TODO: connect via localhost
+        homeserverUrl = "https://matrix.nani.wtf";
+
+        port = secrets.ports.matrix.mx-puppet-discord;
+        enableGroupSync = true;
+      };
+
+      database = {
+        filename = "/var/lib/mx-puppet-discord/database.db";
+      };
+
+      namePatterns = {
+        room = ":name";
+        user = ":name";
+        userOverride = ":displayname";
+        group = ":name";
+      };
+
+      presence = {
+        enabled = true;
+        interval = 500;
+      };
+
+      logging = {
+        console = "info";
+        lineDateFormat = "MMM-D HH:mm:ss.SSS";
+      };
+
+      provisioning.whitelist = [ "@h7x4:nani\\.wtf" ];
+      relay.whitelist = [ "@h7x4:nani\\.wtf" ];
+      selfService.whitelist = [ "@h7x4:nani\\.wtf" ];
+    };
+  };
+
+  services.mautrix-facebook = {
+    enable = true;
+    configurePostgresql = true;
+
+    registrationData = {
+      # NOTE: This is a randomly generated UUID
+      inherit (secrets.keys.matrix.mautrix-facebook) as_token;
+      inherit (secrets.keys.matrix.mautrix-facebook) hs_token;
+    };
+
+    settings = {
+      homeserver = {
+        # TODO: connect via localhost
+        address = "https://matrix.nani.wtf";
+        domain = "nani.wtf";
+      };
+    
+      appservice = rec {
+        address = "http://${hostname}:${toString port}";
+        bot_username = "facebookbot";
+        hostname = "0.0.0.0";
+
+        ephemeral_events = true;
+
+        port = secrets.ports.matrix.mautrix-facebook;
+        inherit (secrets.keys.matrix.mautrix-facebook) as_token;
+        inherit (secrets.keys.matrix.mautrix-facebook) hs_token;
+      };
+
+      bridge = {
+        encryption = {
+          allow = true;
+          default = true;
+        };
+        backfilling = {
+          initial_limit = 8000;
+        };
+        username_template = "facebook_{userid}";
+        sync_with_custom_puppets = false;
+        permissions = {
+          "@h7x4:nani.wtf" = "admin";
+          "nani.wtf" = "user";
+        };
+      };
+
+      logging = {
+        formatters = {
+          journal_fmt = {
+            format = "%(name)s: %(message)s";
+          };
+        };
+        handlers = {
+          journal = {
+            SYSLOG_IDENTIFIER = "mautrix-facebook";
+            class = "systemd.journal.JournalHandler";
+            formatter = "journal_fmt";
+          };
+        };
+        root = {
+          handlers = [
+            "journal"
+          ];
+          level = "INFO";
+        };
+        version = 1;
+      };
+
+      manhole = {
+        enabled = false;
+      };
+
+      metrics = {
+        enabled = false;
+      };
+
+    };
+
+  };
+
   services.coturn = rec {
     enable = true;
     no-cli = true;
     no-tcp-relay = true;
-    min-port = secrets.ports.matrix.min;
-    max-port = secrets.ports.matrix.max;
+    min-port = secrets.ports.matrix.coturn.min;
+    max-port = secrets.ports.matrix.coturn.max;
     use-auth-secret = true;
     static-auth-secret = secrets.keys.matrix.static-auth-secret;
     realm = "turn.nani.wtf";
@@ -114,8 +243,8 @@
   networking.firewall = {
     interfaces.enp2s0 = let
       range = with config.services.coturn; [ {
-      from = secrets.ports.matrix.min;
-      to = secrets.ports.matrix.max;
+      from = secrets.ports.matrix.coturn.min;
+      to = secrets.ports.matrix.coturn.max;
     } ];
     in
     {

@@ -81,9 +81,23 @@
 
     in (listToAttrs [
       # (makeACMEProxy ["gitlab"] "http://unix:/run/gitlab/gitlab-workhorse.socket" {})
+      {
+        name = "nani.wtf";
+        value = {
+          locations."/test".root = pkgs.writeText "asdf.txt" "hello";
+          locations."/.well-known/matrix/server".extraConfig = ''
+            return 200 '{"m.server": "matrix.nani.wtf:443"}';
+            default_type application/json;
+            add_header Access-Control-Allow-Origin *;
+          '';
+          enableACME = true;
+          forceSSL = true;
+        };
+      }
       (makeACMEProxy ["plex"] "http://localhost:${s ports.plex}" {})
       (makeACMEHost ["www"] { root = "${inputs.website.defaultPackage.${pkgs.system}}/"; })
       (makeACMEProxy ["matrix"] "http://localhost:${s ports.matrix.listener}" {})
+      (makeACMEHost ["madmin"] { root = "${pkgs.synapse-admin}/"; })
       (makeACMEProxy ["git"] "http://localhost:${s ports.gitea}" {})
       (makeClientCertHost ["cache"] { root = "/var/lib/nix-cache"; })
       (makeClientCertProxy ["px1"] "https://${ips.px1}:${s ports.proxmox}" {
