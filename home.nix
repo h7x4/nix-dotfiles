@@ -61,6 +61,12 @@ in {
         sys.ps2='\x01\x1b[1;49;31m\x02...\x01\x1b[0m\x02 '  # bright red
       '';
     };
+
+    pointerCursor = mkIf graphics  {
+      package = pkgs.capitaine-cursors;
+      name = "capitaine-cursors";
+      size = 16;
+    };
   };
 
   news.display = "silent";
@@ -114,14 +120,6 @@ in {
   };
 
   xdg.enable = true;
-
-  xsession = mkIf graphics {
-    pointerCursor = {
-      package = pkgs.capitaine-cursors;
-      name = "capitaine-cursors";
-      size = 16;
-    };
-  };
 
   gtk = mkIf graphics {
     enable = true;
