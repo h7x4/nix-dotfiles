@@ -7,6 +7,7 @@
     python39Packages.bpython
     broot
     castnow
+    catdocx
     cheat
     cli-visualizer
     cloc
@@ -38,6 +39,7 @@
     keymapviz
     lastpass-cli
     lazydocker
+    libwebp
     lolcat
     manix
     mcfly
@@ -62,6 +64,7 @@
     nmap
     ouch
     pandoc
+    parallel
     python3
     rclone
     ripgrep
@@ -97,74 +100,83 @@
     icu
     openssl
     xorg.xprop
-  ] ++ lib.optionals (!config.machineVars.headless) [
-    ahoviewer
-    anki
-    audacity
-    calibre
-    cool-retro-term
-    copyq
-    darktable
-    discord
-    element-desktop
-    fcitx
-    geogebra
-    gnome.gnome-font-viewer
-    google-chrome
-    inkscape
-    insomnia
-    iwgtk
-    kid3
-    koreader
-    krita
-    ktouch
-    libreoffice-fresh
-    light
-    maim
-    mopidy
-    mopidy-mpd
-    mopidy-soundcloud
-    mopidy-spotify
-    mopidy-youtube
-    mpc_cli
-    nyxt
-    pulseaudio
-    pulsemixer
-    scrcpy
-    shellcheck
-    slack
-    sublime3
-    sxiv
-    tagainijisho
-    teams
-    tenacity
-    transcribe
-    wireshark
-    xcalib
-    xclip
-    xdotool
-    xfce.thunar
-    xfce.thunar-archive-plugin
-    xfce.thunar-dropbox-plugin
-    xfce.thunar-media-tags-plugin
-    xfce.thunar-volman
-    # xsnow # Wait until christmas
-    yuzu-mainline
-    zeal
-    zoom-us
-    zotero
-  ] ++ lib.optionals (config.machineVars.laptop) [
-    touchegg
-  ] ++ lib.optionals (config.machineVars.gaming) [
-    citra
-    desmume
-    minecraft
-    osu-lazer
-    retroarchFull
-    steam
-    steam-tui
-    stepmania
-    taisei
-  ];
+  ] ++ (
+    lib.optionals (!machineVars.headless) [
+      ahoviewer
+      anki
+      ark
+      audacity
+      calibre
+      cool-retro-term
+      copyq
+      darktable
+      discord
+      element-desktop
+      fcitx
+      geogebra
+      gimp
+      gnome.gnome-font-viewer
+      google-chrome
+      inkscape
+      insomnia
+      iwgtk
+      kid3
+      koreader
+      krita
+      ktouch
+      libreoffice-fresh
+      light
+      maim
+      mopidy
+      mopidy-mpd
+      mopidy-soundcloud
+      mopidy-spotify
+      mopidy-youtube
+      mpc_cli
+      nyxt
+      obsidian
+      pulseaudio
+      pulsemixer
+      scrcpy
+      shellcheck
+      slack
+      sublime3
+      sxiv
+      tagainijisho
+      teams
+      tenacity
+      transcribe
+      wireshark
+      xcalib
+      xclip
+      xdotool
+      (xfce.thunar.override {
+        thunarPlugins = with xfce; [
+          thunar-volman
+          thunar-dropbox-plugin
+          thunar-archive-plugin
+          thunar-media-tags-plugin
+        ];
+      })
+
+      # xsnow # Wait until christmas
+      yuzu-mainline
+      zeal
+      zoom-us
+      zotero
+    ] ++ lib.optionals (machineVars.laptop) [
+      touchegg
+    ] ++ lib.optionals (machineVars.gaming) [
+      citra
+      desmume
+      minecraft
+      osu-lazer
+      retroarchFull
+      steam
+      steam-tui
+      stepmania
+      taisei
+    ]
+  );
 }
 
