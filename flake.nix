@@ -2,10 +2,10 @@
   description = "Mmmmmh, Spaghetti™";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-21.11";
+    nixpkgs.url = "nixpkgs/nixos-22.05";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-21.11";
+      url = "github:nix-community/home-manager/release-22.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -97,7 +97,7 @@
         };
         username = "h7x4";
         homeDirectory = "/home/h7x4";
-        stateVersion = "21.11";
+        stateVersion = "22.05";
         configuration = {
 
           imports = [

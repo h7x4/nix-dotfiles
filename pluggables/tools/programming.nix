@@ -1,5 +1,8 @@
 { pkgs, ... }:
 {
+
+  programs.adb.enable = true;
+
   system.extraDependencies = with pkgs; [
     asciidoc
     asciidoctor
@@ -16,7 +19,7 @@
     gcc
     ghc
     ghcid
-    haskellPackages.Cabal_3_6_2_0
+    haskellPackages.Cabal_3_6_3_0
     maven
     nixfmt
     nixpkgs-fmt
@@ -36,6 +39,8 @@
     sqlint
     sqlite
     sqlite-web
+    xmlformat
+    xmlstarlet
   ];
 }
 
