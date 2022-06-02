@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 
 let mapPrefixToSet = prefix: set:
     with lib; attrsets.mapAttrs' (k: v: attrsets.nameValuePair ("${prefix}.${k}") v) set;
@@ -11,7 +11,46 @@ in
     enable = true;
 
     # package = pkgs.vscodium;
-    # package = pkgs.vscode-fhsWithPackages (ps: with ps; [rustup zlib]);
+    package = pkgs.vscode-fhsWithPackages (ps: with ps; [
+      # rustup
+      # zlib
+      asciidoc
+      asciidoctor
+      cabal2nix
+      clang
+      dart
+      dotnet-sdk
+      dotnet-sdk_3
+      dotnet-sdk_5
+      dotnetPackages.Nuget
+      elm2nix
+      elmPackages.elm
+      flutter
+      gcc
+      ghc
+      ghcid
+      haskellPackages.Cabal_3_6_3_0
+      maven
+      nixfmt
+      nixpkgs-fmt
+      # nixpkgs-hammering
+      nodePackages.node2nix
+      nodePackages.npm
+      nodePackages.sass
+      nodePackages.typescript
+      nodePackages.yarn
+      nodejs
+      plantuml
+      python3
+      rustc
+      rustup
+      sqlcheck
+      sqlint
+      sqlite
+      sqlite-web
+      xmlformat
+      xmlstarlet
+    ]);
     # package = pkgs.vscode-fhs;
 
     userSettings = let
@@ -93,17 +132,17 @@ in
 
       java = mapPrefixToSet "java" {
         "configuration.checkProjectSettingsExclusions" = false;
-        "test.report.showAfterExecution" = "always";
-        "test.report.position" = "currentView";
+        # "test.report.showAfterExecution" = "always";
+        # "test.report.position" = "currentView";
         "refactor.renameFromFileExplorer" = "preview";
       };
 
-      sync = mapPrefixToSet "sync" {
-        autoUpload = true;
-        autoDownload = true;
-        quietSync = true;
-        gist = "86e19852a95d31a278ad1a516b40556b";
-      };
+      # sync = mapPrefixToSet "sync" {
+      #   autoUpload = true;
+      #   autoDownload = true;
+      #   quietSync = true;
+      #   gist = "86e19852a95d31a278ad1a516b40556b";
+      # };
 
       svg = mapPrefixToSet "svgviewer" {
         transparencygrid = true;
@@ -113,7 +152,7 @@ in
       };
 
       indentRainbow = mapPrefixToSet "indentRainbow" {
-        errorColor = "rgb(255, 0, 0)";
+        errorColor= "rgb(255, 0, 0)";
         colors = [ # http://colrd.com/palette/38436/
           "rgba(26, 19, 52, 0.1)"
           "rgba(1, 84, 90, 0.1)"
@@ -143,7 +182,7 @@ in
     java //
     python //
     svg //
-    sync //
+    # sync //
     workbench //
     vim // # This needs to come after workbench because of setting ordering
     zen //
@@ -183,8 +222,8 @@ in
       ];
       "docker.showStartPage" = false;
 
-      "errorLens.errorColor" = "rgba(240,0,0,0.1)";
-      "errorLens.warningColor" = "rgba(180,180,0,0.1)";
+      "errorLens.errorBackground" = "rgba(240,0,0,0.1)";
+      "errorLens.warningBackground" = "rgba(180,180,0,0.1)";
 
       "jupyter.askForKernelRestart" = false;
 
@@ -205,17 +244,17 @@ in
 
       "redhat.telemetry.enabled" = false;
 
-      "sonarlint.rules" = {
-        "java:S3358" = {
-          "level" = "off";
-        };
-      };
+      # "sonarlint.rules" = {
+      #   "java:S3358" = {
+      #     "level" = "off";
+      #   };
+      # };
 
       # Language overrides
 
       "dart.previewFlutterUiGuides" = true;
       "dart.previewFlutterUiGuidesCustomTracking" = true;
-      "dart.previewLsp" = true;
+      # "dart.previewLsp" = true;
 
       "[dart]" = {
         "editor.defaultFormatter" = "Dart-Code.dart-code";
@@ -223,7 +262,7 @@ in
 
       "[html]" = {
         "editor.formatOnSave" = false;
-        "editor.defaultFormatter" = "lonefy.vscode-JS-CSS-HTML-formatter";
+        "editor.defaultFormatter" = "vscode.html-language-features";
       };
 
       "[javascript]" = {
@@ -233,6 +272,7 @@ in
 
       "[json]" = {
         "editor.formatOnSave" = true;
+        "editor.defaultFormatter" = "vscode.json-language-features";
       };
 
       "[jsonc]" = {
@@ -303,36 +343,40 @@ in
     ];
 
     extensions = with pkgs.vscode-extensions; [
-      vs-liveshare
-      # ms-vsliveshare.vsliveshare
-      redhat.java
-      wholroyd.jinja
-      bbenoist.nix
-      # jock.svg
-      vscodevim.vim
-      haskell.haskell
-      justusadam.language-haskell
-      naumovs.color-highlight
-      # eamodio.gitlens
-      ms-python.python
-      mikestead.dotenv
-      redhat.vscode-yaml
-      # ms-toolsai.jupyter
-      # dotjoshjohnson.xml
-      usernamehw.errorlens
-      ibm.output-colorizer
-      gruntfuggly.todo-tree
-      mechatroner.rainbow-csv
-      ms-python.vscode-pylance
-      james-yu.latex-workshop
-      elmtooling.elm-ls-vscode
       # WakaTime.vscode-wakatime
-      yzhang.markdown-all-in-one
-      pkief.material-icon-theme
-      # ms-vscode-remote.remote-ssh
+      # dotjoshjohnson.xml
+      # eamodio.gitlens
+      # jock.svg
       # ms-azuretools.vscode-docker
-      justusadam.language-haskell
+      # ms-toolsai.jupyter
+      # ms-vscode-remote.remote-ssh
+      # ms-vsliveshare.vsliveshare
+      asciidoctor.asciidoctor-vscode
+      bbenoist.nix
       coenraads.bracket-pair-colorizer-2
+      dotjoshjohnson.xml
+      elmtooling.elm-ls-vscode
+      gruntfuggly.todo-tree
+      haskell.haskell
+      ibm.output-colorizer
+      james-yu.latex-workshop
+      justusadam.language-haskell
+      justusadam.language-haskell
+      mechatroner.rainbow-csv
+      mhutchie.git-graph
+      mikestead.dotenv
+      ms-python.python
+      ms-python.vscode-pylance
+      naumovs.color-highlight
+      pkief.material-icon-theme
+      redhat.java
+      redhat.vscode-yaml
+      shardulm94.trailing-spaces
+      usernamehw.errorlens
+      vs-liveshare
+      vscodevim.vim
+      wholroyd.jinja
+      yzhang.markdown-all-in-one
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
         name = "path-intellisense";
@@ -341,22 +385,10 @@ in
         sha256 = "1a4d1n4jpdlx4r2majirnhnwlj34jc94wzbxdrih615176hadxvc";
       }
       {
-        name = "xml";
-        publisher = "DotJoshJohnson";
-        version = "2.5.1";
-        sha256 = "1v4x6yhzny1f8f4jzm4g7vqmqg5bqchyx4n25mkgvw2xp6yls037";
-      }
-      {
         name = "vscode-html-css";
         publisher = "ecmel";
         version = "1.10.2";
         sha256 = "0qzh7fwgadcahxx8hz1sbfz9lzi81iv4xiidvfm3sahyl9s6pyg1";
-      }
-      {
-        name = "elm-ls-vscode";
-        publisher = "elmTooling";
-        version = "2.3.0";
-        sha256 = "1nxl3im5aqiggjx0va64bpjrwshb6fzxan78fqzs68iwn16vsa0b";
       }
       {
         name = "vscode-drawio";
@@ -413,12 +445,6 @@ in
         sha256 = "1x3k8pmzp186bcgga3wg6y86waxrcsi5cnwaxfmifqgn87jp2vqq";
       }
       {
-        name = "trailing-spaces";
-        publisher = "shardulm94";
-        version = "0.3.1";
-        sha256 = "0h30zmg5rq7cv7kjdr5yzqkkc1bs20d72yz9rjqag32gwf46s8b8";
-      }
-      {
         name = "comment-divider";
         publisher = "stackbreak";
         version = "0.4.0";
@@ -429,12 +455,6 @@ in
         publisher = "Tyriar";
         version = "1.3.0";
         sha256 = "03jas413ivahfpxrlc5qif35nd67m1nmwx8p8dj1fpv04s6fdigb";
-      }
-      {
-        name = "asciidoctor-vscode";
-        publisher = "asciidoctor";
-        version = "2.8.10";
-        sha256 = "1n293nsaid9c4lsfn5ns4899yay9vckfk7ld3l2cnd29s82d316i";
       }
       {
         name = "vscode-svgviewer";
@@ -495,12 +515,6 @@ in
         publisher = "lonefy";
         version = "0.2.3";
         sha256 = "06vivclp58wzmqcx6s6pl8ndqina7p995dr59aj9fk65xihkaagy";
-      }
-      {
-        name = "git-graph";
-        publisher = "mhutchie";
-        version = "1.30.0";
-        sha256 = "000zhgzijf3h6abhv4p3cz99ykj6489wfn81j0s691prr8q9lxxh";
       }
       {
         name = "test-adapter-converter";
@@ -579,6 +593,12 @@ in
         publisher = "yzhang";
         version = "3.4.0";
         sha256 = "0ihfrsg2sc8d441a2lkc453zbw1jcpadmmkbkaf42x9b9cipd5qb";
+      }
+      {
+        name = "keyboard-quickfix";
+        publisher = "pascalsenn";
+        version = "0.0.6";
+        sha256 = "BK7ND6gtRVEitxaokJHmQ5rvSOgssVz+s9dktGQnY6M=";
       }
     ];
   };
