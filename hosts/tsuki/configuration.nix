@@ -29,7 +29,7 @@
 
   machineVars = {
     headless = true;
-    dataDrives = let 
+    dataDrives = let
       momiji = "/data2";
     in {
       drives = {
@@ -80,11 +80,9 @@
     };
   };
 
-  users.groups.media = {};
-
-  users.users = {
-    h7x4.extraGroups = [ "media" ];
-    media = {
+  users = {
+    groups.media = {};
+    users.media = {
       isSystemUser = true;
       group = "media";
     };
@@ -92,6 +90,5 @@
 
   virtualisation = {
     docker.enable = true;
-    libvirtd.enable = true;
   };
 }

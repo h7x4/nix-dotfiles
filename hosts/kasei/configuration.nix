@@ -14,7 +14,7 @@
     development = true;
     creative = true;
 
-    dataDrives = let 
+    dataDrives = let
       main = "/data";
     in {
       drives = { inherit main; };
@@ -51,26 +51,15 @@
   networking = {
     hostName = "kasei";
     networkmanager.enable = true;
-    interfaces.wlp5s0.useDHCP = true; 
-    interfaces.wlp2s0f0u4.useDHCP = true; 
+    interfaces.wlp2s0f0u7u3.useDHCP = true;
     firewall.enable = true;
   };
 
-  i18n = {
-    inputMethod = {
-      enabled = "fcitx";
-      fcitx.engines = with pkgs.fcitx-engines; [ mozc ];
+  environment = {
+    shellAliases = {
+      fixscreen = "xrandr --output DP-4 --mode 1920x1080 --pos 0x0 -r 144 --output DVI-D-1 --primary --mode 1920x1080 --pos 1920x0 -r 60";
     };
-
-    # inputMethod = {
-    #   enabled = "fcitx5";
-    #   fcitx5.addons = with pkgs; [
-    #     fcitx5-mozc
-    #     fcitx5-gtk
-    #   ];
-    # };
   };
-
 
   services = {
     openssh.enable = true;
@@ -81,6 +70,7 @@
     #     "*/5 * * * *      root    date >> /tmp/cron.log"
       ];
     };
+  };
 
   hardware.bluetooth.enable = true;
 

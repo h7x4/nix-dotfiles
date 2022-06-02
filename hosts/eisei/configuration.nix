@@ -9,7 +9,7 @@ in {
   ];
 
   # TODO: See ../common.nix
-  services.xserver.enable = true; 
+  services.xserver.enable = true;
   services.xserver.displayManager.lightdm.enable = true;
 
   machineVars = {
@@ -59,21 +59,6 @@ in {
     # };
   };
 
-  i18n = {
-    inputMethod = {
-      enabled = "fcitx";
-      fcitx.engines = with pkgs.fcitx-engines; [ mozc ];
-    };
-
-    # inputMethod = {
-    #   enabled = "fcitx5";
-    #   fcitx5.addons = with pkgs; [
-    #     fcitx5-mozc
-    #     fcitx5-gtk
-    #   ];
-    # };
-  };
-
   services = {
     openssh.enable = true;
     printing.enable = true;
@@ -85,11 +70,6 @@ in {
     };
   };
 
-  hardware.bluetooth.enable = true;
-
-  virtualisation = {
-    docker.enable = true;
-    # libvirtd.enable = true;
-  };
+  hardware.bluetooth.enable = false;
 }
 

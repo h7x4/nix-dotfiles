@@ -1,42 +1,27 @@
 { pkgs, config, inputs, secrets, ... }:
 let
   inherit (pkgs) lib;
-  # inherit (specialArgs) machineVars;
+  inherit (specialArgs) machineVars;
   # inherit (config) machineVars;
   # has_graphics = !config.machineVars.headless;
 in {
-  time.timeZone = "Europe/Oslo";
-
-  i18n.defaultLocale = "en_US.UTF-8";
-
   nixpkgs.config = {
     allowUnfree = true;
   };
 
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = "us";
-  };
-
-  networking = {
-    useDHCP = false;
-    nameservers = [
-      "1.1.1.1"
-      "8.8.8.8"
-    ];
-  };
-
   nix = {
     package = pkgs.nixFlakes;
+    distributedBuilds = machineVars.hostname != "Tsuki";
+    binaryCaches = [
+      "https://cache.nixos.org/"
+    ];
+
     extraOptions = ''
       experimental-features = nix-command flakes
       builders-use-substitutes = true
     '';
 
-    distributedBuilds = (config.networking.hostName != "Tsuki");
-    binaryCaches = [
-      "https://cache.nixos.org/"
-    ];
+    trustedUsers = [ "h7x4" ];
 
     buildMachines = [
       {
@@ -53,6 +38,40 @@ in {
         mandatoryFeatures = [];
       }
     ];
+    # registry = {
+
+    # };
+  };
+
+  time.timeZone = "Europe/Oslo";
+
+  console = {
+    font = "Lat2-Terminus16";
+    keyMap = "us";
+  };
+
+  networking = {
+    useDHCP = false;
+    nameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+    ];
+  };
+
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    inputMethod = lib.mkIf (!machineVars.headless) {
+      enabled = "fcitx";
+      fcitx.engines = with pkgs.fcitx-engines; [ mozc ];
+    };
+
+    # inputMethod = {
+    #   enabled = "fcitx5";
+    #   fcitx5.addons = with pkgs; [
+    #     fcitx5-mozc
+    #     fcitx5-gtk
+    #   ];
+    # };
   };
 
   environment = {
@@ -72,6 +91,12 @@ in {
       zsh
       dash
     ];
+
+    systemPackages = with pkgs; [
+      wget
+    ] ++ (lib.optionals (!machineVars.headless) [
+      haskellPackages.xmobar
+    ]);
 
     etc = {
       # TODO: move this out of etc, and reference it directly in sudo config.
@@ -99,6 +124,18 @@ in {
         in concatStringsSep "\n" sortedUnique;
       };
     };
+
+    shellAliases.fixDisplay = let
+      inherit (config.machineVars) screens headless fixDisplayCommand;
+      screenToArgs = screen: with screen;
+        "--output ${name} --mode ${resolution}"
+        + (lib.optionalString (frequency != null) " --rate ${frequency}");
+      screenArgs = lib.concatStringsSep " " (lib.mapAttrsToList screenToArgs screens);
+    in lib.mkIf (!headless)
+      (lib.mkMerge [
+        "xrandr ${screenArgs}"
+        (lib.mkIf (fixDisplayCommand != null) fixDisplayCommand)
+      ]);
   };
 
   fonts = {
@@ -123,6 +160,7 @@ in {
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
       noto-fonts-emoji
+      ocr-a
       open-sans
       source-han-sans
       source-sans
@@ -142,19 +180,26 @@ in {
     };
   };
 
-  users.users.h7x4 = {
-    isNormalUser = true;
-    shell = pkgs.zsh;
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-      "docker"
-      "audio"
-      "video"
-      "disk"
-      "libvirtd"
-      "input"
-    ];
+  users = {
+    users.h7x4 = {
+      isNormalUser = true;
+      shell = pkgs.zsh;
+
+      extraGroups = [
+        "wheel"
+        "networkmanager"
+        "docker"
+        "disk"
+        "audio"
+        "video"
+        "libvirtd"
+        "input"
+      ];
+    };
+
+    groups = {
+      adbusers.members = [ "h7x4" ];
+    };
   };
 
   home-manager = {
@@ -189,7 +234,7 @@ in {
     };
 
     xserver = {
-      # TODO: What is going on here? 
+      # TODO: What is going on here?
       #       For some reason, this leads to infinite recursion.
       #       This needs to be fixed!
       #       Same with `displayManager.lightdm.enable`
@@ -267,18 +312,6 @@ in {
       };
     };
   };
-
-  environment.shellAliases.fixDisplay = let
-    inherit (config.machineVars) screens headless fixDisplayCommand;
-    screenToArgs = screen: with screen;
-      "--output ${name} --mode ${resolution}"
-      + (lib.optionalString (frequency != null) " --rate ${frequency}");
-    screenArgs = lib.concatStringsSep " " (lib.mapAttrsToList screenToArgs screens);
-  in lib.mkIf (!headless)
-    (lib.mkMerge [
-      "xrandr ${screenArgs}"
-      (lib.mkIf (fixDisplayCommand != null) fixDisplayCommand)
-    ]);
 
   system.extraDependencies =
     lib.optionals (config.machineVars.development) (with pkgs; [
