@@ -7,6 +7,7 @@
     python39Packages.bpython
     broot
     castnow
+    catdocx
     cheat
     cli-visualizer
     cloc
@@ -38,6 +39,7 @@
     keymapviz
     lastpass-cli
     lazydocker
+    libwebp
     lolcat
     manix
     mcfly
@@ -61,6 +63,7 @@
     nmap
     ouch
     pandoc
+    parallel
     python3
     rclone
     ripgrep
@@ -98,6 +101,7 @@
     lib.optionals (!machineVars.headless) [
       ahoviewer
       anki
+      ark
       audacity
       calibre
       cool-retro-term
@@ -107,6 +111,7 @@
       element-desktop
       fcitx
       geogebra
+      gimp
       gnome.gnome-font-viewer
       google-chrome
       inkscape
@@ -126,6 +131,7 @@
       mopidy-youtube
       mpc_cli
       nyxt
+      obsidian
       pulseaudio
       pulsemixer
       scrcpy
@@ -141,11 +147,15 @@
       xcalib
       xclip
       xdotool
-      xfce.thunar
-      xfce.thunar-archive-plugin
-      xfce.thunar-dropbox-plugin
-      xfce.thunar-media-tags-plugin
-      xfce.thunar-volman
+      (xfce.thunar.override {
+        thunarPlugins = with xfce; [
+          thunar-volman
+          thunar-dropbox-plugin
+          thunar-archive-plugin
+          thunar-media-tags-plugin
+        ];
+      })
+
       # xsnow # Wait until christmas
       yuzu-mainline
       zeal
