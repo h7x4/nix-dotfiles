@@ -9,7 +9,7 @@
     plugins = [
       # {
       #   name = "nix-zsh-shell-integration";
-      #   src = pkgs.nix-zsh-shell-integration;
+      #   src = pkgs.nix-zsh-shell;
       # }
       {
         name = "zsh-fast-syntax-highlighting";
@@ -31,6 +31,10 @@
         name = "powerlevel10k";
         src = pkgs.zsh-powerlevel10k;
         file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      }
+      {
+        name = "fzf-tab";
+        src = pkgs.zsh-fzf-tab;
       }
     ];
 
