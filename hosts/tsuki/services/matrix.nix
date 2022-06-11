@@ -54,6 +54,8 @@
 
     # redis.enabled = true;
 
+    max_upload_size = "100M";
+
     # settings = {
 
 
