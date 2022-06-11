@@ -3,64 +3,59 @@
   # TODO: configure synapse to point users to coturn
   services.matrix-synapse = {
     enable = true;
-    turn_uris = let 
-      inherit (config.services.coturn) realm;
-      p = toString secrets.ports.matrix.default;
-    in ["turn:${realm}:${p}?transport=udp" "turn:${realm}:${p}?transport=tcp"];
-    turn_shared_secret = config.services.coturn.static-auth-secret;
-    turn_user_lifetime = "1h";
+    settings = {
+      turn_uris = let
+        inherit (config.services.coturn) realm;
+        p = toString secrets.ports.matrix.default;
+      in ["turn:${realm}:${p}?transport=udp" "turn:${realm}:${p}?transport=tcp"];
+      turn_shared_secret = config.services.coturn.static-auth-secret;
+      turn_user_lifetime = "1h";
 
-    server_name = "nani.wtf";
-    public_baseurl = "https://matrix.nani.wtf";
+      server_name = "nani.wtf";
+      public_baseurl = "https://matrix.nani.wtf";
 
-    registration_shared_secret = secrets.keys.matrix.registration-shared-secret;
+      registration_shared_secret = secrets.keys.matrix.registration-shared-secret;
 
-    enable_metrics = true;
+      enable_metrics = true;
 
-    listeners = [
-      {
-        port = secrets.ports.matrix.listener;
-        bind_address = "::1";
-        type = "http";
-        tls = false;
-        x_forwarded = true;
-        resources = [
-          {
-            names = [ "client" "federation" "metrics" ];
-            compress = false;
-          }
-        ];
-      }
-    ];
+      listeners = [
+        {
+          port = secrets.ports.matrix.listener;
+          bind_address = "::1";
+          type = "http";
+          tls = false;
+          x_forwarded = true;
+          resources = [
+            {
+              names = [ "client" "federation" "metrics" ];
+              compress = false;
+            }
+          ];
+        }
+      ];
 
-    enable_registration = false;
+      enable_registration = false;
 
-    # password_config.enabled = lib.mkForce false;
+      # password_config.enabled = lib.mkForce false;
 
-    dataDir = "/data/var/matrix";
+      dataDir = "/data/var/matrix";
 
-    database_type = "psycopg2";
-    database_args = {
-      password = "synapse";
+      database_type = "psycopg2";
+      database_args = {
+        password = "synapse";
+      };
+
+      # TODO: Figure out a way to do this declaratively.
+      #       The files need to be owned by matrix-synapse
+      app_service_config_files = [
+        "/var/lib/matrix-synapse/discord-registration.yaml"
+        # (pkgs.writeText "facebook-registrations.yaml" (builtins.toJSON config.services.mautrix-facebook.registrationData))
+        "/var/lib/matrix-synapse/facebook-registration.yaml"
+      ];
+
+      # redis.enabled = true;
+      max_upload_size = "100M";
     };
-
-    # TODO: Figure out a way to do this declaratively.
-    #       The files need to be owned by matrix-synapse
-    app_service_config_files = [
-      "/var/lib/matrix-synapse/discord-registration.yaml"
-      # (pkgs.writeText "facebook-registrations.yaml" (builtins.toJSON config.services.mautrix-facebook.registrationData))
-      "/var/lib/matrix-synapse/facebook-registration.yaml"
-    ];
-
-    # redis.enabled = true;
-
-    max_upload_size = "100M";
-
-    # settings = {
-
-
- 
-    # };
   };
 
   services.redis.enable = true;
