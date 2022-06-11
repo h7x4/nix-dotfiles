@@ -215,7 +215,7 @@
       current_item_inactive_column_suffix = "$/r$(end)";
       now_playing_prefix = "$b";
       now_playing_suffix = "$/b";
-      browser_playlist_prefix = "$2playlist$9 ";
+      browser_playlist_prefix = "$2[P] $9";
       selected_item_prefix = "$6";
       selected_item_suffix = "$9";
       modified_item_prefix = "$3> $9";

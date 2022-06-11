@@ -38,8 +38,8 @@ in ((vscode-utils.override { stdenv = gccStdenv; }).buildVscodeMarketplaceExtens
   mktplcRef = {
     name = "vsliveshare";
     publisher = "ms-vsliveshare";
-    version = "1.0.5090";
-    sha256 = "gQ4tChmGxYIt+/izw9NvLCLHD8ypNO7pcWuLw4umhF0=";
+    version = "1.0.5449";
+    sha256 = "QKRWfzEdjY7S3d3RPczBvXnhxmfpJZ2bwzcIDbaw+MQ=";
   };
 }).overrideAttrs({ nativeBuildInputs ? [], buildInputs ? [], ... }: {
   nativeBuildInputs = nativeBuildInputs ++ [
@@ -71,13 +71,6 @@ in ((vscode-utils.override { stdenv = gccStdenv; }).buildVscodeMarketplaceExtens
       --replace "path + '.lock'" \
                 "__webpack_require__('path').join(__webpack_require__('os').tmpdir(), '$ext_unique_id-vsls-agent.lock')"
     # Hardcode executable paths
-    echo '#!/bin/sh' >node_modules/@vsliveshare/vscode-launcher-linux/check-reqs.sh
-    substituteInPlace node_modules/@vsliveshare/vscode-launcher-linux/install.sh \
-      --replace desktop-file-install ${desktop-file-utils}/bin/desktop-file-install
-    substituteInPlace node_modules/@vsliveshare/vscode-launcher-linux/uninstall.sh \
-      --replace update-desktop-database ${desktop-file-utils}/bin/update-desktop-database
-    substituteInPlace node_modules/@vsliveshare/vscode-launcher-linux/vsls-launcher \
-      --replace /bin/bash ${bash}/bin/bash
     substituteInPlace out/prod/extension-prod.js \
       --replace xprop ${xprop}/bin/xprop \
       --replace "'xsel'" "'${xsel}/bin/xsel'"

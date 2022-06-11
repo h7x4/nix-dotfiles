@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: let
+{ pkgs, config, machineVars, ... }: let
 
   # FIXME: lib should be imported directly as a module argument.
   inherit (pkgs) lib;
@@ -233,6 +233,9 @@ in rec {
 
         m = "${ncmpcpp}/bin/ncmpcpp";
         p = "${python39Packages.ipython}/bin/ipython";
+        s = "${sxiv}/bin/sxiv";
+        v = "${mpv}/bin/mpv";
+        zt = "${zathura}/bin/zathura";
       };
 
       # ░█▄█░▀█▀░█▀▀░█▀▀
@@ -259,6 +262,13 @@ in rec {
         view-latex = "${texlive.combined.scheme-full}/bin/latexmk -pdf -pvc main.tex";
 
         reload-tmux = "${tmux}/bin/tmux source $HOME/.config/tmux/tmux.conf";
+
+        fixdisplay = let
+          commands = {
+            "kasei" = "xrandr --output DVI-I-1 --mode 1920x1080 --pos 1920x0 -r 60 --primary --output DP-3 --mode 1920x1080 --pos 0x0 -r 144";
+          };
+        in
+          if commands ? ${machineVars.hostname} then commands.${machineVars.hostname} else "echo \"fixdisplay not defined for this hostname\"";
       };
 
       # ░█▀▀░█▀▀░█▀█░█▀▀░█▀▄░█▀█░▀█▀░█▀▀░█▀▄

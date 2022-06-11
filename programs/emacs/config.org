@@ -1476,7 +1476,7 @@ Some math functions
 	"mmv"   '(LaTeX-math-vee            :which-key "∨")
 	"mm=>"  '(LaTeX-math-Rightarrow     :which-key "=>")
 	"mm->"  '(LaTeX-math-rightarrow     :which-key "->")
-	"mm<=="  '(LaTeX-math-Leftarrow      :which-key "<=")
+	"mm<==" '(LaTeX-math-Leftarrow      :which-key "<=")
 	"mm<-"  '(LaTeX-math-leftarrow      :which-key "<-")
 	"mm<=>" '(LaTeX-math-Leftrightarrow :which-key "<=>")
 	"mm=="  '(LaTeX-math-equiv          :which-key "≡")
