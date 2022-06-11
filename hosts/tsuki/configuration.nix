@@ -49,22 +49,12 @@
   networking = {
     hostName = "Tsuki";
     networkmanager.enable = true;
-    useDHCP = false;
     interfaces.ens18.useDHCP = true;
-    nameservers = [
-      "1.1.1.1"
-      "8.8.8.8"
-    ];
     firewall.enable=true;
   };
 
   services = {
-    openssh = {
-      enable = true;
-      passwordAuthentication = false;
-      challengeResponseAuthentication = false;
-      permitRootLogin = "no";
-    };
+    openssh.enable = true;
     printing.enable = true;
     cron = {
       enable = true;
@@ -77,55 +67,9 @@
   users.groups.media = {};
 
   users.users = {
-    h7x4.extraGroups = [
-      "wheel"
-      "networkmanager"
-      "docker"
-      "disk"
-      "libvirtd"
-      "input"
-    ];
     media = {
       isSystemUser = true;
       group = "media";
-    };
-  };
-
-  environment.systemPackages = with pkgs; [
-    wget
-  ];
-
-  programs = {
-    git.enable = true;
-    npm.enable = true;
-    tmux.enable = true;
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-      viAlias = true;
-      vimAlias = true;
-      configure = {
-        packages.myVimPackage = with pkgs.vimPlugins; {
-          start = [
-            direnv-vim
-            vim-nix
-            vim-polyglot
-          ];
-
-          opt = [
-            vim-monokai
-          ];
-        };
-
-        customRC = ''
-          set number relativenumber
-          set undofile
-          set undodir=~/.cache/vim/undodir 
-
-          packadd! vim-monokai 
-          colorscheme monokai
-        '';
-      };
     };
   };
 

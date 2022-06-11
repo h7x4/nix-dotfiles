@@ -15,12 +15,41 @@ in {
     keyMap = "us";
   };
 
+  networking = {
+    useDHCP = false;
+    nameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+    ];
+  };
+
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
       experimental-features = nix-command flakes
-	    builders-use-substitutes = true
+      builders-use-substitutes = true
     '';
+
+    distributedBuilds = config.networking.hostname != "Tsuki";
+    binaryCaches = [
+      "https://cache.nixos.org/"
+    ];
+
+    buildMachines = [
+      {
+        hostName = "Tsuki";
+        system = "x86_64-linux";
+        maxJobs = 1;
+        speedFactor = 3;
+        supportedFeatures = [
+          "nixos-test"
+          "benchmark"
+          "big-paralell"
+          "kvm"
+        ];
+        mandatoryFeatures = [];
+      }
+    ];
   };
 
   environment = {
@@ -28,6 +57,12 @@ in {
       EDITOR = "nvim";
       VISUAL = "nvim";
     };
+
+    systemPackages = with pkgs; [
+      wget
+    ] + lib.optionals (!machineVars.headless) [
+      haskellPackages.xmobar
+    ];
 
     shells = with pkgs; [
       bashInteractive
@@ -104,6 +139,16 @@ in {
   users.users.h7x4 = {
     isNormalUser = true;
     shell = pkgs.zsh;
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "docker"
+      "audio"
+      "video"
+      "disk"
+      "libvirtd"
+      "input"
+    ];
   };
 
   home-manager = {
@@ -117,10 +162,106 @@ in {
     };
   };
 
+  services = {
+    tumbler.enable = !machineVars.headless;
+    gnome.gnome-keyring.enable = !machineVars.headless;
+
+    openssh = {
+      # enable = true;
+      passwordAuthentication = false;
+      kbdInteractiveAuthentication = false;
+      permitRootLogin = "no";
+    };
+
+    dbus = {
+      enable = !machineVars.headless;
+      packages = with pkgs; [
+        gcr
+        dconf
+      ];
+    };
+
+    xserver = {
+      enable = !machineVars.headless;
+      layout = "us";
+      xkbOptions = "caps:escape";
+
+      libinput = {
+        enable = true;
+        touchpad.disableWhileTyping = true;
+      };
+
+      desktopManager = {
+        xterm.enable = false;
+        xfce.enable = true;
+      };
+
+      windowManager.xmonad = {
+        enable = true;
+        enableContribAndExtras = true;
+      };
+
+      # displayManager.startx.enable = true;
+      # displayManager.gdm.enable = true;
+      displayManager.lightdm.enable = true;
+      displayManager.defaultSession = "none+xmonad";
+    };
+
+  };
+
+  programs = {
+    dconf.enable = !machineVars.headless;
+    git.enable = true;
+    light.enable = !machineVars.headless;
+    npm.enable = true;
+    tmux.enable = true;
+
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
+
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+      viAlias = true;
+      vimAlias = true;
+      configure = {
+        packages.myVimPackage = with pkgs.vimPlugins; {
+          start = [
+            direnv-vim
+            vim-nix
+            vim-polyglot
+          ];
+
+          opt = [
+            vim-monokai
+          ];
+        };
+
+        customRC = ''
+          set number relativenumber
+          set undofile
+          set undodir=~/.cache/vim/undodir
+
+          packadd! vim-monokai
+          colorscheme monokai
+        '';
+      };
+    };
+  };
+
+  sound = {
+    enable = !machineVars.headless;
+    mediaKeys.enable = true;
+  };
+
+  hardware.pulseaudio.enable = !machineVars.headless;
+
   security.sudo.extraConfig = ''
     Defaults    lecture = always
     Defaults    lecture_file = /etc/${config.environment.etc.sudoLecture.target}
   '';
- 
-  system.stateVersion = "21.11";
+
+  system.stateVersion = "22.05";
 }
