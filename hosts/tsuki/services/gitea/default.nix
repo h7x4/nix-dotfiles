@@ -17,6 +17,7 @@ in
     description = "Gitea service";
     home = config.services.gitea.stateDir;
     useDefaultShell = true;
+
     group = "gitea";
     isSystemUser = true;
     uid = config.ids.uids.git;
@@ -31,6 +32,11 @@ in
     domain = "git.nani.wtf";
     httpPort = secrets.ports.gitea;
     disableRegistration = true;
+
+    dump = {
+      enable = true;
+      interval = "hourly";
+    };
 
     database = {
       user = "git";

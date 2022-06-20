@@ -10,7 +10,7 @@
 {
 
   security.acme = {
-    email = "h7x4abk3g@protonmail.com";
+    defaults.email = "h7x4abk3g@protonmail.com";
     acceptTerms = true;
   };
 
@@ -106,14 +106,16 @@
       (makeClientCertProxy ["idrac"] "https://${ips.idrac}" {})
       (makeClientCertProxy ["searx"] "http://localhost:${s ports.searx}" {})
       (makeACMEProxy ["dyn"] "http://${ips.crafty}:${s ports.dynmap}" {
-        basicAuthFile = keys.htpasswds.default;
+        # basicAuthFile = keys.htpasswds.default;
       })
       (makeClientCertProxy ["log"] "http://localhost:${s ports.grafana}" {
         locations."/".proxyWebsockets = true;
       })
+      (makeClientCertProxy ["pg"] "http://localhost:${s ports.postgres}" {})
       # (makeProxy ["wiki"] "" {})
       # (makeHost ["vpn"] "" {})
       (makeClientCertProxy ["hydra"] "http://localhost:${s ports.hydra}" {})
+      (makeClientCertProxy ["air"] "https://${ips.kansei}:${s ports.kansei}" {})
 
       # (makePassProxy ["sync" "drive"] "" {})
       # (makePassProxy ["music" "mpd"] "" {})

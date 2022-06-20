@@ -18,7 +18,7 @@ in
       editor = mapPrefixToSet "editor" {
         fontFamily = "Fira Code";
         fontLigatures = true;
-        lineNumbers = "on";
+        lineNumbers = "relative";
         mouseWheelZoom = false;
         fontSize = 14;
         "minimap.enabled" = false;
