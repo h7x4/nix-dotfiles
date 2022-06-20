@@ -1,28 +1,35 @@
 { config, lib, pkgs, ... }:
 {
-  imports =
-    [
+  imports = [
       ./hardware-configuration.nix
 
-      ../../pluggables/tools/programming.nix
-
-      ./services/nginx.nix
+    # ./services/calibre.nix
       # ./services/dokuwiki.nix
+    ./services/gitea
       # ./services/gitlab
-      ./services/gitea
+    ./services/grafana.nix
+    ./services/hydra.nix
       ./services/jitsi.nix
+    # ./services/keycloak.nix
+    # ./services/libvirt.nix
+    ./services/matrix.nix
+    ./services/nginx.nix
       # ./services/openldap.nix
-      ./services/plex.nix
-      ./services/hydra.nix
-      ./services/matrix.nix
-      # ./services/libvirt.nix
-      ./services/grafana.nix
-      # ./services/calibre.nix
       ./services/openvpn.nix
+    ./services/plex.nix
       # ./services/samba.nix
       ./services/searx.nix
       # ./services/syncthing.nix
+    ./services/vscode-server.nix
     ];
+
+  # TODO: See ../common.nix
+  services.xserver.enable = false;
+  services.xserver.displayManager.lightdm.enable = false;
+
+  machineVars = {
+    headless = true;
+  };
 
   systemd.targets = {
     sleep.enable = false;

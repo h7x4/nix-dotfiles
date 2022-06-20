@@ -2,8 +2,11 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../pluggables/tools/programming.nix
   ];
+
+  # TODO: See ../common.nix
+  services.xserver.enable = true; 
+  services.xserver.displayManager.lightdm.enable = true;
 
   systemd.targets = {
     sleep.enable = false;

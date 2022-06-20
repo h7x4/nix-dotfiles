@@ -25,6 +25,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    vscode-server = {
+      url = "github:msteen/nixos-vscode-server";
+      flake = false;
+    };
+
     # Nix expressions and keys (TODO: move keys to another solution like agenix)
     # which should be kept from the main repo for privacy reasons.
     #
@@ -36,10 +41,11 @@
     };
   };
 
-  outputs = {
+  outputs = inputs@{
     self,
     nixpkgs,
     home-manager,
+    vscode-server,
     secrets,
     fonts,
     dotfiles,
@@ -59,19 +65,6 @@
       overlays = [ self.overlays.lib ];
     };
 
-    specialArgs = {
-      secrets = secrets.outputs.default;
-      colorTheme = import ./common/colors.nix;
-      inputs = {
-        inherit self;
-        inherit home-manager;
-        inherit dotfiles;
-        inherit fonts;
-        inherit website;
-        inherit secrets;
-      };
-    };
-
   in {
     overlays = {
       lib = import ./overlays/lib;
@@ -86,65 +79,45 @@
         inherit system;
         inherit pkgs;
 
-        extraSpecialArgs = specialArgs // {
-          machineVars = {
-            hostname = "machine";
-            headless = false;
-            screens = 1;
-            gaming = true;
-            laptop = false;
-          };
-        };
         username = "h7x4";
         homeDirectory = "/home/h7x4";
         stateVersion = "22.05";
         configuration = {
-
           imports = [
             ./home.nix
+            ./modules
           ];
+
+          machineVars = {
+            headless = false;
+            fixDisplayCommand = "echo 'not available'";
+            gaming = true;
+            development = true;
+            laptop = false;
+          };
         };
       };
     };
 
     nixosConfigurations = let
-
-      # String -> AttrSet -> AttrSet
-      nixSys = name: extraOpts: machineVars:
+      nixSys = name:
         nixpkgs.lib.nixosSystem {
           inherit system;
           inherit pkgs;
           inherit (pkgs) lib;
-          specialArgs = specialArgs // { inherit machineVars; };
           modules = [
             "${home-manager}/nixos"
+            ./modules
             ./hosts/common.nix
             ./hosts/${name}/configuration.nix
+            "${vscode-server}/default.nix"
+            { config._module.args = { inherit inputs; secrets = secrets.outputs.default; }; }
           ];
-        } // extraOpts;
-
+        };
     in {
-      Tsuki = nixSys "tsuki" {} {
-        hostname = "tsuki";
-        headless = true;
-        gaming = false;
-        laptop = false;
-      };
-      Eisei = nixSys "eisei" {} {
-        hostname = "eisei";
-        headless = false;
-        screens = 1;
-        gaming = false;
-        laptop = true;
-      };
-      kasei = nixSys "kasei" {} {
-        hostname = "kasei";
-        headless = false;
-        screens = 2;
-        gaming = true;
-        laptop = false;
-      };
+      Tsuki = nixSys "tsuki";
+      Eisei = nixSys "eisei";
+      kasei = nixSys "kasei";
     };
-
   };
 }

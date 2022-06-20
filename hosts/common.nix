@@ -1,14 +1,17 @@
-{ pkgs, config, inputs, specialArgs, ... }:
+{ pkgs, config, inputs, secrets, ... }:
 let
   inherit (pkgs) lib;
+  # inherit (specialArgs) machineVars;
+  inherit (config) machineVars;
+  has_graphics = !config.machineVars.headless;
 in {
   time.timeZone = "Europe/Oslo";
 
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # nixpkgs.config = {
-  #   allowUnfree = true;
-  # };
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
 
   console = {
     font = "Lat2-Terminus16";
@@ -30,7 +33,7 @@ in {
       builders-use-substitutes = true
     '';
 
-    distributedBuilds = config.networking.hostname != "Tsuki";
+    distributedBuilds = (config.networking.hostName != "Tsuki");
     binaryCaches = [
       "https://cache.nixos.org/"
     ];
@@ -58,11 +61,11 @@ in {
       VISUAL = "nvim";
     };
 
-    systemPackages = with pkgs; [
+    systemPackages = with pkgs; ([
       wget
-    ] + lib.optionals (!machineVars.headless) [
+    ] ++ (lib.optionals (!machineVars.headless) [
       haskellPackages.xmobar
-    ];
+    ]));
 
     shells = with pkgs; [
       bashInteractive
@@ -100,6 +103,8 @@ in {
 
   fonts = {
     enableDefaultFonts = true;
+
+    fontDir.enable = true;
 
     fonts = with pkgs; [
       cm_unicode
@@ -154,18 +159,19 @@ in {
 
   home-manager = {
     useGlobalPkgs = true;
-    extraSpecialArgs = specialArgs;
+    extraSpecialArgs = { inherit inputs; inherit secrets; };
 
     # TODO: figure out why specialArgs isn't accessible from the root home file.
     users.h7x4 = import ../home.nix {
       inherit pkgs;
-      inherit (specialArgs) machineVars inputs;
+      inherit inputs;
+      inherit config;
     };
   };
 
   services = {
-    tumbler.enable = !machineVars.headless;
-    gnome.gnome-keyring.enable = !machineVars.headless;
+    tumbler.enable = !config.machineVars.headless;
+    gnome.gnome-keyring.enable = !config.machineVars.headless;
 
     openssh = {
       # enable = true;
@@ -175,7 +181,7 @@ in {
     };
 
     dbus = {
-      enable = !machineVars.headless;
+      # enable = !machineVars.headless;
       packages = with pkgs; [
         gcr
         dconf
@@ -183,7 +189,17 @@ in {
     };
 
     xserver = {
-      enable = !machineVars.headless;
+      # TODO: What is going on here? 
+      #       For some reason, this leads to infinite recursion.
+      #       This needs to be fixed!
+      #       Same with `displayManager.lightdm.enable`
+      #       options are defined in each hosts config file for the time being.
+      #
+      #       I have a hypothesis that there are some asserts within xserver that
+      #       makes it so that other software can not be activated at the same time
+      #       and that those asserts triggers some kind of evaluation chain that
+      #       recurses infinitely.
+      # enable = !config.machineVars.headless;
       layout = "us";
       xkbOptions = "caps:escape";
 
@@ -194,7 +210,7 @@ in {
 
       desktopManager = {
         xterm.enable = false;
-        xfce.enable = true;
+        xfce.enable = !config.machineVars.headless;
       };
 
       windowManager.xmonad = {
@@ -204,16 +220,16 @@ in {
 
       # displayManager.startx.enable = true;
       # displayManager.gdm.enable = true;
-      displayManager.lightdm.enable = true;
+      # displayManager.lightdm.enable = !config.machineVars.headless;
       displayManager.defaultSession = "none+xmonad";
     };
 
   };
 
   programs = {
-    dconf.enable = !machineVars.headless;
+    dconf.enable = !config.machineVars.headless;
     git.enable = true;
-    light.enable = !machineVars.headless;
+    light.enable = !config.machineVars.headless;
     npm.enable = true;
     tmux.enable = true;
 
@@ -252,12 +268,63 @@ in {
     };
   };
 
+  environment.shellAliases.fixDisplay = let
+    inherit (config.machineVars) screens headless fixDisplayCommand;
+    screenToArgs = screen: with screen;
+      "--output ${name} --mode ${resolution}"
+      + (lib.optionalString (frequency != null) " --rate ${frequency}");
+    screenArgs = lib.concatStringsSep " " (lib.mapAttrsToList screenToArgs screens);
+  in lib.mkIf (!headless)
+    (lib.mkMerge [
+      "xrandr ${screenArgs}"
+      (lib.mkIf (fixDisplayCommand != null) fixDisplayCommand)
+    ]);
+
+  system.extraDependencies =
+    lib.optionals (config.machineVars.development) (with pkgs; [
+      asciidoc
+      asciidoctor
+      cabal2nix
+      clang
+      dart
+      dotnet-sdk
+      dotnet-sdk_3
+      dotnet-sdk_5
+      dotnetPackages.Nuget
+      elm2nix
+      elmPackages.elm
+      flutter
+      gcc
+      ghc
+      ghcid
+      haskellPackages.Cabal_3_6_3_0
+      maven
+      nixfmt
+      nixpkgs-fmt
+      # nixpkgs-hammering
+      nodePackages.node2nix
+      nodePackages.npm
+      nodePackages.sass
+      nodePackages.typescript
+      nodePackages.yarn
+      nodejs
+      plantuml
+      python3
+      rustc
+      rustc
+      rustup
+      sqlcheck
+      sqlint
+      sqlite
+      sqlite-web
+    ]);
+
   sound = {
-    enable = !machineVars.headless;
+    enable = !config.machineVars.headless;
     mediaKeys.enable = true;
   };
 
-  hardware.pulseaudio.enable = !machineVars.headless;
+  hardware.pulseaudio.enable = !config.machineVars.headless;
 
   security.sudo.extraConfig = ''
     Defaults    lecture = always

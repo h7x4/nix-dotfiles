@@ -21,7 +21,10 @@
       listeners = [
         {
           port = secrets.ports.matrix.listener;
-          bind_address = "::1";
+          bind_addresses = [
+            "0.0.0.0"
+            "::1"
+          ];
           type = "http";
           tls = false;
           x_forwarded = true;
@@ -58,7 +61,7 @@
     };
   };
 
-  services.redis.enable = true;
+  # services.redis.enable = true;
 
   services.mx-puppet-discord = {
     enable = true;

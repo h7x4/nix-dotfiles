@@ -1,4 +1,4 @@
-{ lib, pkgs, colorTheme, ... }:
+{ pkgs, lib, config, ... }:
 {
   programs.alacritty = {
     enable = true;
@@ -22,10 +22,10 @@
           primaryColors = [ "foreground" "background" ];
         in
           {
-            primary = getAttrs primaryColors colorTheme.default;
+            primary = getAttrs primaryColors config.colors.defaultColorSet;
             normal = let
               removePrimaryColorAttrs = n: v: !(any (pc: n ? pc) primaryColors);
-            in filterAttrs removePrimaryColorAttrs colorTheme.default;
+            in filterAttrs removePrimaryColorAttrs config.colors.defaultColorSet;
           };
 
       background_opacity = 1.0;

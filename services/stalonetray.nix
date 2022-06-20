@@ -1,4 +1,4 @@
-{ colorTheme, ... }:
+{ config, ... }:
 {
   services.stalonetray = {
     enable = true;
@@ -7,7 +7,7 @@
       transparent = false;
       dockapp_mode = "none";
       geometry = "8x1-0+0";
-      background = colorTheme.default.background;
+      background = config.colors.defaultColorSet.background;
       kludges = "force_icons_size";
       grow_gravity = "NW";
       icon_gravity = "NW";

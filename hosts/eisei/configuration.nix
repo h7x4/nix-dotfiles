@@ -6,8 +6,26 @@
 in {
   imports = [
     ./hardware-configuration.nix
-    ../../pluggables/tools/programming.nix
   ];
+
+  # TODO: See ../common.nix
+  services.xserver.enable = true; 
+  services.xserver.displayManager.lightdm.enable = true;
+
+  machineVars = {
+    gaming = true;
+    creative = true;
+    development = true;
+
+    headless = false;
+    laptop = true;
+
+    screens = {
+      "eDP-1" = {
+        resolution = "1920x1080";
+      };
+    };
+  };
 
   systemd.targets = {
     sleep.enable = false;

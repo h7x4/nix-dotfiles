@@ -1,4 +1,4 @@
-{ pkgs, config, machineVars, ... }: let
+{ pkgs, config, ... }: let
 
   # FIXME: lib should be imported directly as a module argument.
   inherit (pkgs) lib;
@@ -141,6 +141,7 @@ in rec {
 
         hms = "home-manager switch";
         nxr = "sudo nixos-rebuild switch";
+        nxp = "nix-shell -p ";
 
         nxc = "sudoedit /etc/nixos/configuration.nix";
         nxh = "vim ~/.config/nixpkgs/home.nix";
@@ -262,13 +263,6 @@ in rec {
         view-latex = "${texlive.combined.scheme-full}/bin/latexmk -pdf -pvc main.tex";
 
         reload-tmux = "${tmux}/bin/tmux source $HOME/.config/tmux/tmux.conf";
-
-        fixdisplay = let
-          commands = {
-            "kasei" = "xrandr --output DVI-I-1 --mode 1920x1080 --pos 1920x0 -r 60 --primary --output DP-3 --mode 1920x1080 --pos 0x0 -r 144";
-          };
-        in
-          if commands ? ${machineVars.hostname} then commands.${machineVars.hostname} else "echo \"fixdisplay not defined for this hostname\"";
       };
 
       # ░█▀▀░█▀▀░█▀█░█▀▀░█▀▄░█▀█░▀█▀░█▀▀░█▀▄
