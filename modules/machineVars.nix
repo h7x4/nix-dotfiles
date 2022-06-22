@@ -46,6 +46,31 @@ t tools preinstalled.";
       type = types.nullOr types.str;
       default = null;
     };
+
+    dataDrives = let 
+      driveType =
+        types.addCheck types.path (path: builtins.elem path (builtins.attrNames config.fileSystems));
+    in {
+      drives = mkOption {
+        type = types.attrsOf driveType;
+        default = { };
+        example = {
+          dataDrive1 = "/data/data1";
+          dataDrive2 = "/another/location";
+        };
+        description = ''
+          Drives that should act as data drives.
+          These need to be registered in `fileSystems`
+        '';
+      };
+
+      default = mkOption {
+        type = types.nullOr driveType;
+        description = ''
+          Data drive that should be used for most purposes.
+        '';
+      };
+    };
   };
 
   config = {

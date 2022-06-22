@@ -4,10 +4,11 @@ in {
   programs.xmobar = let
     networkCard = "wlp2s0f0u7u4";
 
+    # TODO: loop over dataDrives
     disks = [
       "/"
-      "/data"
-      "/data/disks/data2"
+      "${config.machineVars.dataDrives.default}"
+      "${config.machineVars.dataDrives.default}/disks/data2"
     ];
 
     mpd_status_script = pkgs.writeShellScript "mpd-status" ''

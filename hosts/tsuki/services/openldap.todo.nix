@@ -2,7 +2,7 @@
 {
   services.openldap = {
     enable = true;
-    # dataDir = "/data/var/openldap";
+    # dataDir = "${config.machineVars.dataDrives.default}/var/openldap";
     urlList = [ "ldap:///" "ldapi:///" ]; # Add ldaps to this list to listen with SSL (requires configured certificates)
     # suffix = "dc=nixos,dc=org";
     # rootdn = "cn=admin,dc=nixos,dc=org";

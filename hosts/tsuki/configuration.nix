@@ -1,27 +1,27 @@
-{ config, lib, pkgs, ... }:
 {
   imports = [
-      ./hardware-configuration.nix
+    ./hardware-configuration.nix
 
     # ./services/calibre.nix
-      # ./services/dokuwiki.nix
+    # ./services/dokuwiki.nix
     ./services/gitea
-      # ./services/gitlab
+    # ./services/gitlab
     ./services/grafana.nix
     ./services/hydra.nix
-      ./services/jitsi.nix
+    ./services/jitsi.nix
     # ./services/keycloak.nix
     # ./services/libvirt.nix
-    ./services/matrix.nix
+    ./services/matrix
     ./services/nginx.nix
-      # ./services/openldap.nix
-      ./services/openvpn.nix
+    # ./services/openldap.nix
+    # ./services/openvpn.nix
     ./services/plex.nix
-      # ./services/samba.nix
-      ./services/searx.nix
-      # ./services/syncthing.nix
+    ./services/postgres.nix
+    ./services/samba.nix
+    ./services/searx.nix
+    # ./services/syncthing.nix
     ./services/vscode-server.nix
-    ];
+  ];
 
   # TODO: See ../common.nix
   services.xserver.enable = false;
@@ -29,6 +29,15 @@
 
   machineVars = {
     headless = true;
+    dataDrives = let 
+      momiji = "/data2";
+    in {
+      drives = {
+        cirno = "/data";
+        inherit momiji;
+      };
+      default = momiji;
+    };
   };
 
   systemd.targets = {
@@ -74,6 +83,7 @@
   users.groups.media = {};
 
   users.users = {
+    h7x4.extraGroups = [ "media" ];
     media = {
       isSystemUser = true;
       group = "media";

@@ -8,6 +8,25 @@
   services.xserver.enable = true; 
   services.xserver.displayManager.lightdm.enable = true;
 
+  machineVars = {
+    headless = false;
+    gaming = true;
+    development = true;
+    creative = true;
+
+    dataDrives = let 
+      main = "/data";
+    in {
+      drives = { inherit main; };
+      default = main;
+    };
+
+    screens = {
+      "DP-1" = {};
+      "HDMI-1" = {};
+    };
+  };
+
   systemd.targets = {
     sleep.enable = false;
     suspend.enable = false;

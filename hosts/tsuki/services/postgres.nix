@@ -2,16 +2,26 @@
 
   services.postgresql = {
     enable = true;
-    # port = secrets.ports.postgres
-    # dataDir = 
+    enableTCPIP = true;
+    authentication = pkgs.lib.mkOverride 10 ''
+      local all all trust
+      local hydra all ident map=hydra-users
+      host all all 127.0.0.1/32 trust
+      host all all ::1/128 trust
+    '';
+    port = secrets.ports.postgres;
+    dataDir = "${config.machineVars.dataDrives.default}/db/postgres/${config.services.postgresql.package.psqlSchema}";
     # settings = {};
   };
 
   services.pgadmin = {
     enable = true;
     openFirewall = true;
-    # port = secrets.ports.pgadmin
-    # settings = {
-    # };
+    initialEmail = "h7x4abk3g@protonmail.com";
+    initialPasswordFile = "${config.machineVars.dataDrives.default}/var/pgadmin_pass";
+    port = secrets.ports.pgadmin;
+    settings = {
+      DATA_DIR = "${config.machineVars.dataDrives.default}/var/pgadmin";
+    };
   };
 }

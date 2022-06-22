@@ -111,10 +111,10 @@
       (makeClientCertProxy ["log"] "http://localhost:${s ports.grafana}" {
         locations."/".proxyWebsockets = true;
       })
-      (makeClientCertProxy ["pg"] "http://localhost:${s ports.postgres}" {})
+      (makeClientCertProxy ["pg"] "http://localhost:${s ports.pgadmin}" {})
       # (makeProxy ["wiki"] "" {})
       # (makeHost ["vpn"] "" {})
-      (makeClientCertProxy ["hydra"] "http://localhost:${s ports.hydra}" {})
+      (makeACMEProxy ["hydra"] "http://localhost:${s ports.hydra}" {})
       (makeClientCertProxy ["air"] "https://${ips.kansei}:${s ports.kansei}" {})
 
       # (makePassProxy ["sync" "drive"] "" {})

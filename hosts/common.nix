@@ -2,8 +2,8 @@
 let
   inherit (pkgs) lib;
   # inherit (specialArgs) machineVars;
-  inherit (config) machineVars;
-  has_graphics = !config.machineVars.headless;
+  # inherit (config) machineVars;
+  # has_graphics = !config.machineVars.headless;
 in {
   time.timeZone = "Europe/Oslo";
 
@@ -63,7 +63,7 @@ in {
 
     systemPackages = with pkgs; ([
       wget
-    ] ++ (lib.optionals (!machineVars.headless) [
+    ] ++ (lib.optionals (!config.machineVars.headless) [
       haskellPackages.xmobar
     ]));
 
@@ -199,7 +199,7 @@ in {
       #       makes it so that other software can not be activated at the same time
       #       and that those asserts triggers some kind of evaluation chain that
       #       recurses infinitely.
-      # enable = !config.machineVars.headless;
+      # enable = true;
       layout = "us";
       xkbOptions = "caps:escape";
 
@@ -220,7 +220,7 @@ in {
 
       # displayManager.startx.enable = true;
       # displayManager.gdm.enable = true;
-      # displayManager.lightdm.enable = !config.machineVars.headless;
+      # displayManager.lightdm.enable = true;
       displayManager.defaultSession = "none+xmonad";
     };
 
