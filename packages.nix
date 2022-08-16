@@ -1,5 +1,6 @@
-{ pkgs, config, ... }:
-{
+{ pkgs, config, ... }: let
+  inherit (config) machineVars;
+in {
   home.packages = with pkgs; [
     asciidoctor
     beets
@@ -130,7 +131,6 @@
       mopidy
       mopidy-mpd
       mopidy-soundcloud
-      mopidy-spotify
       mopidy-youtube
       mpc_cli
       nyxt

@@ -1,8 +1,8 @@
 { pkgs, config, inputs, secrets, ... }:
 let
   inherit (pkgs) lib;
-  inherit (specialArgs) machineVars;
-  # inherit (config) machineVars;
+  # inherit (specialArgs) machineVars;
+  inherit (config) machineVars;
   # has_graphics = !config.machineVars.headless;
 in {
   nixpkgs.config = {
@@ -11,7 +11,7 @@ in {
 
   nix = {
     package = pkgs.nixFlakes;
-    distributedBuilds = machineVars.hostname != "Tsuki";
+    distributedBuilds = config.networking.hostName != "Tsuki";
     binaryCaches = [
       "https://cache.nixos.org/"
     ];
@@ -92,12 +92,6 @@ in {
       dash
     ];
 
-    systemPackages = with pkgs; [
-      wget
-    ] ++ (lib.optionals (!machineVars.headless) [
-      haskellPackages.xmobar
-    ]);
-
     etc = {
       # TODO: move this out of etc, and reference it directly in sudo config.
       sudoLecture = {
@@ -127,15 +121,17 @@ in {
 
     shellAliases.fixDisplay = let
       inherit (config.machineVars) screens headless fixDisplayCommand;
+
       screenToArgs = screen: with screen;
         "--output ${name} --mode ${resolution}"
         + (lib.optionalString (frequency != null) " --rate ${frequency}");
+
       screenArgs = lib.concatStringsSep " " (lib.mapAttrsToList screenToArgs screens);
+
     in lib.mkIf (!headless)
-      (lib.mkMerge [
-        "xrandr ${screenArgs}"
-        (lib.mkIf (fixDisplayCommand != null) fixDisplayCommand)
-      ]);
+      (if screenArgs == null
+          then "xrandr ${screenArgs}"
+          else (lib.mkIf (fixDisplayCommand != null) fixDisplayCommand));
   };
 
   fonts = {

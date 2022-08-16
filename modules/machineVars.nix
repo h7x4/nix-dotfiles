@@ -47,9 +47,10 @@ t tools preinstalled.";
       default = null;
     };
 
-    dataDrives = let 
+    dataDrives = let
       driveType =
-        types.addCheck types.path (path: builtins.elem path (builtins.attrNames config.fileSystems));
+        types.path;
+      #   types.addCheck types.path (path: builtins.elem path (builtins.attrNames config.fileSystems));
     in {
       drives = mkOption {
         type = types.attrsOf driveType;

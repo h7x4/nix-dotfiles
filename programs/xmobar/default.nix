@@ -12,7 +12,7 @@ in {
     ];
 
     mpd_status_script = pkgs.writeShellScript "mpd-status" ''
-      MPD_STATUS=$(${pkgs.mpc}/bin/mpc 2>/dev/null | sed -n '2{p;q}' | cut -d ' ' -f1)
+      MPD_STATUS=$(${pkgs.mpc-cli}/bin/mpc 2>/dev/null | sed -n '2{p;q}' | cut -d ' ' -f1)
       case "$MPD_STATUS" in
         "[playing]")
           echo "<fn=2><fc=#00ff00>▶</fc></fn>"

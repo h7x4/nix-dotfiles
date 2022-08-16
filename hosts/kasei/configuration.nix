@@ -21,10 +21,12 @@
       default = main;
     };
 
-    screens = {
-      "DP-1" = {};
-      "HDMI-1" = {};
-    };
+    fixDisplayCommand = "xrandr --output DP-4 --mode 1920x1080 --pos 0x0 -r 144 --output DVI-D-1 --primary --mode 1920x1080 --pos 1920x0 -r 60";
+
+    # screens = {
+    #   "DP-1" = {};
+    #   "HDMI-1" = {};
+    # };
   };
 
   systemd.targets = {
@@ -53,12 +55,6 @@
     networkmanager.enable = true;
     interfaces.wlp2s0f0u7u3.useDHCP = true;
     firewall.enable = true;
-  };
-
-  environment = {
-    shellAliases = {
-      fixscreen = "xrandr --output DP-4 --mode 1920x1080 --pos 0x0 -r 144 --output DVI-D-1 --primary --mode 1920x1080 --pos 1920x0 -r 60";
-    };
   };
 
   services = {

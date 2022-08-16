@@ -3,44 +3,44 @@ let
   cfg = config.colors;
   inherit (lib) types mkOption;
 in {
-  options.colors = let 
+  options.colors = let
     colorType = types.str;
 
     mkColorOption = mkOption {
-      # name = 
       type = colorType;
     };
 
     colorSetType = types.submodule ({ name, ... }: {
-      name = mkOption {
-        type = types.str;
-        default = name;
+      options = {
+        name = mkOption {
+          type = types.str;
+          default = name;
+        };
+        foreground = mkColorOption;
+        background = mkColorOption;
+        black      = mkColorOption;
+        red        = mkColorOption;
+        green      = mkColorOption;
+        yellow     = mkColorOption;
+        blue       = mkColorOption;
+        magenta    = mkColorOption;
+        cyan       = mkColorOption;
+        white      = mkColorOption;
       };
-      foreground = mkColorOption;
-      background = mkColorOption;
-      black      = mkColorOption;
-      red        = mkColorOption;
-      green      = mkColorOption;
-      yellow     = mkColorOption;
-      blue       = mkColorOption;
-      magenta    = mkColorOption;
-      cyan       = mkColorOption;
-      white      = mkColorOption;
     });
 
   in {
     colorSets = mkOption {
-      type = types.attrsof colorSetType;
+      type = types.attrsOf colorSetType;
     };
     defaultColorSet = mkOption {
       description = "the default color to use for applications";
       type = colorSetType;
-      default = cfg.color.colorSets.monokai;
     };
   };
 
-  config = {
-    colors.colorSets = {
+  config.colors = rec {
+    colorSets = {
       monokai = rec {
         foreground = white;
         background = black;
@@ -67,6 +67,7 @@ in {
         white   = "#f7f3ee";
       };
     };
+    defaultColorSet = colorSets.monokai;
   };
 }
 
