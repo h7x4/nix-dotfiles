@@ -3,7 +3,10 @@
   programs.alacritty = {
     enable = true;
     settings = {
-      window.padding = { x = 15; y = 15; };
+      window = {
+        padding = { x = 15; y = 15; };
+        opacity = 1.0;
+      };
 
       font = {
         normal = {
@@ -27,8 +30,6 @@
               removePrimaryColorAttrs = n: v: !(any (pc: n ? pc) primaryColors);
             in filterAttrs removePrimaryColorAttrs config.colors.defaultColorSet;
           };
-
-      background_opacity = 1.0;
 
       cursor = {
         style = "Block";
