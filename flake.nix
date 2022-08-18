@@ -7,6 +7,7 @@
 
     home-manager = {
       url = "github:nix-community/home-manager/release-22.05";
+      # url = "git+file:///home/h7x4/git/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

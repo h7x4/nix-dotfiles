@@ -34,8 +34,8 @@
     "fonts": {
       "flake": false,
       "locked": {
-        "lastModified": 1651945262,
-        "narHash": "sha256-7r0hq5G/HjK6yVOt18VKaxuJcGM6GPu/jmwbkksJ7LE=",
+        "lastModified": 1649003599,
+        "narHash": "sha256-QtT+ansp3ombpdS2+jNWgZKSqpxhVq3cyrpAKkDzA9Y=",
         "path": "/home/h7x4/git/fonts",
         "type": "path"
       },
@@ -67,11 +67,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1660581366,
-        "narHash": "sha256-et+bi9/jlSF/pHx5AYB9ZP2XDdZEQ0vnF7xlvs4503Y=",
+        "lastModified": 1660661643,
+        "narHash": "sha256-WlgPb7KLTZUeY31o9HWhu37pvgA76MKwakaXefkaIB4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3d47bbaa26e7a771059d828eecf3bd8bf28a8b0f",
+        "rev": "a82127cea64fd801c5e138ae23dfd444ec1e06d1",
         "type": "github"
       },
       "original": {
@@ -100,10 +100,7 @@
       },
       "locked": {
         "lastModified": 1649874484,
-        "narHash": "sha256-gRo+xTefhEyqdHnUQihtjf1R6zFuHIHTtsTdjglWFI8=",
-        "ref": "main",
-        "rev": "9fffae0bad5225b508f1ee8cc98ac64603ed4410",
-        "revCount": 25,
+        "narHash": "sha256-B1MVa8TInLhivLJMcEltfzUxYFYkiq+55oteHD4DoO8=",
         "type": "git",
         "url": "file:///home/h7x4/git/nix-secrets"
       },
