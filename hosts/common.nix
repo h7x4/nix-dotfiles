@@ -203,7 +203,7 @@ in {
     extraSpecialArgs = { inherit inputs; inherit secrets; };
 
     # TODO: figure out why specialArgs isn't accessible from the root home file.
-    users.h7x4 = import ../home.nix {
+    users.h7x4 = import ../home/home.nix {
       inherit pkgs;
       inherit inputs;
       inherit config;

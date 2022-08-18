@@ -1,17 +1,13 @@
 { pkgs, ... }:
 {
   services.sxhkd = {
-  	enable = true;
-  	keybindings = {
+    enable = true;
+    keybindings = {
 
       # make sxhkd reload its configuration files:
       "super + Escape" = "pkill -USR1 -x sxhkd && ${pkgs.libnotify}/bin/notify-send -t 3000 \"sxhkd configuration reloaded\"";
 
       # Applications
-      "super + w" = "${pkgs.emacs}/bin/emacs";
-
-      "super + e" = "$FILEBROWSER";
-
       "super + s" = "$BROWSER";
 
       "super + r" = "${pkgs.rofi}/bin/rofi -show drun";
@@ -54,7 +50,7 @@
       # fcitx5
       # "super + {b,n,m}" = "${pkgs.fcitx5}/bin/fcitx5-remote -s {mozc,keyboard-no,keyboard-us}";
 
-  		# TODO: fix
+      # TODO: fix
       # "super + v" = "${pkgs.rofi}/bin/rofi -modi lpass:$HOME/.scripts/rofi/lpass/rofi-lpass -show lpass";
 
       "super + minus" = "${pkgs.xcalib}/bin/xcalib -invert -alter";
@@ -74,6 +70,6 @@
 
       # é
       "super + shift + e" = "sleep 0.3; ${pkgs.xdotool}/bin/xdotool key U00E9";
-  	};
+    };
   };
 }

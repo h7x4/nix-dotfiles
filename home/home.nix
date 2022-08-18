@@ -19,7 +19,7 @@ in {
     ./programs/tmux.nix
     ./programs/zsh
 
-    ./modules
+    ../modules
 
     inputs.secrets.outputs.nixosModule
   ] ++ optionals graphics [
@@ -38,6 +38,7 @@ in {
     ./services/dunst.nix
     ./services/mpd.nix
     ./services/picom.nix
+    ./services/polybar.nix
     ./services/stalonetray.nix
     ./services/sxhkd.nix
   ];

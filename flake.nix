@@ -98,7 +98,7 @@
         stateVersion = "22.05";
         configuration = {
           imports = [
-            ./home.nix
+            ./home/home.nix
             ./modules
           ];
 
