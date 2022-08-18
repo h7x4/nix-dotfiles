@@ -5,7 +5,12 @@
     package = pkgs.gitFull;
 
     userName = "h7x4";
-    userEmail = "h7x4abk3g@protonmail.com";
+    userEmail = "h7x4@nani.wtf";
+
+    signing = {
+      key = "46B9228E814A2AAC";
+      signByDefault = true;
+    };
 
     aliases = {
         aliases = "!git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1 = \\2/g'";
