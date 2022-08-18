@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-22.05";
+    unstable-nixpkgs.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-22.05";
@@ -44,6 +45,7 @@
   outputs = inputs@{
     self,
     nixpkgs,
+    unstable-nixpkgs,
     home-manager,
     vscode-server,
     secrets,
@@ -55,6 +57,17 @@
     system = "x86_64-linux";
 
     pkgs = import nixpkgs {
+      inherit system;
+
+      config = {
+        allowUnfree = true;
+        android_sdk.accept_license = true;
+      };
+
+      overlays = [ self.overlays.lib ];
+    };
+
+    unstable-pkgs = import unstable-nixpkgs {
       inherit system;
 
       config = {
@@ -111,7 +124,13 @@
             ./hosts/common.nix
             ./hosts/${name}/configuration.nix
             "${vscode-server}/default.nix"
-            { config._module.args = { inherit inputs; secrets = secrets.outputs.default; }; }
+            {
+              config._module.args = {
+                inherit inputs;
+                inherit unstable-pkgs;
+                secrets = secrets.outputs.default;
+              };
+            }
           ];
         };
     in {

@@ -1,4 +1,4 @@
-{ pkgs, config, inputs, secrets, ... }:
+{ pkgs, unstable-pkgs, config, inputs, secrets, ... }:
 let
   inherit (pkgs) lib;
   # inherit (specialArgs) machineVars;
@@ -10,7 +10,7 @@ in {
   };
 
   nix = {
-    package = pkgs.nixFlakes;
+    package = unstable-pkgs.nixFlakes;
     distributedBuilds = config.networking.hostName != "Tsuki";
     binaryCaches = [
       "https://cache.nixos.org/"
