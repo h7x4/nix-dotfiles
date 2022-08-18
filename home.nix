@@ -10,6 +10,7 @@ in {
     ./misc/ssh/hosts/pvv.nix
 
     ./programs/comma.nix
+    ./programs/firefox.nix
     ./programs/gh.nix
     ./programs/git.nix
     ./programs/gpg.nix
