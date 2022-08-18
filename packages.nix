@@ -5,7 +5,6 @@ in {
     asciidoctor
     beets
     biber
-    python39Packages.bpython
     broot
     castnow
     catdocx
@@ -26,7 +25,7 @@ in {
     ffmpeg
     glances
     googler
-    # gpgtui
+    gpg-tui
     gping
     graphviz
     hck
@@ -66,6 +65,8 @@ in {
     ouch
     pandoc
     parallel
+    pinentry
+    pinentry-curses
     python3
     rclone
     ripgrep
@@ -101,7 +102,11 @@ in {
     icu
     openssl
     xorg.xprop
-  ] ++ (
+  ] ++ (with pkgs.python3Packages; [
+    bpython
+  ]) ++ (with pkgs.haskellPackages; [
+    # bhoogle
+  ]) ++ (
     lib.optionals (!machineVars.headless) [
       ahoviewer
       anki
@@ -158,6 +163,7 @@ in {
           thunar-media-tags-plugin
         ];
       })
+      xmonad-log
 
       # xsnow # Wait until christmas
       yuzu-mainline
