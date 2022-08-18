@@ -12,6 +12,7 @@ in {
     ./programs/comma.nix
     ./programs/gh.nix
     ./programs/git.nix
+    ./programs/gpg.nix
     ./programs/neovim.nix
     ./programs/newsboat.nix
     ./programs/tmux.nix
@@ -84,7 +85,6 @@ in {
       enable = true;
       defaultCommand = "fd --type f";
     };
-    gpg.enable = true;
     irssi.enable = true;
     kakoune.enable = true;
     lazygit.enable = true;
