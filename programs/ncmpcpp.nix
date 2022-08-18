@@ -105,8 +105,8 @@
       { key = "ctrl-_"; command = "select_found_items"; }
       { key = "/"; command = "find"; }
       { key = "/"; command = "find_item_forward"; }
-      { key = "?"; command = "find"; }
-      { key = "?"; command = "find_item_backward"; }
+      # { key = "?"; command = "find"; }
+      # { key = "?"; command = "find_item_backward"; }
       { key = "."; command = "next_found_item"; }
       { key = ","; command = "previous_found_item"; }
       { key = "w"; command = "toggle_find_mode"; }
@@ -118,7 +118,7 @@
       { key = "e"; command = "edit_lyrics"; }
       { key = "i"; command = "show_song_info"; }
       { key = "I"; command = "show_artist_info"; }
-      { key = "g"; command = "jump_to_position_in_song"; }
+      # { key = "g"; command = "jump_to_position_in_song"; }
       { key = "l"; command = "show_lyrics"; }
       { key = "ctrl-v"; command = "select_range"; }
       { key = "v"; command = "reverse_selection"; }
@@ -137,8 +137,8 @@
       { key = "A"; command = "add"; }
       { key = "S"; command = "save_playlist"; }
       { key = "o"; command = "jump_to_playing_song"; }
-      { key = "G"; command = "jump_to_browser"; }
-      { key = "G"; command = "jump_to_playlist_editor"; }
+      # { key = "G"; command = "jump_to_browser"; }
+      # { key = "G"; command = "jump_to_playlist_editor"; }
       { key = "~"; command = "jump_to_media_library"; }
       { key = "E"; command = "jump_to_tag_editor"; }
       { key = "U"; command = "toggle_playing_song_centering"; }
@@ -181,6 +181,11 @@
       # not used but bound
       { key = "J"; command = "move_sort_order_down"; }
       { key = "K"; command = "move_sort_order_up"; }
+
+      { key = "g"; command = "move_home"; }
+      { key = "G"; command = "move_end"; }
+
+      { key = "?"; command = "show_help"; }
     ];
 
     settings = {
