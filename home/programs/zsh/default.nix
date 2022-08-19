@@ -6,6 +6,13 @@
     # enableSyntaxHighlighting = true;
     defaultKeymap = "viins";
 
+    history = {
+      extended = true;
+      ignoreDups = false;
+      size = 100000;
+      path = "${config.xdg.dataHome}/zsh/zsh_history";
+    };
+
     plugins = [
       # {
       #   name = "nix-zsh-shell-integration";
@@ -42,21 +49,6 @@
 
     shellAliases = shellOptions.flattened.aliases;
 
-    # initExtra = let
-    #   functions = {
-    #     # TODO: make 'join' available.
-    #     md-to-pdf = join [
-    #       "pandoc \"$1\""
-    #       "-f gfm"
-    #       "-V linkcolor:blue"
-    #       "-V geometry:a4paper"
-    #       "-V geometry:margin=2cm"
-    #       "-V mainfont=\"Droid Sans\""
-    #       "--pdf-engine=xelatex"
-    #       "-o \"$2\""
-    #     ];
-    #   };
-    # in ''
     initExtra = ''
       source ${./p10k.zsh}
     '';
