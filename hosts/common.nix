@@ -257,6 +257,10 @@ in {
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
+        enableConfiguredRecompile = true;
+        extraPackages = hPkgs: with hPkgs; [
+          dbus
+        ];
       };
 
       # displayManager.startx.enable = true;

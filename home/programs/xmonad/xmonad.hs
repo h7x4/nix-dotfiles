@@ -1,11 +1,3 @@
-#+TITLE: XMonad Configuration
-#+AUTHOR: h7x4
-#+PROPERTY: header-args :haskell :tangle yes
-#+STARTUP: org-startup-folded: t
-
-* Imports
-
-#+BEGIN_SRC haskell
 {-# LANGUAGE LambdaCase #-}
 
 import XMonad
@@ -13,7 +5,12 @@ import XMonad
 import System.Exit
 
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
+-- import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
+
+import qualified Codec.Binary.UTF8.String as UTF8
+import qualified DBus                     as D
+import qualified DBus.Client              as D
+import XMonad.Hooks.DynamicLog
 
 import XMonad.ManageHook
 
@@ -36,11 +33,7 @@ import XMonad.Layout.MultiToggle.Instances
 import qualified XMonad.Layout.Magnifier as Mag
 
 import Graphics.X11.ExtraTypes.XF86
-#+END_SRC
 
-* Colors
-
-#+BEGIN_SRC haskell
 type Color = String
 
 background = "#272822"
@@ -51,11 +44,7 @@ yellow     = "#f4bf75"
 blue       = "#66d9ef"
 magenta    = "#ae81ff"
 cyan       = "#a1efe4"
-#+END_SRC
 
-* Config
-
-#+BEGIN_SRC haskell
 type TerminalCommand = String
 
 myTerminal      = "alacritty"
@@ -76,59 +65,67 @@ myModMask :: KeyMask
 myModMask = mod4Mask
 
 myWorkspaces :: [WorkspaceId]
-myWorkspaces = ["gen","www","emx","dev","slk","6","7","8","com"]
+myWorkspaces = map (UTF8.decode . UTF8.encode) ["総","草","書","企","連","総2","総3"]
+
+wsWeb = myWorkspaces !! 1
+wsDev = myWorkspaces !! 2
+wsCom = myWorkspaces !! 4
 
 myNormalBorderColor  = "#dddddd"
 myFocusedBorderColor = "#ff0000"
 myBorderWidth = 4
 
-myScratchpads = [ NS "ncmpcpp" spawnNC findNC layoutNC
-                , NS "terminal" spawnTM findTM layoutTM
-                , NS "schedule" spawnSC findSC layoutNC
-                , NS "help" spawnH findH layoutNC ]
+myScratchpads = [ NS "ncmpcpp"     spawnNC findNC layoutA
+                , NS "terminal"    spawnTM findTM layoutB
+                -- , NS "matrix"      spawnMX findMX layoutB
+                , NS "filebrowser" spawnFB findFB layoutA
+                , NS "emacs"       spawnEX findEX layoutB
+                , NS "schedule"    spawnSC findSC layoutA
+                , NS "help"        spawnHP findHP layoutA
+                ]
   where
-    spawnNC  = myTerminal ++ " --title ncmpcppScratchpad -e ncmpcpp"
-    findNC   = title =? "ncmpcppScratchpad"
-    layoutNC = customFloating $ W.RationalRect l t w h
-      where
-      h = 0.9
-      w = 0.9
-      t = 0.05
-      l = 0.05
+    spawnNC = myTerminal ++ " --title ncmpcppScratchpad -e ncmpcpp"
+    spawnTM = myTerminal ++ " --class instanceClass,floatingTerminal -e tmux new-session -A -s f"
+    -- spawnMX = "element"
+    spawnFB = "thunar --class=floatingThunar"
+    spawnEX = "emacs --name=floatingEmacs"
+    spawnSC = "sxiv -N floatingSchedule ~/uni/schedule.png"
+    spawnHP = "echo \"" ++ help ++ "\" | xmessage -file -"
 
-    spawnTM  = myTerminal ++ " --class instanceClass,floatingTerminal -e tmux new-session -A -s f"
-    findTM   = className =? "floatingTerminal"
-                                              
-    layoutTM = customFloating $ W.RationalRect l t w h
+    findNC = title =? "ncmpcppScratchpad"
+    findTM = className =? "floatingTerminal"
+    findSC = className =? "floatingSchedule"
+    -- findMX = className =? "element"
+    findFB = className =? "floatingThunar"
+    findEX = className =? "floatingEmacs"
+    findHP = className =? "Xmessage"
+
+    layoutA = customFloating $ W.RationalRect l t w h
+      where
+        t = 0.05
+        l = 0.05
+        h = 0.9
+        w = 0.9
+
+    layoutB = customFloating $ W.RationalRect l t w h
       where
         l = 0.025
         t = 0.05
         h = 0.9
         w = 0.95
 
-    spawnSC  = "sxiv ~/uni/schedule.png"
-    findSC   = className =? "sxiv"
-
-    spawnH   = "echo \"" ++ help ++ "\" | xmessage -file -"
-    findH    = className =? "Xmessage"
-#+END_SRC
-
-* Keys
-
-#+BEGIN_SRC haskell
 myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [
      ((modm .|. shiftMask,  xK_l ), sendMessage NextLayout)
     -- , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
     -- , ((modm,               xK_n     ), refresh)
-    , ((modm,               xK_Tab   ), windows W.focusDown)
     , ((modm,               xK_j     ), windows W.focusDown)
-    , ((modm,               xK_k     ), windows W.focusUp  )
+    , ((modm,               xK_k     ), windows W.focusUp)
     -- , ((modm,               xK_m     ), windows W.focusMaster  )
     -- , ((modm,               xK_Return), windows W.swapMaster)
-    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
-    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
+    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown)
+    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp)
     , ((modm,               xK_h     ), sendMessage Shrink)
     , ((modm,               xK_l     ), sendMessage Expand)
     , ((modm,               xK_t     ), withFocused $ windows . W.sink)
@@ -136,7 +133,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
     -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
     , ((modm .|. shiftMask, xK_q     ), io exitSuccess)
-    , ((modm              , xK_c     ), myRestartHook )
+    , ((modm              , xK_c     ), myRestartHook)
     ]
 
     ++
@@ -159,50 +156,27 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- TODO: Clean up formatting
 
     [
-      ((modm .|. shiftMask , xK_Return),    spawn $ myTerminal ++ " --class instanceClass,termTerminal -e tmux new-session -A -s term")
-    , ((modm               , xK_BackSpace), kill)
-    -- , ((modm               , xK_s),         spawn myBrowser)
-    , ((modm               , xK_f),         sendMessage $ Toggle FULL)
-    -- , ((modm .|. shiftMask , xK_w),         spawn "io.elementary.code -t")
-    -- , ((modm               , xK_a),         spawn "copyq toggle")
-    -- , ((modm               , xK_e),         spawn emacsCommand)
-    -- , ((modm .|. shiftMask , xK_e),         spawn myFileBrowser)
-    -- , ((modm               , xK_r),         spawn "rofi -show drun")
-    -- , ((modm               , xK_p),         spawn "mpc toggle")
-    , ((modm               , xK_q),         namedScratchpadAction myScratchpads "ncmpcpp")
-    -- , ((modm               , xK_minus),     namedScratchpadAction myScratchpads "schedule")
-    -- , ((modm               , xK_F7),        spawn "amixer set Master 2%-")
-    -- , ((modm               , xK_F8),        spawn "amixer set Master 2%+")
+      ((modm               , xK_BackSpace), kill)
     -- , ((modm               , xK_c),         spawn myTerminal ++ " -e cfile")
-    -- , ((modm               , xK_n),         spawn "fcitx-remote -s fcitx-keyboard-no")
-    -- , ((modm               , xK_m),         spawn "fcitx-remote -s fcitx-keyboard-us")
-    -- , ((modm               , xK_b),         spawn "fcitx-remote -s mozc")
+    , ((modm               , xK_f),         sendMessage $ Toggle FULL)
+    , ((modm               , xK_w),         namedScratchpadAction myScratchpads "emacs")
+    , ((modm               , xK_e),         namedScratchpadAction myScratchpads "filebrowser")
+    , ((modm               , xK_q),         namedScratchpadAction myScratchpads "ncmpcpp")
+    , ((modm               , xK_minus),     namedScratchpadAction myScratchpads "schedule")
+    , ((modm .|. shiftMask, xK_slash),      namedScratchpadAction myScratchpads "help")
+
     , ((modm               , xK_Return),    namedScratchpadAction myScratchpads "terminal")
-    , ((modm               , xK_space ),    namedScratchpadAction myScratchpads "terminal")
+    , ((modm               , xK_space),     namedScratchpadAction myScratchpads "terminal")
+    , ((modm .|. shiftMask , xK_Return),    spawn $ myTerminal ++ " --class instanceClass,termTerminal -e tmux new-session -A -s term")
     , ((modm .|. shiftMask , xK_space ),    spawn $ myTerminal ++ " -e tmux")
-    -- , ((0                  , xK_Print ),    spawn "skushoclip")
-    -- , ((shiftMask          , xK_Print ),    spawn "skusho")
-    -- , ((modm               , xK_Print ),    spawn "$HOME/.scripts/git/boomer/boomer")
+
     -- , ((modm               , xK_v ),        spawn "rofi -modi lpass:$HOME/.scripts/rofi/lpass//rofi-lpass -show lpass")
-
-    -- , ((0, xF86XK_AudioRaiseVolume   ), spawn "amixer set Master 2%+")
-    -- , ((0, xF86XK_AudioLowerVolume   ), spawn "amixer set Master 2%-")
-    -- , ((0, xF86XK_AudioMute          ), spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
-
-    -- , ((0, xF86XK_AudioPlay          ), spawn "mpc toggle")
-    -- , ((0, xF86XK_AudioPrev          ), spawn "mpc prev")
-    -- , ((0, xF86XK_AudioNext          ), spawn "mpc next")
-
-    -- , ((0, xF86XK_MonBrightnessUp    ), spawn "light -A 5")
-    -- , ((0, xF86XK_MonBrightnessDown  ), spawn "light -U 5")
-
-    , ((modm .|. shiftMask, xK_slash ), namedScratchpadAction myScratchpads "help")
     , ((modm .|. shiftMask, xK_d     ), viewDropboxStatus)
     ]
 
 termIsOpen :: X Bool
 termIsOpen = isOpen
-  where 
+  where
     output :: X String
     output = liftIO $ runProcessWithInput "tmux" ["ls", "-F", "#{session_name}", "#{?session_attached,1,}"] ""
 
@@ -219,12 +193,6 @@ viewDropboxStatus = spawn =<< ((++) "notify-send -t 3000 " . unpack) <$> status
     unpack :: String -> String
     unpack =  wrap "\" " "\"" . unwords . map (wrap " [" "] "). lines
 
-
-#+END_SRC
-
-** Mouse Bindings
-
-#+BEGIN_SRC haskell
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
 --
@@ -242,11 +210,7 @@ myMouseBindings XConfig {XMonad.modMask = modm} = M.fromList
 
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
-#+END_SRC
 
-* Layout
-
-#+BEGIN_SRC haskell
 myLayout =
   fullscreenFull $
   avoidStruts $
@@ -294,7 +258,15 @@ myManageHook = composeAll
     , resource  =? "kdesktop"       --> doIgnore
     , resource  =? "fcitx-config"   --> doFloat
     , className =? "copyq"          --> doFloat
-    , className =? "discord"        --> doShift "com"
+
+    , className =? "firefox"        --> doShift wsWeb
+    , className =? "google-chrome"  --> doShift wsWeb
+
+    , className =? "Emacs"          --> doShift wsDev
+    , className =? "Code"           --> doShift wsDev
+
+    , className =? "discord"        --> doShift wsCom
+    , className =? "Element"        --> doShift wsCom
     ] <+> namedScratchpadManageHook myScratchpads
 
 ------------------------------------------------------------------------
@@ -309,43 +281,58 @@ myManageHook = composeAll
 myEventHook = mempty
 
 ------------------------------------------------------------------------
-#+END_SRC
 
-* XMobar
-
-#+BEGIN_SRC haskell
 -- Perform an arbitrary action on each internal state change or X event.
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
 
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
-myLogHook xmproc = dynamicLogWithPP $ xmobarPP
-  {
-    ppOutput          = hPutStrLn xmproc
-  , ppCurrent         = xmobarColor green      "" . wrap "[" "]"
-  , ppVisible         = xmobarColor green      ""
-  , ppHidden          = xmobarColor blue       ""
-  , ppHiddenNoWindows = xmobarColor yellow     ""
-  , ppTitle           = xmobarColor foreground "" . shorten 60
-  , ppSep             = "<fc=#666666> <fn=0>|</fn> </fc>"
-  , ppUrgent          = xmobarColor red        "" . wrap "!" "!"
-  , ppExtras          = [windowCount]
-  , ppLayout          =
-      wrap "<fn=4>" "</fn>" .
-      (\case
-        "Spacing Full"           -> "🖵"
-        "Spacing Tall"           -> "🗗"
-        "Spacing Magnifier Tall" -> "\128269" -- 🔍
-        "Spacing Mirror Tall"    -> "\129694" -- 🪞
-      )
-  , ppOrder           = \(ws:l:t:ex) -> [ws,l] ++ ex ++ [t]
-  }
-#+END_SRC
+mkDbusClient :: IO D.Client
+mkDbusClient = do
+  dbus <- D.connectSession
+  D.requestName dbus (D.busName_ "org.xmonad.log") opts
+  return dbus
+ where
+  opts = [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
 
-* Startup hook
+-- Emit a DBus signal on log updates
+dbusOutput :: D.Client -> String -> IO ()
+dbusOutput dbus str = D.emit dbus $ signal { D.signalBody = body }
+  where
+    opath  = D.objectPath_ "/org/xmonad/Log"
+    iname  = D.interfaceName_ "org.xmonad.Log"
+    mname  = D.memberName_ "Update"
+    signal = (D.signal opath iname mname)
+    body   = [D.toVariant str]
 
-#+BEGIN_SRC haskell
+polybarHook :: D.Client -> PP
+polybarHook dbus =
+  let wrapper c s | s /= "NSP" = wrap ("%{F" <> c <> "}%{T2}") "%{T-}%{F-}" s
+                  | otherwise  = mempty
+  in  def { ppOutput          = dbusOutput dbus
+          , ppCurrent         = wrapper green . wrap "[" "]"
+          , ppVisible         = wrapper magenta
+          , ppUrgent          = wrapper red
+          , ppHidden          = wrapper blue
+          , ppHiddenNoWindows = wrapper yellow
+          , ppTitle           = shorten 44 . wrapper magenta
+          , ppExtras          = [windowCount]
+          , ppSep             = " | "
+          , ppLayout          =
+            wrap "%{T3}" "%{T-}" .
+            (\case
+              "Spacing Full"           -> "\62160"
+              "Spacing Tall"           -> "\57934"
+              "Spacing Magnifier Tall" -> "\61442" -- 🔍
+              "Spacing Mirror Tall"    -> "\57935" -- 🪞
+            )
+          , ppOrder           = \(ws:l:t:ex) -> [ws,l] ++ ex ++ [t]
+          }
+
+-- myPolybarLogHook dbus = myLogHook <+> dynamicLogWithPP (polybarHook dbus)
+myPolybarLogHook dbus = dynamicLogWithPP (polybarHook dbus)
+
 ------------------------------------------------------------------------
 -- Startup hook
 
@@ -354,27 +341,23 @@ myLogHook xmproc = dynamicLogWithPP $ xmobarPP
 -- per-workspace layout choices.
 --
 myStartupHook :: X ()
-myStartupHook = do
-  spawn "stalonetray &"
-  spawnOnce "$HOME/.xmonad/setup-script/xinit.sh"
+myStartupHook = 
+  spawnOnce "sxhkd &"
+  -- spawnOnce "$HOME/.xmonad/setup-script/xinit.sh"
 
 myRestartHook :: X ()
 myRestartHook = do
-  spawn "killall stalonetray"
-  spawn "killall xmobar"
+  spawn "notify-send 'XMonad' 'Restarted XMonad/Polybar' --icon=dialog-information"
   spawn "xmonad --recompile"
   spawn "xmonad --restart"
+  spawn "systemctl --user restart polybar"
 
 ------------------------------------------------------------------------
-#+END_SRC
-
-* Main
-
-#+BEGIN_SRC haskell
 
 main :: IO ()
 main = do
-  xmproc <- spawnPipe "xmobar --recompile"
+  -- xmproc <- spawnPipe "xmobar --recompile"
+  dbus <- mkDbusClient
   xmonad
     $ fullscreenSupport
     $ docks def {
@@ -396,14 +379,10 @@ main = do
         layoutHook         = myLayout,
         manageHook         = myManageHook,
         handleEventHook    = myEventHook,
-        logHook            = myLogHook xmproc,
+        logHook            = myPolybarLogHook dbus,
         startupHook        = myStartupHook
     }
-#+END_SRC
 
-* Help
-
-#+BEGIN_SRC haskell
 -- TODO: Generate this automatically
 help :: String
 help = unlines ["The default modifier key is 'alt'. Default keybindings:",
@@ -454,4 +433,3 @@ help = unlines ["The default modifier key is 'alt'. Default keybindings:",
     "mod-button1  Set the window to floating mode and move by dragging",
     "mod-button2  Raise the window to the top of the stack",
     "mod-button3  Set the window to floating mode and resize by dragging"]
-#+END_SRC

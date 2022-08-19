@@ -14,6 +14,8 @@
     development = true;
     creative = true;
 
+    wlanInterface = "wlp2s0f0u7u3";
+
     dataDrives = let
       main = "/data";
     in {

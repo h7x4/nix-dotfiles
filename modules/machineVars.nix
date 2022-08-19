@@ -40,6 +40,17 @@ t tools preinstalled.";
     creative = mkEnableOption "Whether or not the machine should have creative software
 (music, video and image editing) installed.";
 
+    wlanInterface = mkOption {
+      type = types.nullOr types.string;
+      default = null;
+    };
+
+    # Check " ls -1 /sys/class/power_supply/ "
+    battery = mkOption {
+      type = types.nullOr types.string;
+      default = null;
+    };
+
     laptop = mkEnableOption "Whether the machine is a laptop";
 
     fixDisplayCommand = mkOption {
@@ -87,6 +98,10 @@ t tools preinstalled.";
       {
         assertion = cfg.headless -> (cfg.screens == { } && cfg.fixDisplayCommand == null);
         message = "A headless machine can't have any screens.";
+      }
+      {
+        assertion = cfg.battery != null -> cfg.laptop;
+        message = "A battery shouldn't exist on a non laptop machine";
       }
     ];
 
