@@ -7,7 +7,8 @@ in {
     ./shellOptions.nix
     ./packages.nix
 
-    ./misc/ssh/hosts/pvv.nix
+    ./config/ssh/hosts/pvv.nix
+    ./config/xdg
 
     ./programs/comma.nix
     ./programs/firefox.nix
@@ -23,7 +24,7 @@ in {
 
     inputs.secrets.outputs.nixosModule
   ] ++ optionals graphics [
-    ./misc/mimetypes.nix
+    ./config/gtk.nix
 
     ./programs/alacritty.nix
     ./programs/emacs
@@ -119,23 +120,6 @@ in {
     html.enable = true;
     manpages.enable = true;
     json.enable = true;
-  };
-
-  xdg.enable = true;
-
-  gtk = mkIf graphics {
-    enable = true;
-    font = {
-      name = "Droid Sans";
-    };
-    iconTheme = {
-      package = pkgs.papirus-icon-theme;
-      name = "Papirus";
-    };
-    theme = {
-      package = pkgs.vimix-gtk-themes;
-      name = "VimixDark";
-    };
   };
 
   qt = mkIf graphics {
