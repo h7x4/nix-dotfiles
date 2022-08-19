@@ -125,13 +125,30 @@
             ./hosts/common.nix
             ./hosts/${name}/configuration.nix
             "${vscode-server}/default.nix"
+
+            secrets.outputs.nixos-config
+
             {
               config._module.args = {
                 inherit inputs;
                 inherit unstable-pkgs;
-                secrets = secrets.outputs.default;
+                secrets = secrets.outputs.settings;
               };
             }
+
+            ({ config, ... }:
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                extraSpecialArgs = { inherit inputs; secrets = secrets.outputs.settings; };
+
+                users.h7x4 = import ./home/home.nix {
+                  inherit pkgs;
+                  inherit inputs;
+                  inherit (config) machineVars colors;
+                };
+              };
+            })
           ];
         };
     in {

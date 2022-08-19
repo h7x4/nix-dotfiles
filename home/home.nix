@@ -1,8 +1,11 @@
-{ pkgs, config, inputs, ... } @ args: let
+{ pkgs, inputs, machineVars, colors, ... } @ args: let
   inherit (pkgs) lib;
   inherit (pkgs.lib) mkForce mkIf optionals;
-  graphics = !config.machineVars.headless;
+  graphics = !machineVars.headless;
 in {
+  inherit machineVars;
+  inherit colors;
+
   imports = [
     ./shellOptions.nix
     ./packages.nix
@@ -23,7 +26,7 @@ in {
 
     ../modules
 
-    inputs.secrets.outputs.nixosModule
+    inputs.secrets.outputs.home-config
   ] ++ optionals graphics [
     ./config/gtk.nix
 
@@ -44,8 +47,6 @@ in {
     ./services/stalonetray.nix
     ./services/sxhkd.nix
   ];
-
-  inherit (config) machineVars colors;
 
   home = {
     stateVersion = "22.05";
