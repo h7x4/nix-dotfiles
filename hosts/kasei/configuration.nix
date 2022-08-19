@@ -4,8 +4,10 @@
     ./hardware-configuration.nix
   ];
 
+  services.xserver.enable = true;
+  services.xserver.videoDrivers = ["nvidia"];
+
   # TODO: See ../common.nix
-  services.xserver.enable = true; 
   services.xserver.displayManager.lightdm.enable = true;
 
   machineVars = {
@@ -40,15 +42,19 @@
 
   # security.pam.services.login.unixAuth = true;
 
-  boot.loader = {
-    efi.canTouchEfiVariables = false;
-    grub = {
-      enable = true;
-      version = 2;
-      efiSupport = true;
-      fsIdentifier = "label";
-      device = "nodev";
-      efiInstallAsRemovable = true;
+  boot = {
+    blacklistedKernelModules = ["nouveau"];
+    kernelParams = ["nomodeset"];
+    loader = {
+      efi.canTouchEfiVariables = false;
+      grub = {
+        enable = true;
+        version = 2;
+        efiSupport = true;
+        fsIdentifier = "label";
+        device = "nodev";
+        efiInstallAsRemovable = true;
+      };
     };
   };
 
