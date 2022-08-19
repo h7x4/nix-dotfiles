@@ -72,7 +72,7 @@
         extendedRegexp = true;
       };
 
-      github.user = "h7x4abk3g";
+      github.user = "h7x4";
 
       web.browser = "google-chrome-stable";
 
