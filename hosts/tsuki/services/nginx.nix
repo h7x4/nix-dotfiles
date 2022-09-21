@@ -4,22 +4,26 @@
     lib = pkgs.lib;
       
     inherit (secrets) ips ports;
-
-    s = toString;
   in
 {
 
-  security.acme = {
-    defaults.email = "h7x4abk3g@protonmail.com";
-    acceptTerms = true;
-  };
+  # All of these nginx endpoints are hosted through a cloudflare proxy.
+  # This has several implications for the configuration:
+  #   - The sites I want to protect using a client side certificate needs to 
+  #     use a client side certificate given by cloudflare, since the client cert set here
+  #     only works to secure communication between nginx and cloudflare
+  #   - I don't need to redirect http traffic to https manually, as cloudflare does it for me
+  #   - I don't need to request ACME certificates manually, as cloudflare does it for me.
 
   services.nginx = let
     generateServerAliases =
       domains: subdomains:
       lib.lists.flatten (map (s: map (d: "${s}.${d}") domains) subdomains);
+    
+    s = toString;
   in {
     enable = true;
+    enableReload = true;
     
     statusPage = true;
 
@@ -33,54 +37,32 @@
       inherit (lib.lists) head drop;
       inherit (secrets) domains keys;
 
-      makeHost =
-        subdomains: extraSettings:
-        nameValuePair "${head subdomains}.${head domains}" (recursiveUpdate {
-          serverAliases = drop 1 (generateServerAliases domains subdomains);
-          forceSSL = true;
-          sslCertificate = keys.certificates.server.crt;
-          sslCertificateKey = keys.certificates.server.key;
-        } extraSettings);
+      cloudflare-origin-pull-ca = builtins.fetchurl {
+        url = "https://developers.cloudflare.com/ssl/static/authenticated_origin_pull_ca.pem";
+        sha256 = "0hxqszqfzsbmgksfm6k0gp0hsx9k1gqx24gakxqv0391wl6fsky1";
+      };
 
-      makeACMEHost =
-        subdomains: extraSettings:
-        nameValuePair "${head subdomains}.${head domains}" (recursiveUpdate {
-          serverAliases = drop 1 (generateServerAliases domains subdomains);
-          enableACME = true;
-          forceSSL = true;
-        } extraSettings);
-      
-      makeClientCertHost =
-        subdomains: extraSettings:
-        nameValuePair "${head subdomains}.${head domains}" (recursiveUpdate {
-          serverAliases = drop 1 (generateServerAliases domains subdomains);
-          enableACME = true;
-          forceSSL = true;
-          extraConfig = ''
-            ssl_client_certificate ${secrets.keys.certificates.CA.crt};
-            ssl_verify_client optional;
-          '';
-          locations."/".extraConfig = ''
-            if ($ssl_client_verify != SUCCESS) {
-              return 403;
-            } 
-          '';
-        } extraSettings);
+      host =
+        subdomains: extraSettings: let
+          settings = with keys.certificates; {
+            serverAliases = drop 1 (generateServerAliases domains subdomains);
+            onlySSL = true;
+            sslCertificate = server.crt;
+            sslCertificateKey = server.key;
 
-      makeProxy = 
+            extraConfig = ''
+              ssl_client_certificate ${cloudflare-origin-pull-ca};
+              ssl_verify_client on;
+            '';
+          };
+        in
+          nameValuePair "${head subdomains}.${head domains}" (recursiveUpdate settings extraSettings);
+
+      proxy =
         subdomains: url: extraSettings:
-        makeHost subdomains (recursiveUpdate { locations."/".proxyPass = url; } extraSettings);
-
-      makeACMEProxy = 
-        subdomains: url: extraSettings:
-        makeACMEHost subdomains (recursiveUpdate { locations."/".proxyPass = url; } extraSettings);
-
-      makeClientCertProxy = 
-        subdomains: url: extraSettings:
-        makeClientCertHost subdomains (recursiveUpdate { locations."/".proxyPass = url; } extraSettings);
+        host subdomains (recursiveUpdate { locations."/".proxyPass = url; } extraSettings);
 
     in (listToAttrs [
-      # (makeACMEProxy ["gitlab"] "http://unix:/run/gitlab/gitlab-workhorse.socket" {})
       {
         name = "nani.wtf";
         value = {
@@ -90,40 +72,47 @@
             default_type application/json;
             add_header Access-Control-Allow-Origin *;
           '';
-          enableACME = true;
-          forceSSL = true;
+          onlySSL = true;
+
+          sslCertificate = keys.certificates.server.crt;
+          sslCertificateKey = keys.certificates.server.key;
+
+            extraConfig = ''
+              ssl_client_certificate ${cloudflare-origin-pull-ca};
+              ssl_verify_client on;
+            '';
         };
       }
-      (makeACMEProxy ["plex"] "http://localhost:${s ports.plex}" {})
-      (makeACMEHost ["www"] { root = "${inputs.website.defaultPackage.${pkgs.system}}/"; })
-      (makeACMEProxy ["matrix"] "http://localhost:${s ports.matrix.listener}" {})
-      (makeACMEHost ["madmin"] { root = "${pkgs.synapse-admin}/"; })
-      (makeACMEProxy ["git"] "http://localhost:${s ports.gitea}" {})
-      (makeClientCertHost ["cache"] { root = "/var/lib/nix-cache"; })
-      (makeClientCertProxy ["px1"] "https://${ips.px1}:${s ports.proxmox}" {
+      (proxy ["plex"] "http://localhost:${s ports.plex}" {})
+      (host ["www"] { root = "${inputs.website.defaultPackage.${pkgs.system}}/"; })
+      (proxy ["matrix"] "http://localhost:${s ports.matrix.listener}" {})
+      (host ["madmin"] { root = "${pkgs.synapse-admin}/"; })
+      (host ["cache"] { root = "/var/lib/nix-cache"; })
+      (proxy ["git"] "http://localhost:${s ports.gitea}" {})
+      (proxy ["px1"] "https://${ips.px1}:${s ports.proxmox}" {
           locations."/".proxyWebsockets = true;
       })
-      (makeClientCertProxy ["idrac"] "https://${ips.idrac}" {})
-      (makeClientCertProxy ["searx"] "http://localhost:${s ports.searx}" {})
-      (makeACMEProxy ["dyn"] "http://${ips.crafty}:${s ports.dynmap}" {
+      (proxy ["idrac"] "https://${ips.idrac}" {})
+      (proxy ["searx"] "http://localhost:${s ports.searx}" {})
+      (proxy ["dyn"] "http://${ips.crafty}:${s ports.dynmap}" {
         # basicAuthFile = keys.htpasswds.default;
       })
-      (makeClientCertProxy ["log"] "http://localhost:${s ports.grafana}" {
+      (proxy ["log"] "http://localhost:${s ports.grafana}" {
         locations."/".proxyWebsockets = true;
       })
-      (makeClientCertProxy ["pg"] "http://localhost:${s ports.pgadmin}" {})
-      # (makeProxy ["wiki"] "" {})
-      # (makeHost ["vpn"] "" {})
-      (makeACMEProxy ["hydra"] "http://localhost:${s ports.hydra}" {})
-      (makeClientCertProxy ["air"] "https://${ips.kansei}:${s ports.kansei}" {})
+      (proxy ["pg"] "http://localhost:${s ports.pgadmin}" {})
+      # (host ["vpn"] "" {})
+      (proxy ["hydra"] "http://localhost:${s ports.hydra}" {})
+      (proxy ["air"] "https://${ips.kansei}:${s ports.kansei}" {})
 
-      # (makePassProxy ["sync" "drive"] "" {})
-      # (makePassProxy ["music" "mpd"] "" {})
+      # (proxy ["sync" "drive"] "" {})
+      # (proxy ["music" "mpd"] "" {})
     ]) // {
-      ${config.services.jitsi-meet.hostName} = {
-        enableACME = true;
-        forceSSL = true;
-      };
+      # Disabled for time being
+      # ${config.services.jitsi-meet.hostName} = {
+        # enableACME = true;
+        # forceSSL = true;
+      # };
     };
 
     upstreams = {};
