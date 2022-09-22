@@ -36,6 +36,7 @@ in {
     ipcalc
     jq
     kepubify
+    keybase
     keymapviz
     lastpass-cli
     lazydocker
@@ -93,6 +94,9 @@ in {
     wiki-tui
     youtube-dl
     yq
+    yubico-pam
+    yubikey-agent
+    yubikey-manager
     zip
 
     # Needed for VSCode liveshare
@@ -122,10 +126,12 @@ in {
       geogebra
       gimp
       gnome.gnome-font-viewer
+      gnome.seahorse
       google-chrome
       inkscape
       insomnia
       iwgtk
+      keybase-gui
       kid3
       koreader
       krita
@@ -140,6 +146,7 @@ in {
       mpc_cli
       nyxt
       obsidian
+      pcloud
       pulseaudio
       pulsemixer
       scrcpy
@@ -166,6 +173,7 @@ in {
       xmonad-log
 
       # xsnow # Wait until christmas
+      yubioath-desktop
       yuzu-mainline
       zeal
       zoom-us
