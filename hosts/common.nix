@@ -209,6 +209,13 @@ in {
       permitRootLogin = "no";
     };
 
+    udev.packages = with pkgs; [
+      yubikey-personalization
+      android-udev-rules
+    ];
+
+    pcscd.enable = true;
+
     dbus = {
       # enable = !machineVars.headless;
       packages = with pkgs; [
