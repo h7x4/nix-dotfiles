@@ -1,15 +1,4 @@
-{config, pkgs, lib, secrets, ...}:
-let
-
-  # TODO: Include monokai
-
-  # pkgs.writeTextFile 
-  # {
-  #   name = "monokai.css";
-  #   text = '''';
-
-  # }
-in
+{ config, pkgs, unstable-pkgs, lib, secrets, ... }:
 {
   security.pam.services."gitea".unixAuth = true;
 
@@ -26,12 +15,13 @@ in
   services.gitea = {
     enable = true;
     user = "git";
-    appName = "Git Gud";
     cookieSecure = true;
     rootUrl = "https://git.nani.wtf/";
     domain = "git.nani.wtf";
     httpPort = secrets.ports.gitea;
     disableRegistration = true;
+
+    package = unstable-pkgs.gitea;
 
     dump = {
       enable = true;
@@ -45,14 +35,17 @@ in
     settings = {
       server = {
         BUILTIN_SSH_SERVER_USER="git";
+        LANDING_PAGE = "/explore/repos";
       };
 
       ui = {
-        DEFAULT_THEME = "arc-green";
+        DEFAULT_THEME = "monokai";
         THEMES = lib.strings.concatStringsSep "," [
           "gitea"
           "arc-green"
-          # "monokai"
+
+          # Custom
+          "monokai"
         ];
       };
       indexer.REPO_INDEXER_ENABLED = true;
@@ -84,4 +77,37 @@ in
       # };
     };
   };
+
+  system.activationScripts.linkGiteaThemes.text = let
+    themes = pkgs.stdenv.mkDerivation {
+      pname = "gitea-themes";
+      version = "1.0.0";
+      src = ./themes;
+
+      buildInputs = with pkgs; [ lessc ];
+      buildPhase = ''
+        mkdir out
+        for f in $(find -name 'theme-*.less')
+        do
+          lessc $f out/''${f%.less}.css
+        done;
+      '';
+      installPhase = "mv out $out";
+    };
+    cssParentPath = "${config.services.gitea.stateDir}/custom/public";
+    cssPath = "${cssParentPath}/css";
+  in ''
+    if [[ ! -e "${cssPath}" ]]; then
+      printf "creating symlink at %s...\n" "${cssPath}"
+      mkdir -p "${cssParentPath}"
+      ln -s "${themes}" "${cssPath}"
+    elif [ -L "${cssPath}" ]; then
+      printf "replacing symlink at %s...\n" "${cssPath}"
+      rm ${cssPath}
+      ln -s "${themes}" "${cssPath}"
+    else
+      printf "ERROR: %s already exists and it is not a symlink\n" "${cssPath}"
+      _localstatus=1;
+    fi
+  '';
 }
