@@ -1,10 +1,16 @@
 { pkgs, lib, config, shellOptions, ... }:
 {
-  programs.zsh = rec {
+  programs.zsh = {
+
     enable = true;
     dotDir = ".config/zsh";
     # enableSyntaxHighlighting = true;
     defaultKeymap = "viins";
+    enableCompletion = true;
+
+    initExtraBeforeCompInit = ''
+      fpath+=(${pkgs.zsh-completions}/share/zsh/site-functions)
+    '';
 
     history = {
       extended = true;
@@ -19,8 +25,19 @@
       #   src = pkgs.nix-zsh-shell;
       # }
       {
+        name = "fzf-tab";
+        src = pkgs.zsh-fzf-tab;
+        file = "share/fzf-tab/fzf-tab.plugin.zsh";
+      }
+      {
+        name = "powerlevel10k";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      }
+      {
         name = "zsh-fast-syntax-highlighting";
         src = pkgs.zsh-fast-syntax-highlighting;
+        file = "share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh";
       }
       {
         name = "zsh-completions";
@@ -29,19 +46,12 @@
       {
         name = "zsh-you-should-use";
         src = pkgs.zsh-you-should-use;
+        file = "share/zsh/plugins/you-should-use/you-should-use.plugin.zsh";
       }
       {
         name = "zsh-autosuggestions";
         src = pkgs.zsh-autosuggestions;
-      }
-      {
-        name = "powerlevel10k";
-        src = pkgs.zsh-powerlevel10k;
-        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-      }
-      {
-        name = "fzf-tab";
-        src = pkgs.zsh-fzf-tab;
+        file = "share/zsh-autosuggestions/zsh-autosuggestions.zsh";
       }
     ];
 
@@ -51,6 +61,15 @@
 
     initExtra = ''
       source ${./p10k.zsh}
+      
+      enable-fzf-tab
+
+      zstyle ':fzf-tab:complete:cd:*' fzf-preview '${pkgs.exa}/bin/exa -1 --color=always $realpath'
+
+      # Use tmux buffer if we are inside tmux
+      if ! { [ "$TERM" = "screen" ] && [ -n "$TMUX" ]; } then
+        zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+      fi
     '';
   };
 }
