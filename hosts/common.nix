@@ -10,7 +10,7 @@ in {
   };
 
   nix = {
-    package = unstable-pkgs.nixFlakes;
+    package = unstable-pkgs.nixVersions.stable;
     distributedBuilds = config.networking.hostName != "Tsuki";
     binaryCaches = [
       "https://cache.nixos.org/"
@@ -19,28 +19,62 @@ in {
     extraOptions = ''
       experimental-features = nix-command flakes
       builders-use-substitutes = true
+      allowed-uris = http:// https://
     '';
 
-    trustedUsers = [ "h7x4" ];
+    trustedUsers = [ "h7x4" "nix-builder" ];
 
     buildMachines = [
       {
-        hostName = "Tsuki";
+        # Login details configured in ssh module in nix-secrets
+        hostName = "nix-builder-tsukir";
         system = "x86_64-linux";
-        maxJobs = 1;
-        speedFactor = 3;
+        speedFactor = 5;
+        maxJobs = 8;
         supportedFeatures = [
           "nixos-test"
           "benchmark"
           "big-paralell"
-          "kvm"
         ];
         mandatoryFeatures = [];
+        sshUser = "nix-builder";
+        sshKey = secrets.keys.ssh.nixBuilders.tsuki.private;
+      }
+      {
+        # Login details configured in ssh module in nix-secrets
+        hostName = "nix-builder-isvegg";
+        system = "x86_64-linux";
+        speedFactor = 7;
+        maxJobs = 16;
+        supportedFeatures = [
+          "benchmark"
+          "big-paralell"
+        ];
+        mandatoryFeatures = [];
+        sshUser = secrets.ssh.users.pvv.normalUser;
+        sshKey = secrets.keys.ssh.nixBuilders.isvegg.private;
       }
     ];
     # registry = {
 
     # };
+  };
+
+  programs.ssh = {
+    extraConfig = ''
+      Host nix-builder-isvegg
+        HostName isvegg.pvv.ntnu.no
+
+      Host nix-builder-tsukir
+        HostName nani.wtf
+        Port ${toString secrets.ports.ssh.home-in}
+    '';
+    knownHosts = {
+      tsukir = {
+        hostNames = [ "nani.wtf" "gingakei.loginto.me" ];
+        publicKeyFile = secrets.keys.ssh.nixBuilders.tsuki.public;
+      };
+    };
   };
 
   time.timeZone = "Europe/Oslo";

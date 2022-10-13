@@ -1,3 +1,4 @@
+{ secrets, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -8,11 +9,11 @@
     # ./services/gitlab
     ./services/grafana.nix
     ./services/hydra.nix
-    ./services/jitsi.nix
+    # ./services/jitsi.nix
     # ./services/keycloak.nix
     # ./services/libvirt.nix
     ./services/matrix
-    ./services/nginx.nix
+    ./services/nginx
     # ./services/openldap.nix
     # ./services/openvpn.nix
     ./services/plex.nix
@@ -81,10 +82,22 @@
   };
 
   users = {
-    groups.media = {};
-    users.media = {
-      isSystemUser = true;
-      group = "media";
+    users = {
+      media = {
+        description = "User responsible for owning all sorts of server media files";
+        isSystemUser = true;
+        group = "media";
+      };
+      nix-builder = {
+        description = "User for executing distributed builds via SSH";
+        isSystemUser = true;
+        group = "nix-builder";
+        openssh.authorizedKeys.keyFiles = [ secrets.keys.ssh.nixBuilders.tsuki.public ];
+      };
+    };
+    groups = {
+      media = {};
+      nix-builder = {};
     };
   };
 
