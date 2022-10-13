@@ -48,11 +48,18 @@
           "monokai"
         ];
       };
+
+      "ui.svg".RENDER = true;
+
       indexer.REPO_INDEXER_ENABLED = true;
       mailer = {
         ENABLED = true;
         FROM = "gitea@nani.wtf";
       };
+
+      # Looking forward to the day I can uncomment this line
+      # federation.ENABLED = true;
+      packages.ENABLED = false;
 
       # TODO: fix
 

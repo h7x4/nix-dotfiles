@@ -296,8 +296,8 @@
   --color-text-dark: lighten(@mk-fg0, 10%);
   --color-text: @mk-fg0;
   --color-text-light: @mk-fg1;
-  --color-text-light-2: #8a8e99;
-  --color-text-light-3: #707687;
+  --color-text-light-2: @mk-fg1;
+  --color-text-light-3: @mk-fg1;
   --color-footer: @mk-bg1;
   --color-timeline: #4c525e;
   --color-input-text: @mk-fg1;
@@ -334,6 +334,24 @@
   filter: invert(.8);
 }
 
+.markup {
+  & h1,
+  & h2 {
+    border-bottom: 1px solid @mk-bg2;
+  }
+
+  & table {
+    & tr
+    {
+      border-top: 1px solid @mk-bg2;
+    }
+    & td,
+    & th {
+      border: 1px solid @mk-bg2 !important;
+    }
+  }
+}
+
 .ui {
   &.card {
     background: var(--color-card);
@@ -365,6 +383,10 @@
 
   &.repository.list.item:not(:first-child) {
     border-top: 1px solid @mk-bg2;
+  }
+
+  &.divider {
+    border-bottom-color: @mk-bg2;
   }
 
   &.button {
@@ -413,6 +435,20 @@
     }
   }
 
+  &.red {
+    &.button,
+    &.buttons .button {
+      color: white;
+      background-color: @mk-error-red;
+    }
+
+    &.button:hover,
+    &.buttons .button:hover {
+      color: white;
+      background-color: darken(@mk-error-red, 15%);
+    }
+  }
+
   &.basic {
     &.primary {
       &.button,
@@ -458,6 +494,20 @@
         background-color: lighten(@mk-blue, 15%) !important;
       }
     }
+
+    &.red {
+      &.button,
+      &.buttons .button {
+        color: white;
+        background-color: @mk-error-red;
+      }
+
+      &.button:hover,
+      &.buttons .button:hover {
+        color: white;
+        background-color: darken(@mk-error-red, 15%);
+      }
+    }
   }
 }
 
@@ -472,6 +522,40 @@
 
 .ui.progress.success .bar {
   background-color: #7b9e57 !important;
+}
+
+.repository {
+  &.file.list #repo-files-table tr {
+    background: @mk-bg-dark;
+    &:hover {
+      background-color: lighten(@mk-bg-dark, 20%) !important;
+    }
+  }
+
+  & .navbar .active.item,
+  & .navbar .active.item:hover {
+    border-color: transparent !important;
+  }
+  
+  & .diff-stats li {
+    border-color: var(--color-secondary);
+  }
+
+  &.release #release-list {
+    border-top: 1px solid @mk-bg2;
+    & > li .detail .dot {
+      background-color: #505667;
+      border-color: #383c4a;
+    }
+  }
+
+  & .repo-header .ui.huge.breadcrumb.repo-title .repo-header-icon .avatar {
+    color: #2a2e3a;
+  }
+
+  &.labels .ui.basic.black.label {
+    background-color: #bbbbbb !important;
+  }
 }
 
 .following.bar.light {
@@ -519,13 +603,13 @@ a.ui.basic.green.label:hover {
   color: #fff !important;
 }
 
-.ui.divider:not(.vertical):not(.horizontal) {
-  border-bottom-color: var(--color-secondary);
-  border-top-color: transparent;
-}
+// .ui.divider:not(.vertical):not(.horizontal) {
+//   border-bottom-color: var(--color-secondary);
+//   border-top-color: transparent;
+// }
 
 .form .help {
-  color: #7f8699;
+  color: @mk-fg1;
 }
 
 .ui .text.light.grey {
@@ -607,14 +691,6 @@ a.ui.basic.green.label:hover {
 }
 
 
-.repository.file.list #repo-files-table tr {
-  background: @mk-bg-dark;
-}
-
-.repository.file.list #repo-files-table tr:hover {
-  background-color: lighten(@mk-bg-dark, 20%) !important;
-}
-
 .overflow.menu .items .item {
   color: #9d9d9d;
 }
@@ -627,14 +703,6 @@ a.ui.basic.green.label:hover {
   color: var(--color-secondary-dark-6) !important;
 }
 
-.repository .navbar .active.item,
-.repository .navbar .active.item:hover {
-  border-color: transparent !important;
-}
-
-.repository .diff-stats li {
-  border-color: var(--color-secondary);
-}
 
 .tag-code,
 .tag-code td {
@@ -650,16 +718,6 @@ td.blob-hunk {
   color: #dbdbdb !important;
 }
 
-.ui.red.button,
-.ui.red.buttons .button {
-  background-color: #7d3434;
-}
-
-.ui.red.button:hover,
-.ui.red.buttons .button:hover {
-  background-color: #984646;
-}
-
 .ui.list .list > .item .header,
 .ui.list > .item .header {
   color: #dedede;
@@ -668,10 +726,6 @@ td.blob-hunk {
 .ui.list .list > .item .description,
 .ui.list > .item .description {
   color: var(--color-secondary-dark-6);
-}
-
-.repository.labels .ui.basic.black.label {
-  background-color: #bbbbbb !important;
 }
 
 .lines-num {
@@ -759,18 +813,10 @@ footer .container .links > * {
   border-left-color: #888;
 }
 
-.repository.release #release-list > li .detail .dot {
-  background-color: #505667;
-  border-color: #383c4a;
-}
-
 .tribute-container {
   box-shadow: 0 .25rem .5rem rgba(0, 0, 0, .6);
 }
 
-.repository .repo-header .ui.huge.breadcrumb.repo-title .repo-header-icon .avatar {
-  color: #2a2e3a;
-}
 
 img[src$="/img/matrix.svg"] {
   filter: invert(80%);
