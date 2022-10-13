@@ -1,0 +1,15 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Contact: mailto:fixplz@nani.wtf
+Expires: 2025-10-12T22:00:00.000Z
+Encryption: https://nani.wtf/.well-known/openpgpkey/hu/o51os3b94w9rd8pwh986hxu56icaqq65
+Preferred-Languages: en,no
+Canonical: https://nani.wtf/.well-known/security.txt
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYKAB0WIQTzzahsxVqfENegaYGfL32CUPNRRgUCY0iFxwAKCRCfL32CUPNR
+Rqc3AQDSncBCpI8PKxneo5mp76APB86xYliZkKDRfwdrm1ClTQEA3arl1+UYg2Ry
+XQSn2NLaJ7sdZkicZB2ChB6gvD2NeAw=
+=5dxn
+-----END PGP SIGNATURE-----

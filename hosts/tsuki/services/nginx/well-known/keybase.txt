@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/h7x4
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://nani.wtf
+  * I am h7x4 (https://keybase.io/h7x4) on keybase.
+  * I have a public key ASBBMSnXp8vf1AF8SeYrJM2RzWLs2O8L04B9b6ZnIFzcVAo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "0120413129d7a7cbdfd4017c49e62b24cd91cd62ecd8ef0bd3807d6fa667205cdc540a",
+      "host": "keybase.io",
+      "kid": "0120413129d7a7cbdfd4017c49e62b24cd91cd62ecd8ef0bd3807d6fa667205cdc540a",
+      "uid": "2babc56f964d025472c1fd3b17797f19",
+      "username": "h7x4"
+    },
+    "merkle_root": {
+      "ctime": 1665673950,
+      "hash": "c30191d602dd4c4398baa0fc27df683da11d66cf929831f529c1832e0447430e1eb39251a62dfbc384ae1136d9524b953e805727eaa9a02e5dd0fc7044c9585f",
+      "hash_meta": "921bb14b4294b8b4b0b02ee477b705a8f3c04cab6c8fe7bc0ed5123fbdcad88e",
+      "seqno": 23362018
+    },
+    "service": {
+      "entropy": "wJLA9sRUHzPa6ElFEAnNZS1r",
+      "hostname": "nani.wtf",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "6.0.1"
+  },
+  "ctime": 1665674008,
+  "expire_in": 504576000,
+  "prev": "4fd3a7f075610e1c7e0618dd4f96ba8e4bc2b6b81a8af58f80ab2f29b93d4794",
+  "seqno": 6,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgQTEp16fL39QBfEnmKyTNkc1i7NjvC9OAfW+mZyBc3FQKp3BheWxvYWTESpcCBsQgT9On8HVhDhx+BhjdT5a6jkvCtrgaivWPgKsvKbk9R5TEIBXMUT8iq+cGZ4AJrwj9JxtSFFe/n2xYNktUj0c8sKeLAgHCo3NpZ8RA0SD45xOcGUZc7sfdpH4aXbMMvdYN+BybprXp1MBthURIaW4x15omCwFgN56cG7hKVRx1S00Dgc4k31g8Dm5WD6hzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIKpqM0TI6eMUtwHMKVzgK5Dx8LGLBDMip+KCHfTTE3F0o3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/h7x4
+
+==================================================================
