@@ -10,6 +10,7 @@
     group = "gitea";
     isSystemUser = true;
     uid = config.ids.uids.git;
+    packages = with unstable-pkgs; [ gitea ];
   };
 
   services.gitea = {
@@ -29,7 +30,10 @@
     };
 
     database = {
-      user = "git";
+      type = "postgres";
+      user = "gitea";
+      passwordFile = secrets.keys.postgres.gitea;
+      createDatabase = false;
     };
 
     settings = {
@@ -84,6 +88,10 @@
       # };
     };
   };
+
+  # TODO: remove when updating to nixpkgs 22.11
+  systemd.services.gitea.serviceConfig.SystemCallFilter = 
+    lib.mkForce "~@clock @cpu-emulation @debug @keyring @memlock @module @mount @obsolete @raw-io @reboot @setuid @swap";
 
   system.activationScripts.linkGiteaThemes.text = let
     themes = pkgs.stdenv.mkDerivation {
