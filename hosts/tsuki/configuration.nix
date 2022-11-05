@@ -10,6 +10,7 @@
     ./services/grafana.nix
     ./services/hydra.nix
     # ./services/jitsi.nix
+    ./services/jupyter.nix
     # ./services/keycloak.nix
     # ./services/libvirt.nix
     ./services/matrix
