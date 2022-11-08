@@ -67,6 +67,7 @@
         name = "nani.wtf";
         value = {
           locations = {
+            "= /".return = "301 https://www.nani.wtf/";
             "/.well-known/".alias = "${./well-known}/";
             "/.well-known/openpgpkey/hu/" = {
               alias = "${./well-known/openpgpkey/hu}/";
@@ -90,7 +91,7 @@
         };
       }
       (proxy ["plex"] "http://localhost:${s ports.plex}" {})
-      (host ["www"] { root = "${inputs.website.defaultPackage.${pkgs.system}}/"; })
+      (host ["www"] { root = "${inputs.website.packages.${pkgs.system}.default}/"; })
       (proxy ["matrix"] "http://localhost:${s ports.matrix.listener}" {})
       (host ["madmin"] { root = "${pkgs.synapse-admin}/"; })
       (host ["cache"] { root = "/var/lib/nix-cache"; })
@@ -107,6 +108,9 @@
         locations."/".proxyWebsockets = true;
       })
       (proxy ["pg"] "http://localhost:${s ports.pgadmin}" {})
+      (proxy ["py"] "http://localhost:${s ports.jupyterhub}" {
+        locations."/".proxyWebsockets = true;
+      })
       # (host ["vpn"] "" {})
       (proxy ["hydra"] "http://localhost:${s ports.hydra}" {})
       (proxy ["air"] "https://${ips.kansei}:${s ports.kansei}" {})
