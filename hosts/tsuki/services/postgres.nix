@@ -17,11 +17,17 @@
   services.pgadmin = {
     enable = true;
     openFirewall = true;
-    initialEmail = "h7x4abk3g@protonmail.com";
+    initialEmail = "h7x4@nani.wtf";
     initialPasswordFile = "${config.machineVars.dataDrives.default}/var/pgadmin_pass";
     port = secrets.ports.pgadmin;
     settings = {
       DATA_DIR = "${config.machineVars.dataDrives.default}/var/pgadmin";
     };
+  };
+
+  services.postgresqlBackup = {
+    enable = true;
+    location = "${config.machineVars.dataDrives.default}/backup/postgres";
+    backupAll = true;
   };
 }
