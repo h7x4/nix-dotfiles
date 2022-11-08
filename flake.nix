@@ -86,8 +86,6 @@
 
     lib = (pkgs.extend self.overlays.lib).lib;
 
-    packages.${system} = import ./pkgs { inherit pkgs; };
-
     homeConfigurations = {
       h7x4 = home-manager.lib.homeManagerConfiguration {
         inherit system;
