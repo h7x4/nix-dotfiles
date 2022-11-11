@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 {
   programs.git = {
     enable = true;
@@ -10,6 +10,15 @@
     signing = {
       key = "46B9228E814A2AAC";
       signByDefault = true;
+    };
+
+    delta = {
+      enable = true;
+      options = {
+        line-numbers = true;
+        side-by-side = true;
+        theme = "Monokai Extended Origin";
+      };
     };
 
     aliases = {
@@ -39,7 +48,6 @@
         untrackedCache = true;
 
         editor = "nvim";
-        pager = "less";
       };
 
       "color \"branch\"".upstream = "cyan";

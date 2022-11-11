@@ -68,6 +68,10 @@ in {
       '';
     };
 
+    sessionVariables = {
+      TEXMFHOME = "$HOME/documents/texmf";
+    };
+
     pointerCursor = mkIf graphics  {
       package = pkgs.capitaine-cursors;
       name = "capitaine-cursors";
@@ -99,7 +103,10 @@ in {
     };
     mpv.enable = mkIf graphics true;
     obs-studio.enable = mkIf graphics true;
-    ssh.enable = true;
+    ssh = {
+      enable = true;
+      includes = [ "mutable_config" ];
+    };
     skim = {
       enable = true;
       defaultCommand ="fd --type f";

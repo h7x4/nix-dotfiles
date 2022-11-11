@@ -2,8 +2,7 @@
 {
   services.mpd = rec {
     enable = true;
-    musicDirectory = "${config.services.dropbox.path}/music/music";
-    # musicDirectory = "${config.home.homeDirectory}/music";
+    musicDirectory = config.xdg.userDirs.music;
     playlistDirectory = "${musicDirectory}/playlists/MPD";
   };
 }

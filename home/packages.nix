@@ -38,6 +38,7 @@ in {
     kepubify
     keybase
     keymapviz
+    kondo
     lastpass-cli
     lazydocker
     libwebp
