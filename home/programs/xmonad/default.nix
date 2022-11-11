@@ -1,4 +1,4 @@
 { pkgs, ... }:
 {
-  home.file.".xmonad/xmonad.hs".source = ./xmonad.hs;
+  xdg.configFile."xmonad/xmonad.hs".source = ./xmonad.hs;
 }

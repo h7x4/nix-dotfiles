@@ -254,6 +254,7 @@ myLayout =
 myManageHook = composeAll
     [ className =? "Gimp"           --> doFloat
     , className =? "QjackCtl"       --> doFloat
+    , className =? "MEGAsync"       --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore
     , resource  =? "fcitx-config"   --> doFloat
