@@ -25,7 +25,7 @@
       default = main;
     };
 
-    fixDisplayCommand = "xrandr --output DP-4 --mode 1920x1080 --pos 0x0 -r 144 --output DVI-D-1 --primary --mode 1920x1080 --pos 1920x0 -r 60";
+    fixDisplayCommand = "xrandr --output DP-4 --mode 1920x1080 --pos 0x0 -r 144 --output HDMI-0 --primary --mode 1920x1080 --pos 1920x0 -r 60";
 
     # screens = {
     #   "DP-1" = {};
