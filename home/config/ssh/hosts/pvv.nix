@@ -33,17 +33,13 @@ let
   ];
 
   # Either( String [String] AttrSet{String} ) -> AttrSet{String}
-  normalizeValueType = let
-    inherit (lib.strings) isString;
-    inherit (lib.lists) isList;
-    inherit (lib.attrsets) filterAttrs;
-  in
+  coerceToSSHMatchBlock =
     machine:
-    if (isString machine) then { names = [machine]; }
-    else if (isList machine) then { names = machine; }
+    if builtins.isString machine then { names = [machine]; }
+    else if builtins.isList machine then { names = machine; }
     else machine;
 
-  # [String] -> AttrSet
+  # ListOf(String) -> AttrSet
   machineWithNames = let
     inherit (lib.lists) head;
     inherit (lib.strings) split;
@@ -70,12 +66,12 @@ let
   convertAdminMachine =
     convertMachineWithDefaults { user = adminUser; proxyJump = "hildring"; };
 
-  # [ Either(String [String] AttrSet{String}) ] -> (AttrSet -> AttrSet) -> AttrSet
+  # ListOf (Either(String ListOf(String) AttrsOf(String))) -> (AttrSet -> AttrSet) -> AttrSet
   convertMachinesWith = convertMachineFunction: let
     inherit (lib.attrsets) listToAttrs;
     inherit (lib.trivial) pipe;
     pipeline = [
-      (map normalizeValueType)
+      (map coerceToSSHMatchBlock)
       (map convertMachineFunction)
       listToAttrs
     ];
