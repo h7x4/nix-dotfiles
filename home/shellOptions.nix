@@ -1,7 +1,4 @@
-{ pkgs, config, ... }: let
-
-  # FIXME: lib should be imported directly as a module argument.
-  inherit (pkgs) lib;
+{ pkgs, lib, extendedLib, config, ... }: let
 
   sedColor =
     color:
@@ -16,7 +13,7 @@
   # Context Functors
   functors = let
     inherit (lib.strings) concatStringsSep;
-    inherit (lib.termColors.front) blue;
+    inherit (extendedLib.termColors.front) blue;
     genWrapper = type: value: { inherit type; inherit value; };
   in
     {
@@ -228,7 +225,7 @@ in rec {
         watch = "${procps}/bin/watch ";
 
         concatPdfs = shellThen [
-          "echo \"${lib.termColors.front.red "Concatenating all pdfs in current directory to 'out.pdf'"}\""
+          "echo \"${extendedLib.termColors.front.red "Concatenating all pdfs in current directory to 'out.pdf'"}\""
           "${poppler_utils}/bin/pdfunite *.pdf out.pdf"
         ];
 
@@ -247,14 +244,14 @@ in rec {
 
       "Misc" = {
         youtube-dl-list = shellJoin [
-          "${youtube-dl}/bin/youtube-dl"
+          "${yt-dlp}/bin/yt-dlp"
           "-f \"bestvideo[ext=mp4]+bestaudio[e=m4a]/bestvideo+bestaudio\""
           "-o \"%(playlist_index)s-%(title)s.%(ext)s\""
         ];
 
-        music-dl = "${youtube-dl}/bin/youtube-dl --extract-audio -f \"bestaudio[ext=m4a]/best\"";
+        music-dl = "${yt-dlp}/bin/yt-dlp --extract-audio -f \"bestaudio[ext=m4a]/best\"";
         music-dl-list = shellJoin [
-          "${youtube-dl}/bin/youtube-dl"
+          "${yt-dlp}/bin/yt-dlp"
           "--extract-audio"
           "-f \"bestaudio[ext=m4a]/best\""
           "-o \"%(playlist_index)s-%(title)s.%(ext)s\""
@@ -273,8 +270,12 @@ in rec {
 
       "Generated" = {
         "cds" = let
-          inherit (lib.strings) concatStringsSep repeatString;
-          inherit (lib.lists) range flatten repeat;
+          inherit (lib.strings) concatStringsSep;
+          inherit (extendedLib.strings) repeatString;
+
+          inherit (lib.lists) range flatten;
+          inherit (extendedLib.lists) repeat;
+
           inherit (lib.attrsets) nameValuePair listToAttrs;
 
           nthCds = n: [
@@ -336,7 +337,8 @@ in rec {
     };
 
     flattened.aliases = let
-      inherit (lib.attrsets) mapAttrs attrValues filterAttrs isAttrs concatAttrs;
+      inherit (lib.attrsets) mapAttrs attrValues filterAttrs isAttrs;
+      inherit (extendedLib.attrsets) concatAttrs;
       inherit (lib.strings) isString concatStringsSep;
 
       applyFunctor = attrset: functors.${attrset.type}.apply attrset;
@@ -369,11 +371,12 @@ in rec {
   xdg.dataFile = {
     aliases = {
       text = let
-        inherit (lib.strings) unlines wrap' replaceStrings' stringLength repeatString;
+        inherit (lib.strings) stringLength;
+        inherit (extendedLib.strings) unlines wrap' replaceStrings' repeatString;
         inherit (lib.attrsets) attrValues mapAttrs isAttrs;
         inherit (lib.lists) remove;
         inherit (lib.trivial) mapNullable;
-        inherit (lib.termColors.front) red green blue;
+        inherit (extendedLib.termColors.front) red green blue;
 
         # int -> String -> AttrSet -> String
         stringifyCategory = level: name: category:
@@ -409,8 +412,8 @@ in rec {
       packageManagerLecture = {
       target = "package-manager.lecture";
       text = let
-        inherit (lib.strings) unlines;
-        inherit (lib.termColors.front) red blue;
+        inherit (extendedLib.strings) unlines;
+        inherit (extendedLib.termColors.front) red blue;
       in unlines [
         ((red "This package manager is not installed on ") + (blue "NixOS") + (red "."))
         ((red "Either use ") + ("\"nix-env -i\"") + (red " or install it through a configuration file."))

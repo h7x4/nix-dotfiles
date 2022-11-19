@@ -1,6 +1,5 @@
-{ pkgs, unstable-pkgs, config, inputs, secrets, ... }:
+{ pkgs, unstable-pkgs, lib, extendedLib, config, inputs, secrets, ... }:
 let
-  inherit (pkgs) lib;
   # inherit (specialArgs) machineVars;
   inherit (config) machineVars;
   # has_graphics = !config.machineVars.headless;
@@ -130,7 +129,7 @@ in {
       # TODO: move this out of etc, and reference it directly in sudo config.
       sudoLecture = {
         target = "sudo.lecture";
-        text = lib.termColors.front.red "Be careful or something, idk...\n";
+        text = extendedLib.termColors.front.red "Be careful or something, idk...\n";
       };
 
       "resolv.conf".source = let

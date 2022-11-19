@@ -1,8 +1,7 @@
-final: prev:
+{ stdlib, strings }:
 let
-  inherit (final.lib.strings) wrap;
-  inherit (prev.lib.attrsets) mapAttrs' nameValuePair;
-  # inherit (final.lib.myStuff.termColors) escapeCharacter escapeColor resetCharacter wrapWithColor' colorMappings;
+  inherit (strings) wrap;
+  inherit (stdlib.attrsets) mapAttrs' nameValuePair;
 in rec {
   # String
   escapeCharacter = "";

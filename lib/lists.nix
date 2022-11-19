@@ -1,8 +1,8 @@
-final: prev:
+{ stdlib }:
 let 
-  inherit (prev.lib.trivial) const;
-  inherit (prev.lib.lists) range any all;
-in prev.lib.lists // {
+  inherit (stdlib.trivial) const;
+  inherit (stdlib.lists) range any all;
+in {
   # a -> Int -> [a]
   repeat = item: times: map (const item) (range 1 times);
 

@@ -1,9 +1,9 @@
-final: prev:
+{ stdlib, lists }:
 let
-  inherit (final.lib.lists) repeat length;
-  inherit (prev.lib.strings) concatStringsSep replaceStrings splitString;
-  # inherit (final.lib.strings) wrap;
-in prev.lib.strings // rec {
+  inherit (stdlib.lists) length;
+  inherit (lists) repeat;
+  inherit (stdlib.strings) concatStringsSep replaceStrings splitString;
+in rec {
   # String -> [String]
   lines = splitString "\n";
 

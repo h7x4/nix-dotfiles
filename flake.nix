@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-22.05";
-    unstable-nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-22.05";
@@ -46,18 +46,17 @@
   outputs = inputs@{
     self,
     nixpkgs,
-    unstable-nixpkgs,
+    nixpkgs-unstable,
     home-manager,
     vscode-server,
     secrets,
     fonts,
     dotfiles,
-    website,
-    ...
+    website
   }: let
     system = "x86_64-linux";
 
-    pkgs = import nixpkgs {
+    pkgs-config = {
       inherit system;
 
       config = {
@@ -65,26 +64,13 @@
         android_sdk.accept_license = true;
       };
 
-      overlays = [ self.overlays.lib ];
+      # overlays = [ self.overlays.lib ];
     };
 
-    unstable-pkgs = import unstable-nixpkgs {
-      inherit system;
-
-      config = {
-        allowUnfree = true;
-        android_sdk.accept_license = true;
-      };
-
-      overlays = [ self.overlays.lib ];
-    };
-
+    pkgs = import nixpkgs pkgs-config;
+    unstable-pkgs = import nixpkgs-unstable pkgs-config;
   in {
-    overlays = {
-      lib = import ./overlays/lib;
-    };
-
-    lib = (pkgs.extend self.overlays.lib).lib;
+    extendedLib = import ./lib { stdlib = pkgs.lib; };
 
     homeConfigurations = {
       h7x4 = home-manager.lib.homeManagerConfiguration {
@@ -130,6 +116,7 @@
               config._module.args = {
                 inherit inputs;
                 inherit unstable-pkgs;
+                inherit (self) extendedLib;
                 secrets = secrets.outputs.settings;
               };
             }
@@ -138,12 +125,18 @@
             {
               home-manager = {
                 useGlobalPkgs = true;
-                extraSpecialArgs = { inherit inputs; secrets = secrets.outputs.settings; };
+                extraSpecialArgs = {
+                  inherit inputs;
+                  inherit (self) extendedLib;
+                  secrets = secrets.outputs.settings;
+                };
 
                 users.h7x4 = import ./home/home.nix {
                   inherit pkgs;
                   inherit inputs;
+                  inherit (pkgs) lib;
                   inherit (config) machineVars colors;
+                  inherit (self) extendedLib;
                 };
               };
             })

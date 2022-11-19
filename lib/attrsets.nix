@@ -1,8 +1,8 @@
-final: prev:
+{ stdlib }:
 let
-  inherit (prev.lib.attrsets) mapAttrs isAttrs filterAttrs listToAttrs nameValuePair attrNames mapAttrsToList;
-  inherit (prev.lib.lists) foldr imap0 imap1;
-in prev.lib.attrsets // rec {
+  inherit (stdlib.attrsets) mapAttrs isAttrs filterAttrs listToAttrs nameValuePair attrNames mapAttrsToList;
+  inherit (stdlib.lists) foldr imap0 imap1;
+in rec {
   # a -> [String] -> AttrSet{a}
   mapToAttrsWithConst = constant: items:
     listToAttrs (map (name: nameValuePair name constant) items);

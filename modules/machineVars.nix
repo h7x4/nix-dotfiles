@@ -1,6 +1,5 @@
-{ pkgs, config, ... }:
+{ lib, config, ... }:
 let
-  inherit (pkgs) lib;
   inherit (lib) types mkEnableOption mkOption mkIf;
   cfg = config.machineVars;
 in {

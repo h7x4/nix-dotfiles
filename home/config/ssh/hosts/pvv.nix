@@ -1,6 +1,5 @@
-{ pkgs, secrets, ... }:
+{ pkgs, lib, extendedLib, secrets, ... }:
 let
-  inherit (pkgs) lib;
   inherit (secrets.ssh.users.pvv) normalUser adminUser;
 
   # http://www.pvv.ntnu.no/pvv/Maskiner
@@ -82,10 +81,9 @@ let
     ];
   in
     machines: pipe machines pipeline;
-
 in
   {
-    programs.ssh.matchBlocks = lib.attrsets.concatAttrs [
+    programs.ssh.matchBlocks = extendedLib.attrsets.concatAttrs [
       (convertMachinesWith convertNormalMachine normalMachines)
       (convertMachinesWith convertAdminMachine rootMachines)
     ];
