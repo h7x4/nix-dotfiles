@@ -10,47 +10,48 @@ in
   programs.vscode ={
     enable = true;
 
+    package = pkgs.vscode;
     # package = pkgs.vscodium;
-    package = pkgs.vscode-fhsWithPackages (ps: with ps; [
-      # rustup
-      # zlib
-      asciidoc
-      asciidoctor
-      cabal2nix
-      clang
-      dart
-      dotnet-sdk
-      dotnet-sdk_3
-      dotnet-sdk_5
-      dotnetPackages.Nuget
-      elm2nix
-      elmPackages.elm
-      flutter
-      gcc
-      ghc
-      ghcid
-      haskellPackages.Cabal_3_6_3_0
-      maven
-      nixfmt
-      nixpkgs-fmt
-      # nixpkgs-hammering
-      nodePackages.node2nix
-      nodePackages.npm
-      nodePackages.sass
-      nodePackages.typescript
-      nodePackages.yarn
-      nodejs
-      plantuml
-      python3
-      rustc
-      rustup
-      sqlcheck
-      sqlint
-      sqlite
-      sqlite-web
-      xmlformat
-      xmlstarlet
-    ]);
+    # package = pkgs.vscode-fhsWithPackages (ps: with ps; [
+    #   # rustup
+    #   # zlib
+    #   asciidoc
+    #   asciidoctor
+    #   cabal2nix
+    #   clang
+    #   dart
+    #   dotnet-sdk
+    #   dotnet-sdk_3
+    #   dotnet-sdk_5
+    #   dotnetPackages.Nuget
+    #   elm2nix
+    #   elmPackages.elm
+    #   flutter
+    #   gcc
+    #   ghc
+    #   ghcid
+    #   haskellPackages.Cabal_3_6_3_0
+    #   maven
+    #   nixfmt
+    #   nixpkgs-fmt
+    #   # nixpkgs-hammering
+    #   nodePackages.node2nix
+    #   nodePackages.npm
+    #   nodePackages.sass
+    #   nodePackages.typescript
+    #   nodePackages.yarn
+    #   nodejs
+    #   plantuml
+    #   python3
+    #   rustc
+    #   rustup
+    #   sqlcheck
+    #   sqlint
+    #   sqlite
+    #   sqlite-web
+    #   xmlformat
+    #   xmlstarlet
+    # ]);
     # package = pkgs.vscode-fhs;
 
     userSettings = let
@@ -367,6 +368,7 @@ in
       mikestead.dotenv
       ms-python.python
       ms-python.vscode-pylance
+      ms-vscode-remote.remote-ssh
       naumovs.color-highlight
       pkief.material-icon-theme
       redhat.java
