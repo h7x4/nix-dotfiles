@@ -1,14 +1,16 @@
 {
-  description = "Mmmmmh, Spaghetti™";
-
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-22.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-22.05";
-      # url = "git+file:///home/h7x4/git/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    home-manager-local = {
+      url = "git+file:///home/h7x4/git/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     dotfiles = {
@@ -48,6 +50,7 @@
     nixpkgs,
     nixpkgs-unstable,
     home-manager,
+    home-manager-local,
     vscode-server,
     secrets,
     fonts,
@@ -146,6 +149,22 @@
       Tsuki = nixSys "tsuki";
       Eisei = nixSys "eisei";
       kasei = nixSys "kasei";
+      home-manager-tester = nixpkgs.lib.nixosSystem {
+        inherit system;
+        pkgs = unstable-pkgs;
+        inherit (unstable-pkgs) lib;
+        modules = [
+          "${home-manager-local}/nixos"
+          ./hosts/special/home-manager-tester/configuration.nix
+          {
+            config._module.args = {
+              pkgs = unstable-pkgs;
+              # inherit (self) extendedLib;
+              # secrets = secrets.outputs.settings;
+            };
+          }
+        ];
+      };
     };
   };
 }
