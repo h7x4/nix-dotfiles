@@ -65,7 +65,7 @@ in {
         HostName isvegg.pvv.ntnu.no
 
       Host nix-builder-tsukir
-        HostName nani.wtf
+        HostName gingakei.loginto.me
         Port ${toString secrets.ports.ssh.home-in}
     '';
     knownHosts = {
