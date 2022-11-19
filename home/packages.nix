@@ -88,6 +88,7 @@ in {
     tokei
     tsukae
     unpaper
+    usbutils
     w3m
     waifu2x-converter-cpp
     watchexec
@@ -154,6 +155,7 @@ in {
       shellcheck
       slack
       sublime3
+      swiPrologWithGui
       sxiv
       tagainijisho
       teams
