@@ -149,7 +149,7 @@
       Tsuki = nixSys "tsuki";
       Eisei = nixSys "eisei";
       kasei = nixSys "kasei";
-      home-manager-tester = nixpkgs.lib.nixosSystem {
+      home-manager-tester = nixpkgs-unstable.lib.nixosSystem {
         inherit system;
         pkgs = unstable-pkgs;
         inherit (unstable-pkgs) lib;
