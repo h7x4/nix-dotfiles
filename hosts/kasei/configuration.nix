@@ -25,12 +25,15 @@
       default = main;
     };
 
-    fixDisplayCommand = "xrandr --output DP-4 --mode 1920x1080 --pos 0x0 -r 144 --output HDMI-0 --primary --mode 1920x1080 --pos 1920x0 -r 60";
-
-    # screens = {
-    #   "DP-1" = {};
-    #   "HDMI-1" = {};
-    # };
+    screens = {
+      DP-4 = {
+        primary = true;
+        frequency = 144;
+      };
+      HDMI-0 = {
+        position = "1920x0";
+      };
+    };
   };
 
   systemd.targets = {

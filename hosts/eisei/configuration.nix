@@ -20,11 +20,7 @@ in {
     headless = false;
     laptop = true;
 
-    screens = {
-      "eDP-1" = {
-        resolution = "1920x1080";
-      };
-    };
+    screens."eDP-1".primary = true;
   };
 
   systemd.targets = {

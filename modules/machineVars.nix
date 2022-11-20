@@ -9,12 +9,6 @@ in {
     screens = mkOption {
       type = types.attrsOf (types.submodule ( { name, ...}: {
         options = {
-          resolution = mkOption {
-            type = types.str;
-            example = "1920x1080";
-            description = "The resolution of the screen";
-          };
-
           name = mkOption {
             type = types.str;
             default = name;
@@ -22,10 +16,27 @@ in {
             description = "The name of the screen";
           };
 
-          freq = mkOption {
-            type = types.nullOr types.str;
-            example = "60.00";
+          primary = mkEnableOption "Whether this screen should be the primary one. There can only be one primary screen";
+
+          resolution = mkOption {
+            type = types.str;
+            example = "3840x2160";
+            default = "1920x1080";
+            description = "The resolution of the screen";
+          };
+
+          frequency = mkOption {
+            type = types.ints.positive;
+            example = 144;
+            default = 60;
             description = "The update frequency of the screen, defined in Hz";
+          };
+
+          position = mkOption {
+            type = types.str;
+            example = "1920x0";
+            default = "0x0";
+            description = "The position of the screen, compared to the other screens";
           };
         };
       }));
@@ -102,6 +113,11 @@ t tools preinstalled.";
         assertion = cfg.battery != null -> cfg.laptop;
         message = "A battery shouldn't exist on a non laptop machine";
       }
+      # FIXME:
+      # {
+      #   assertion = map () (cfg.screens)
+      #   message = "There can only be one primary screen.";
+      # }
     ];
 
     warnings = lib.optionals (0 < (lib.length (builtins.attrNames cfg.screens)) && (cfg.fixDisplayCommand != null)) [

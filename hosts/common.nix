@@ -152,17 +152,17 @@ in {
       };
     };
 
-    shellAliases.fixDisplay = let
+    shellAliases.fixdisplay = let
       inherit (config.machineVars) screens headless fixDisplayCommand;
 
-      screenToArgs = screen: with screen;
-        "--output ${name} --mode ${resolution}"
-        + (lib.optionalString (frequency != null) " --rate ${frequency}");
+      screenToArgs = name: screen: with screen;
+        "--output ${name} --mode ${resolution} --rate ${toString frequency} --pos ${position}"
+        + (lib.optionalString primary " --primary");
 
       screenArgs = lib.concatStringsSep " " (lib.mapAttrsToList screenToArgs screens);
 
     in lib.mkIf (!headless)
-      (if screenArgs == null
+      (if screenArgs != null
           then "xrandr ${screenArgs}"
           else (lib.mkIf (fixDisplayCommand != null) fixDisplayCommand));
   };
@@ -305,6 +305,7 @@ in {
     light.enable = !config.machineVars.headless;
     npm.enable = true;
     tmux.enable = true;
+    zsh.enable = true;
 
     gnupg.agent = {
       enable = true;
