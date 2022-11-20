@@ -94,17 +94,12 @@ in {
   i18n = {
     defaultLocale = "en_US.UTF-8";
     inputMethod = lib.mkIf (!machineVars.headless) {
-      enabled = "fcitx";
-      fcitx.engines = with pkgs.fcitx-engines; [ mozc ];
+      enabled = "fcitx5";
+      fcitx5.addons = with pkgs; [
+        fcitx5-mozc
+        fcitx5-gtk
+      ];
     };
-
-    # inputMethod = {
-    #   enabled = "fcitx5";
-    #   fcitx5.addons = with pkgs; [
-    #     fcitx5-mozc
-    #     fcitx5-gtk
-    #   ];
-    # };
   };
 
   environment = {

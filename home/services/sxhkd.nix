@@ -45,10 +45,10 @@
       "super + a" = "${pkgs.copyq}/bin/copyq toggle";
 
       # fcitx
-      "super + {b,n,m}" = "${pkgs.fcitx}/bin/fcitx-remote -s {mozc,fcitx-keyboard-no,fcitx-keyboard-us}";
+      # "super + {b,n,m}" = "${pkgs.fcitx}/bin/fcitx-remote -s {mozc,fcitx-keyboard-no,fcitx-keyboard-us}";
 
       # fcitx5
-      # "super + {b,n,m}" = "${pkgs.fcitx5}/bin/fcitx5-remote -s {mozc,keyboard-no,keyboard-us}";
+      "super + {b,n,m}" = "${pkgs.fcitx5}/bin/fcitx5-remote -s {mozc,keyboard-no,keyboard-us}";
 
       # TODO: fix
       # "super + v" = "${pkgs.rofi}/bin/rofi -modi lpass:$HOME/.scripts/rofi/lpass/rofi-lpass -show lpass";
