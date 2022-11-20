@@ -14,7 +14,7 @@
     };
 
     dotfiles = {
-      url = "github:h7x4abk3g/dotfiles";
+      url = "git+https://git.nani.wtf/h7x4/dotfiles?ref=master";
       flake = false;
     };
 
