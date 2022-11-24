@@ -7,7 +7,7 @@
     # ./services/dokuwiki.nix
     ./services/gitea
     # ./services/gitlab
-    ./services/grafana.nix
+    ./services/grafana
     ./services/hydra.nix
     # ./services/jitsi.nix
     ./services/jupyter.nix
