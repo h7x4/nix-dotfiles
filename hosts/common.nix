@@ -11,9 +11,6 @@ in {
   nix = {
     package = unstable-pkgs.nixVersions.stable;
     distributedBuilds = config.networking.hostName != "Tsuki";
-    binaryCaches = [
-      "https://cache.nixos.org/"
-    ];
 
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -21,7 +18,12 @@ in {
       allowed-uris = http:// https://
     '';
 
-    trustedUsers = [ "h7x4" "nix-builder" ];
+    settings = {
+      trusted-users = [ "h7x4" "nix-builder" ];
+      binary-caches = [
+        "https://cache.nixos.org/"
+      ];
+    };
 
     buildMachines = [
       {

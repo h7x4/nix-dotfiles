@@ -117,7 +117,6 @@ in {
       ahoviewer
       anki
       ark
-      audacity
       calibre
       cool-retro-term
       copyq
