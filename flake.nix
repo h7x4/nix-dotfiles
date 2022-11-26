@@ -18,6 +18,12 @@
       flake = false;
     };
 
+    nix-attr-search ={
+      url = "github:h7x4/nix-attr-search";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
     fonts = {
       url = "path:/home/h7x4/git/fonts";
       flake = false;
@@ -51,6 +57,7 @@
     nixpkgs-unstable,
     home-manager,
     home-manager-local,
+    nix-attr-search,
     vscode-server,
     secrets,
     fonts,

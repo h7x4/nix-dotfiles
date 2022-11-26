@@ -59,11 +59,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1668830718,
-        "narHash": "sha256-p5BRIr3yRqCOMNFUXArkz0/WtbhLAgtJLN5lzN5Tq2o=",
-        "ref": "refs/heads/zellij-kdl-configuration-generator",
-        "rev": "0987fc94313af85fd42a900d3525e9be7f2a89bb",
-        "revCount": 2377,
+        "lastModified": 1669143911,
+        "narHash": "sha256-15rTqvGmBmRcmX6sVCsjrqBEcID0KkRuYu/feLJx9Ew=",
+        "ref": "refs/heads/init-miniplayer",
+        "rev": "9ced47f180d4a98cf782587c221a29d18354956f",
+        "revCount": 2378,
         "type": "git",
         "url": "file:///home/h7x4/git/home-manager"
       },
@@ -72,13 +72,36 @@
         "url": "file:///home/h7x4/git/home-manager"
       }
     },
+    "nix-attr-search": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1669440958,
+        "narHash": "sha256-kMBkFFwXwTJEQQSoiP64ojnIEn+wz/G3+xNevkV6dis=",
+        "owner": "h7x4",
+        "repo": "nix-attr-search",
+        "rev": "ca3e27ec770bf3d3f980a7ff41718c528fd43ef1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "h7x4",
+        "repo": "nix-attr-search",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1668908668,
-        "narHash": "sha256-oimCE4rY7Btuo/VYmA8khIyTHSMV7qUWTpz9w8yc9LQ=",
+        "lastModified": 1669378442,
+        "narHash": "sha256-nm+4PN0A4SnV0SzEchxrMyKPvI3Ld/aoom4PnHeHucs=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "b68a6a27adb452879ab66c0eaac0c133e32823b2",
+        "rev": "0faaf0a9bb6dedb69bfd43ac06fb27fadc476c51",
         "type": "github"
       },
       "original": {
@@ -89,11 +112,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1668765800,
-        "narHash": "sha256-rC40+/W6Hio7b/RsY8SvQPKNx4WqNcTgfYv8cUMAvJk=",
+        "lastModified": 1669320964,
+        "narHash": "sha256-EBFw+ge12Pcr3qCk8If3/eMBAoQLR7ytndXZoRevUtM=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "52b2ac8ae18bbad4374ff0dd5aeee0fdf1aea739",
+        "rev": "27ccd29078f974ddbdd7edc8e38c8c8ae003c877",
         "type": "github"
       },
       "original": {
@@ -108,6 +131,7 @@
         "fonts": "fonts",
         "home-manager": "home-manager",
         "home-manager-local": "home-manager-local",
+        "nix-attr-search": "nix-attr-search",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "secrets": "secrets",

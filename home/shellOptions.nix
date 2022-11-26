@@ -1,4 +1,4 @@
-{ pkgs, lib, extendedLib, config, ... }: let
+{ pkgs, lib, extendedLib, inputs, config, ... }: let
 
   sedColor =
     color:
@@ -133,16 +133,20 @@ in rec {
       "Nix Stuff" = {
 
         # FIXME: This for some reason uses an outdated version of home-manager and nixos-rebuild
-        # hs = "${pkgs.home-manager}/bin/home-manager switch";
         # nxr = "sudo ${nixos-rebuild}/bin/nixos-rebuild switch";
 
-        hms = "home-manager switch";
         nxr = "sudo nixos-rebuild switch";
         nxp = "nix-shell -p ";
 
         nxc = "sudoedit /etc/nixos/configuration.nix";
         nxh = "vim ~/.config/nixpkgs/home.nix";
         ns = "nix-shell";
+
+        nxr-hm = "sudo nixos-rebuild switch --flake ~/nix#home-manager-tester";
+        nxr-ks = "sudo nixos-rebuild switch --flake ~/nix#kasei";
+
+        hms = toString inputs.nix-attr-search.packages.${pkgs.system}.home-manager-search;
+        nxo = toString inputs.nix-attr-search.packages.${pkgs.system}.nix-option-search;
       };
 
       # ░█▀▀░█▀█░█▀▀░▀█▀░█░█░█▀█░█▀▄░█▀▀
