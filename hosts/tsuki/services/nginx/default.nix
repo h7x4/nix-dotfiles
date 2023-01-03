@@ -62,7 +62,7 @@
         subdomains: url: extraSettings:
         host subdomains (recursiveUpdate { locations."/".proxyPass = url; } extraSettings);
 
-    in (listToAttrs [
+    in (listToAttrs ([
       {
         name = "nani.wtf";
         value = {
@@ -113,40 +113,14 @@
       })
       # (host ["vpn"] "" {})
       (proxy ["hydra"] "http://localhost:${s ports.hydra}" {})
-      (proxy ["air"] "https://${ips.kansei}:${s ports.kansei}" {})
-
-      # (proxy ["sync" "drive"] "" {})
-      # (proxy ["music" "mpd"] "" {})
-    ]) // {
-      # Disabled for time being
-      # ${config.services.jitsi-meet.hostName} = {
-        # enableACME = true;
-        # forceSSL = true;
-      # };
+    ] ++ (let
+      stickerpickers = pkgs.callPackage ../matrix/maunium-stickerpicker.nix {
+        inherit (inputs) maunium-stickerpicker;
     };
-
-    upstreams = {};
-
-    streamConfig = ''
-      upstream minecraft {
-        server ${ips.crafty}:${s ports.minecraft};
-      }
-
-      server {
-        listen 0.0.0.0:${s ports.minecraft};
-        listen [::0]:${s ports.minecraft};
-        proxy_pass minecraft;
-      }
-    '';
-      # upstream openvpn {
-      #   server localhost:${s ports.openvpn};
-      # }
-
-      # server {
-      #   listen 0.0.0.0:${s ports.openvpn};
-      #   listen [::0]:${s ports.openvpn};
-      #   proxy_pass openvpn;
-      # }
+    in [
+      (host ["stickers-pingu"] { root = "${stickerpickers.stickers-pingu}/"; })
+      (host ["stickers-h7x4"] { root = "${stickerpickers.stickers-h7x4}/"; })
+    ])));
   };
 
   networking.firewall.allowedTCPPorts = [

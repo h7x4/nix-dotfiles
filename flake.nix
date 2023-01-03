@@ -35,6 +35,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    maunium-stickerpicker = {
+      url = "git+file:///home/h7x4/git/maunium-stickerpicker-nix";
+    };
+
     vscode-server = {
       url = "github:msteen/nixos-vscode-server";
       flake = false;
@@ -61,6 +65,7 @@
     vscode-server,
     secrets,
     fonts,
+    maunium-stickerpicker,
     dotfiles,
     website
   }: let
