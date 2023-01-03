@@ -2,6 +2,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./extra-hardware-configuration.nix
 
     # ./services/calibre.nix
     ./services/gitea
@@ -23,14 +24,16 @@
 
   machineVars = {
     headless = true;
-    dataDrives = let
-      momiji = "/data2";
-    in {
+    dataDrives = {
       drives = {
-        cirno = "/data";
-        inherit momiji;
+        backup = "/data2/backup";
+        momiji = "/data2/momiji";
+        cirno = "/data2/cirno";
+        media = "/data2/media";
+        postgres = "/data2/postgres";
+        home = "/data2/home";
       };
-      default = momiji;
+      default = "/data2/momiji";
     };
   };
 

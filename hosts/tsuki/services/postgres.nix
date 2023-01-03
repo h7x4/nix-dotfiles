@@ -10,7 +10,7 @@
       host all all ::1/128 trust
     '';
     port = secrets.ports.postgres;
-    dataDir = "${config.machineVars.dataDrives.default}/db/postgres/${config.services.postgresql.package.psqlSchema}";
+    dataDir = "${config.machineVars.dataDrives.drives.postgres}/${config.services.postgresql.package.psqlSchema}";
     # settings = {};
   };
 
@@ -18,7 +18,7 @@
     enable = true;
     openFirewall = true;
     initialEmail = "h7x4@nani.wtf";
-    initialPasswordFile = "${config.machineVars.dataDrives.default}/var/pgadmin_pass";
+    initialPasswordFile = "${config.machineVars.dataDrives.default}/keys/pgadmin_pass";
     port = secrets.ports.pgadmin;
     settings = {
       DATA_DIR = "${config.machineVars.dataDrives.default}/var/pgadmin";
@@ -27,7 +27,7 @@
 
   services.postgresqlBackup = {
     enable = true;
-    location = "${config.machineVars.dataDrives.default}/backup/postgres";
+    location = "${config.machineVars.dataDrives.drives.backup}/postgres";
     backupAll = true;
   };
 }
