@@ -4,24 +4,16 @@
     ./hardware-configuration.nix
 
     # ./services/calibre.nix
-    # ./services/dokuwiki.nix
     ./services/gitea
-    # ./services/gitlab
     ./services/grafana
     ./services/hydra.nix
     # ./services/jitsi.nix
     ./services/jupyter.nix
     # ./services/keycloak.nix
-    # ./services/libvirt.nix
     ./services/matrix
     ./services/nginx
-    # ./services/openldap.nix
-    # ./services/openvpn.nix
     ./services/plex.nix
     ./services/postgres.nix
-    ./services/samba.nix
-    ./services/searx.nix
-    # ./services/syncthing.nix
     ./services/vscode-server.nix
   ];
 

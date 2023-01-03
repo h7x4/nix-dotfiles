@@ -94,16 +94,12 @@
       (host ["www"] { root = "${inputs.website.packages.${pkgs.system}.default}/"; })
       (proxy ["matrix"] "http://localhost:${s ports.matrix.listener}" {})
       (host ["madmin"] { root = "${pkgs.synapse-admin}/"; })
-      (host ["cache"] { root = "/var/lib/nix-cache"; })
+      # (host ["cache"] { root = "/var/lib/nix-cache"; })
       (proxy ["git"] "http://localhost:${s ports.gitea}" {})
       (proxy ["px1"] "https://${ips.px1}:${s ports.proxmox}" {
           locations."/".proxyWebsockets = true;
       })
       (proxy ["idrac"] "https://${ips.idrac}" {})
-      (proxy ["searx"] "http://localhost:${s ports.searx}" {})
-      (proxy ["dyn"] "http://${ips.crafty}:${s ports.dynmap}" {
-        # basicAuthFile = keys.htpasswds.default;
-      })
       (proxy ["log"] "http://localhost:${s ports.grafana}" {
         locations."/".proxyWebsockets = true;
       })
@@ -116,7 +112,7 @@
     ] ++ (let
       stickerpickers = pkgs.callPackage ../matrix/maunium-stickerpicker.nix {
         inherit (inputs) maunium-stickerpicker;
-    };
+      };
     in [
       (host ["stickers-pingu"] { root = "${stickerpickers.stickers-pingu}/"; })
       (host ["stickers-h7x4"] { root = "${stickerpickers.stickers-h7x4}/"; })
@@ -126,7 +122,5 @@
   networking.firewall.allowedTCPPorts = [
     80
     443
-  #   secrets.ports.openvpn
-    ports.minecraft
   ];
 }
