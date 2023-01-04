@@ -32,7 +32,7 @@
     website = {
       url = "git+https://git.nani.wtf/h7x4/nani.wtf?ref=main";
       # url = "path:/home/h7x4/git/nani.wtf";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
 
     maunium-stickerpicker = {
