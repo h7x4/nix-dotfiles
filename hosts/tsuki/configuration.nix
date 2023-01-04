@@ -13,6 +13,7 @@
     # ./services/keycloak.nix
     ./services/matrix
     ./services/nginx
+    ./services/osuchan.nix
     ./services/plex.nix
     ./services/postgres.nix
     ./services/vscode-server.nix

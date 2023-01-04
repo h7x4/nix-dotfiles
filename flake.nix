@@ -29,6 +29,11 @@
       flake = false;
     };
 
+    osuchan = {
+      url = "git+file:///home/h7x4/git/osuchan-line-bot";
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     website = {
       url = "git+https://git.nani.wtf/h7x4/nani.wtf?ref=main";
       # url = "path:/home/h7x4/git/nani.wtf";
@@ -65,6 +70,7 @@
     vscode-server,
     secrets,
     fonts,
+    osuchan,
     maunium-stickerpicker,
     dotfiles,
     website
@@ -79,7 +85,7 @@
         android_sdk.accept_license = true;
       };
 
-      # overlays = [ self.overlays.lib ];
+      overlays = [ osuchan.overlays.default ];
     };
 
     pkgs = import nixpkgs pkgs-config;
@@ -126,6 +132,7 @@
             "${vscode-server}/default.nix"
 
             secrets.outputs.nixos-config
+            osuchan.outputs.nixosModules.default
 
             {
               config._module.args = {
