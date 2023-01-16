@@ -107,6 +107,7 @@
       (proxy ["py"] "http://localhost:${s ports.jupyterhub}" {
         locations."/".proxyWebsockets = true;
       })
+      (proxy ["dyn"] "http://localhost:${s ports.minecraft.dynmap}" {})
       (proxy ["osu"] "http://localhost:${s ports.osuchan}" {})
       # (host ["vpn"] "" {})
       (proxy ["hydra"] "http://localhost:${s ports.hydra}" {})

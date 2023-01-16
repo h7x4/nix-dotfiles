@@ -44,6 +44,10 @@
       url = "git+file:///home/h7x4/git/maunium-stickerpicker-nix";
     };
 
+    minecraft = {
+      url = "github:infinidoge/nix-minecraft";
+    };
+
     vscode-server = {
       url = "github:msteen/nixos-vscode-server";
       flake = false;
@@ -72,6 +76,7 @@
     fonts,
     osuchan,
     maunium-stickerpicker,
+    minecraft,
     dotfiles,
     website
   }: let
@@ -133,6 +138,7 @@
 
             secrets.outputs.nixos-config
             osuchan.outputs.nixosModules.default
+            minecraft.outputs.nixosModules.minecraft-servers
 
             {
               config._module.args = {

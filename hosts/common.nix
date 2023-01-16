@@ -212,14 +212,16 @@ in {
       shell = pkgs.zsh;
 
       extraGroups = [
-        "wheel"
-        "networkmanager"
-        "docker"
-        "disk"
         "audio"
-        "video"
-        "libvirtd"
+        "disk"
+        "docker"
         "input"
+        "libvirtd"
+        "media"
+        "minecraft"
+        "networkmanager"
+        "video"
+        "wheel"
       ];
     };
 

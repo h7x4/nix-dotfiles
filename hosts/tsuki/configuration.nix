@@ -12,6 +12,7 @@
     ./services/jupyter.nix
     # ./services/keycloak.nix
     ./services/matrix
+    ./services/minecraft
     ./services/nginx
     ./services/osuchan.nix
     ./services/plex.nix
