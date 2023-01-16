@@ -18,6 +18,7 @@ in {
     ./programs/git.nix
     ./programs/gpg.nix
     ./programs/less.nix
+    ./programs/ncmpcpp.nix
     ./programs/neovim.nix
     ./programs/newsboat.nix
     ./programs/tmux.nix
