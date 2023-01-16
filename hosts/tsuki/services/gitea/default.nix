@@ -16,17 +16,17 @@
   services.gitea = {
     enable = true;
     user = "git";
-    cookieSecure = true;
     rootUrl = "https://git.nani.wtf/";
     domain = "git.nani.wtf";
     httpPort = secrets.ports.gitea;
-    disableRegistration = true;
 
     package = unstable-pkgs.gitea;
 
+    stateDir = "${config.machineVars.dataDrives.default}/var/gitea";
+
     dump = {
       enable = true;
-      interval = "hourly";
+      interval = "weekly";
     };
 
     database = {
@@ -41,6 +41,9 @@
         BUILTIN_SSH_SERVER_USER="git";
         LANDING_PAGE = "/explore/repos";
       };
+
+      service.DISABLE_REGISTRATION = true;
+      session.COOKIE_SECURE = true;
 
       ui = {
         DEFAULT_THEME = "monokai";
@@ -88,10 +91,6 @@
       # };
     };
   };
-
-  # TODO: remove when updating to nixpkgs 22.11
-  systemd.services.gitea.serviceConfig.SystemCallFilter = 
-    lib.mkForce "~@clock @cpu-emulation @debug @keyring @memlock @module @mount @obsolete @raw-io @reboot @setuid @swap";
 
   system.activationScripts.linkGiteaThemes.text = let
     themes = pkgs.stdenv.mkDerivation {
