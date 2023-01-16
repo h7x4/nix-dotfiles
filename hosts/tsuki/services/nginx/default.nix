@@ -113,7 +113,7 @@
       (proxy ["hydra"] "http://localhost:${s ports.hydra}" {})
     ] ++ (let
       stickerpickers = pkgs.callPackage ../matrix/maunium-stickerpicker.nix {
-        inherit (inputs) maunium-stickerpicker;
+        inherit (inputs) maunium-stickerpicker secrets;
       };
     in [
       (host ["stickers-pingu"] { root = "${stickerpickers.stickers-pingu}/"; })
