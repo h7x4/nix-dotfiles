@@ -7,6 +7,7 @@
     # ./services/calibre.nix
     ./services/gitea
     ./services/grafana
+    ./services/headscale.nix
     ./services/hydra.nix
     # ./services/jitsi.nix
     ./services/jupyter.nix
