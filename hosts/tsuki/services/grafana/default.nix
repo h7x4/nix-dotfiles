@@ -8,15 +8,20 @@
 
   services.grafana = {
     enable = true;
-    domain = "log.nani.wtf";
-    port = secrets.ports.grafana;
-    addr = "0.0.0.0";
     dataDir = "${config.machineVars.dataDrives.default}/var/grafana";
 
-    database = {
-      type = "postgres";
-      user = "grafana";
-      host = "localhost:${toString secrets.ports.postgres}";
+    settings = {
+      server = {
+        domain = "log.nani.wtf";
+        http_addr = "0.0.0.0";
+        http_port = secrets.ports.grafana;
+      };
+
+      database = {
+        type = "postgres";
+        user = "grafana";
+        host = "localhost:${toString secrets.ports.postgres}";
+      };
     };
   };
 }
