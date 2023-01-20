@@ -129,14 +129,6 @@ in {
         text = extendedLib.termColors.front.red "Be careful or something, idk...\n";
       };
 
-      "resolv.conf".source = let
-        inherit (lib.strings) concatStringsSep;
-        inherit (pkgs) writeText;
-      in writeText "resolv.conf" ''
-        ${concatStringsSep "\n" (map (ns: "nameserver ${ns}") config.networking.nameservers)}
-        options edns0
-      '';
-
       currentSystemPackages = {
         target = "current-system-packages";
         text = let
@@ -233,6 +225,8 @@ in {
   services = {
     tumbler.enable = !config.machineVars.headless;
     gnome.gnome-keyring.enable = !config.machineVars.headless;
+
+    resolved.enable = true;
 
     openssh = {
       # enable = true;
