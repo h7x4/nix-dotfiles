@@ -48,6 +48,10 @@
       url = "github:infinidoge/nix-minecraft";
     };
 
+    matrix-synapse-next = {
+      url = "github:dali99/nixos-matrix-modules";
+    };
+
     vscode-server = {
       url = "github:msteen/nixos-vscode-server";
       flake = false;
@@ -70,14 +74,16 @@
     nixpkgs-unstable,
     home-manager,
     home-manager-local,
-    nix-attr-search,
-    vscode-server,
-    secrets,
+
+    dotfiles,
     fonts,
-    osuchan,
+    matrix-synapse-next,
     maunium-stickerpicker,
     minecraft,
-    dotfiles,
+    nix-attr-search,
+    osuchan,
+    secrets,
+    vscode-server,
     website
   }: let
     system = "x86_64-linux";
@@ -139,6 +145,7 @@
             secrets.outputs.nixos-config
             osuchan.outputs.nixosModules.default
             minecraft.outputs.nixosModules.minecraft-servers
+            matrix-synapse-next.nixosModules.synapse
 
             {
               config._module.args = {

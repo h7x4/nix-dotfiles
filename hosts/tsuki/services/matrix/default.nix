@@ -10,8 +10,20 @@
     ./coturn.nix
   ];
 
-  services.matrix-synapse = {
+  services.matrix-synapse-next = {
     enable = true;
+    enableNginx = true;
+    dataDir = "${config.machineVars.dataDrives.default}/var/matrix";
+
+    workers = {
+      federationSenders = 3;
+      federationReceivers = 3;
+      initialSyncers = 1;
+      normalSyncers = 1;
+      eventPersisters = 1;
+      useUserDirectoryWorker = true;
+    };
+
     settings = {
       turn_uris = let
         inherit (config.services.coturn) realm;
@@ -28,9 +40,7 @@
       in [
         {
           server_name = "matrix.org";
-          verify_keys = {
-            "ed25519:auto" = "Noi6WqcDj0QmPxCNQqgezwTlBKrfqehY1u2FyWP9uYw";
-          };
+          verify_keys."ed25519:auto" = "Noi6WqcDj0QmPxCNQqgezwTlBKrfqehY1u2FyWP9uYw";
         }
         (emptykey "pvv.ntnu.no")
         (emptykey "feal.no")
@@ -42,25 +52,6 @@
 
       enable_metrics = true;
 
-      listeners = [
-        {
-          port = secrets.ports.matrix.listener;
-          bind_addresses = [
-            "0.0.0.0"
-            "::1"
-          ];
-          type = "http";
-          tls = false;
-          x_forwarded = true;
-          resources = [
-            {
-              names = [ "client" "federation" "metrics" ];
-              compress = false;
-            }
-          ];
-        }
-      ];
-
       # NOTE: To register a new admin user, use a nix-shell with
       # package 'matrix-synapse', and use the register_new_matrix_user command
       # with the registration shared secret
@@ -70,12 +61,17 @@
 
       # password_config.enabled = lib.mkForce false;
 
-      dataDir = "${config.machineVars.dataDrives.default}/var/matrix";
-
-      database_type = "postgres";
-      # database_args = {
-      #   password = "synapse";
-      # };
+      database = {
+        name = "psycopg2";
+        args = {
+          user = "matrix-synapse";
+          # TODO: Generate proper password
+          password = "";
+          database = "matrix-synapse";
+          host = "localhost";
+          port = secrets.ports.postgres;
+        };
+      };
 
       # TODO: Figure out a way to do this declaratively.
       #       The files need to be owned by matrix-synapse
@@ -90,7 +86,7 @@
     };
   };
 
-  # services.redis.enable = true;
+  services.redis.servers."".enable = true;
 
   networking.firewall = {
     interfaces.enp2s0 = let
