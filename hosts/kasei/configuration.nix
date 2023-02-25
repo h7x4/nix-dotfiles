@@ -1,22 +1,10 @@
 { config, lib, pkgs, inputs, specialArgs, ... }:
 {
-  imports = [
-    ./hardware-configuration.nix
-  ];
-
-  services.xserver.enable = true;
-  services.xserver.videoDrivers = ["nvidia"];
-
-  # TODO: See ../common.nix
-  services.xserver.displayManager.lightdm.enable = true;
-
   machineVars = {
     headless = false;
     gaming = true;
     development = true;
     creative = true;
-
-    wlanInterface = "wlp2s0f0u7u3";
 
     dataDrives = let
       main = "/data";
@@ -26,11 +14,11 @@
     };
 
     screens = {
-      DP-4 = {
+      DVI-D-0 = {
         primary = true;
-        frequency = 144;
       };
-      HDMI-0 = {
+      DP-4 = {
+        frequency = 144;
         position = "1920x0";
       };
     };
@@ -44,6 +32,18 @@
   };
 
   # security.pam.services.login.unixAuth = true;
+
+  networking = {
+    hostName = "kasei";
+    networkmanager.enable = true;
+    interfaces.enp6s0.useDHCP = true;
+    firewall.enable = true;
+  };
+
+  services = {
+    openssh.enable = true;
+    xserver.videoDrivers = ["nvidia"];
+  };
 
   # TODO: remove when merged: https://github.com/NixOS/nixpkgs/pull/167388
   systemd.services.logid = {
