@@ -1,8 +1,6 @@
 { pkgs, unstable-pkgs, lib, extendedLib, config, inputs, secrets, ... }:
 let
-  # inherit (specialArgs) machineVars;
   inherit (config) machineVars;
-  # has_graphics = !config.machineVars.headless;
 in {
   nixpkgs.config = {
     allowUnfree = true;
@@ -243,7 +241,7 @@ in {
     pcscd.enable = true;
 
     dbus = {
-      # enable = !machineVars.headless;
+      enable = true;
       packages = with pkgs; [
         gcr
         dconf
@@ -251,17 +249,7 @@ in {
     };
 
     xserver = {
-      # TODO: What is going on here?
-      #       For some reason, this leads to infinite recursion.
-      #       This needs to be fixed!
-      #       Same with `displayManager.lightdm.enable`
-      #       options are defined in each hosts config file for the time being.
-      #
-      #       I have a hypothesis that there are some asserts within xserver that
-      #       makes it so that other software can not be activated at the same time
-      #       and that those asserts triggers some kind of evaluation chain that
-      #       recurses infinitely.
-      # enable = true;
+      enable = !config.machineVars.headless;
       layout = "us";
       xkbOptions = "caps:escape";
 
@@ -272,7 +260,7 @@ in {
 
       desktopManager = {
         xterm.enable = false;
-        xfce.enable = !config.machineVars.headless;
+        xfce.enable = true;
       };
 
       windowManager.xmonad = {
@@ -284,9 +272,7 @@ in {
         ];
       };
 
-      # displayManager.startx.enable = true;
-      # displayManager.gdm.enable = true;
-      # displayManager.lightdm.enable = true;
+      displayManager.lightdm.enable = true;
       displayManager.defaultSession = "none+xmonad";
     };
 
