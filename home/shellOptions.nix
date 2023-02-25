@@ -83,11 +83,11 @@ in rec {
         htop = "${bottom}/bin/btm";
         hhtop = "${htop}/bin/htop";
 
-        # This is potentially dangerous, as procs flags are totally different
-        ps = "${procs}/bin/procs";
+        dig = "${dog}/bin/dog";
 
-        # Find flags are so different that I've renamed fd to fin for time being
-        fin = "${fd}/bin/fd";
+        # Flags are incompatible, so they are suffixed by -x
+        psx = "${procs}/bin/procs";
+        findx = "${fd}/bin/fd";
 
         ag="${ripgrep}/bin/rg";
 
