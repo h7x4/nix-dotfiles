@@ -63,6 +63,9 @@
   };
 
   boot = {
+    initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
+    initrd.kernelModules = [ ];
+    kernelModules = [ "kvm-amd" ];
     blacklistedKernelModules = ["nouveau"];
     kernelParams = ["nomodeset"];
     loader = {
@@ -78,29 +81,36 @@
     };
   };
 
-  networking = {
-    hostName = "kasei";
-    networkmanager.enable = true;
-    interfaces.wlp2s0f0u7u3.useDHCP = true;
-    firewall.enable = true;
-  };
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/70a0ca95-4ca4-4298-a8c4-e492705cfb93";
+      fsType = "btrfs";
+    };
 
-  services = {
-    openssh.enable = true;
-    printing.enable = true;
-    cron = {
-      enable = true;
-      systemCronJobs = [
-    #     "*/5 * * * *      root    date >> /tmp/cron.log"
-      ];
+    "/boot" = {
+      device = "/dev/disk/by-uuid/D883-A077";
+      fsType = "vfat";
+    };
+
+    "/data" = {
+      device = "/dev/disk/by-label/data1";
+      fsType = "btrfs";
+    };
+
+    "/data/disks/data2" = {
+      device = "/dev/disk/by-uuid/7afc5f6b-947a-4c86-a5b5-dfefe42899c0";
+      fsType = "ext4";
     };
   };
 
-  hardware.bluetooth.enable = true;
+  swapDevices = [ ];
 
-  virtualisation = {
-    docker.enable = true;
-    libvirtd.enable = true;
+  hardware = {
+    bluetooth.enable = true;
+    cpu.amd.updateMicrocode = true;
+    enableRedistributableFirmware = true;
+    keyboard.zsa.enable = true;
+    logitech.wireless.enable = true;
   };
 }
 
