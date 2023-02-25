@@ -30,4 +30,6 @@
     location = "${config.machineVars.dataDrives.drives.backup}/postgres";
     backupAll = true;
   };
+
+  environment.systemPackages = [ config.services.postgresql.package ];
 }
