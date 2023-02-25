@@ -104,6 +104,8 @@
   in {
     extendedLib = import ./lib { stdlib = pkgs.lib; };
 
+    inherit pkgs;
+
     homeConfigurations = {
       h7x4 = home-manager.lib.homeManagerConfiguration {
         inherit system;
