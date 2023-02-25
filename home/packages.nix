@@ -69,6 +69,7 @@ in {
     parallel
     pinentry
     pinentry-curses
+    progress
     python3
     rclone
     ripgrep
@@ -146,7 +147,7 @@ in {
       mopidy-youtube
       mpc_cli
       nyxt
-      obsidian
+      # obsidian
       pcloud
       pulseaudio
       pulsemixer
@@ -159,6 +160,7 @@ in {
       tagainijisho
       teams
       tenacity
+      thunderbird
       transcribe
       wireshark
       xcalib
