@@ -1,7 +1,8 @@
 { ... }:
 {
   services.picom = {
-    enable = true;
+    # See https://github.com/NixOS/nixpkgs/issues/206663
+    enable = false;
 
     fade = true;
     fadeSteps = [ 0.1 0.1 ];
