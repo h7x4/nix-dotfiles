@@ -85,7 +85,7 @@ myScratchpads = [ NS "ncmpcpp"     spawnNC findNC layoutA
                 ]
   where
     spawnNC = myTerminal ++ " --title ncmpcppScratchpad -e ncmpcpp"
-    spawnTM = myTerminal ++ " --class instanceClass,floatingTerminal -e tmux new-session -A -s f"
+    spawnTM = myTerminal ++ " --class floatingTerminal -e tmux new-session -A -s f"
     -- spawnMX = "element"
     spawnFB = "thunar --class=floatingThunar"
     spawnEX = "emacs --name=floatingEmacs"
@@ -143,9 +143,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
 
      ++
-
-    -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
-    -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
 
     [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
         | (key, sc) <- zip [xK_u, xK_i] [0..]
@@ -323,10 +320,10 @@ polybarHook dbus =
           , ppLayout          =
             wrap "%{T3}" "%{T-}" .
             (\case
-              "Spacing Full"           -> "\62160"
-              "Spacing Tall"           -> "\57934"
-              "Spacing Magnifier Tall" -> "\61442" -- 🔍
-              "Spacing Mirror Tall"    -> "\57935" -- 🪞
+              "Spacing Full"           -> "F"
+              "Spacing Tall"           -> "T"
+              "Spacing Magnifier Tall" -> "Mag"
+              "Spacing Mirror Tall"    -> "Mir"
             )
           , ppOrder           = \(ws:l:t:ex) -> [ws,l] ++ ex ++ [t]
           }
