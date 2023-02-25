@@ -119,4 +119,10 @@
     ensureUsers =
       (o config.services.minecraft-servers.enable (db "dynmap"));
   };
+
+  systemd.services.minecraft-server-kakuland.requires = [ "postgresql.service" ];
+  systemd.services.minecraft-server-kakuland.after = [
+    "postgresql.service"
+    "data2-momiji.mount"
+  ];
 }
