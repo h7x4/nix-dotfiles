@@ -23,30 +23,16 @@
 
     aliases = {
         aliases = "!git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1 = \\2/g'";
-        uncommit = "reset --soft HEAD^";
-        rev = "checkout HEAD -- ";
-        revall = "checkout .";
-        # unstage = "rm --cached ";
-        unstage = "restore --staged ";
         delete-merged = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d";
-
-        mkbr = "checkout -b";
-        mvbr = "branch -m";
-        rmbr = "branch -d";
-        rrmbr = "push origin --delete";
-
         graph = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all";
         graphv = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all";
-        g = "!git graph";
+        forcepush = "push --force-with-lease --force-if-includes";
     };
 
     extraConfig = {
       core = {
         whitespace = "space-before-tab,-indent-with-non-tab,trailing-space";
-
-        precomposeunicode = false;
         untrackedCache = true;
-
         editor = "nvim";
       };
 
@@ -56,7 +42,12 @@
       init.defaultBranch = "main";
       fetch.prune = true;
       pull.rebase = true;
-      push.default = "current";
+
+      push = {
+        default = "current";
+        autoSetupRemote = true;
+        followTags = true;
+      };
 
       merge = {
         tool = "nvimdiff";
