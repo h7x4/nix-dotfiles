@@ -4,6 +4,7 @@ let
 
   # Applications
   google-chrome = "google-chrome.desktop";
+  firefox = "firefox.desktop";
   gimp = "gimp.desktop";
   inkscape = "org.inkscape.Inkscape.desktop";
   vscode = "code.desktop";
@@ -75,10 +76,11 @@ let
   image-viewer = sxiv;
   pdf-viewer = zathura;
   video-player = mpv;
-  web-browser = google-chrome;
+  web-browser = firefox;
 
 in {
 
+  xdg.dataFile."applications/mimeapps.list".force = true;
   xdg.mimeApps = {
     enable = true;
     # associations.added = {};
