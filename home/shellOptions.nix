@@ -131,16 +131,7 @@ in rec {
       # Nix related aliases
 
       "Nix Stuff" = {
-
-        # FIXME: This for some reason uses an outdated version of home-manager and nixos-rebuild
-        # nxr = "sudo ${nixos-rebuild}/bin/nixos-rebuild switch";
-
         nxr = "sudo nixos-rebuild switch";
-        nxp = "nix-shell -p ";
-
-        nxc = "sudoedit /etc/nixos/configuration.nix";
-        nxh = "vim ~/.config/nixpkgs/home.nix";
-        ns = "nix-shell";
 
         nxr-hm = "sudo nixos-rebuild switch --flake ~/nix#home-manager-tester";
         nxr-ks = "sudo nixos-rebuild switch --flake ~/nix#kasei";
