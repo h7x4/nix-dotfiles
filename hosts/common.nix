@@ -10,17 +10,15 @@ in {
     package = unstable-pkgs.nixVersions.stable;
     distributedBuilds = config.networking.hostName != "Tsuki";
 
-    extraOptions = ''
-      experimental-features = nix-command flakes
-      builders-use-substitutes = true
-      allowed-uris = http:// https://
-    '';
-
     settings = {
+      allow-dirty = true;
+      allowed-uris = [ "http://" "https://" ];
+      auto-optimise-store = true;
+      binary-caches = [ "https://cache.nixos.org/" ];
+      builders-use-substitutes = true;
+      experimental-features = [ "nix-command" "flakes" "repl-flake" ];
+      log-lines = 50;
       trusted-users = [ "h7x4" "nix-builder" ];
-      binary-caches = [
-        "https://cache.nixos.org/"
-      ];
     };
 
     buildMachines = [
