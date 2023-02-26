@@ -144,11 +144,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1677289764,
-        "narHash": "sha256-mPltE1XGxKTBMlIrFsCGb4+kO/rQhR8Jy6OACfIScoU=",
+        "lastModified": 1677376635,
+        "narHash": "sha256-ESBC0dvaCpbhUs3DvWxC0JMF6BoKo6xPCaqICvOyPNg=",
         "owner": "infinidoge",
         "repo": "nix-minecraft",
-        "rev": "e2921a87ddd366e08d413159b94de48bc0e1e7b2",
+        "rev": "fa5b93f66b355d6b549d0d19733030f2eb09209e",
         "type": "github"
       },
       "original": {
@@ -212,11 +212,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1677063315,
-        "narHash": "sha256-qiB4ajTeAOVnVSAwCNEEkoybrAlA+cpeiBxLobHndE8=",
+        "lastModified": 1677342105,
+        "narHash": "sha256-kv1fpkfCJGb0M+LZaCHFUuIS9kRIwyVgupHu86Y28nc=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "988cc958c57ce4350ec248d2d53087777f9e1949",
+        "rev": "b1f87ca164a9684404c8829b851c3586c4d9f089",
         "type": "github"
       },
       "original": {
@@ -243,11 +243,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1677179781,
-        "narHash": "sha256-+peLp16ruWLuTFHo0ZUbLlS1/meS/+RsWQQ9bUAzOh8=",
+        "lastModified": 1677341534,
+        "narHash": "sha256-zqaJuOTnKzg5AubC4rzzJ/IS5kU5n4U7vxosv1Fv8Ug=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "50c23cd4ff6c8344e0b4d438b027b3afabfe58dd",
+        "rev": "7076110064c09f0b3942f609f2134c1358ef2e50",
         "type": "github"
       },
       "original": {
@@ -329,11 +329,8 @@
         ]
       },
       "locked": {
-        "lastModified": 1677343807,
-        "narHash": "sha256-yBX++xauLwJt1RXLKkFZ81Aamqc34ddQoAgvWREMhAQ=",
-        "ref": "refs/heads/main",
-        "rev": "f1356f693f98828637b4b94a2559bf88666ff28a",
-        "revCount": 52,
+        "lastModified": 1677374425,
+        "narHash": "sha256-rcXsPpdbcm/9ULPhldGW9FbroC9y+Vt/HRMGBuJ5lmY=",
         "type": "git",
         "url": "file:///home/h7x4/git/nix-secrets"
       },
