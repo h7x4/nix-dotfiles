@@ -1,4 +1,4 @@
-{ secrets, ... }:
+{ pkgs, secrets, ... }:
 {
   programs.firefox = {
     enable = true;
@@ -7,6 +7,11 @@
         toolbar = true;
         bookmarks = secrets.browser.bookmarks;
       }];
+      search = {
+        default = "Google";
+        engines = secrets.browser.engines { inherit pkgs; };
+        force = true;
+      };
       settings = {};
     };
   };
