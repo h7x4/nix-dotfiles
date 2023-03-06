@@ -11,6 +11,7 @@
     ./services/hydra.nix
     # ./services/jitsi.nix
     ./services/jupyter.nix
+    ./services/kanidm.nix
     # ./services/keycloak.nix
     ./services/matrix
     ./services/minecraft

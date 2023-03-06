@@ -109,7 +109,11 @@
       })
       (proxy ["dyn"] "http://localhost:${s ports.minecraft.dynmap}" {})
       (proxy ["osu"] "http://localhost:${s ports.osuchan}" {})
-      (proxy ["vpn"] "http://localhost:${s ports.headscale}" {})
+      (proxy ["auth"] "https://localhost:8300" {
+        extraConfig = ''
+          proxy_ssl_verify off;
+        '';
+      })
       (proxy ["hydra"] "http://localhost:${s ports.hydra}" {})
     ] ++ (let
       stickerpickers = pkgs.callPackage ../matrix/maunium-stickerpicker.nix {
