@@ -72,7 +72,7 @@ in {
         label = "%date% | %time%";
         label-padding = 1;
 
-        date = "W%W | %Y.%M.%d | %A";
+        date = "W%W | %Y.%m.%d | %A";
         time = "%R";
       };
 
@@ -247,7 +247,7 @@ in {
 
         label-song = "%title%";
         label.song = {
-          maxlen = 15;
+          maxlen = 30;
           ellipsis = true;
           padding = 1;
         };
