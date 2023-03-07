@@ -29,6 +29,8 @@
       flake = false;
     };
 
+    sops-nix.url = "github:Mic92/sops-nix";
+
     osuchan = {
       url = "git+file:///home/h7x4/git/osuchan-line-bot";
       # inputs.nixpkgs.follows = "nixpkgs";
@@ -83,6 +85,7 @@
     nix-attr-search,
     osuchan,
     secrets,
+    sops-nix,
     vscode-server,
     website
   }: let
@@ -105,6 +108,10 @@
     extendedLib = import ./lib { stdlib = pkgs.lib; };
 
     inherit pkgs;
+
+    devShells.${system}.default = pkgs.mkShell {
+      packages = with pkgs; [ sops ];
+    };
 
     homeConfigurations = {
       h7x4 = home-manager.lib.homeManagerConfiguration {
@@ -148,6 +155,7 @@
             osuchan.outputs.nixosModules.default
             minecraft.outputs.nixosModules.minecraft-servers
             matrix-synapse-next.nixosModules.synapse
+            sops-nix.nixosModules.sops
 
             {
               config._module.args = {

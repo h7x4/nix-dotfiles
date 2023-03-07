@@ -6,6 +6,8 @@ in {
     allowUnfree = true;
   };
 
+  sops.defaultSopsFile = ../secrets/default.yaml;
+
   nix = {
     package = unstable-pkgs.nixVersions.stable;
     distributedBuilds = config.networking.hostName != "Tsuki";
