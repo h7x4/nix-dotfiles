@@ -8,6 +8,7 @@
     ./services/gitea
     ./services/grafana
     ./services/headscale.nix
+    ./services/hedgedoc.nix
     ./services/hydra.nix
     # ./services/jitsi.nix
     ./services/jupyter.nix

@@ -107,7 +107,8 @@
       (proxy ["py"] "http://localhost:${s ports.jupyterhub}" {
         locations."/".proxyWebsockets = true;
       })
-      (proxy ["dyn"] "http://localhost:${s ports.minecraft.dynmap}" {})
+      (proxy ["docs"] "http://localhost:${s config.services.hedgedoc.settings.port}" {})
+      (proxy ["map"] "http://localhost:${s ports.minecraft.dynmap}" {})
       (proxy ["osu"] "http://localhost:${s ports.osuchan}" {})
       (proxy ["auth"] "https://localhost:8300" {
         extraConfig = ''
