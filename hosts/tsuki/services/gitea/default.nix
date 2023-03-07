@@ -45,6 +45,20 @@
       service.DISABLE_REGISTRATION = true;
       session.COOKIE_SECURE = true;
 
+      oauth2_client = {
+        ENABLE_AUTO_REGISTRATION = true;
+        OPENID_CONNECT_SCOPES = "email profile";
+        UPDATE_AVATAR = true;
+        ACCOUNT_LINKING = "auto";
+        USERNAME = "userid";
+      };
+
+      log.LEVEL = "Info";
+
+      database.LOG_SQL = false;
+
+      repository.DISABLE_STARS = true;
+
       ui = {
         DEFAULT_THEME = "monokai";
         THEMES = lib.strings.concatStringsSep "," [
