@@ -99,7 +99,10 @@
         android_sdk.accept_license = true;
       };
 
-      overlays = [ osuchan.overlays.default ];
+      overlays = [
+        (self: super: { kanidm = unstable-pkgs.callPackage ./package-overrides/kanidm.nix {}; })
+        osuchan.overlays.default
+      ];
     };
 
     pkgs = import nixpkgs pkgs-config;
