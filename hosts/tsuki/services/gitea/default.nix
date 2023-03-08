@@ -13,6 +13,12 @@
     packages = with unstable-pkgs; [ gitea ];
   };
 
+  sops.secrets."postgres/gitea" = rec {
+    restartUnits = [ "gitea.service" ];
+    owner = config.services.gitea.user;
+    group = config.users.users.${owner}.group;
+  };
+
   services.gitea = {
     enable = true;
     user = "git";
@@ -32,7 +38,7 @@
     database = {
       type = "postgres";
       user = "gitea";
-      passwordFile = secrets.keys.postgres.gitea;
+      passwordFile = config.sops.secrets."postgres/gitea".path;
       createDatabase = false;
     };
 
