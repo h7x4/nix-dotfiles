@@ -6,14 +6,22 @@
     inherit (secrets) ips ports;
   in
 {
+  sops.secrets."cloudflare/api-key" = {};
 
-  # All of these nginx endpoints are hosted through a cloudflare proxy.
-  # This has several implications for the configuration:
-  #   - The sites I want to protect using a client side certificate needs to 
-  #     use a client side certificate given by cloudflare, since the client cert set here
-  #     only works to secure communication between nginx and cloudflare
-  #   - I don't need to redirect http traffic to https manually, as cloudflare does it for me
-  #   - I don't need to request ACME certificates manually, as cloudflare does it for me.
+  security.acme = {
+    acceptTerms = true;
+    defaults = {
+      email = "h7x4@nani.wtf";
+      dnsProvider = "cloudflare";
+      credentialsFile = config.sops.secrets."cloudflare/api-key".path;
+      dnsPropagationCheck = true;
+    };
+    certs."nani.wtf" = {
+      extraDomainNames = [ "*.nani.wtf" ];
+    };
+  };
+
+  users.groups.${config.security.acme.certs."nani.wtf".group}.members = [ "nginx" ];
 
   services.nginx = let
     generateServerAliases =
@@ -46,9 +54,8 @@
         subdomains: extraSettings: let
           settings = with keys.certificates; {
             serverAliases = drop 1 (generateServerAliases domains subdomains);
-            onlySSL = true;
-            sslCertificate = server.crt;
-            sslCertificateKey = server.key;
+            useACMEHost = "nani.wtf";
+            forceSSL = true;
 
             extraConfig = ''
               ssl_client_certificate ${cloudflare-origin-pull-ca};
@@ -77,22 +84,23 @@
             };
           };
 
-          onlySSL = true;
-
-          sslCertificate = keys.certificates.server.crt;
-          sslCertificateKey = keys.certificates.server.key;
+          useACMEHost = "nani.wtf";
+          forceSSL = true;
 
           extraConfig = ''
-            ssl_client_certificate ${cloudflare-origin-pull-ca};
-            ssl_verify_client on;
             add_header Access-Control-Allow-Origin *;
             default_type text/plain;
+            ssl_client_certificate ${cloudflare-origin-pull-ca};
+            ssl_verify_client on;
           '';
         };
       }
       (proxy ["plex"] "http://localhost:${s ports.plex}" {})
       (host ["www"] { root = "${inputs.website.packages.${pkgs.system}.default}/"; })
-      (proxy ["matrix"] "http://localhost:${s ports.matrix.listener}" {})
+      (host ["matrix"] {
+        enableACME = lib.mkForce false;
+        locations."/_synapse".proxyPass = "http://$synapse_backend";
+      })
       (host ["madmin"] { root = "${pkgs.synapse-admin}/"; })
       # (host ["cache"] { root = "/var/lib/nix-cache"; })
       (proxy ["git"] "http://localhost:${s ports.gitea}" {})

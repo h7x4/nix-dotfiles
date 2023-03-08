@@ -1,10 +1,12 @@
 { pkgs, config, ... }: let
   cfg = config.services.kanidm;
 in {
-  systemd.services.kanidm = {
-    requires = [ "acme-finished-${cfg.serverSettings.domain}.target" ];
+  systemd.services.kanidm = let
+    certName = config.services.nginx.virtualHosts.${cfg.serverSettings.domain}.useACMEHost;
+  in {
+    requires = [ "acme-finished-${certName}.target" ];
     serviceConfig.LoadCredential = let
-      certDir = config.security.acme.certs.${cfg.serverSettings.domain}.directory;
+      certDir = config.security.acme.certs.${certName}.directory;
     in [
       "fullchain.pem:${certDir}/fullchain.pem"
       "key.pem:${certDir}/key.pem"
