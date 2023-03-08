@@ -1,8 +1,7 @@
-{ secrets, ... }:
+{ config, lib, secrets, modulesPath, ... }:
 {
   imports = [
-    ./hardware-configuration.nix
-    ./extra-hardware-configuration.nix
+    (modulesPath + "/profiles/qemu-guest.nix")
 
     # ./services/calibre.nix
     ./services/gitea
@@ -51,19 +50,6 @@
 
   # security.pam.services.login.unixAuth = true;
 
-  boot.loader = {
-    grub = {
-      enable = true;
-      version = 2;
-      efiSupport = true;
-      fsIdentifier = "label";
-      device = "nodev";
-      efiInstallAsRemovable = true;
-    };
-    # efi.efiSysMountPoint = "/boot/efi";
-    # efi.canTouchEfiVariables = true;
-  };
-
   networking = {
     hostName = "Tsuki";
     networkmanager.enable = true;
@@ -98,11 +84,68 @@
     };
     groups = {
       media = {};
-      nix-builder = {};
     };
   };
 
+  sops.secrets."drives/cirno/credentials" = {};
+
+  fileSystems = let
+    nfsDrive = drivename: {
+      device = "10.0.0.36:/mnt/PoolsClosed/${drivename}";
+      fsType = "nfs";
+      options = [ "vers=3" "local_lock=all" ];
+    };
+  in {
+    "/" = {
+      device = "/dev/disk/by-uuid/54b9fd58-0df5-410c-ab87-766860967653";
+      fsType = "btrfs";
+    };
+
+    "/boot" = {
+      device = "/dev/disk/by-uuid/0A60-2885";
+      fsType = "vfat";
+    };
+
+    "/data2/backup" = nfsDrive "backup";
+    "/data2/momiji" = nfsDrive "momiji";
+    "/data2/media" = nfsDrive "media";
+    "/data2/postgres" = nfsDrive "postgres";
+    "/data2/home" = nfsDrive "home";
+
+    "/data2/cirno" = {
+      device = "//10.0.0.36/cirno";
+      fsType = "cifs";
+      options = [
+        "vers=3.0"
+        "cred=${config.sops.secrets."drives/cirno/credentials".path}"
+        "rw"
+        "uid=1000"
+      ];
+    };
+  };
+
+  swapDevices = [{ device = "/dev/disk/by-uuid/92a1a33f-89a8-45de-a45e-6c303172cd7f"; }];
+
   virtualisation = {
     docker.enable = true;
+  };
+
+  boot = {
+    initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" ];
+    initrd.kernelModules = [ ];
+    kernelModules = [ ];
+    extraModulePackages = [ ];
+    loader = {
+      grub = {
+        enable = true;
+        version = 2;
+        efiSupport = true;
+        fsIdentifier = "label";
+        device = "nodev";
+        efiInstallAsRemovable = true;
+      };
+      # efi.efiSysMountPoint = "/boot/efi";
+      # efi.canTouchEfiVariables = true;
+    };
   };
 }
