@@ -99,8 +99,11 @@
         android_sdk.accept_license = true;
       };
 
-      overlays = [
-        (self: super: { kanidm = unstable-pkgs.callPackage ./package-overrides/kanidm.nix {}; })
+      overlays = let 
+        nonrecursive-unstable-pkgs = nixpkgs-unstable.legacyPackages.${system};
+      in [
+        (self: super: { kanidm = super.callPackage ./package-overrides/kanidm.nix {}; })
+        (self: super: { pgadmin4 = nonrecursive-unstable-pkgs.pgadmin4; })
         osuchan.overlays.default
       ];
     };
