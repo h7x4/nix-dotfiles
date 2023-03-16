@@ -53,7 +53,6 @@ in {
     micro
     mkvtoolnix
     mmv
-    mps-youtube
     mtr
     navi
     neofetch
