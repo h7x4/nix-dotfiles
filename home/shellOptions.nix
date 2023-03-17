@@ -140,6 +140,20 @@ in rec {
         nxo = toString inputs.nix-attr-search.packages.${pkgs.system}.nix-option-search;
       };
 
+      # ░█▀▀░█░█░█▀▀░▀█▀░█▀▀░█▄█░█▀▄
+      # ░▀▀█░░█░░▀▀█░░█░░█▀▀░█░█░█░█
+      # ░▀▀▀░░▀░░▀▀▀░░▀░░▀▀▀░▀░▀░▀▀░
+
+      # Systemd related aliases
+
+      "Systemd Stuff" = {
+        scr = "sudo systemctl restart";
+        scs = "systemctl status";
+        scc = "systemctl cat";
+        scf = "systemctl list-units --failed";
+        jx = "journalctl -xeu";
+      };
+
       # ░█▀▀░█▀█░█▀▀░▀█▀░█░█░█▀█░█▀▄░█▀▀
       # ░▀▀█░█░█░█▀▀░░█░░█▄█░█▀█░█▀▄░█▀▀
       # ░▀▀▀░▀▀▀░▀░░░░▀░░▀░▀░▀░▀░▀░▀░▀▀▀
