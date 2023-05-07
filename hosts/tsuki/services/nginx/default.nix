@@ -117,6 +117,7 @@
       })
       (proxy ["docs"] "http://localhost:${s config.services.hedgedoc.settings.port}" {})
       (proxy ["map"] "http://localhost:${s ports.minecraft.dynmap}" {})
+      (proxy ["yt"] "http://localhost:${s config.services.invidious.port}" {})
       (proxy ["osu"] "http://localhost:${s ports.osuchan}" {})
       (proxy ["auth"] "https://localhost:8300" {
         extraConfig = ''
