@@ -12,6 +12,9 @@
       fpath+=(${pkgs.zsh-completions}/share/zsh/site-functions)
     '';
 
+    # TODO: Regenerate zcompdump with a systemd timer
+    completionInit = "autoload -Uz compinit && compinit -C";
+
     history = {
       extended = true;
       ignoreDups = false;
