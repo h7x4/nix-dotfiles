@@ -12,6 +12,7 @@ in {
     ./config/ssh/hosts/pvv.nix
     ./config/xdg
 
+    ./programs/atuin.nix
     ./programs/comma.nix
     ./programs/firefox.nix
     ./programs/gh.nix
