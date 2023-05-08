@@ -259,7 +259,7 @@ in {
 
       desktopManager = {
         xterm.enable = false;
-        xfce.enable = true;
+        xfce.enable = !config.machineVars.headless;
       };
 
       windowManager.xmonad = {
@@ -271,7 +271,7 @@ in {
         ];
       };
 
-      displayManager.lightdm.enable = true;
+      displayManager.lightdm.enable = !config.machineVars.headless;
       displayManager.defaultSession = "none+xmonad";
     };
 

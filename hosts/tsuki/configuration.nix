@@ -25,10 +25,6 @@
     ./services/vscode-server.nix
   ];
 
-  # TODO: See ../common.nix
-  services.xserver.enable = false;
-  services.xserver.displayManager.lightdm.enable = false;
-
   machineVars = {
     headless = true;
     dataDrives = {
