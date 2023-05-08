@@ -117,6 +117,7 @@ in {
       ahoviewer
       anki
       ark
+      birdtray
       calibre
       cool-retro-term
       copyq
@@ -137,6 +138,7 @@ in {
       koreader
       krita
       ktouch
+      libnotify
       libreoffice-fresh
       light
       maim
