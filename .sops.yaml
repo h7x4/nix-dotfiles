@@ -1,6 +1,7 @@
 keys:
   - &gpg_h7x4 F7D37890228A907440E1FD4846B9228E814A2AAC
   - &host_tsuki age1c92j4w0gqh32hwssl5m2mfrggssxax9pge8qxwytv9lmrnfttcvqdrgsst
+  - &host_kasei age1eu2a6m3adakfzelfa9pqpl74a5dz0wkyr0v7gegm5ajnx7aqmqcqsp2ftc
 
 creation_rules:
   - path_regex: secrets/[^/]+\.(yaml|json|env)$
@@ -9,3 +10,4 @@ creation_rules:
         - *gpg_h7x4
         age:
         - *host_tsuki
+        - *host_kasei

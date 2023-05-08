@@ -38,6 +38,7 @@
     networkmanager.enable = true;
     interfaces.enp6s0.useDHCP = true;
     firewall.enable = true;
+    hostId = "f0660cef";
   };
 
   services = {
