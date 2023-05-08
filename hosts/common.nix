@@ -226,11 +226,10 @@ in {
 
     resolved.enable = true;
 
-    openssh = {
-      # enable = true;
-      passwordAuthentication = false;
-      kbdInteractiveAuthentication = false;
-      permitRootLogin = "no";
+    openssh.settings = {
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+      PermitRootLogin = "no";
     };
 
     udev.packages = with pkgs; [
