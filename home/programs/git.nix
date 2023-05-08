@@ -28,6 +28,8 @@
         graphv = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all";
         forcepush = "push --force-with-lease --force-if-includes";
         authors = "shortlog --summary --numbered --email";
+        switch-interactive = "!cat <(git branch) <(git branch -r) | grep -v '^\\*\\|HEAD ->' | ${pkgs.fzf}/bin/fzf --reverse --info=inline --preview 'echo {} | xargs git show --color' | sed 's|\\s*.*/||' | xargs git switch";
+        si = "switch-interactive";
     };
 
     extraConfig = {
