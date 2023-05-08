@@ -11,48 +11,6 @@ in
     enable = true;
 
     package = pkgs.vscode;
-    # package = pkgs.vscodium;
-    # package = pkgs.vscode-fhsWithPackages (ps: with ps; [
-    #   # rustup
-    #   # zlib
-    #   asciidoc
-    #   asciidoctor
-    #   cabal2nix
-    #   clang
-    #   dart
-    #   dotnet-sdk
-    #   dotnet-sdk_3
-    #   dotnet-sdk_5
-    #   dotnetPackages.Nuget
-    #   elm2nix
-    #   elmPackages.elm
-    #   flutter
-    #   gcc
-    #   ghc
-    #   ghcid
-    #   haskellPackages.Cabal_3_6_3_0
-    #   maven
-    #   nixfmt
-    #   nixpkgs-fmt
-    #   # nixpkgs-hammering
-    #   nodePackages.node2nix
-    #   nodePackages.npm
-    #   nodePackages.sass
-    #   nodePackages.typescript
-    #   nodePackages.yarn
-    #   nodejs
-    #   plantuml
-    #   python3
-    #   rustc
-    #   rustup
-    #   sqlcheck
-    #   sqlint
-    #   sqlite
-    #   sqlite-web
-    #   xmlformat
-    #   xmlstarlet
-    # ]);
-    # package = pkgs.vscode-fhs;
 
     userSettings = let
       editor = mapPrefixToSet "editor" {
@@ -131,20 +89,6 @@ in
         languageServer = "Pylance";
       };
 
-      java = mapPrefixToSet "java" {
-        "configuration.checkProjectSettingsExclusions" = false;
-        # "test.report.showAfterExecution" = "always";
-        # "test.report.position" = "currentView";
-        "refactor.renameFromFileExplorer" = "preview";
-      };
-
-      # sync = mapPrefixToSet "sync" {
-      #   autoUpload = true;
-      #   autoDownload = true;
-      #   quietSync = true;
-      #   gist = "86e19852a95d31a278ad1a516b40556b";
-      # };
-
       svg = mapPrefixToSet "svgviewer" {
         transparencygrid = true;
         enableautopreview = true;
@@ -180,10 +124,8 @@ in
     in
     editor //
     indentRainbow //
-    java //
     python //
     svg //
-    # sync //
     workbench //
     vim // # This needs to come after workbench because of setting ordering
     zen //
@@ -221,17 +163,11 @@ in
         "#ff8400"
         "#ff0030"
       ];
-      "docker.showStartPage" = false;
 
       "errorLens.errorBackground" = "rgba(240,0,0,0.1)";
       "errorLens.warningBackground" = "rgba(180,180,0,0.1)";
 
-      "jupyter.askForKernelRestart" = false;
-
       "keyboard-quickfix.showActionNotification" = false;
-
-      "latex-workshop.latex.autoBuild.run" = "onFileChange";
-      "latex-workshop.view.pdf.viewer" = "tab";
 
       "liveshare.presence" = true;
       "liveshare.showInStatusBar" = "whileCollaborating";
@@ -244,22 +180,6 @@ in
       };
 
       "redhat.telemetry.enabled" = false;
-
-      # "sonarlint.rules" = {
-      #   "java:S3358" = {
-      #     "level" = "off";
-      #   };
-      # };
-
-      # Language overrides
-
-      "dart.previewFlutterUiGuides" = true;
-      "dart.previewFlutterUiGuidesCustomTracking" = true;
-      # "dart.previewLsp" = true;
-
-      "[dart]" = {
-        "editor.defaultFormatter" = "Dart-Code.dart-code";
-      };
 
       "[html]" = {
         "editor.formatOnSave" = false;
@@ -352,111 +272,31 @@ in
       # ms-toolsai.jupyter
       # ms-vscode-remote.remote-ssh
       # ms-vsliveshare.vsliveshare
-      asciidoctor.asciidoctor-vscode
       bbenoist.nix
+      christian-kohler.path-intellisense
       coenraads.bracket-pair-colorizer-2
-      dotjoshjohnson.xml
-      elmtooling.elm-ls-vscode
-      gruntfuggly.todo-tree
       haskell.haskell
-      ibm.output-colorizer
-      james-yu.latex-workshop
       justusadam.language-haskell
       justusadam.language-haskell
       mechatroner.rainbow-csv
       mhutchie.git-graph
-      mikestead.dotenv
       ms-python.python
       ms-python.vscode-pylance
       ms-vscode-remote.remote-ssh
       naumovs.color-highlight
+      oderwat.indent-rainbow
       pkief.material-icon-theme
-      redhat.java
       redhat.vscode-yaml
       shardulm94.trailing-spaces
       usernamehw.errorlens
       vs-liveshare
       vscodevim.vim
-      wholroyd.jinja
-      yzhang.markdown-all-in-one
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-      {
-        name = "path-intellisense";
-        publisher = "christian-kohler";
-        version = "2.4.2";
-        sha256 = "1a4d1n4jpdlx4r2majirnhnwlj34jc94wzbxdrih615176hadxvc";
-      }
-      {
-        name = "vscode-html-css";
-        publisher = "ecmel";
-        version = "1.10.2";
-        sha256 = "0qzh7fwgadcahxx8hz1sbfz9lzi81iv4xiidvfm3sahyl9s6pyg1";
-      }
-      {
-        name = "vscode-drawio";
-        publisher = "hediet";
-        version = "1.6.3";
-        sha256 = "0r4qrw1l8s8sfgxj4wvkzamd3yc1h1l60r3kkc1g9afkikmnbr5w";
-      }
-      {
-        name = "language-x86-64-assembly";
-        publisher = "13xforever";
-        version = "3.0.0";
-        sha256 = "0lxg58hgdl4d96yjgrcy2dbacxsc3wz4navz23xaxcx1bgl1i2y0";
-      }
       {
         name = "monokai-st3";
         publisher = "AndreyVolosovich";
         version = "0.2.0";
         sha256 = "1rvz5hlrfshy9laybxzvrdklx328s13j0lb8ljbda9zkadi3wcad";
-      }
-      # {
-      #   name = "nix-env-selector";
-      #   publisher = "arrterian";
-      #   version = "1.0.7";
-      #   sha256 = "0mralimyzhyp4x9q98x3ck64ifbjqdp8cxcami7clvdvkmf8hxhf";
-      # }
-      {
-        name = "vscode-JS-CSS-HTML-formatter";
-        publisher = "lonefy";
-        version = "0.2.3";
-        sha256 = "06vivclp58wzmqcx6s6pl8ndqina7p995dr59aj9fk65xihkaagy";
-      }
-      {
-        name = "indent-rainbow";
-        publisher = "oderwat";
-        version = "8.2.2";
-        sha256 = "1xxljwh66f21fzmhw8icrmxxmfww1s67kf5ja65a8qb1x1rhjjgf";
-      }
-      {
-        name = "vscode-css-peek";
-        publisher = "pranaygp";
-        version = "4.2.0";
-        sha256 = "0dpkp3xs8jd826h2aa9xlfilsj4yv8q6r9cs350ljrpcyj7wrlpq";
-      }
-      {
-        name = "LiveServer";
-        publisher = "ritwickdey";
-        version = "5.6.1";
-        sha256 = "077arf3hsn1yb8xdhlrax5gf93ljww78irv4gm8ffmsqvcr1kws0";
-      }
-      {
-        name = "background";
-        publisher = "shalldie";
-        version = "1.1.29";
-        sha256 = "1x3k8pmzp186bcgga3wg6y86waxrcsi5cnwaxfmifqgn87jp2vqq";
-      }
-      {
-        name = "comment-divider";
-        publisher = "stackbreak";
-        version = "0.4.0";
-        sha256 = "1qcj2lngcv1sc7jri70ilkkrcx34wn8f4sqwk4dlgrribw6nvj1g";
-      }
-      {
-        name = "lorem-ipsum";
-        publisher = "Tyriar";
-        version = "1.3.0";
-        sha256 = "03jas413ivahfpxrlc5qif35nd67m1nmwx8p8dj1fpv04s6fdigb";
       }
       {
         name = "vscode-svgviewer";
@@ -465,28 +305,10 @@ in
         sha256 = "06swlqiv3gc7plcbmzz795y6zwpxsdhg79k1n3jj6qngfwnv2p6z";
       }
       {
-        name = "arm";
-        publisher = "dan-c-underwood";
-        version = "1.5.2";
-        sha256 = "0x31wmd6m1gzm0sfi5xjsa38jr043qq9kgykw3b52hcma7ww8ky3";
-      }
-      {
-        name = "dart-code";
-        publisher = "Dart-Code";
-        version = "3.28.0";
-        sha256 = "0ppzv0cs4b559m4nvbfik2m63hs10g5idrc5j3pkgdjm14n1jiwv";
-      }
-      {
         name = "comment-anchors";
         publisher = "ExodiusStudios";
         version = "1.9.6";
         sha256 = "1zgvgf6zq1ny3v8b9jjp4j3n27qmiz45g23ljaim92g6hni38wvv";
-      }
-      {
-        name = "bloc";
-        publisher = "FelixAngelov";
-        version = "6.2.0";
-        sha256 = "0rr00pfcpjk17plzmmaqr0znj3k1qd0m2rh15c9894fifdyy69fx";
       }
       {
         name = "vscode-test-explorer";
@@ -495,28 +317,10 @@ in
         sha256 = "022lnkq278ic0h9ggpqcwb3x3ivpcqjimhgirixznq0zvwyrwz3w";
       }
       {
-        name = "haskell-linter";
-        publisher = "hoovercj";
-        version = "0.0.6";
-        sha256 = "0fb71cbjx1pyrjhi5ak29wj23b874b5hqjbh68njs61vkr3jlf1j";
-      }
-      {
-        name = "plantuml";
-        publisher = "jebbs";
-        version = "2.16.1";
-        sha256 = "17gkrai7fdhrq0q1zip4wn7j4qx9vbbirx3n68silb34wh0dbydk";
-      }
-      {
         name = "vscode-gutter-preview";
         publisher = "kisstkondoros";
         version = "0.29.0";
         sha256 = "00vibv9xmhwaqiqzp0y2c246pqiqfjsw4bqx4vcdd67pz1wnqhg1";
-      }
-      {
-        name = "vscode-JS-CSS-HTML-formatter";
-        publisher = "lonefy";
-        version = "0.2.3";
-        sha256 = "06vivclp58wzmqcx6s6pl8ndqina7p995dr59aj9fk65xihkaagy";
       }
       {
         name = "test-adapter-converter";
@@ -525,76 +329,16 @@ in
         sha256 = "02b04756kfk640hri1xw0p6kwjxwp8d2hpmca0iysfivfcmm1bqn";
       }
       {
-        name = "awesome-flutter-snippets";
-        publisher = "Nash";
-        version = "3.0.2";
-        sha256 = "009z6k719w0sypzsk53wiard3j3d8bq9b0g9s82vw3wc4jvkc3hr";
-      }
-      {
         name = "indent-rainbow";
         publisher = "oderwat";
         version = "8.2.2";
         sha256 = "1xxljwh66f21fzmhw8icrmxxmfww1s67kf5ja65a8qb1x1rhjjgf";
       }
       {
-        name = "vscode-xml";
-        publisher = "redhat";
-        version = "0.18.1";
-        sha256 = "006fjcr8s3rsznqgpp13cmvw8k94cfpr24r3rp019jaj5as3l1ck";
-      }
-      {
-        name = "comment-divider";
-        publisher = "stackbreak";
-        version = "0.4.0";
-        sha256 = "1qcj2lngcv1sc7jri70ilkkrcx34wn8f4sqwk4dlgrribw6nvj1g";
-      }
-      {
-        name = "addDocComments";
-        publisher = "stevencl";
-        version = "0.0.8";
-        sha256 = "08572fhn6ilfbx8zwn849ab3npyfkh9m5mk2br6sii601s9k5vrk";
-      }
-      {
         name = "vscodeintellicode";
         publisher = "VisualStudioExptTeam";
         version = "1.2.14";
         sha256 = "1j72v6grwasqk34m1jy3d6w3fgrw0dnsv7v17wca8baxrvgqsm6g";
-      }
-      {
-        name = "vscode-java-debug";
-        publisher = "vscjava";
-        version = "0.36.0";
-        sha256 = "1p9mymbf8sn39k44350zf3zwl29fhcwxfsqxr7841ch1qz88w9r8";
-      }
-      {
-        name = "vscode-java-dependency";
-        publisher = "vscjava";
-        version = "0.18.8";
-        sha256 = "1yjzgf96kqm09qlhxpa249fqb2b5wpzw9k53sgr8jx8sfx5qn95b";
-      }
-      {
-        name = "vscode-java-pack";
-        publisher = "vscjava";
-        version = "0.18.6";
-        sha256 = "095jdvvv4m8s2ymnrsq0ay7afqff5brgn6waknjfyy97qb3mzxj8";
-      }
-      {
-        name = "vscode-java-test";
-        publisher = "vscjava";
-        version = "0.32.0";
-        sha256 = "0lq6daz228ipzls88y09zbdsv9n6backs5bddpdam628rs99qvn3";
-      }
-      {
-        name = "vscode-maven";
-        publisher = "vscjava";
-        version = "0.34.1";
-        sha256 = "1mnlvnl2lg8fijxx4a6rqjix9k2j82js8kn8da7kjf4wh0ksdgvd";
-      }
-      {
-        name = "markdown-all-in-one";
-        publisher = "yzhang";
-        version = "3.4.0";
-        sha256 = "0ihfrsg2sc8d441a2lkc453zbw1jcpadmmkbkaf42x9b9cipd5qb";
       }
       {
         name = "keyboard-quickfix";
