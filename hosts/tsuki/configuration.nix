@@ -16,6 +16,7 @@
     # ./services/keycloak.nix
     ./services/matrix
     ./services/minecraft
+    ./services/nextcloud.nix
     ./services/nginx
     ./services/osuchan.nix
     ./services/pgadmin.nix
