@@ -20,11 +20,11 @@
 
         oauth2 = let 
           authServerUrl = config.services.kanidm.serverSettings.origin;
-        in {
+        in rec {
           baseURL = "${authServerUrl}/oauth2";
           tokenURL = "${authServerUrl}/oauth2/token";
           authorizationURL = "${authServerUrl}/ui/oauth2";
-          userProfileURL = "${authServerUrl}/oauth2/openid/hedgedoc/userinfo";
+          userProfileURL = "${authServerUrl}/oauth2/openid/${clientID}/userinfo";
 
           clientID = "hedgedoc";
 
