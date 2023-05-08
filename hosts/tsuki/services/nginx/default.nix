@@ -111,7 +111,19 @@
       (proxy ["log"] "http://localhost:${s ports.grafana}" {
         locations."/".proxyWebsockets = true;
       })
-      (proxy ["pg"] "http://localhost:${s ports.pgadmin}" {})
+      (host ["pg"] {
+        locations."/" = {
+        extraConfig = ''
+          include ${pkgs.nginx}/conf/uwsgi_params;
+          uwsgi_pass unix:${config.services.uwsgi.instance.vassals.pgadmin.socket};
+        '';
+        };
+      })
+      # (proxy ["pg"] "http://localhost:${s ports.pgadmin}" {
+      #   extraConfig = ''
+      #     proxy_set_header X-CSRF-Token $http_x_pga_csrftoken;
+      #   '';
+      # })
       (proxy ["py"] "http://localhost:${s ports.jupyterhub}" {
         locations."/".proxyWebsockets = true;
       })

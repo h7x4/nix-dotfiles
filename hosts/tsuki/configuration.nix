@@ -18,6 +18,7 @@
     ./services/minecraft
     ./services/nginx
     ./services/osuchan.nix
+    ./services/pgadmin.nix
     ./services/plex.nix
     ./services/postgres.nix
     ./services/vscode-server.nix
