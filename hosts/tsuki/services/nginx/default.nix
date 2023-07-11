@@ -141,6 +141,7 @@
       (proxy ["vpn"] "http://localhost:${s config.services.headscale.port}" {
         locations."/".proxyWebsockets = true;
       })
+      (proxy ["hydra"] "http://localhost:${s config.services.hydra.port}" {})
     ] ++ (let
       stickerpickers = pkgs.callPackage ../matrix/maunium-stickerpicker.nix {
         inherit (inputs) maunium-stickerpicker secrets;
