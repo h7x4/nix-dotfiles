@@ -1,7 +1,7 @@
 { secrets, ... }:
 {
   services.mautrix-facebook = {
-    enable = true;
+    enable = false;
     configurePostgresql = true;
 
     registrationData = {
