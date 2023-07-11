@@ -171,12 +171,11 @@
           proxy_ssl_verify off;
         '';
       })
-      (proxy ["hydra"] "http://localhost:${s ports.hydra}" {})
+      (proxy ["hydra"] "http://localhost:${s config.services.hydra.port}" {})
       (proxy ["atuin"] "http://localhost:${s config.services.atuin.port}" {})
       (proxy ["vpn"] "http://localhost:${s config.services.headscale.port}" {
         locations."/".proxyWebsockets = true;
       })
-      (proxy ["hydra"] "http://localhost:${s config.services.hydra.port}" {})
     ] ++ (let
       stickerpickers = pkgs.callPackage ../matrix/maunium-stickerpicker.nix {
         inherit (inputs) maunium-stickerpicker secrets;

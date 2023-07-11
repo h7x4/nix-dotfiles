@@ -3,6 +3,8 @@
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
 
+    ./services/atuin.nix
+    ./services/borg.nix
     # ./services/calibre.nix
     ./services/gitea
     ./services/grafana
