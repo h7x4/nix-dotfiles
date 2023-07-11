@@ -1,7 +1,7 @@
 { secrets, ... }:
 {
   services.mx-puppet-discord = {
-    enable = true;
+    enable = false;
     serviceDependencies = [
       "matrix-synapse.service"
       "postgresql.service"
