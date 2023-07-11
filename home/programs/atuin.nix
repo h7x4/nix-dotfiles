@@ -13,6 +13,10 @@
       search_mode = "fuzzy";
       style = "auto";
       inline_height = 13;
+      sync_address = "https://atuin.nani.wtf";
+      sync_frequency = "1h";
+      auto_sync = true;
+      update_check = true;
     };
   };
 }
