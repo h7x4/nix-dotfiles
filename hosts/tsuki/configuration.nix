@@ -26,6 +26,8 @@
     ./services/postgres.nix
     ./services/vaultwarden.nix
     ./services/vscode-server.nix
+
+    ./services/scrapers/nhk-easy-news/default.nix
   ];
 
   machineVars = {
