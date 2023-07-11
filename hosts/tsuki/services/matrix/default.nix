@@ -3,8 +3,7 @@
   imports = [
     ./bridges/mautrix-facebook.nix
     ./bridges/mx-puppet-discord.nix
-    # TODO: fix irc service
-    # ./bridges/matrix-appservice-irc.nix
+    ./bridges/matrix-appservice-irc.nix
 
     ./postgres.nix
     ./coturn.nix
@@ -58,6 +57,7 @@
       enable_registration = false;
 
       registration_shared_secret = secrets.keys.matrix.registration-shared-secret;
+      allow_public_rooms_over_federation = true;
 
       # password_config.enabled = lib.mkForce false;
 
@@ -79,6 +79,7 @@
         "/var/lib/matrix-synapse/discord-registration.yaml"
         # (pkgs.writeText "facebook-registrations.yaml" (builtins.toJSON config.services.mautrix-facebook.registrationData))
         "/var/lib/matrix-synapse/facebook-registration.yaml"
+        "/var/lib/matrix-synapse/irc-registration.yml"
       ];
 
       # redis.enabled = true;
