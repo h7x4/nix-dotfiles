@@ -3,11 +3,14 @@
 
   imports = [
     ./prometheus-exporters/matrix-synapse.nix
+    ./prometheus-exporters/minecraft.nix
+    ./prometheus-exporters/nginx.nix
     ./prometheus-exporters/node.nix
+    # TODO: activate when php-fpm exporter is backported
+    # ./prometheus-exporters/php-fpm.nix
     ./prometheus-exporters/postgres.nix
     ./prometheus-exporters/redis.nix
     ./prometheus-exporters/systemd.nix
-    ./prometheus-exporters/minecraft.nix
   ];
 
   services.prometheus = {
