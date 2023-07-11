@@ -21,11 +21,12 @@
 
     settings = {
       server_url = "https://vpn.nani.wtf";
-      log.level = "warn";
-      ip_prefixes = [ "10.8.0.0/24" ];
+      log.level = "info";
+      ip_prefixes = [ "100.64.0.0/24" ];
 
       dns_config = {
         magic_dns = true;
+        base_domain = "nani.wtf";
         nameservers = [
           "1.1.1.1"
         ];
@@ -34,18 +35,23 @@
       db_type = "postgres";
       db_user = "headscale";
       db_name = "headscale";
-      db_host = "localhost";
-      db_port = secrets.ports.postgres;
+      db_host = "/var/run/postgresql";
+      db_port = null;
       db_password_file = config.sops.secrets."postgres/headscale".path;
 
       oidc = {
         issuer = "https://auth.nani.wtf/oauth2/openid/headscale";
         client_id = "headscale";
-        client_secret_file = config.sops.secrets."headscale/oauth2_secret".path;
-        # allowed_domains = [ "nani.wtf" ];
-        allowed_groups = [ "headscale_users" ];
+        client_secret_path = config.sops.secrets."headscale/oauth2_secret".path;
       };
     };
+  };
+
+  systemd.services.headscale = {
+    requires = [
+      "postgresql.service"
+      "kanidm.service"
+    ];
   };
 
   services.postgresql = {
@@ -65,5 +71,9 @@
 
   services.tailscale.enable = true;
 
-  networking.firewall.checkReversePath = "loose";
+  networking.firewall = {
+    checkReversePath = "loose";
+    trustedInterfaces = [ "tailscale0" ];
+    allowedUDPPorts = [ config.services.tailscale.port ];
+  };
 }

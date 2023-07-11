@@ -137,6 +137,10 @@
         '';
       })
       (proxy ["hydra"] "http://localhost:${s ports.hydra}" {})
+      (proxy ["atuin"] "http://localhost:${s config.services.atuin.port}" {})
+      (proxy ["vpn"] "http://localhost:${s config.services.headscale.port}" {
+        locations."/".proxyWebsockets = true;
+      })
     ] ++ (let
       stickerpickers = pkgs.callPackage ../matrix/maunium-stickerpicker.nix {
         inherit (inputs) maunium-stickerpicker secrets;
