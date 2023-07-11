@@ -162,6 +162,7 @@
       (proxy ["py"] "http://localhost:${s ports.jupyterhub}" {
         locations."/".proxyWebsockets = true;
       })
+      (proxy ["bw"] "http://localhost:${s config.services.vaultwarden.config.ROCKET_PORT}" {})
       (proxy ["docs"] "http://localhost:${s config.services.hedgedoc.settings.port}" {})
       (proxy ["map"] "http://localhost:${s ports.minecraft.dynmap}" {})
       (proxy ["yt"] "http://localhost:${s config.services.invidious.port}" {})

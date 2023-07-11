@@ -24,6 +24,7 @@
     ./services/pgadmin.nix
     ./services/plex.nix
     ./services/postgres.nix
+    ./services/vaultwarden.nix
     ./services/vscode-server.nix
   ];
 
