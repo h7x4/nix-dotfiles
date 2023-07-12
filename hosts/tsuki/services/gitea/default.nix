@@ -1,5 +1,6 @@
-{ config, pkgs, unstable-pkgs, lib, secrets, ... }:
-{
+{ config, pkgs, unstable-pkgs, lib, secrets, ... }: let
+  cfg = config.services.gitea;
+in {
   security.pam.services."gitea".unixAuth = true;
 
   users.users.git = {
@@ -13,6 +14,8 @@
     packages = with unstable-pkgs; [ gitea ];
   };
 
+  users.groups."gitea".members = [ "nginx" ];
+
   sops.secrets."postgres/gitea" = rec {
     restartUnits = [ "gitea.service" ];
     owner = config.services.gitea.user;
@@ -22,10 +25,6 @@
   services.gitea = {
     enable = true;
     user = "git";
-    rootUrl = "https://git.nani.wtf/";
-    domain = "git.nani.wtf";
-    httpPort = secrets.ports.gitea;
-
     package = unstable-pkgs.gitea;
 
     stateDir = "${config.machineVars.dataDrives.default}/var/gitea";
@@ -36,16 +35,21 @@
     };
 
     database = {
-      type = "postgres";
       user = "gitea";
-      passwordFile = config.sops.secrets."postgres/gitea".path;
+      type = "postgres";
+      socket = "/var/run/postgresql";
       createDatabase = false;
+      passwordFile = config.sops.secrets."postgres/gitea".path;
     };
 
     settings = {
       server = {
+        PROTOCOL = "http+unix";
+        HTTP_ADDR = "/run/gitea/gitea.sock";
         BUILTIN_SSH_SERVER_USER="git";
         LANDING_PAGE = "/explore/repos";
+        ROOT_URL = "https://git.nani.wtf/";
+        DOMAIN = "git.nani.wtf";
       };
 
       service.DISABLE_REGISTRATION = true;
