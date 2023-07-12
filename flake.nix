@@ -1,10 +1,10 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-22.11";
+    nixpkgs.url = "nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-22.11";
+      url = "github:nix-community/home-manager/release-23.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -33,7 +33,7 @@
 
     osuchan = {
       url = "git+file:///home/h7x4/git/osuchan-line-bot";
-      # inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     website = {
@@ -48,6 +48,7 @@
 
     minecraft = {
       url = "github:infinidoge/nix-minecraft";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     matrix-synapse-next = {
@@ -55,8 +56,7 @@
     };
 
     vscode-server = {
-      url = "github:msteen/nixos-vscode-server";
-      flake = false;
+      url = "github:nix-community/nixos-vscode-server";
     };
 
     # Nix expressions and keys (TODO: move keys to another solution like agenix)
@@ -99,10 +99,10 @@
         android_sdk.accept_license = true;
       };
 
-      overlays = let 
+      overlays = let
         nonrecursive-unstable-pkgs = nixpkgs-unstable.legacyPackages.${system};
       in [
-        (self: super: { kanidm = super.callPackage ./package-overrides/kanidm.nix {}; })
+        (self: super: { kanidm = nonrecursive-unstable-pkgs.kanidm; })
         (self: super: { pgadmin4 = nonrecursive-unstable-pkgs.pgadmin4; })
         osuchan.overlays.default
       ];
@@ -155,13 +155,17 @@
             ./modules
             ./hosts/common.nix
             ./hosts/${name}/configuration.nix
-            "${vscode-server}/default.nix"
 
-            secrets.outputs.nixos-config
-            osuchan.outputs.nixosModules.default
-            minecraft.outputs.nixosModules.minecraft-servers
             matrix-synapse-next.nixosModules.synapse
+            osuchan.outputs.nixosModules.default
+            secrets.outputs.nixos-config
             sops-nix.nixosModules.sops
+            vscode-server.nixosModules.default
+
+            (args: import minecraft.outputs.nixosModules.minecraft-servers (args // {
+              pkgs = unstable-pkgs;
+              lib = unstable-pkgs.lib;
+            }))
 
             {
               config._module.args = {
