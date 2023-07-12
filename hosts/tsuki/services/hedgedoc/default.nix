@@ -1,7 +1,7 @@
 { pkgs, lib, config, options, ... }: let
   cfg = config.services.hedgedoc;
 in {
-  imports = [ ./hedgedoc.nix  ];
+  imports = [ ./module.nix  ];
   disabledModules = [ "services/web-apps/hedgedoc.nix" ];
 
   config = {
@@ -10,9 +10,10 @@ in {
       restartUnits = [ "hedgedoc.service" ];
     };
 
+    users.groups.hedgedoc.members = [ "nginx" ];
+
     services.hedgedoc = {
       enable = true;
-      workDir = "${config.machineVars.dataDrives.default}/var/hedgedoc";
       environmentFile = config.sops.secrets."hedgedoc/env".path;
       settings = {
         domain = "docs.nani.wtf";
@@ -20,6 +21,8 @@ in {
         allowAnonymous = false;
         allowAnonymousEdits = true;
         protocolUseSSL = true;
+
+        path = "/run/hedgedoc/hedgedoc.sock";
 
         db = {
           username = "hedgedoc";
@@ -59,35 +62,12 @@ in {
       }];
     };
 
-    systemd.services.hedgedoc = {
+    systemd.services.hedgedoc = rec {
       requires = [
         "postgresql.service"
         "kanidm.service"
       ];
-      serviceConfig = {
-        CapabilityBoundingSet = "";
-        LockPersonality = true;
-        NoNewPrivileges = true;
-        PrivateDevices = true;
-        PrivateMounts = true;
-        PrivateTmp = true;
-        PrivateUsers = true;
-        ProtectClock = true;
-        ProtectHome = true;
-        ProtectHostname = true;
-        ProtectKernelLogs = true;
-        ProtectKernelModules = true;
-        ProtectKernelTunables = true;
-        ProtectProc = "invisible";
-        ProtectSystem = "strict";
-        ReadWritePaths = [ cfg.workDir ];
-        RemoveIPC = true;
-        RestrictSUIDSGID = true;
-        UMask = "0007";
-        RestrictAddressFamilies = [ "AF_UNIX AF_INET AF_INET6" ];
-        SystemCallArchitectures = "native";
-        SystemCallFilter = "~@clock @cpu-emulation @debug @keyring @module @mount @obsolete @raw-io @reboot @setuid @swap";
-      };
+      after = requires;
     };
   };
 }
