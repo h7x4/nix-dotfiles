@@ -5,17 +5,14 @@
 
     ./services/atuin.nix
     ./services/borg.nix
-    # ./services/calibre.nix
     ./services/gitea
     ./services/grafana
     ./services/headscale.nix
     ./services/hedgedoc
     ./services/hydra.nix
     ./services/invidious.nix
-    # ./services/jitsi.nix
     ./services/jupyter.nix
     ./services/kanidm.nix
-    # ./services/keycloak.nix
     ./services/matrix
     ./services/minecraft
     ./services/nextcloud.nix
