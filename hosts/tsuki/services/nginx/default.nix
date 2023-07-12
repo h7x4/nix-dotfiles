@@ -1,10 +1,4 @@
-{ pkgs, config, secrets, inputs, ... }:
-  let
-    # TODO: fix lib
-    lib = pkgs.lib;
-      
-    inherit (secrets) ips ports;
-  in
+{ pkgs, lib, config, secrets, inputs, ... }:
 {
   sops.secrets."cloudflare/api-key" = {};
 
@@ -40,6 +34,25 @@
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
 
+    upstreams = let inherit (secrets) ips ports; in {
+      "atuin".servers."localhost:${s config.services.atuin.port}" = { };
+      "dynmap".servers."localhost:${s ports.minecraft.dynmap}" = { };
+      "gitea".servers."unix:/run/gitea/gitea.sock" = { };
+      "grafana".servers."unix:/run/grafana/grafana.sock" = { };
+      "headscale".servers."localhost:${s config.services.headscale.port}" = { };
+      "hedgedoc".servers."unix:${config.services.hedgedoc.settings.path}" = { };
+      "hydra".servers."localhost:${s config.services.hydra.port}" = { };
+      "idrac".servers."${ips.idrac}" = { };
+      "invidious".servers."localhost:${s config.services.invidious.port}" = { };
+      "jupyter".servers."localhost:${s ports.jupyterhub}" = { };
+      "kanidm".servers."localhost:8300" = { };
+      "osuchan".servers."localhost:${s ports.osuchan}" = { };
+      "pgadmin".servers."unix:${config.services.uwsgi.instance.vassals.pgadmin.socket}" = { };
+      "plex".servers."localhost:${s ports.plex}" = { };
+      "proxmox".servers."${ips.px1}:${s ports.proxmox}" = { };
+      "vaultwarden".servers."localhost:${s config.services.vaultwarden.config.ROCKET_PORT}" = { };
+    };
+
     virtualHosts = let
       inherit (lib.attrsets) nameValuePair listToAttrs recursiveUpdate;
       inherit (lib.lists) head drop;
@@ -69,6 +82,7 @@
         subdomains: url: extraSettings:
         host subdomains (recursiveUpdate { locations."/".proxyPass = url; } extraSettings);
 
+      enableWebsockets = { locations."/".proxyWebsockets = true; };
     in (listToAttrs ([
       {
         name = "nani.wtf";
@@ -95,62 +109,18 @@
           '';
         };
       }
-      (proxy ["plex"] "http://localhost:${s ports.plex}" {})
       # (host ["www"] { root = "${inputs.website.packages.${pkgs.system}.default}/"; })
       (host ["www"] {
         locations."/" = {
           tryFiles = "$uri /index.html";
-          root = pkgs.writeTextDir "index.html" ''
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nani.wtf</title>
-  <style>
-    html, body { padding: 0; margin: 0; width: 100%; height: 100%; }
-    * {box-sizing: border-box;}
-    body { text-align: center; padding: 0; background: #d6433b; color: #fff; font-family: Open Sans; }
-    h1 { font-size: 50px; font-weight: 100; text-align: center;}
-    body { font-family: Open Sans; font-weight: 100; font-size: 20px; color: #fff; text-align: center; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; -webkit-box-align: center; -ms-flex-align: center; align-items: center;}
-    article { display: block; width: 700px; padding: 50px; margin: 0 auto; }
-    a { color: #fff; font-weight: bold;}
-    a:hover { text-decoration: none; }
-    svg { width: 75px; margin-top: 1em; }
-  </style>
-</head>
-<body>
-  <article>
-    <h1>Nani.wtf</h1>
-    <p style="font-size: 1.3em;">Down for maintenance</p>
-    <p style="font-size: 1.1em;">Will be back soon!</p>
-
-    <a href="https://git.nani.wtf">git.nani.wtf</a>
-  </article>
-</body>
-</html>
-          '';
+          root = pkgs.writeTextDir "index.html" (lib.fileContents ./temp-website.html);
         };
-      })
-      (host ["matrix"] {
-        enableACME = lib.mkForce false;
-        locations."/_synapse".proxyPass = "http://$synapse_backend";
-      })
-      (host ["madmin"] { root = "${pkgs.synapse-admin}/"; })
-      # (host ["cache"] { root = "/var/lib/nix-cache"; })
-      (proxy ["git"] "http://localhost:${s ports.gitea}" {})
-      (proxy ["px1"] "https://${ips.px1}:${s ports.proxmox}" {
-          locations."/".proxyWebsockets = true;
-      })
-      (proxy ["idrac"] "https://${ips.idrac}" {})
-      (proxy ["log"] "http://localhost:${s ports.grafana}" {
-        locations."/".proxyWebsockets = true;
       })
       (host ["pg"] {
         locations."/" = {
         extraConfig = ''
           include ${pkgs.nginx}/conf/uwsgi_params;
-          uwsgi_pass unix:${config.services.uwsgi.instance.vassals.pgadmin.socket};
+          uwsgi_pass pgadmin;
         '';
         };
       })
@@ -159,24 +129,32 @@
       #     proxy_set_header X-CSRF-Token $http_x_pga_csrftoken;
       #   '';
       # })
-      (proxy ["py"] "http://localhost:${s ports.jupyterhub}" {
-        locations."/".proxyWebsockets = true;
+      # (proxy ["matrix"] "http://localhost:${s ports.matrix.listener}" {})
+      (host ["matrix"] {
+        enableACME = lib.mkForce false;
+        locations."/_synapse".proxyPass = "http://$synapse_backend";
       })
-      (proxy ["bw"] "http://localhost:${s config.services.vaultwarden.config.ROCKET_PORT}" {})
-      (proxy ["docs"] "http://localhost:${s config.services.hedgedoc.settings.port}" {})
-      (proxy ["map"] "http://localhost:${s ports.minecraft.dynmap}" {})
-      (proxy ["yt"] "http://localhost:${s config.services.invidious.port}" {})
-      (proxy ["osu"] "http://localhost:${s ports.osuchan}" {})
-      (proxy ["auth"] "https://localhost:8300" {
-        extraConfig = ''
-          proxy_ssl_verify off;
-        '';
-      })
-      (proxy ["hydra"] "http://localhost:${s config.services.hydra.port}" {})
-      (proxy ["atuin"] "http://localhost:${s config.services.atuin.port}" {})
-      (proxy ["vpn"] "http://localhost:${s config.services.headscale.port}" {
-        locations."/".proxyWebsockets = true;
-      })
+      (host ["madmin"] { root = "${pkgs.synapse-admin}/"; })
+      # This one gets properly configured by the nextcloud module itself.
+      # It just needs the cloudflare and SSL settings.
+      (host ["cloud"] {})
+      # (host ["cache"] { root = "/var/lib/nix-cache"; })
+      # (proxy ["slack-bot"] "http://localhost:9898" {})
+      (proxy ["atuin"] "http://atuin" {})
+      (proxy ["auth"] "https://kanidm" { extraConfig = "proxy_ssl_verify off;"; })
+      (proxy ["bw"] "http://vaultwarden" {})
+      (proxy ["docs"] "http://hedgedoc" {})
+      (proxy ["git"] "http://gitea" {})
+      (proxy ["hydra"] "http://hydra" {})
+      (proxy ["idrac"] "https://idrac" {})
+      (proxy ["log"] "http://grafana" enableWebsockets)
+      (proxy ["map"] "http://dynmap" {})
+      (proxy ["osu"] "http://osuchan" {})
+      (proxy ["plex"] "http://plex" {})
+      (proxy ["px1"] "https://proxmox" enableWebsockets)
+      (proxy ["py"] "http://jupyter" enableWebsockets)
+      (proxy ["vpn"] "http://headscale" enableWebsockets)
+      (proxy ["yt"] "http://invidious" {})
     ] ++ (let
       stickerpickers = pkgs.callPackage ../matrix/maunium-stickerpicker.nix {
         inherit (inputs) maunium-stickerpicker secrets;
@@ -185,7 +163,19 @@
       (host ["stickers-pingu"] { root = "${stickerpickers.stickers-pingu}/"; })
       (host ["stickers-h7x4"] { root = "${stickerpickers.stickers-h7x4}/"; })
     ])));
+
+    streamConfig = ''
+      server {
+        listen 0.0.0.0:53589;
+        listen [::0]:53589;
+        proxy_pass localhost:${s config.services.taskserver.listenPort};
+      }
+    '';
   };
+
+  # NOTE: This is needed for nginx to be able
+  #       to connect to sockets in /run
+  systemd.services.nginx.serviceConfig.ProtectHome = false;
 
   networking.firewall.allowedTCPPorts = [
     80
