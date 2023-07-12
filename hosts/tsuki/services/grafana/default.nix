@@ -96,10 +96,9 @@
       analytics.check_for_updates = false;
       server = {
         domain = "log.nani.wtf";
-        # TODO: use socket
-        # protocol = [ "socket" ];
-        http_addr = "127.0.0.1";
-        http_port = secrets.ports.grafana;
+        enable_gzip = true;
+        protocol = "socket";
+        socket = "/run/grafana/grafana.sock";
       };
 
       security = {
@@ -116,6 +115,8 @@
       };
     };
   };
+
+  users.groups."grafana".members = [ "nginx" ];
 
   systemd.services.grafana = {
     requires = [ "postgresql.service" ];
