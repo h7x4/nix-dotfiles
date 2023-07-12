@@ -35,7 +35,6 @@ in {
     grub = {
       enable = true;
       device = "/dev/sda";
-      version = 2;
     };
   };
 

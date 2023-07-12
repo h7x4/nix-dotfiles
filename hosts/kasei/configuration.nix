@@ -78,7 +78,6 @@
       efi.canTouchEfiVariables = false;
       grub = {
         enable = true;
-        version = 2;
         efiSupport = true;
         fsIdentifier = "label";
         device = "nodev";
