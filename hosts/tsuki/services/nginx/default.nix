@@ -39,6 +39,7 @@
     upstreams = let
       inherit (secrets) ips ports;
       srv = config.services;
+      sa = config.local.socketActivation;
     in {
       "atuin".servers."localhost:${s srv.atuin.port}" = { };
       "dynmap".servers."localhost:${s ports.minecraft.dynmap}" = { };
@@ -51,6 +52,7 @@
       "invidious".servers."localhost:${s config.services.invidious.port}" = { };
       "jupyter".servers."unix:/run/jupyter/jupyter.sock" = { };
       "kanidm".servers."localhost:8300" = { };
+      "navidrome".servers."unix:${sa.navidrome.newSocketAddress}" = { };
       "osuchan".servers."localhost:${s ports.osuchan}" = { };
       "pgadmin".servers."unix:${srv.uwsgi.instance.vassals.pgadmin.socket}" = { };
       "plex".servers."localhost:${s ports.plex}" = { };
@@ -157,6 +159,7 @@
       (proxy ["map"] "http://dynmap" {})
       (proxy ["osu"] "http://osuchan" {})
       (proxy ["plex"] "http://plex" {})
+      (proxy ["mus"] "http://navidrome" enableWebsockets)
       (proxy ["px1"] "https://proxmox" enableWebsockets)
       (proxy ["py"] "http://jupyter" enableWebsockets)
       (proxy ["vpn"] "http://headscale" enableWebsockets)

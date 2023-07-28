@@ -15,7 +15,7 @@
     ./services/kanidm.nix
     ./services/matrix
     ./services/minecraft
-    ./services/nextcloud.nix
+    ./services/navidrome.nix
     ./services/nginx
     ./services/osuchan.nix
     ./services/pgadmin.nix
