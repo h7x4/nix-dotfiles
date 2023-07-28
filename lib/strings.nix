@@ -1,7 +1,6 @@
-{ stdlib, lists }:
+{ stdlib }:
 let
-  inherit (stdlib.lists) length;
-  inherit (lists) repeat;
+  inherit (stdlib.lists) length replicate;
   inherit (stdlib.strings) concatStringsSep replaceStrings splitString;
 in rec {
   # String -> [String]
@@ -15,13 +14,13 @@ in rec {
   mapLines = splitMap "\n";
 
   # String -> Int -> String
-  repeatString = string: times: concatStringsSep "" (repeat string times);
+  repeatString = string: times: concatStringsSep "" (replicate times string);
 
   # Replaces any occurences in a list of strings with a single replacement.
   # NOTE: This function does not support regex patterns.
   #
   # [String] -> String -> String -> String
-  replaceStrings' = from: to: replaceStrings from (repeat to (length from));
+  replaceStrings' = from: to: replaceStrings from (replicate (length from) to);
 
   # [String] -> String
   unlines = concatStringsSep "\n";

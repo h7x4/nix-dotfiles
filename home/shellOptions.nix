@@ -284,9 +284,7 @@ in rec {
           inherit (lib.strings) concatStringsSep;
           inherit (extendedLib.strings) repeatString;
 
-          inherit (lib.lists) range flatten;
-          inherit (extendedLib.lists) repeat;
-
+          inherit (lib.lists) range flatten replicate;
           inherit (lib.attrsets) nameValuePair listToAttrs;
 
           nthCds = n: [
@@ -296,7 +294,7 @@ in rec {
             ("." + toString n)
             (".." + toString n)
           ];
-          realCommand = n: "cd " + (concatStringsSep "/" (repeat ".." n));
+          realCommand = n: "cd " + (concatStringsSep "/" (replicate n ".."));
 
           nthCdsAsNameValuePairs = n: map (cmd: nameValuePair cmd (realCommand n)) (nthCds n);
           allCdNameValuePairs = flatten (map nthCdsAsNameValuePairs (range 1 9));
