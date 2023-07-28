@@ -48,9 +48,6 @@ in {
     mdcat
     mdp
     mediainfo
-    megacmd
-    megasync
-    micro
     mkvtoolnix
     mmv
     mtr
@@ -84,7 +81,6 @@ in {
     tealdeer
     terminal-parrot
     termtosvg
-    # tv-renamer
     toilet
     tokei
     tsukae

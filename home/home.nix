@@ -96,9 +96,6 @@ in {
       enable = true;
       defaultCommand = "fd --type f";
     };
-    irssi.enable = true;
-    kakoune.enable = true;
-    lazygit.enable = true;
     man = {
       enable = true;
       generateCaches = true;
@@ -109,10 +106,6 @@ in {
       enable = true;
       includes = [ "mutable_config" ];
     };
-    skim = {
-      enable = true;
-      defaultCommand ="fd --type f";
-    };
     texlive = {
       enable = true;
       # packageSet = pkgs.texlive.combined.scheme-medium;
@@ -122,9 +115,7 @@ in {
 
   services = {
     gnome-keyring.enable = mkIf graphics true;
-    # dropbox.enable = true;
     network-manager-applet.enable = mkIf graphics true;
-    # redshift.enable = true;
   };
 
   manual = {
