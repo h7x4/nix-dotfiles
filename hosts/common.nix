@@ -303,10 +303,7 @@ in {
     tmux.enable = true;
     zsh.enable = true;
 
-    gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-    };
+    gnupg.agent.enable = true;
 
     neovim = {
       enable = true;

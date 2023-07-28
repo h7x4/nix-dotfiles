@@ -15,6 +15,7 @@
   services.gpg-agent = {
     enable = true;
     pinentryFlavor = "curses";
+    enableExtraSocket = true;
     enableSshSupport = true;
     enableScDaemon = true;
     grabKeyboardAndMouse = false;
