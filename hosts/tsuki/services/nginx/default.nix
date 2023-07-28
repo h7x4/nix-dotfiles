@@ -21,36 +21,41 @@
     generateServerAliases =
       domains: subdomains:
       lib.lists.flatten (map (s: map (d: "${s}.${d}") domains) subdomains);
-    
+
     s = toString;
   in {
     enable = true;
     enableReload = true;
-    
+
     statusPage = true;
 
+    recommendedBrotliSettings = true;
     recommendedGzipSettings = true;
     recommendedOptimisation = true;
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
+    recommendedZstdSettings = true;
 
-    upstreams = let inherit (secrets) ips ports; in {
-      "atuin".servers."localhost:${s config.services.atuin.port}" = { };
+    upstreams = let
+      inherit (secrets) ips ports;
+      srv = config.services;
+    in {
+      "atuin".servers."localhost:${s srv.atuin.port}" = { };
       "dynmap".servers."localhost:${s ports.minecraft.dynmap}" = { };
       "gitea".servers."unix:/run/gitea/gitea.sock" = { };
       "grafana".servers."unix:/run/grafana/grafana.sock" = { };
-      "headscale".servers."localhost:${s config.services.headscale.port}" = { };
-      "hedgedoc".servers."unix:${config.services.hedgedoc.settings.path}" = { };
-      "hydra".servers."localhost:${s config.services.hydra.port}" = { };
+      "headscale".servers."localhost:${s srv.headscale.port}" = { };
+      "hedgedoc".servers."unix:${srv.hedgedoc.settings.path}" = { };
+      "hydra".servers."localhost:${s srv.hydra.port}" = { };
       "idrac".servers."${ips.idrac}" = { };
       "invidious".servers."localhost:${s config.services.invidious.port}" = { };
       "jupyter".servers."unix:/run/jupyter/jupyter.sock" = { };
       "kanidm".servers."localhost:8300" = { };
       "osuchan".servers."localhost:${s ports.osuchan}" = { };
-      "pgadmin".servers."unix:${config.services.uwsgi.instance.vassals.pgadmin.socket}" = { };
+      "pgadmin".servers."unix:${srv.uwsgi.instance.vassals.pgadmin.socket}" = { };
       "plex".servers."localhost:${s ports.plex}" = { };
       "proxmox".servers."${ips.px1}:${s ports.proxmox}" = { };
-      "vaultwarden".servers."localhost:${s config.services.vaultwarden.config.ROCKET_PORT}" = { };
+      "vaultwarden".servers."localhost:${s srv.vaultwarden.config.ROCKET_PORT}" = { };
     };
 
     virtualHosts = let
@@ -69,6 +74,7 @@
             serverAliases = drop 1 (generateServerAliases domains subdomains);
             useACMEHost = "nani.wtf";
             forceSSL = true;
+            kTLS = true;
 
             extraConfig = ''
               ssl_client_certificate ${cloudflare-origin-pull-ca};
