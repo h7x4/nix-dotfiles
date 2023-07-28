@@ -54,6 +54,7 @@ in {
 
       service.DISABLE_REGISTRATION = true;
       session.COOKIE_SECURE = true;
+      metrics.ENABLED = true;
 
       oauth2_client = {
         ENABLE_AUTO_REGISTRATION = true;
