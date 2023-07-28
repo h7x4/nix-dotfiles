@@ -47,6 +47,7 @@ in {
     ./services/polybar.nix
     ./services/stalonetray.nix
     ./services/sxhkd.nix
+    ./services/copyq.nix
   ];
 
   home = {
@@ -121,7 +122,7 @@ in {
 
   services = {
     gnome-keyring.enable = mkIf graphics true;
-    dropbox.enable = true;
+    # dropbox.enable = true;
     network-manager-applet.enable = mkIf graphics true;
     # redshift.enable = true;
   };

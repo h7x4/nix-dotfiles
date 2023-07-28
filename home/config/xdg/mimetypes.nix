@@ -80,7 +80,7 @@ let
 
 in {
 
-  xdg.dataFile."applications/mimeapps.list".force = true;
+  xdg.configFile."mimeapps.list".force = true;
   xdg.mimeApps = {
     enable = true;
     # associations.added = {};

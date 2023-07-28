@@ -36,7 +36,7 @@ in {
           "big-paralell"
         ];
         mandatoryFeatures = [];
-        sshUser = "nix-builder";
+        sshUser = "nix-ssh";
         sshKey = secrets.keys.ssh.nixBuilders.tsuki.private;
       }
       {
@@ -94,11 +94,25 @@ in {
   i18n = {
     defaultLocale = "en_US.UTF-8";
     inputMethod = lib.mkIf (!machineVars.headless) {
+      # enabled = "fcitx";
+      # engines = with pkgs.fcitx-engines; [ mozc ];
       enabled = "fcitx5";
       fcitx5.addons = with pkgs; [
         fcitx5-mozc
-        fcitx5-gtk
+        # fcitx5-gtk
+        # fcitx5-chinese-addons
       ];
+    };
+  };
+
+  systemd.user.services."fcitx5" = lib.mkIf (config.i18n.inputMethod.enabled == "fcitx5") {
+    description = "Fcitx5 IME";
+    wantedBy = [ "graphical.target" ];
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${config.i18n.inputMethod.package}/bin/fcitx5";
+      ExecReload = "/bin/kill -HUP $MAINPID";
+      Restart="on-failure";
     };
   };
 
@@ -226,10 +240,10 @@ in {
 
     resolved.enable = true;
 
-    openssh.settings = {
-      PasswordAuthentication = false;
-      KbdInteractiveAuthentication = false;
-      PermitRootLogin = "no";
+    openssh= {
+      passwordAuthentication = false;
+      kbdInteractiveAuthentication = false;
+      permitRootLogin = "no";
     };
 
     udev.packages = with pkgs; [
@@ -328,8 +342,8 @@ in {
       clang
       dart
       dotnet-sdk
-      dotnet-sdk_3
-      dotnet-sdk_5
+      # dotnet-sdk_3
+      # dotnet-sdk_5
       dotnetPackages.Nuget
       elm2nix
       elmPackages.elm
@@ -337,7 +351,7 @@ in {
       gcc
       ghc
       ghcid
-      haskellPackages.Cabal_3_6_3_0
+      # haskellPackages.Cabal_3_6_3_0
       maven
       nixfmt
       nixpkgs-fmt

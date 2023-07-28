@@ -104,7 +104,18 @@
       in [
         (self: super: { kanidm = nonrecursive-unstable-pkgs.kanidm; })
         (self: super: { pgadmin4 = nonrecursive-unstable-pkgs.pgadmin4; })
+        (self: super: { pcloud = unstable-pkgs.callPackage ./package-overrides/pcloud.nix {}; })
         osuchan.overlays.default
+        (self: super: {
+          mpv-unwrapped = super.mpv-unwrapped.override {
+            ffmpeg_5 = super.ffmpeg_5-full;
+          };
+        })
+        # (self: super: {
+        #   systemd = super.systemd.overrideAttrs (final: prev: {
+        #     mesonFlags = prev.mesonFlags ++ [ "-Dsystemd-socket-proxyd=true" ];
+        #   });
+        # })
       ];
     };
 
@@ -114,6 +125,10 @@
     extendedLib = import ./lib { stdlib = pkgs.lib; };
 
     inherit pkgs;
+
+    packages.${system} = {
+      inherit (pkgs) kanidm pcloud;
+    };
 
     devShells.${system}.default = pkgs.mkShell {
       packages = with pkgs; [ sops ];

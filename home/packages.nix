@@ -61,6 +61,7 @@ in {
     nix-output-monitor
     nix-tree
     nix-zsh-completions
+    nixpkgs-review
     # nixops
     nmap
     ouch
@@ -120,11 +121,9 @@ in {
       birdtray
       calibre
       cool-retro-term
-      copyq
       darktable
       discord
       element-desktop
-      fcitx
       geogebra
       gimp
       gnome.gnome-font-viewer
@@ -156,7 +155,7 @@ in {
       shellcheck
       slack
       sublime3
-      swiPrologWithGui
+      # swiPrologWithGui
       sxiv
       tagainijisho
       teams
@@ -178,7 +177,7 @@ in {
       xmonad-log
 
       # xsnow # Wait until christmas
-      yubioath-desktop
+      yubioath-flutter
       yuzu-mainline
       zeal
       zoom-us

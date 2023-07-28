@@ -3,7 +3,7 @@
 let mapPrefixToSet = prefix: set:
     with lib; attrsets.mapAttrs' (k: v: attrsets.nameValuePair ("${prefix}.${k}") v) set;
 
-    vs-liveshare = pkgs.callPackage ./vscode-extensions/vsliveshare.nix {};
+    # vs-liveshare = pkgs.callPackage ./vscode-extensions/vsliveshare.nix {};
 
 in
 {
@@ -274,7 +274,7 @@ in
       # ms-vsliveshare.vsliveshare
       bbenoist.nix
       christian-kohler.path-intellisense
-      coenraads.bracket-pair-colorizer-2
+      # coenraads.bracket-pair-colorizer-2
       haskell.haskell
       justusadam.language-haskell
       justusadam.language-haskell
@@ -289,7 +289,7 @@ in
       redhat.vscode-yaml
       shardulm94.trailing-spaces
       usernamehw.errorlens
-      vs-liveshare
+      # vs-liveshare
       vscodevim.vim
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
@@ -328,12 +328,12 @@ in
         version = "0.1.4";
         sha256 = "02b04756kfk640hri1xw0p6kwjxwp8d2hpmca0iysfivfcmm1bqn";
       }
-      {
-        name = "indent-rainbow";
-        publisher = "oderwat";
-        version = "8.2.2";
-        sha256 = "1xxljwh66f21fzmhw8icrmxxmfww1s67kf5ja65a8qb1x1rhjjgf";
-      }
+      # {
+      #   name = "indent-rainbow";
+      #   publisher = "oderwat";
+      #   version = "8.2.2";
+      #   sha256 = "1xxljwh66f21fzmhw8icrmxxmfww1s67kf5ja65a8qb1x1rhjjgf";
+      # }
       {
         name = "vscodeintellicode";
         publisher = "VisualStudioExptTeam";

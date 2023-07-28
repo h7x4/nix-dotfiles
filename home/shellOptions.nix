@@ -133,6 +133,8 @@ in rec {
       "Nix Stuff" = {
         nxr = "sudo nixos-rebuild switch";
 
+        nix-check-syntax = "nix-instantiate --parse-only";
+
         nxr-hm = "sudo nixos-rebuild switch --flake ~/nix#home-manager-tester";
         nxr-ks = "sudo nixos-rebuild switch --flake ~/nix#kasei";
 
@@ -228,7 +230,7 @@ in rec {
       # the "technically correct definition" of an alias
 
       "Actual Aliases" = {
-        dp = "${dropbox-cli}/bin/dropbox";
+        # dp = "${dropbox-cli}/bin/dropbox";
 
         # Having 'watch' with a space after as an alias, enables it to expand other aliases
         watch = "${procps}/bin/watch ";
