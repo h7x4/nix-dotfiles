@@ -145,7 +145,7 @@
         configuration = {
           imports = [
             ./home/home.nix
-            ./modules
+            ./modules/machineVars.nix
           ];
 
           machineVars = {
@@ -167,7 +167,8 @@
           inherit (pkgs) lib;
           modules = [
             "${home-manager}/nixos"
-            ./modules
+            ./modules/machineVars.nix
+            ./modules/socketActivation.nix
             ./hosts/common.nix
             ./hosts/${name}/configuration.nix
 
@@ -205,7 +206,7 @@
                   inherit pkgs;
                   inherit inputs;
                   inherit (pkgs) lib;
-                  inherit (config) machineVars colors;
+                  inherit (config) machineVars;
                   inherit (self) extendedLib;
                 };
               };

@@ -3,6 +3,7 @@ let
   inherit (lib) types mkEnableOption mkOption mkIf;
   cfg = config.machineVars;
 in {
+  # TODO: namespace these options behind `local`
   options.machineVars = {
     headless = mkEnableOption "Whether or not the machine should have graphical output.";
 
