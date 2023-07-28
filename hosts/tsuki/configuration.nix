@@ -59,15 +59,11 @@
     firewall.enable=true;
   };
 
-  services = {
-    openssh.enable = true;
-    printing.enable = true;
-    cron = {
-      enable = true;
-      systemCronJobs = [
-    #     "*/5 * * * *      root    date >> /tmp/cron.log"
-      ];
-    };
+  services.openssh.enable = true;
+
+  systemd.services."sshd@".serviceConfig = {
+    Nice = -15;
+    IOSchedulingClass = "realtime";
   };
 
   users = {
