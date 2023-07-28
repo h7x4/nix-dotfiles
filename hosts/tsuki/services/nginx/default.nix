@@ -44,7 +44,7 @@
       "hydra".servers."localhost:${s config.services.hydra.port}" = { };
       "idrac".servers."${ips.idrac}" = { };
       "invidious".servers."localhost:${s config.services.invidious.port}" = { };
-      "jupyter".servers."localhost:${s ports.jupyterhub}" = { };
+      "jupyter".servers."unix:/run/jupyter/jupyter.sock" = { };
       "kanidm".servers."localhost:8300" = { };
       "osuchan".servers."localhost:${s ports.osuchan}" = { };
       "pgadmin".servers."unix:${config.services.uwsgi.instance.vassals.pgadmin.socket}" = { };
