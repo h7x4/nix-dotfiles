@@ -93,17 +93,23 @@
     settings = let
       secretFile = sopsKey: ''$__file{${config.sops.secrets.${sopsKey}.path}}'';
     in {
-      analytics.check_for_updates = false;
       server = {
         domain = "log.nani.wtf";
+        root_url = "https://log.nani.wtf";
+        enforce_domain = true;
         enable_gzip = true;
         protocol = "socket";
         socket = "/run/grafana/grafana.sock";
       };
 
       security = {
-        disable_initial_admin_creation = true;
         cookie_secure = true;
+        csrf_trusted_origins = [ "https://auth.nani.wtf" ];
+        data_source_proxy_whitelist = [
+          (with config.services.prometheus; "${listenAddress}:${toString port}")
+        ];
+        disable_gravatar = true;
+        disable_initial_admin_creation = true;
         secret_key = secretFile "grafana/secretkey";
       };
 
@@ -112,6 +118,37 @@
         user = "grafana";
         host = "/var/run/postgresql";
         password = secretFile "postgres/grafana";
+      };
+
+      auth = {
+        # disable_login_form = true;
+      };
+
+      "auth.generic_oauth" = let
+        authServerUrl = config.services.kanidm.serverSettings.origin;
+      in {
+        enabled = true;
+        name = "KaniDM";
+        client_id = "grafana";
+        client_secret = secretFile "grafana/oauth2_secret";
+        auth_url = "${authServerUrl}/ui/oauth2";
+        token_url = "${authServerUrl}/oauth2/token";
+        api_url = "${authServerUrl}/oauth2/authorise";
+        scopes = "email openid profile";
+        auto_login = true;
+        use_pkce = true;
+
+        # I only have one user, and that one user should always be admin,
+        # no matter what kanidm sends.
+        role_attribute_strict = true;
+        role_attribute_path = "contains(info.groups[*], 'grafana_users') && 'GrafanaAdmin' || 'Viewer'";
+        allow_assign_grafana_admin = true;
+      };
+
+      analytics = {
+        check_for_updates = false;
+        feedback_links_enabled = false;
+        reporting_enabled = false;
       };
     };
   };
