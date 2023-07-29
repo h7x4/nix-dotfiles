@@ -1,4 +1,4 @@
-{ pkgs, lib, config, shellOptions, ... }:
+{ pkgs, lib, config, ... }:
 {
   programs.zsh = {
 
@@ -58,13 +58,9 @@
       }
     ];
 
-    localVariables = shellOptions.variables;
-
-    shellAliases = shellOptions.flattened.aliases;
-
     initExtra = ''
       source ${./p10k.zsh}
-      
+
       enable-fzf-tab
 
       zstyle ':fzf-tab:complete:cd:*' fzf-preview '${pkgs.exa}/bin/exa -1 --color=always $realpath'

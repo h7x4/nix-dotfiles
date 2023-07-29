@@ -5,7 +5,7 @@ in {
   inherit machineVars;
 
   imports = [
-    ./shellOptions.nix
+    ./shell.nix
     ./packages.nix
 
     ./config/ssh/hosts/pvv.nix
@@ -26,6 +26,7 @@ in {
 
     ../modules/machineVars.nix
     ./modules/colors.nix
+    ./modules/shellAliases.nix
 
     inputs.secrets.outputs.home-config
   ] ++ optionals graphics [
