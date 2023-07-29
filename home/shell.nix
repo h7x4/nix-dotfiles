@@ -8,10 +8,11 @@
     colorRed = sedColor 1;
 
     colorSlashes = colorRed "/" { middle = "/"; };
-in {
-  local.shell.aliases = let
+
     p = pkg: "${pkgs.${pkg}}/bin/${pkg}";
-  in {
+in {
+  local.shell.aliases = {
+
     # ░█▀▄░█▀▀░█▀█░█░░░█▀█░█▀▀░█▀▀░█▄█░█▀▀░█▀█░▀█▀░█▀▀
     # ░█▀▄░█▀▀░█▀▀░█░░░█▀█░█░░░█▀▀░█░█░█▀▀░█░█░░█░░▀▀█
     # ░▀░▀░▀▀▀░▀░░░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░▀░▀░░▀░░▀▀▀
@@ -25,7 +26,7 @@ in {
       #
       #             Example:   cp -> ccp
 
-      cd = "z";
+      cd = lib.mkIf config.programs.zoxide.enable "z";
 
       ccp = "${pkgs.coreutils}/bin/cp";
       cp  = "${p "rsync"} --progress --human-readable";
@@ -50,7 +51,13 @@ in {
       la = "${p "exa"} -lah --changed --time-style long-iso --git --group";
       lsa = "la";
 
-      killall = "echo \"killall is dangerous on non-gnu platforms. Using 'pkill -x'\"; pkill -x";
+      killall = {
+        type = ";";
+        alias = [
+          ''echo "killall is dangerous on non-gnu platforms. Using 'pkill -x'"''
+          "pkill -x"
+        ];
+      };
     };
 
     # ░█▀▀░█▀█░█░░░█▀█░█▀▄░▀█▀░▀▀█░█▀▀░█▀▄
@@ -65,16 +72,6 @@ in {
       grep = "grep --color=always";
       # TODO: doesn't work
       # make = "${colormake}/bin/colormake";
-    };
-
-    # ░█▀▄░█▀▀░█▄█░▀█▀░█▀█░█▀▄░█▀▀░█▀▄░█▀▀
-    # ░█▀▄░█▀▀░█░█░░█░░█░█░█░█░█▀▀░█▀▄░▀▀█
-    # ░▀░▀░▀▀▀░▀░▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀░▀▀▀
-
-    # Stuff that I constantly forget...
-
-    "Reminders" = {
-      regex-escapechars = "echo \"[\\^$.|?*+()\"";
     };
 
     # ░█▀█░▀█▀░█░█
@@ -106,7 +103,7 @@ in {
       scs = "systemctl status";
       scc = "systemctl cat";
       scf = "systemctl list-units --failed";
-      jx = "journalctl -xeu";
+      je = "journalctl -eu";
     };
 
     # ░█▀▀░█▀█░█▀▀░▀█▀░█░█░█▀█░█▀▄░█▀▀
@@ -125,7 +122,7 @@ in {
         ];
       };
 
-      dp-check = {
+      dp-check = lib.mkIf config.services.dropbox.enable {
         type = "|";
         alias = [
           "ls -l /proc/$(pidof dropbox)/fd"
@@ -157,9 +154,14 @@ in {
         ];
       };
 
-      path = ''echo $PATH | sed -e 's/:/\n/g' ${colorSlashes} | sort'';
-
-      wowify = "${p "toilet"} -f pagga | ${p "lolcat"}";
+      path = {
+        type = "|";
+        alias = [
+          "echo $PATH"
+          "sed -e 's/:/\n/g' ${colorSlashes}"
+          "sort"
+        ];
+      };
 
       aliasc = let
         colorAliasNames = colorRed "\\(^[^=]*\\)=" { middle = "\\1"; after = "\\t"; };
