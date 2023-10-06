@@ -9,7 +9,10 @@
 
     colorSlashes = colorRed "/" { middle = "/"; };
 
-    p = pkg: "${pkgs.${pkg}}/bin/${pkg}";
+    p = name: let
+      pkg = pkgs.${name};
+      exe = if pkg.meta ? mainProgram then pkg.meta.mainProgram else name;
+    in "${pkg}/bin/${exe}";
 in {
   local.shell.aliases = {
 
@@ -82,6 +85,7 @@ in {
 
     "Nix Stuff" = {
       nxr = "sudo nixos-rebuild switch";
+      nxrl = "sudo nixos-rebuild switch --option builders '' -L";
 
       nix-check-syntax = "nix-instantiate --parse-only";
 
