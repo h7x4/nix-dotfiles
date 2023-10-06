@@ -14,6 +14,7 @@ in {
     ./programs/atuin.nix
     ./programs/comma.nix
     ./programs/firefox.nix
+    ./programs/gdb.nix
     ./programs/gh.nix
     ./programs/git.nix
     ./programs/gpg.nix
