@@ -2,62 +2,35 @@
   inherit (config) machineVars;
 in {
   home.packages = with pkgs; [
-    asciidoctor
     beets
-    biber
-    broot
-    castnow
-    catdocx
-    cheat
-    cli-visualizer
     cloc
     czkawka
     delta
     diskonaut
-    diskus
-    docker
-    dogdns
-    du-dust
     duf
     duff
-    epr
-    fd
     ffmpeg
-    glances
-    googler
     gpg-tui
-    gping
     graphviz
-    hck
-    hexyl
     httpie
-    icdiff
     imagemagick
-    ipcalc
     jq
     kepubify
-    keybase
+    # keybase
     keymapviz
-    kondo
-    lastpass-cli
-    lazydocker
     libwebp
     lolcat
-    manix
-    mcfly
     mdcat
-    mdp
     mediainfo
     mkvtoolnix
     mmv
     mtr
-    navi
     neofetch
     nix-diff
     nix-index
     nix-output-monitor
     nix-tree
-    nix-zsh-completions
+    nix-update
     nixpkgs-review
     # nixops
     nmap
@@ -71,9 +44,7 @@ in {
     rclone
     ripgrep
     rsync
-    rust-motd
     sc-im
-    sd
     slack-term
     taskwarrior
     taskwarrior-tui
@@ -83,16 +54,12 @@ in {
     termtosvg
     toilet
     tokei
-    tsukae
     unpaper
     usbutils
-    w3m
     waifu2x-converter-cpp
-    watchexec
     wavemon
     wiki-tui
-    youtube-dl
-    yq
+    yt-dlp
     yubico-pam
     yubikey-agent
     yubikey-manager
@@ -105,38 +72,34 @@ in {
     icu
     openssl
     xorg.xprop
-  ] ++ (with pkgs.python3Packages; [
-    bpython
-  ]) ++ (with pkgs.haskellPackages; [
-    # bhoogle
-  ]) ++ (
+  ] ++ (
     lib.optionals (!machineVars.headless) [
       ahoviewer
-      anki
+      # anki
       ark
       birdtray
       calibre
       cool-retro-term
-      darktable
+      # darktable
       discord
       element-desktop
       geogebra
       gimp
-      gnome.gnome-font-viewer
+      # gnome.gnome-font-viewer
       gnome.seahorse
       google-chrome
       inkscape
-      insomnia
+      # insomnia
       iwgtk
-      keybase-gui
+      # keybase-gui
       kid3
       koreader
-      krita
+      # krita
       ktouch
       libnotify
-      libreoffice-fresh
+      libreoffice
       light
-      maim
+      # maim
       mopidy
       mopidy-mpd
       mopidy-soundcloud
@@ -147,17 +110,17 @@ in {
       pcloud
       pulseaudio
       pulsemixer
-      scrcpy
+      # scrcpy
       shellcheck
       slack
-      sublime3
+      # sublime3
       # swiPrologWithGui
       sxiv
-      tagainijisho
+      # tagainijisho
       teams
       tenacity
       thunderbird
-      transcribe
+      # transcribe
       wireshark
       xcalib
       xclip
@@ -165,7 +128,7 @@ in {
       (xfce.thunar.override {
         thunarPlugins = with xfce; [
           thunar-volman
-          thunar-dropbox-plugin
+          # thunar-dropbox-plugin
           thunar-archive-plugin
           thunar-media-tags-plugin
         ];
@@ -174,9 +137,6 @@ in {
 
       # xsnow # Wait until christmas
       yubioath-flutter
-      yuzu-mainline
-      zeal
-      zoom-us
       zotero
     ] ++ lib.optionals (machineVars.laptop) [
       touchegg
