@@ -41,7 +41,7 @@
       srv = config.services;
       sa = config.local.socketActivation;
     in {
-      "atuin".servers."localhost:${s srv.atuin.port}" = { };
+      "atuin".servers."unix:${sa.atuin.newSocketAddress}" = { };
       "dynmap".servers."localhost:${s ports.minecraft.dynmap}" = { };
       "gitea".servers."unix:/run/gitea/gitea.sock" = { };
       "grafana".servers."unix:/run/grafana/grafana.sock" = { };

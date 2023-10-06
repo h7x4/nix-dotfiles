@@ -1,4 +1,7 @@
-{ ... }:
+{ config, ... }:
+let
+  cfg = config.services.atuin;
+in
 {
   services.atuin = {
     enable = true;
@@ -41,5 +44,12 @@
       SystemCallFilter = "~@clock @cpu-emulation @debug @keyring @module @mount @obsolete @raw-io @reboot @setuid @swap @privileged";
       UMask = "0007";
     };
+  };
+
+  local.socketActivation.atuin = {
+    enable = cfg.enable;
+    originalSocketAddress = "${cfg.host}:${toString cfg.port}";
+    newSocketAddress = "/run/atuin.sock";
+    privateNamespace = false;
   };
 }
