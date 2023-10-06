@@ -1,5 +1,6 @@
-{ config, ... }:
-{
+{ config, ... }: let
+  cfg = config.services.invidious;
+in {
   sops.secrets."postgres/invidious" = {
     restartUnits = [ "invidious.service" ];
   };
@@ -21,6 +22,13 @@
       host_binding = "127.0.0.1";
       # popular_enabled = false;
     };
+  };
+
+  local.socketActivation.invidious = {
+    enable = cfg.enable;
+    originalSocketAddress = "${cfg.settings.host_binding}:${toString cfg.port}";
+    newSocketAddress = "/run/invidious.sock";
+    privateNamespace = false;
   };
 }
 

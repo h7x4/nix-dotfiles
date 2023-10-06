@@ -49,7 +49,7 @@
       "hedgedoc".servers."unix:${srv.hedgedoc.settings.path}" = { };
       "hydra".servers."localhost:${s srv.hydra.port}" = { };
       "idrac".servers."${ips.idrac}" = { };
-      "invidious".servers."localhost:${s config.services.invidious.port}" = { };
+      "invidious".servers."unix:${sa.invidious.newSocketAddress}" = { };
       "jupyter".servers."unix:${sa.jupyter.newSocketAddress}" = { };
       "kanidm".servers."localhost:8300" = { };
       "navidrome".servers."unix:${sa.navidrome.newSocketAddress}" = { };
