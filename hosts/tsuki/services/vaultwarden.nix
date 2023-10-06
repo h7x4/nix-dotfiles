@@ -1,5 +1,6 @@
-{ pkgs, config, ... }:
-{
+{ config, pkgs, ... }: let
+  cfg = config.services.vaultwarden;
+in {
   services.vaultwarden = {
     enable = true;
     dbBackend = "postgresql";
@@ -65,5 +66,12 @@
         };
       })
     ];
+  };
+
+  local.socketActivation.vaultwarden = {
+    enable = cfg.enable;
+    originalSocketAddress = "${cfg.config.ROCKET_ADDRESS}:${toString cfg.config.ROCKET_PORT}";
+    newSocketAddress = "/run/vaultwarden.sock";
+    privateNamespace = false;
   };
 }

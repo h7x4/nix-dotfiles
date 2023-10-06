@@ -57,7 +57,7 @@
       "pgadmin".servers."unix:${srv.uwsgi.instance.vassals.pgadmin.socket}" = { };
       "plex".servers."localhost:${s ports.plex}" = { };
       "proxmox".servers."${ips.px1}:${s ports.proxmox}" = { };
-      "vaultwarden".servers."localhost:${s srv.vaultwarden.config.ROCKET_PORT}" = { };
+      "vaultwarden".servers."unix:${sa.vaultwarden.newSocketAddress}" = { };
     };
 
     virtualHosts = let
