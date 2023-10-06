@@ -50,7 +50,7 @@
       "hydra".servers."localhost:${s srv.hydra.port}" = { };
       "idrac".servers."${ips.idrac}" = { };
       "invidious".servers."localhost:${s config.services.invidious.port}" = { };
-      "jupyter".servers."unix:/run/jupyter/jupyter.sock" = { };
+      "jupyter".servers."unix:${sa.jupyter.newSocketAddress}" = { };
       "kanidm".servers."localhost:8300" = { };
       "navidrome".servers."unix:${sa.navidrome.newSocketAddress}" = { };
       "osuchan".servers."localhost:${s ports.osuchan}" = { };

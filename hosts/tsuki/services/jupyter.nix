@@ -8,7 +8,6 @@ in {
   };
 
   users.users."jupyter".group = "jupyter";
-  users.groups."jupyter".members = [ "nginx" ];
 
   services.jupyter = {
     enable = true;
@@ -94,5 +93,17 @@ in {
         ${cfg.package}/bin/${cfg.command} --NotebookApp.config_file=${notebookConfig}
       '';
     };
+  };
+
+  local.socketActivation.jupyter = {
+    enable = cfg.enable;
+    originalSocketAddress = "/run/jupyter/jupyter.sock";
+    newSocketAddress = "/run/jupyter.sock";
+    privateNamespace = false;
+  };
+
+  systemd.services.jupyter-proxy.serviceConfig = {
+    User = "jupyter";
+    Group = "jupyter";
   };
 }
