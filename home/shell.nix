@@ -90,6 +90,39 @@ in {
 
       hms = toString inputs.nix-attr-search.packages.${pkgs.system}.home-manager-search;
       nxo = toString inputs.nix-attr-search.packages.${pkgs.system}.nix-option-search;
+
+      # TODO: does this need to be a function?
+      # ofborg-build = {};
+
+      ofborg-nixos-eval = {
+        type = " ";
+        alias = [
+          "HOME=/homeless-shelter"
+          "NIX_PATH=ofborg-nixpkgs-pr=$(pwd)"
+          "nix-instantiate"
+          "./nixos/release.nix"
+          "-A manual"
+          "--option restrict-eval true"
+          "--option build-timeout 1800"
+          "--argstr system ${pkgs.system}"
+          "--show-trace"
+        ];
+      };
+
+      ofborg-pkgs-eval = {
+        type = " ";
+        alias = [
+          "HOME=/homeless-shelter"
+          "NIX_PATH=ofborg-nixpkgs-pr=$(pwd)"
+          "nix-instantiate"
+          "./pkgs/top-level/release.nix"
+          "-A manual"
+          "--option restrict-eval true"
+          "--option build-timeout 1800"
+          "--argstr system ${pkgs.system}"
+          "--show-trace"
+        ];
+      };
     };
 
     # ░█▀▀░█░█░█▀▀░▀█▀░█▀▀░█▄█░█▀▄
