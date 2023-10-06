@@ -1,4 +1,4 @@
-{ secrets, ... }:
+{ config, ... }:
 {
   services.mx-puppet-discord = {
     enable = false;
@@ -15,11 +15,11 @@
         # TODO: connect via localhost
         homeserverUrl = "https://matrix.nani.wtf";
 
-        port = secrets.ports.matrix.mx-puppet-discord;
+        port = 8434;
         enableGroupSync = true;
       };
 
-      database.connString = "postgres://mx-puppet-discord:@localhost:${toString secrets.ports.postgres}/mx-puppet-discord?sslmode=disable";
+      database.connString = "postgres://mx-puppet-discord:@localhost:${toString config.services.postgresql.port}/mx-puppet-discord?sslmode=disable";
 
       namePatterns = {
         room = ":name";

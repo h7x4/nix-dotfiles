@@ -2,9 +2,8 @@
 {
   services.osuchan = {
     enable = true;
-    port = secrets.ports.osuchan;
+    port = 9283;
     secretFile = "${config.machineVars.dataDrives.default}/keys/osuchan/envfile";
-
   };
 
   systemd.services.osuchan.after = [

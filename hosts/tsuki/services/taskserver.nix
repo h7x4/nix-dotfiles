@@ -1,4 +1,4 @@
-{ pkgs, config, secrets, ... }:
+{ pkgs, config, ... }:
 {
   security.acme.certs."tasks.nani.wtf" = {
     group = config.services.taskserver.group;
@@ -11,7 +11,7 @@
   services.taskserver = {
     enable = true;
     fqdn = "todo.nani.wtf";
-    listenPort = secrets.ports.taskserver;
+    listenPort = 19233;
     dataDir = "${config.machineVars.dataDrives.default}/var/taskserver";
 
     organisations.h7x4 = {

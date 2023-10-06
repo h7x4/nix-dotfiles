@@ -1,4 +1,4 @@
-{ config, secrets, ... }: let
+{ config, ... }: let
   cfg = config.services.matrix-appservice-irc;
 in {
   services.matrix-appservice-irc = {
@@ -14,7 +14,7 @@ in {
 
       database = {
         engine = "postgres";
-        connectionString = "postgres://matrix-appservice-irc:@localhost:${toString secrets.ports.postgres}/matrix-appservice-irc?sslmode=disable";
+        connectionString = "postgres://matrix-appservice-irc:@localhost:${toString config.services.postgresql.port}/matrix-appservice-irc?sslmode=disable";
       };
 
       ircService.servers."irc.lainchan.org" = {

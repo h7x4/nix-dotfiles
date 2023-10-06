@@ -1,4 +1,4 @@
-{ pkgs, config, lib, secrets, ... }:
+{ pkgs, config, lib, ... }:
 {
   imports = [
     ./prometheus.nix

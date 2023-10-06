@@ -1,4 +1,4 @@
-{ config, secrets, ... }: let 
+{ config, ... }: let 
   cfg = config.services.plex;
 in {
   services.plex = {
@@ -29,6 +29,4 @@ in {
     # RestrictAddressFamilies = [ "AF_UNIX AF_INET AF_INET6" ];
     SystemCallArchitectures = "native";
   };
-
-  # networking.firewall.allowedTCPPorts = [ secrets.ports.plex ];
 }

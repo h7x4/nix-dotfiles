@@ -1,4 +1,4 @@
-{ lib, config, secrets, ... }:
+{ lib, config, ... }:
 {
   services.postgresql = let
     o = lib.optional;

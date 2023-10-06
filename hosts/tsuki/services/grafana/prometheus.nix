@@ -1,4 +1,4 @@
-{ secrets, ... }: {
+{ ... }: {
   # TODO: Autogenerate port infrastructure
 
   imports = [
@@ -17,6 +17,6 @@
 
   services.prometheus = {
     enable = true;
-    port = secrets.ports.prometheus;
+    port = 7001;
   };
 }

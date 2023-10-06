@@ -1,4 +1,4 @@
-{ pkgs, secrets, config, ... }:
+{ config, pkgs, ... }:
 {
   sops.secrets."headscale/oauth2_secret" = rec {
     restartUnits = [ "headscale.service" ];
@@ -17,7 +17,7 @@
     # TODO: make PR
     # dataDir = "${config.machineVars.dataDrives.default}/var/headscale";
 
-    port = secrets.ports.headscale;
+    port = 39304;
 
     settings = {
       server_url = "https://vpn.nani.wtf";
