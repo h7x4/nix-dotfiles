@@ -3,31 +3,39 @@
 # Nix Dotfiles
 
 These are my dotfiles for several nix machines.
-The folder structure looks somewhat like this:
+Here are some of the interesting files and dirs:
 
-| Directory | Purpose |
-|-----------|---------|
-| `flake.nix` | The root of everyting. Defines the inputs and outputs of the project. See [Nix Flakes][nix-flakes] for more information. |
-| `/pkgs`   | Custom packages that doesn't exist in nixpkgs. The code is also too "dirty" to add them to nixpkgs (yet). |
-| `/modules` | Custom modules that I use to make my own set of "arguments" and options for the rest of the configuration. |
-| `/overlays/lib` | Additions of helper functions to the standard library. |
+| Path | Purpose |
+|------|---------|
+| `/home` | [home-manager][home-manager] configuration. |
 | `/hosts` | Machine specific NixOS configurations. |
-| `/hosts/common.nix` | Configuration that should be equal for all NixOS machines (or at least change based on other module options). |
-| `/home` | All user specific configuration, using [home-manager][home-manager] |
-| `/home/shellOptions.nix` | Settings (mostly command aliases) for all shells. |
-| `/home/packages.nix` | A list of packages that should be available only to the user. This is where most of the installed packages are defined. |
+| `/hosts/common.nix` | Configuration that is equal for all hosts. |
+| `/lib` | Custom lib functions that has not been upstreamed (or should not be) to nixpkgs. I'm trying to phase these out as much as possible. |
+| `/modules` | Custom nixos modules that I use in my own configuration. If you see options that does not appear in [NixOS Search][nixos-search], they might be defined here. |
+| `/package-overrides` | Updated or pinned versions of packages that have not been upstreamed to nixpkgs (yet). |
+| `/secrets` | Encrypted [sops-nix][sops-nix] secrets. |
+| `flake.nix` | The root of everyting. Defines the inputs and outputs of the project. Also applies misc overlays and adds config-wide modules. See [Nix Flakes][nix-flakes] for more information. |
 
 ## Hosts
 
 | Host | Machine type | Purpose |
 |------|--------------|---------|
-| `Tsuki` | Dell Poweredge r710 server | Data storage / Build server / Selfhosted services. This server hosts a wide variety of services, including websites, matrix server, git repos, CI/CD and more. |
-| `Kasei` | AMD CPU / Nvidia GFX based desktop computer | Semi-daily driver. This is my main computer at home. Most of the configuration written in `/home` is made specifically for this computer, since `Eisei` is out of service at the moment. |
+| `Tsuki` | Dell Poweredge r710 server | Data storage / Build server / Selfhosted services. This server hosts a wide variety of services, including websites, matrix server, git repos, CI/CD and more. **This is probably the most interesting machine to pick config from** |
+| `Kasei` | AMD Zen 2 CPU / Nvidia GPU - desktop computer | Semi-daily driver. This is my main computer at home. Most of the configuration written in `/home` is made specifically for this computer, since `Eisei` is out of service at the moment. |
 | `Eisei` | HP Laptop | At the moment, this laptop is not in use. I've found that I'm not able to use NixOS quickly enough in a university environment where I need to rapidly install software and maintain project configurations (Makefile, Maven, django, npm, etc...) for several subjects. In addition to the configurations, some of the software is not available on NixOS. As a result, I would the be forced to package or FHS a lot of stuff in order to do anything productive. I might return to using NixOS on my laptop in the future. |
 
-## Nix Secrets
+## home-manager configuration
 
-Some options that are sensitive have been redacted from the files, and put into another repo. Some of the secrets are available through the `secrets` input, others are direct module configuration that is importet in `/home/home.nix`. Although this repo is required for this project to work, most of the options should be named in a way that their value type is almost guessable.
+| Path | Purpose |
+|------|---------|
+| `/home/config` | Configuration for everything that is not a program, nor a service, and are big enough to warrant their own file or directory. |
+| `/home/modules` | Custom home-manager modules. |
+| `/home/packages.nix` | A list of packages that should be included in the environment. |
+| `/home/programs` | Configuration for programs that have their own home-manager modules. |
+| `/home/services` | Configuration for services/daemons that are user-specific. |
+| `/home/shell.nix` | Shell-agnostic configuration. This includes aliases, envvars, functions, etc. |
 
 [home-manager]: https://github.com/nix-community/home-manager
+[nixos-search]: https://search.nixos.org/options
+[sops-nix]: https://github.com/Mic92/sops-nix
 [nix-flakes]: https://nixos.wiki/wiki/Flakes
