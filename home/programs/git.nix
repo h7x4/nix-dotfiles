@@ -30,6 +30,7 @@
         authors = "shortlog --summary --numbered --email";
         switch-interactive = "!cat <(git branch) <(git branch -r) | grep -v '^\\*\\|HEAD ->' | ${pkgs.fzf}/bin/fzf --reverse --info=inline --preview 'echo {} | xargs git show --color' | sed 's|\\s*.*/||' | xargs git switch";
         si = "switch-interactive";
+        rebase-author = "rebase -i -x \"git commit --amend --reset-author -CHEAD\"";
     };
 
     extraConfig = {
