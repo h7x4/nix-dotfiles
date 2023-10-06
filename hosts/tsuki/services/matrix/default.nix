@@ -5,6 +5,8 @@
     ./bridges/mx-puppet-discord.nix
     ./bridges/matrix-appservice-irc.nix
 
+    ./maunium-stickerpicker.nix
+
     ./postgres.nix
     ./coturn.nix
   ];
@@ -84,6 +86,7 @@
 
       # redis.enabled = true;
       max_upload_size = "100M";
+      dynamic_thumbnails = true;
     };
   };
 

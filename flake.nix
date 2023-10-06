@@ -43,7 +43,8 @@
     };
 
     maunium-stickerpicker = {
-      url = "git+file:///home/h7x4/git/maunium-stickerpicker-nix";
+      # url = "git+file:///home/h7x4/git/maunium-stickerpicker-nix";
+      url = "github:h7x4/maunium-stickerpicker-nix/project-rewrite";
     };
 
     minecraft = {
@@ -177,6 +178,7 @@
             secrets.outputs.nixos-config
             sops-nix.nixosModules.sops
             vscode-server.nixosModules.default
+            maunium-stickerpicker.nixosModules.default
 
             (args: import minecraft.outputs.nixosModules.minecraft-servers (args // {
               pkgs = unstable-pkgs;

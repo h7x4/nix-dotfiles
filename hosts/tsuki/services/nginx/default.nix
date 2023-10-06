@@ -164,14 +164,10 @@
       (proxy ["py"] "http://jupyter" enableWebsockets)
       (proxy ["vpn"] "http://headscale" enableWebsockets)
       (proxy ["yt"] "http://invidious" {})
-    ] ++ (let
-      stickerpickers = pkgs.callPackage ../matrix/maunium-stickerpicker.nix {
-        inherit (inputs) maunium-stickerpicker secrets;
-      };
-    in [
-      (host ["stickers-pingu"] { root = "${stickerpickers.stickers-pingu}/"; })
-      (host ["stickers-h7x4"] { root = "${stickerpickers.stickers-h7x4}/"; })
-    ])));
+
+      (host ["h7x4-stickers"] {})
+      (host ["pingu-stickers"] {})
+    ]));
 
     streamConfig = ''
       server {
