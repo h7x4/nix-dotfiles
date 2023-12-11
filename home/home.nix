@@ -8,7 +8,7 @@ in {
     ./shell.nix
     ./packages.nix
 
-    ./config/ssh/hosts/pvv.nix
+    ./config/ssh
     ./config/xdg
 
     ./programs/atuin.nix

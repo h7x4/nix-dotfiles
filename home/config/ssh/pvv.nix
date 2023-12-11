@@ -7,7 +7,16 @@ let
     [ "hildring" "pvv-login" "pvv" ]
     "demiurgen"
     "eirin"
-    [ "jokum" "pvv-nix" ]
+    "bekkalokk"
+    "ildkule"
+    "shark"
+    "buskerud"
+    "bicep"
+    {
+      names = [ "bob" ];
+      proxyJump = "hildring";
+    }
+    "knutsen"
     "isvegg"
     [ "microbel" "pvv-users" "pvv-mail" ]
   ];
@@ -16,18 +25,17 @@ let
     [ "knakelibrak" "pvv-databases" ]
     [ "spikkjeposche" "pvv-web" "pvv-wiki" "pvv-webmail" ]
     "sleipner"
-    "fenris"
+    # "fenris"
     "balduzius"
     "joshua"
-    "skrotnisse"
+    # "skrotnisse"
     "principal"
     "tom"
-    "monty"
-
-    {
-      names = ["dvask"];
-      proxyJump = "monty";
-    }
+    # "monty"
+    # {
+    #   names = [ "dvask" ];
+    #   proxyJump = "monty";
+    # }
 
     [ "innovation" "pvv-minecraft" ]
   ];
@@ -44,7 +52,7 @@ let
     inherit (lib.lists) head;
     inherit (lib.strings) split;
   in
-    names: { hostname = "${head names}.pvv.org"; };
+    names: { hostname = "${head names}.pvv.ntnu.no"; };
 
   # AttrSet -> AttrSet -> AttrSet
   convertMachineWithDefaults = defaults: normalizedMachine: let
