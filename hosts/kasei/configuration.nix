@@ -1,5 +1,14 @@
 { config, lib, pkgs, inputs, specialArgs, ... }:
 {
+  imports = [
+    ./services/docker.nix
+    ./services/libvirtd.nix
+    ./services/logiops.nix
+    ./services/postgres.nix
+    ./services/stable-diffusion.nix
+    ./services/tailscale.nix
+  ];
+
   machineVars = {
     headless = false;
     gaming = true;
@@ -37,13 +46,7 @@
     hostName = "kasei";
     networkmanager.enable = true;
     interfaces.enp6s0.useDHCP = true;
-    firewall = {
-      enable = true;
-      allowedTCPPorts = [ 7860 ];
-      allowedUDPPorts = [ config.services.tailscale.port ];
-      checkReversePath = "loose";
-      trustedInterfaces = [ "tailscale0" ];
-    };
+    firewall.enable = true;
     hostId = "f0660cef";
   };
 
@@ -54,32 +57,6 @@
     };
     xserver.videoDrivers = ["nvidia"];
     tailscale.enable = true;
-  };
-
-  # TODO: remove when merged: https://github.com/NixOS/nixpkgs/pull/167388
-  systemd = {
-    services = {
-      logid = {
-        description = "Logitech Configuration Daemon";
-        startLimitIntervalSec = 0;
-        wants = [ "multi-user.target" ];
-        after = [ "multi-user.target" ];
-        wantedBy = [ "graphical-session.target" ];
-    
-        serviceConfig = {
-          Type = "simple";
-          ExecStart = "${pkgs.logiops}/bin/logid";
-          User = "root";
-          ExecReload = "/bin/kill -HUP $MAINPID";
-          Restart="on-failure";
-        };
-      };
-    };
-  };
-
-  virtualisation = {
-    docker.enable = true;
-    libvirtd.enable = true;
   };
 
   boot = {
@@ -134,6 +111,5 @@
     cpu.amd.updateMicrocode = true;
     enableRedistributableFirmware = true;
     keyboard.zsa.enable = true;
-    logitech.wireless.enable = true;
   };
 }
