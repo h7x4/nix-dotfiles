@@ -21,7 +21,7 @@ in {
     ./programs/less.nix
     ./programs/ncmpcpp.nix
     ./programs/neovim.nix
-    ./programs/newsboat.nix
+    ./programs/newsboat
     ./programs/tmux.nix
     ./programs/zsh
 

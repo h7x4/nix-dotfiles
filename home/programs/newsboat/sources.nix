@@ -1,0 +1,41 @@
+{ ... }:
+let
+  mkSource = tags: url: { inherit tags url; };
+in {
+  programs.newsboat.urls = [
+    (mkSource [ "tech" "linux" ] "https://lukesmith.xyz/rss.xml")
+    (mkSource [ "tech" "vim" "old" ] "https://castel.dev/rss.xml")
+    (mkSource [ "tech" "linux" "nixos" ] "https://christine.website/blog.rss")
+    (mkSource [ "japanese" "language" "old" ] "http://feeds.feedburner.com/LocalizingJapan")
+    (mkSource [ "tech" "linux" ] "http://xahlee.info/comp/blog.xml")
+    (mkSource [ "japanese" "language" ] "https://www.outlier-linguistics.com/blogs/japanese.atom")
+    (mkSource [ "tech" "linux" ] "https://archlinux.org/feeds/news/")
+    (mkSource [ "tech" "linux" ] "https://bartoszmilewski.com/feed/")
+    (mkSource [ "tech" "linux" "nixos" ] "https://nixos.org//blog/announcements-rss.xml")
+    (mkSource [ "tech" "linux" ] "https://www.digitalneanderthal.com/index.xml")
+    (mkSource [ "tech" "ntnu" ] "https://omegav.no/newsrss")
+    (mkSource [ "tech" ] "https://code.visualstudio.com/feed.xml")
+    (mkSource [ "tech" "linux" "nixos" ] "https://blog.ysndr.de/atom.xml")
+    (mkSource [ "tech" "linux" "nixos" ] "https://kaushikc.org/atom.xml")
+    (mkSource [ "tech" "linux" "nixos" ] "https://ianthehenry.com/feed.xml")
+    (mkSource [ "tech" "linux" "ntnu" ] "https://www.pvv.ntnu.no/w/api.php?hidebots=1&urlversion=1&days=7&limit=50&action=feedrecentchanges&feedformat=atom")
+    (mkSource [ "ntnu" ] "https://varsel.it.ntnu.no/subscribe/rss/")
+    (mkSource [ "tech" "linux" "japanese" ] "https://www.ncaq.net/feed.atom")
+    (mkSource [ "tech" "linux" "haskell" "nixos" "functional-programming" ] "https://www.haskellforall.com/feeds/posts/default")
+    (mkSource [ "tech" "haskell" "functional-programming" ] "https://williamyaoh.com/feed.atom")
+    (mkSource [ "tech" "haskell" "functional-programming" ] "https://www.parsonsmatt.org/feed.xml")
+    (mkSource [ "tech" "haskell" "functional-programming" "python" ] "http://blog.ezyang.com/feed/")
+    (mkSource [ "tech" "haskell" "functional-programming" ] "https://lexi-lambda.github.io/feeds/all.rss.xml")
+    (mkSource [ "tech" "haskell" "functional-programming" ] "https://www.stephendiehl.com/feed.rss")
+    (mkSource [ "tech" "haskell" "functional-programming" "emacs" ] "https://chrisdone.com/rss.xml")
+    (mkSource [ "tech" "haskell" "functional-programming" "nixos" ] "https://markkarpov.com/feed.atom")
+    (mkSource [ "tech" "flutter" ] "https://resocoder.com/feed/")
+    (mkSource [ "tech" "compilers" ] "https://existentialtype.wordpress.com/feed/")
+    (mkSource [ "tech" "compilers" "haskell" "functional-programming" "old" ] "https://skilpat.tumblr.com/rss")
+    (mkSource [ "language" ] "https://feeds.feedburner.com/blogspot/Ckyi")
+    (mkSource [ "tech" "compilers" ] "https://go.dev/blog/feed.atom")
+    (mkSource [ "tech" "linux" "nixos" ] "https://myme.no/feed.xml")
+    (mkSource [ "tech" "linux" "nixos" "compilers" ] "https://flyx.org/feed.xml")
+    (mkSource [ "tech" "linux" ] "https://blog.jfx.ac/feed.xml")
+  ];
+}

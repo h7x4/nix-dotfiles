@@ -3,6 +3,8 @@ let
   defaultBrowser = "google-chrome-stable %u";
   videoViewer = "mpv %u";
 in {
+  imports = [ ./sources.nix ];
+
   programs.newsboat = {
     enable = true;
     autoReload = true;
