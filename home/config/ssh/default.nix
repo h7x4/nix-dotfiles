@@ -1,6 +1,7 @@
 {
   imports = [
-    ./pvv.nix
+    ./home.nix
     ./other.nix
+    ./pvv.nix
   ];
 }
