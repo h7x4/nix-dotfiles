@@ -110,6 +110,10 @@ in {
       enable = true;
       # packageSet = pkgs.texlive.combined.scheme-medium;
     };
+    tealdeer = {
+      enable = true;
+      settings.updates.auto_update = true;
+    };
     zoxide.enable = true;
   };
 
