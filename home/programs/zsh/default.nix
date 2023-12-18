@@ -63,7 +63,7 @@
 
       enable-fzf-tab
 
-      zstyle ':fzf-tab:complete:cd:*' fzf-preview '${pkgs.exa}/bin/exa -1 --color=always $realpath'
+      zstyle ':fzf-tab:complete:cd:*' fzf-preview '${lib.getExe pkgs.eza} -1 --color=always $realpath'
 
       # Use tmux buffer if we are inside tmux
       if ! { [ "$TERM" = "screen" ] && [ -n "$TMUX" ]; } then

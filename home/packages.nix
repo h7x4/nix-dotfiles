@@ -44,7 +44,7 @@ in {
     rclone
     ripgrep
     rsync
-    sc-im
+    # sc-im
     slack-term
     taskwarrior
     taskwarrior-tui

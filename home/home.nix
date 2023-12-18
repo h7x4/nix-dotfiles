@@ -90,7 +90,7 @@ in {
 
     bat.enable = true;
     bottom.enable = true;
-    exa.enable = true;
+    eza.enable = true;
     feh.enable = mkIf graphics true;
     fzf = {
       enable = true;

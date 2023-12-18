@@ -50,8 +50,8 @@ in {
       ag = "${pkgs.ripgrep}/bin/rg";
 
       lls = "${pkgs.coreutils}/bin/ls --color=always";
-      ls = p "exa";
-      la = "${p "exa"} -lah --changed --time-style long-iso --git --group";
+      ls = p "eza";
+      la = "${p "eza"} -lah --changed --time-style long-iso --git --group";
       lsa = "la";
 
       killall = {

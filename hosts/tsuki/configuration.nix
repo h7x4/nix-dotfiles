@@ -82,6 +82,7 @@
     };
     groups = {
       media = {};
+      nix-builder = {};
     };
   };
 

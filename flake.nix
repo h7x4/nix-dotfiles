@@ -1,10 +1,10 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-23.05";
+    nixpkgs.url = "nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.05";
+      url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -53,7 +53,7 @@
     };
 
     matrix-synapse-next = {
-      url = "github:dali99/nixos-matrix-modules";
+      url = "github:dali99/nixos-matrix-modules/v0.5.0";
     };
 
     vscode-server = {
@@ -109,7 +109,7 @@
         osuchan.overlays.default
         (self: super: {
           mpv-unwrapped = super.mpv-unwrapped.override {
-            ffmpeg_5 = super.ffmpeg_5-full;
+            ffmpeg = super.ffmpeg_6-full;
           };
         })
         # (self: super: {
@@ -173,7 +173,7 @@
             ./hosts/common.nix
             ./hosts/${name}/configuration.nix
 
-            matrix-synapse-next.nixosModules.synapse
+            matrix-synapse-next.nixosModules.default
             osuchan.outputs.nixosModules.default
             secrets.outputs.nixos-config
             sops-nix.nixosModules.sops

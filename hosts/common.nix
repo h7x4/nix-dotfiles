@@ -2,10 +2,6 @@
 let
   inherit (config) machineVars;
 in {
-  nixpkgs.config = {
-    allowUnfree = true;
-  };
-
   sops.defaultSopsFile = ../secrets/default.yaml;
 
   nix = {
