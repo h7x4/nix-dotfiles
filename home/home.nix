@@ -28,8 +28,6 @@ in {
     ../modules/machineVars.nix
     ./modules/colors.nix
     ./modules/shellAliases.nix
-
-    inputs.secrets.outputs.home-config
   ] ++ optionals graphics [
     ./config/gtk.nix
 

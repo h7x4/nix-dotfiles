@@ -1,6 +1,7 @@
-{ pkgs, lib, extendedLib, secrets, ... }:
+{ pkgs, lib, extendedLib, ... }:
 let
-  inherit (secrets.ssh.users.pvv) normalUser adminUser;
+  adminUser = "root";
+  normalUser = "oysteikt";
 
   # http://www.pvv.ntnu.no/pvv/Maskiner
   normalMachines = [
