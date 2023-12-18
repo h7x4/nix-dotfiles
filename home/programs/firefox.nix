@@ -1,15 +1,15 @@
-{ pkgs, secrets, ... }:
+{ pkgs, ... }:
 {
   programs.firefox = {
     enable = true;
     profiles.h7x4 = {
       bookmarks = [{
         toolbar = true;
-        bookmarks = secrets.browser.bookmarks;
+        bookmarks = import ./browser/bookmarks.nix;
       }];
       search = {
         default = "Google";
-        engines = secrets.browser.engines { inherit pkgs; };
+        engines = import ./browser/engines.nix { inherit pkgs; };
         force = true;
       };
       settings = {};
