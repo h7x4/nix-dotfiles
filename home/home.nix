@@ -80,6 +80,8 @@ in {
       name = "capitaine-cursors";
       size = 16;
     };
+
+    keyboard.options = [ "caps:escape" ];
   };
 
   news.display = "silent";
