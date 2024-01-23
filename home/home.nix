@@ -13,6 +13,7 @@ in {
 
     ./programs/atuin.nix
     ./programs/comma.nix
+    ./programs/direnv.nix
     ./programs/firefox.nix
     ./programs/gdb.nix
     ./programs/gh.nix
