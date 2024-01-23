@@ -216,7 +216,7 @@
           ];
         };
     in {
-      Tsuki = nixSys "tsuki";
+      tsuki = nixSys "tsuki";
       Eisei = nixSys "eisei";
       kasei = nixSys "kasei";
       home-manager-tester = nixpkgs-unstable.lib.nixosSystem {

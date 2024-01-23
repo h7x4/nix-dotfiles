@@ -6,7 +6,7 @@ in {
 
   nix = {
     package = unstable-pkgs.nixVersions.stable;
-    distributedBuilds = config.networking.hostName != "Tsuki";
+    distributedBuilds = config.networking.hostName != "tsuki";
 
     settings = {
       allow-dirty = true;

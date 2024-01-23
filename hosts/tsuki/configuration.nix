@@ -52,7 +52,7 @@
   # security.pam.services.login.unixAuth = true;
 
   networking = {
-    hostName = "Tsuki";
+    hostName = "tsuki";
     networkmanager.enable = true;
     interfaces.ens18.useDHCP = true;
     firewall.enable=true;
