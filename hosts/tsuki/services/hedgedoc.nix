@@ -1,23 +1,37 @@
-{ pkgs, lib, config, options, ... }:
-{
+{ pkgs, lib, config, options, ... }: let
+  cfg = config.services.hedgedoc;
+in {
   config = {
     # Contains CMD_SESSION_SECRET and CMD_OAUTH2_CLIENT_SECRET
     sops.secrets."hedgedoc/env" = {
       restartUnits = [ "hedgedoc.service" ];
+      owner = "hedgedoc";
+      group = "hedgedoc";
     };
+
+    users.groups.hedgedoc.members = [ "nginx" ];
 
     services.hedgedoc = {
       enable = true;
       environmentFile = config.sops.secrets."hedgedoc/env".path;
       settings = {
         domain = "docs.nani.wtf";
-        dbURL = "postgres://hedgedoc:@localhost/hedgedoc";
         email = false;
         allowAnonymous = false;
         allowAnonymousEdits = true;
         protocolUseSSL = true;
 
-        oauth2 = let 
+        path = "/run/hedgedoc/hedgedoc.sock";
+
+        db = {
+          username = "hedgedoc";
+          # TODO: set a password
+          database = "hedgedoc";
+          host = "/var/run/postgresql";
+          dialect = "postgres";
+        };
+
+        oauth2 = let
           authServerUrl = config.services.kanidm.serverSettings.origin;
         in rec {
           baseURL = "${authServerUrl}/oauth2";
@@ -45,6 +59,14 @@
           "DATABASE \"hedgedoc\"" = "ALL PRIVILEGES";
         };
       }];
+    };
+
+    systemd.services.hedgedoc = rec {
+      requires = [
+        "postgresql.service"
+        "kanidm.service"
+      ];
+      after = requires;
     };
   };
 }

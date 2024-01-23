@@ -10,7 +10,7 @@
     ./services/gitea
     ./services/grafana
     ./services/headscale.nix
-    ./services/hedgedoc
+    ./services/hedgedoc.nix
     ./services/hydra.nix
     ./services/invidious.nix
     ./services/jupyter.nix
