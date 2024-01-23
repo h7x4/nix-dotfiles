@@ -67,10 +67,8 @@
         name = "psycopg2";
         args = {
           user = "matrix-synapse";
-          # TODO: Generate proper password
-          password = "";
           database = "matrix-synapse";
-          host = "localhost";
+          host = "/var/run/postgresql";
           port = secrets.ports.postgres;
         };
       };
