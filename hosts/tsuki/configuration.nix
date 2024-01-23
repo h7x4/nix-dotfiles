@@ -1,5 +1,7 @@
 { config, lib, secrets, modulesPath, ... }:
 {
+  system.stateVersion = "22.05";
+
   imports = [
     ./hardware-configuration.nix
 
