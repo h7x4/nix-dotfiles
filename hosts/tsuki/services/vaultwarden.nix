@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: let
+{ config, pkgs, lib, ... }: let
   cfg = config.services.vaultwarden;
 in {
   services.vaultwarden = {
@@ -18,7 +18,7 @@ in {
     };
   };
 
-  systemd.services.vaultwarden = {
+  systemd.services.vaultwarden = lib.mkIf cfg.enable {
     requires = [ "postgresql.service" ];
 
     serviceConfig = {
@@ -55,7 +55,7 @@ in {
     };
   };
 
-  services.postgresql = {
+  services.postgresql = lib.mkIf cfg.enable {
     enable = true;
     ensureDatabases = [ "vaultwarden" ];
     ensureUsers = [
