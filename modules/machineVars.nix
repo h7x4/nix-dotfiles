@@ -52,13 +52,13 @@ t tools preinstalled.";
 (music, video and image editing) installed.";
 
     wlanInterface = mkOption {
-      type = types.nullOr types.string;
+      type = types.nullOr types.str;
       default = null;
     };
 
     # Check " ls -1 /sys/class/power_supply/ "
     battery = mkOption {
-      type = types.nullOr types.string;
+      type = types.nullOr types.str;
       default = null;
     };
 
