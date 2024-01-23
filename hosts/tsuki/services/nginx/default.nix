@@ -56,7 +56,6 @@
       "osuchan".servers."localhost:${s ports.osuchan}" = { };
       "pgadmin".servers."unix:${srv.uwsgi.instance.vassals.pgadmin.socket}" = { };
       "plex".servers."localhost:${s ports.plex}" = { };
-      "proxmox".servers."${ips.px1}:${s ports.proxmox}" = { };
       "vaultwarden".servers."unix:${sa.vaultwarden.newSocketAddress}" = { };
     };
 
@@ -160,7 +159,6 @@
       (proxy ["osu"] "http://osuchan" {})
       (proxy ["plex"] "http://plex" {})
       (proxy ["mus"] "http://navidrome" enableWebsockets)
-      (proxy ["px1"] "https://proxmox" enableWebsockets)
       (proxy ["py"] "http://jupyter" enableWebsockets)
       (proxy ["vpn"] "http://headscale" enableWebsockets)
       (proxy ["yt"] "http://invidious" {})
