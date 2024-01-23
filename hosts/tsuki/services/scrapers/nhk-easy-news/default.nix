@@ -6,7 +6,7 @@
 in {
   systemd.services.scrape-nhk-easy-news = {
     after = [ "network.target" ];
-    serviceConfig = {
+    serviceConfig = rec {
       Type = "oneshot";
       ExecStart = script;
       DynamicUser = true;
@@ -15,6 +15,10 @@ in {
       ProtectProc = "invisible";
       ProtectSystem = "strict";
       WorkingDirectory = "/data/scrapers/nhk-easy-news";
+      BindPaths = [ WorkingDirectory ];
+      ReadWritePaths = [ WorkingDirectory ];
+      StateDirectory = "nhk-easy-news-scraper";
+      StateDirectoryMode = "0755";
     };
   };
 
