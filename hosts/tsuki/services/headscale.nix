@@ -1,11 +1,12 @@
-{ config, pkgs, ... }:
-{
-  sops.secrets."headscale/oauth2_secret" = rec {
+{ config, pkgs, lib, ... }: let
+  cfg = config.services.headscale;
+in {
+  sops.secrets."headscale/oauth2_secret" = lib.mkIf cfg.enable rec {
     restartUnits = [ "headscale.service" ];
     owner = config.services.headscale.user;
     group = config.users.users.${owner}.group;
   };
-  sops.secrets."postgres/headscale" = rec {
+  sops.secrets."postgres/headscale" = lib.mkIf cfg.enable rec {
     restartUnits = [ "headscale.service" ];
     owner = config.services.headscale.user;
     group = config.users.users.${owner}.group;
@@ -44,14 +45,14 @@
     };
   };
 
-  systemd.services.headscale = {
+  systemd.services.headscale = lib.mkIf cfg.enable {
     requires = [
       "postgresql.service"
       "kanidm.service"
     ];
   };
 
-  services.postgresql = {
+  services.postgresql = lib.mkIf cfg.enable {
     enable = true;
     ensureDatabases = [ "headscale" ];
     ensureUsers = [
@@ -64,7 +65,7 @@
     ];
   };
 
-  environment.systemPackages = with pkgs; [ headscale ];
+  environment.systemPackages = lib.mkIf cfg.enable [ pkgs.headscale ];
 
   services.tailscale.enable = true;
 
