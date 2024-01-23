@@ -86,5 +86,12 @@
         clean = "git-lfs clean -- %f";
       };
     };
+
+    ignores = [
+      ".vscode"
+      ".direnv"
+      ".envrc"
+      "shell.nix"
+    ];
   };
 }
