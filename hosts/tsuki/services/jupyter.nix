@@ -16,7 +16,7 @@ in {
       readFile = f: "open('${f}', 'r', encoding='utf8').read().strip()";
     in
       readFile config.sops.secrets."jupyter/password".path;
-      
+
     kernels = {
       pythonDS = let
         env = (pkgs.python3.withPackages (pythonPackages: with pythonPackages; [
@@ -40,6 +40,19 @@ in {
     }; 
   };
 
+  systemd.tmpfiles.settings."10-jupyter" = {
+    "/var/lib/jupyter/notebooks".d = {
+      mode = "0700";
+      user = "jupyter";
+      group = "jupyter";
+    };
+    "/var/lib/jupyter/data".d = {
+      mode = "0700";
+      user = "jupyter";
+      group = "jupyter";
+    };
+  };
+
   systemd.services.jupyter = let
     notebookConfig = pkgs.writeText "jupyter_config.py" ''
       c.NotebookApp.notebook_dir = 'notebooks'
@@ -57,8 +70,8 @@ in {
     '';
   in {
     environment = {
-      JUPYTER_DATA_DIR = "$STATE_DIRECTORY/data";
-      JUPYTER_RUNTIME_DIR = "$RUNTIME_DIRECTORY";
+      JUPYTER_DATA_DIR = "%S/${config.systemd.services.jupyter.serviceConfig.StateDirectory}/data";
+      JUPYTER_RUNTIME_DIR = "%t/${config.systemd.services.jupyter.serviceConfig.RuntimeDirectory}";
     };
     serviceConfig = {
       RuntimeDirectory = "jupyter";
@@ -86,9 +99,6 @@ in {
       RestrictAddressFamilies = [ "AF_INET" "AF_INET6" "AF_UNIX" ];
       SystemCallArchitectures = "native";
 
-      ExecStartPre = ''
-        ${pkgs.coreutils}/bin/mkdir -p /var/lib/jupyter/{notebooks,data}
-      '';
       ExecStart = lib.mkForce ''
         ${cfg.package}/bin/${cfg.command} --NotebookApp.config_file=${notebookConfig}
       '';
