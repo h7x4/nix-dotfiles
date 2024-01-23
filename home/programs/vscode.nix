@@ -1,12 +1,24 @@
 { pkgs, lib, config, ... }:
+let
+  cfg = config.programs.vscode;
 
-let mapPrefixToSet = prefix: set:
+  mapPrefixToSet = prefix: set:
     with lib; attrsets.mapAttrs' (k: v: attrsets.nameValuePair ("${prefix}.${k}") v) set;
 
-    # vs-liveshare = pkgs.callPackage ./vscode-extensions/vsliveshare.nix {};
-
+  configDir = {
+    "vscode" = "Code";
+    "vscode-insiders" = "Code - Insiders";
+    "vscodium" = "VSCodium";
+  }.${cfg.package.pname};
+  userDir = "${config.xdg.configHome}/${configDir}/User";
+  configFilePath = "${userDir}/settings.json";
 in
 {
+  home.file.${configFilePath} = {
+    target = "${configFilePath}.ro";
+    onChange = ''install -m660 $(realpath "${configFilePath}.ro") "${configFilePath}"'';
+  };
+
   programs.vscode ={
     enable = true;
 
@@ -22,11 +34,13 @@ in
         "minimap.enabled" = false;
         tabSize = 2;
         insertSpaces = true;
+        "inlineSuggest.enabled" = true;
+        "inlayHints.enabled" = "offUnlessPressed";
         detectIndentation = false;
         tabCompletion = "onlySnippets";
         snippetSuggestions = "top";
         cursorBlinking = "smooth";
-        cursorSmoothCaretAnimation = true;
+        cursorSmoothCaretAnimation = "on";
         multiCursorModifier = "ctrlCmd";
         suggestSelection = "first";
         cursorStyle = "line";
@@ -39,7 +53,6 @@ in
         centerLayout = true;
         hideStatusBar = false;
         hideLineNumbers = false;
-        hideTabs = false;
       };
 
       vim = mapPrefixToSet "vim" {
@@ -133,6 +146,7 @@ in
       "extensions.autoCheckUpdates" = false;
       "extensions.autoUpdate" = false;
       "diffEditor.ignoreTrimWhitespace" = false;
+      "diffEditor.hideUnchangedRegions" = "enabled";
       "emmet.triggerExpansionOnTab" = true;
       "explorer.confirmDragAndDrop" = false;
       "git.allowForcePush" = true;
@@ -140,7 +154,7 @@ in
       "telemetry.telemetryLevel" = "off";
       "terminal.integrated.fontSize" = 14;
       "vsintellicode.modify.editor.suggestSelection" = "automaticallyOverrodeDefaultValue";
-      "window.zoomLevel" = 2;
+      "window.zoomLevel" = 1;
 
       # This setting does not support language overrides
       "files.exclude" = {
@@ -270,7 +284,7 @@ in
       # jock.svg
       # ms-azuretools.vscode-docker
       # ms-toolsai.jupyter
-      # ms-vscode-remote.remote-ssh
+      ms-vscode-remote.remote-ssh
       # ms-vsliveshare.vsliveshare
       bbenoist.nix
       christian-kohler.path-intellisense
@@ -289,6 +303,7 @@ in
       redhat.vscode-yaml
       shardulm94.trailing-spaces
       usernamehw.errorlens
+      rust-lang.rust-analyzer
       # vs-liveshare
       vscodevim.vim
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
@@ -307,8 +322,8 @@ in
       {
         name = "comment-anchors";
         publisher = "ExodiusStudios";
-        version = "1.9.6";
-        sha256 = "1zgvgf6zq1ny3v8b9jjp4j3n27qmiz45g23ljaim92g6hni38wvv";
+        version = "1.10.3";
+        sha256 = "sha256-IyiiS4jpcghwKI0j8s69uGNZlKnZ0o78ZCT0oZeJER0=";
       }
       {
         name = "vscode-test-explorer";
@@ -325,8 +340,8 @@ in
       {
         name = "test-adapter-converter";
         publisher = "ms-vscode";
-        version = "0.1.4";
-        sha256 = "02b04756kfk640hri1xw0p6kwjxwp8d2hpmca0iysfivfcmm1bqn";
+        version = "0.1.9";
+        sha256 = "sha256-M53jhAVawk2yCeSrLkWrUit3xbDc0zgCK2snbK+BaSs=";
       }
       # {
       #   name = "indent-rainbow";
@@ -337,8 +352,8 @@ in
       {
         name = "vscodeintellicode";
         publisher = "VisualStudioExptTeam";
-        version = "1.2.14";
-        sha256 = "1j72v6grwasqk34m1jy3d6w3fgrw0dnsv7v17wca8baxrvgqsm6g";
+        version = "1.2.30";
+        sha256 = "sha256-f2Gn+W0QHN8jD5aCG+P93Y+JDr/vs2ldGL7uQwBK4lE=";
       }
       {
         name = "keyboard-quickfix";
