@@ -12,7 +12,7 @@ in {
   };
 
   local.socketActivation.navidrome = {
-    enable = true;
+    enable = cfg.enable;
     originalSocketAddress = "${cfg.settings.Address}:${toString cfg.settings.Port}";
     newSocketAddress = "/run/navidrome.sock";
     privateNamespace = false;
