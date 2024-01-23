@@ -17,8 +17,8 @@
     dataDir = "/var/lib/matrix";
 
     workers = {
-      federationSenders = 3;
-      federationReceivers = 3;
+      federationSenders = 2;
+      federationReceivers = 2;
       initialSyncers = 1;
       normalSyncers = 1;
       eventPersisters = 1;
