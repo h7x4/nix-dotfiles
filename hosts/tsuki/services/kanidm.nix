@@ -11,6 +11,9 @@ in {
       "fullchain.pem:${certDir}/fullchain.pem"
       "key.pem:${certDir}/key.pem"
     ];
+    serviceConfig.BindPaths = [
+      cfg.serverSettings.online_backup.path
+    ];
   };
 
   services.kanidm = {
@@ -23,7 +26,11 @@ in {
       domain = "auth.nani.wtf";
       tls_chain = "${credsDir}/fullchain.pem";
       tls_key = "${credsDir}/key.pem";
-      bindaddress = "localhost:8300";
+      online_backup = {
+        path = "/data/backup/kanidm";
+        schedule = "00 22 * * *";
+        versions = 10;
+      };
     };
   };
 
