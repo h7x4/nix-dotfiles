@@ -1,12 +1,76 @@
 { pkgs, lib, config, inputs, secrets, ... }:
+let
+  cfg = config.services.minecraft-servers;
+
+  # See https://docs.papermc.io/paper/aikars-flags
+  jvmOpts = lib.concatStringsSep " " [
+    "-Xms5G"
+    "-Xmx15G"
+    "-XX:+UseG1GC"
+    "-XX:+ParallelRefProcEnabled"
+    "-XX:MaxGCPauseMillis=200"
+    "-XX:+UnlockExperimentalVMOptions"
+    "-XX:+DisableExplicitGC"
+    "-XX:+AlwaysPreTouch"
+    "-XX:G1NewSizePercent=30"
+    "-XX:G1MaxNewSizePercent=40"
+    "-XX:G1HeapRegionSize=8M"
+    "-XX:G1ReservePercent=20"
+    "-XX:G1HeapWastePercent=5"
+    "-XX:G1MixedGCCountTarget=4"
+    "-XX:InitiatingHeapOccupancyPercent=15"
+    "-XX:G1MixedGCLiveThresholdPercent=90"
+    "-XX:G1RSetUpdatingPauseTimePercent=5"
+    "-XX:SurvivorRatio=32"
+    "-XX:+PerfDisableSharedMem"
+    "-XX:MaxTenuringThreshold=1"
+    "-Dusing.aikars.flags=https://mcflags.emc.gs"
+    "-Daikars.new.flags=true"
+  ];
+
+  # serverPackage = inputs.minecraft.packages.x86_64-linux.paper-server-1_20_2;
+  # serverPackage = pkgs.paperServers.paper-1_20_2;
+
+  # lazymc-config = ((pkgs.formats.toml { }).generate "lazymc.toml" {
+  #   # public = {
+  #   #   version = builtins.head
+  #   #     (builtins.match "([[:digit:]].*[[:digit:]]*.[[:digit:]]*)-build.*" serverPackage.version);
+  #   #   protocol = 765;
+  #   # };
+  #   server = {
+  #     directory = "${cfg.dataDir}/kakuland";
+  #     command = "${serverPackage}/bin/minecraft-server ${jvmOpts}";
+  #     freeze_process = false;
+  #     probe_on_start = true;
+  #   };
+  #   rcon = {
+  #     enabled = true;
+  #     password = "mcrcond";
+  #     randomize_password = false;
+  #   };
+  #   advanced.rewrite_server_properties = false;
+  # }).override {
+  #   runCommand = pkgs.runCommandLocal;
+  # };
+
+  # lazymcServerPackage = pkgs.writeShellScriptBin "minecraft-server" ''
+  #   exec ${lib.getExe pkgs.lazymc} -c ${lazymc-config}
+  # '';
+in
 {
+  # ugly hack for https://github.com/Infinidoge/nix-minecraft/pull/54
+  services.minecraft-server.dataDir = "/srv/minecraft";
+
   services.minecraft-servers = {
     enable = true;
     eula = true;
     openFirewall = true;
-    dataDir = "${config.machineVars.dataDrives.default}/var/minecraft";
+    dataDir = "/var/lib/minecraft";
     servers.kakuland = {
       enable = true;
+
+      # package = lazymcServerPackage;
+      package = pkgs.paperServers.paper-1_20_4;
 
       serverProperties = {
         allow-flight = true;
@@ -18,7 +82,6 @@
         enable-command-block = false;
         enable-jmx-monitoring = false;
         enable-query = false;
-        enable-rcon = false;
         enable-status = true;
         enforce-secure-profile = false;
         enforce-whitelist = false;
@@ -47,14 +110,16 @@
         pvp = true;
         # "query.port" = 25565;
         rate-limit = 0;
-        # rcon.password=
-        # rcon.port=25575
+        enable-rcon = true;
+        "rcon.password" = "mcrcond";
+        "rcon.port" = 25575;
         require-resource-pack = false;
         # resource-pack=
         # resource-pack-prompt=
         # resource-pack-sha1=
         server-ip = "0.0.0.0";
         server-port = 25565;
+        # server-port = 25566;
         simulation-distance = 10;
         spawn-animals = true;
         spawn-monsters = true;
@@ -67,33 +132,7 @@
         white-list = true;
       };
 
-      package = inputs.minecraft.packages.x86_64-linux.paper-server;
-
-      # See https://docs.papermc.io/paper/aikars-flags
-      jvmOpts = lib.concatStringsSep " " [
-        "-Xms5G"
-        "-Xmx15G"
-        "-XX:+UseG1GC"
-        "-XX:+ParallelRefProcEnabled"
-        "-XX:MaxGCPauseMillis=200"
-        "-XX:+UnlockExperimentalVMOptions"
-        "-XX:+DisableExplicitGC"
-        "-XX:+AlwaysPreTouch"
-        "-XX:G1NewSizePercent=30"
-        "-XX:G1MaxNewSizePercent=40"
-        "-XX:G1HeapRegionSize=8M"
-        "-XX:G1ReservePercent=20"
-        "-XX:G1HeapWastePercent=5"
-        "-XX:G1MixedGCCountTarget=4"
-        "-XX:InitiatingHeapOccupancyPercent=15"
-        "-XX:G1MixedGCLiveThresholdPercent=90"
-        "-XX:G1RSetUpdatingPauseTimePercent=5"
-        "-XX:SurvivorRatio=32"
-        "-XX:+PerfDisableSharedMem"
-        "-XX:MaxTenuringThreshold=1"
-        "-Dusing.aikars.flags=https://mcflags.emc.gs"
-        "-Daikars.new.flags=true"
-      ];
+      inherit jvmOpts;
 
       symlinks = let
         rawFile = file: pkgs.runCommandLocal (builtins.baseNameOf file) {} ''
@@ -147,6 +186,9 @@
   systemd.services.minecraft-server-kakuland.requires = [ "postgresql.service" ];
   systemd.services.minecraft-server-kakuland.after = [
     "postgresql.service"
-    "data2-momiji.mount"
+    # "data2-momiji.mount"
   ];
+
+  networking.firewall.allowedTCPPorts = [ 25565 ];
+  networking.firewall.allowedUDPPorts = [ 25565 ];
 }

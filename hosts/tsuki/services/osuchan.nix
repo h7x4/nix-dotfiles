@@ -1,12 +1,12 @@
-{ secrets, config, ... }:
+{ config, ... }:
 {
+  sops.secrets."osuchan/envfile" = {
+    restartUnits = [ "osuchan.service" ];
+  };
+
   services.osuchan = {
     enable = true;
     port = 9283;
-    secretFile = "${config.machineVars.dataDrives.default}/keys/osuchan/envfile";
+    secretFile = config.sops.secrets."osuchan/envfile".path;
   };
-
-  systemd.services.osuchan.after = [
-    "data2-momiji.mount"
-  ];
 }

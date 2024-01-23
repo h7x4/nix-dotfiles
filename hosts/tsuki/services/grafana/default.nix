@@ -19,7 +19,6 @@
 
   services.grafana = {
     enable = true;
-    dataDir = "${config.machineVars.dataDrives.default}/var/grafana";
 
     provision = {
       enable = true;

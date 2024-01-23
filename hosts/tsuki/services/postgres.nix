@@ -10,7 +10,6 @@ in {
       host all all 127.0.0.1/32 trust
       host all all ::1/128 trust
     '';
-    dataDir = "${config.machineVars.dataDrives.drives.postgres}/${config.services.postgresql.package.psqlSchema}";
     settings = {
       max_connections = 150;
     };
@@ -18,16 +17,15 @@ in {
 
   services.postgresqlBackup = {
     enable = true;
-    location = "${config.machineVars.dataDrives.drives.backup}/postgres";
+    location = "/data/backup/postgres";
     backupAll = true;
   };
 
   systemd.services.postgresqlBackup = {
-    requires = [ "postgresql.service" "data2-backup.mount" ];
+    requires = [ "postgresql.service" ];
   };
 
   systemd.services.postgresql = {
-    requires = [ "data2-postgres.mount" ];
     serviceConfig = {
       Restart = "always";
       RestartSec = 3;

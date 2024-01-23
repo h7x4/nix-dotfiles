@@ -27,11 +27,10 @@ in {
     user = "git";
     package = unstable-pkgs.gitea;
 
-    stateDir = "${config.machineVars.dataDrives.default}/var/gitea";
-
     dump = {
       enable = true;
       interval = "weekly";
+      backupDir = "/data/backup/gitea";
     };
 
     database = {

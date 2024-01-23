@@ -12,7 +12,6 @@
     enable = true;
     fqdn = "todo.nani.wtf";
     listenPort = 19233;
-    dataDir = "${config.machineVars.dataDrives.default}/var/taskserver";
 
     organisations.h7x4 = {
       groups = [ "users" ];

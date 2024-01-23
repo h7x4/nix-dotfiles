@@ -4,7 +4,6 @@ in {
   services.plex = {
     enable = true;
     openFirewall = true;
-    dataDir = "${config.machineVars.dataDrives.default}/var/plex";
   };
 
   systemd.services.plex.serviceConfig = {

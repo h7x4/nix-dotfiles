@@ -14,9 +14,6 @@
   services.headscale = {
     enable = true;
 
-    # TODO: make PR
-    # dataDir = "${config.machineVars.dataDrives.default}/var/headscale";
-
     port = 39304;
 
     settings = {

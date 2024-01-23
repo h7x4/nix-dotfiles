@@ -8,7 +8,6 @@
 
     services.hedgedoc = {
       enable = true;
-      workDir = "${config.machineVars.dataDrives.default}/var/hedgedoc";
       environmentFile = config.sops.secrets."hedgedoc/env".path;
       settings = {
         domain = "docs.nani.wtf";

@@ -45,7 +45,7 @@
   BackupLimiter = 0;
   KeepUniqueBackups = false;
   UpdateAvailableMessage = true;
-  BackupDestination = "Backups/";
+  BackupDestination = "/data/backup/minecraft/kakuland";
 
   # Ftp = {
   #   UploadBackup = false;

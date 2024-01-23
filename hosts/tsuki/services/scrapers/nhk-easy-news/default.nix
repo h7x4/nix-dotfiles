@@ -14,9 +14,7 @@ in {
       ProtectHome = true;
       ProtectProc = "invisible";
       ProtectSystem = "strict";
-      WorkingDirectory = "/var/lib/nhk_easy_news_scraper";
-      StateDirectory = "nhk_easy_news_scraper";
-      StateDirectoryMode = "0755";
+      WorkingDirectory = "/data/scrapers/nhk-easy-news";
     };
   };
 

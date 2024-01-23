@@ -14,7 +14,7 @@
   services.matrix-synapse-next = {
     enable = true;
     enableNginx = true;
-    dataDir = "${config.machineVars.dataDrives.default}/var/matrix";
+    dataDir = "/var/lib/matrix";
 
     workers = {
       federationSenders = 3;
