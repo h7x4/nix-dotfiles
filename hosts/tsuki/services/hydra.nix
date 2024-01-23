@@ -36,4 +36,43 @@
     hydra-compress-logs.timerConfig.Slice = "system-hydra.slice";
     hydra-update-gc-roots.timerConfig.Slice = "system-hydra.slice";
   };
+
+  systemd.services.hydra-server.serviceConfig = {
+    Slice = "system-hydra.slice";
+    ReadOnlyPaths = [
+      "/nix/"
+      "/var/lib/hydra/scm/"
+    ];
+    ReadWritePaths = [
+      "/nix/var/nix/gcroots/hydra/"
+      "/nix/var/nix/daemon-socket/socket"
+    ];
+
+    LockPersonality = true;
+    # MemoryDenyWriteExecute = false;
+    NoNewPrivileges = true;
+    PermissionsStartOnly = true;
+    PrivateDevices = true;
+    PrivateMounts = true;
+    # PrivateNetwork=false
+    PrivateTmp = true;
+    PrivateUsers = true;
+    ProtectClock = true;
+    ProtectControlGroups = true;
+    ProtectHome = true;
+    ProtectHostname = true;
+    ProtectKernelLogs = true;
+    ProtectKernelModules = true;
+    ProtectKernelTunables = true;
+    ProtectSystem = "strict";
+    RemoveIPC = true;
+    Restart = "always";
+    RestrictNamespaces = true;
+    RestrictRealtime = true;
+    RestrictSUIDSGID = true;
+    # StateDirectory=hydra/www
+    # StateDirectoryMode=700
+    SystemCallArchitectures = "native";
+    SystemCallFilter = "@system-service";
+  };
 }
