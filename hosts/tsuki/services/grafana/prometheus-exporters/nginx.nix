@@ -15,4 +15,6 @@ in {
       listenAddress = "127.0.0.1";
     };
   };
+
+  systemd.services.prometheus-nginx-exporter.serviceConfig.Slice = "system-prometheus.slice";
 }

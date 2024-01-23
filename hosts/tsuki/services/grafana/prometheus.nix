@@ -19,4 +19,12 @@
     enable = true;
     port = 7001;
   };
+
+  systemd.slices.system-prometheus = {
+    description = "Prometheus slice";
+    requires= [ "system.slice" ];
+    after= [ "system.slice" ];
+  };
+
+  systemd.services.prometheus.serviceConfig.Slice = "system-prometheus.slice";
 }

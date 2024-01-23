@@ -18,4 +18,6 @@
       ];
     };
   };
+
+  systemd.services.prometheus-systemd-exporter.serviceConfig.Slice = "system-prometheus.slice";
 }

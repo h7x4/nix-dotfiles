@@ -15,4 +15,6 @@
       enabledCollectors = [ "systemd" ];
     };
   };
+
+  systemd.services.prometheus-node-exporter.serviceConfig.Slice = "system-prometheus.slice";
 }

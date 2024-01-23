@@ -18,4 +18,6 @@
       extraFlags = [ "--auto-discover-databases" ];
     };
   };
+
+  systemd.services.prometheus-postgres-exporter.serviceConfig.Slice = "system-prometheus.slice";
 }

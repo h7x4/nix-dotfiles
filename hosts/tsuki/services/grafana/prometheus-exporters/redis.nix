@@ -14,4 +14,6 @@
       port = 10394;
     };
   };
+
+  systemd.services.prometheus-redis-exporter.serviceConfig.Slice = "system-prometheus.slice";
 }
