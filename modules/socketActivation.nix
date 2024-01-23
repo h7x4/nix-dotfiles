@@ -121,17 +121,52 @@ in
               connections-max = value.connectionsMax;
             };
           in ''${pkgs.systemd}/lib/systemd/systemd-socket-proxyd ${args} "${cfg.${name}.originalSocketAddress}"'';
+
+          CapabilityBoundingSet = "";
+          LockPersonality = true;
+          NoNewPrivileges = true;
+          PrivateDevices = true;
+          PrivateMounts = true;
           PrivateNetwork = value.privateNamespace;
+          PrivateTmp = true;
+          PrivateUsers = true;
+          ProcSubset = "pid";
+          ProtectClock = true;
+          ProtectControlGroups = true;
+          # ProtectHome = true;
+          ProtectHostname = true;
+          ProtectKernelLogs = true;
+          ProtectKernelModules = true;
+          ProtectKernelTunables = true;
+          ProtectProc = "invisible";
+          ProtectSystem = "strict";
+          RemoveIPC = true;
+          RestrictAddressFamilies = [
+            "AF_INET"
+            "AF_INET6"
+            "AF_UNIX"
+          ];
+          RestrictNamespaces = true;
+          RestrictRealtime = true;
+          RestrictSUIDSGID = true;
+          SystemCallArchitectures = "native";
+          SystemCallFilter = [
+            "@system-service"
+            "~@privileged"
+          ];
+          UMask = "0007";
         };
       };
 
       services.${name} = {
+        wantedBy = lib.mkForce [ ];
         unitConfig = {
           StopWhenUnneeded = true;
+          RefuseManualStart = true;
         };
 
-        serviceConfig = lib.mkIf value.privateNamespace {
-          PrivateNetwork = true;
+        serviceConfig = {
+          PrivateNetwork = value.privateNamespace;
         };
       };
     }));
