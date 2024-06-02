@@ -216,6 +216,7 @@ in {
         "networkmanager"
         "video"
         "wheel"
+        "wireshark"
       ];
     };
 
