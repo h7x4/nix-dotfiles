@@ -14,7 +14,7 @@
     };
 
     dotfiles = {
-      url = "git+https://git.nani.wtf/h7x4/dotfiles?ref=master";
+      url = "git+https://git.pvv.ntnu.no/oysteikt/dotfiles?ref=master";
       flake = false;
     };
 
@@ -31,7 +31,7 @@
     };
 
     website = {
-      url = "git+https://git.nani.wtf/h7x4/nani.wtf?ref=main";
+      url = "git+https://git.pvv.ntnu.no/oysteikt/nani.wtf?ref=main";
       # url = "path:/home/h7x4/git/nani.wtf";
       # inputs.nixpkgs.follows = "nixpkgs";
     };
