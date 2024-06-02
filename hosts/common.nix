@@ -294,6 +294,7 @@ in {
     zsh.enable = true;
 
     gnupg.agent.enable = true;
+    gnupg.agent.pinentryFlavor = "curses";
 
     neovim = {
       enable = true;
