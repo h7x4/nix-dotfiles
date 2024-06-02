@@ -246,11 +246,10 @@ in {
   };
 
   fonts = {
-    enableDefaultFonts = true;
-
     fontDir.enable = true;
 
-    fonts = with pkgs; [
+    enableDefaultPackages = true;
+    packages = with pkgs; [
       cm_unicode
       dejavu_fonts
       fira-code
