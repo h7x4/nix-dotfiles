@@ -99,6 +99,20 @@
       vnoremap <A-j> :m '>+1<CR>gv=gv
       vnoremap <A-k> :m '<-2<CR>gv=gv
     '';
+
+    extraLuaConfig = ''
+      local function paste_buf()
+        local content = os.getenv("NVIM_CLIPBOARD")
+
+        local line = vim.api.nvim_get_current_line()
+        local indent = string.match(line, " +")
+
+        vim.fn.setreg("a", indent .. content)
+        vim.cmd("put a")
+      end
+
+      vim.keymap.set('n', ';', paste_buf)
+    '';
   };
 
   home.sessionVariables = { EDITOR = "nvim"; };
