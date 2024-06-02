@@ -41,7 +41,7 @@ in {
       htop = "${pkgs.bottom}/bin/btm";
       hhtop = p "htop";
 
-      dig = p "dog";
+      dig = p "dogdns";
 
       # Flags are incompatible, so they are suffixed by -x
       psx = p "procs";
