@@ -1,10 +1,10 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-23.11";
+    nixpkgs.url = "nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -47,7 +47,7 @@
     };
 
     matrix-synapse-next = {
-      url = "github:dali99/nixos-matrix-modules/v0.5.0";
+      url = "github:dali99/nixos-matrix-modules/v0.6.0";
     };
 
     vscode-server = {

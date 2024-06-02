@@ -248,7 +248,7 @@ in {
       };
 
       m = p "ncmpcpp";
-      p = "${pkgs.python39Packages.ipython}/bin/ipython";
+      p = "${pkgs.python3Packages.ipython}/bin/ipython";
       s = p "sxiv";
       v = p "mpv";
       zt = p "zathura";

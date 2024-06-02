@@ -342,20 +342,27 @@ in {
       ];
     };
 
+    libinput = {
+      enable = !config.machineVars.headless;
+      touchpad.disableWhileTyping = true;
+    };
+
+    displayManager.defaultSession = "none+xmonad";
+
     xserver = {
       enable = !config.machineVars.headless;
-      layout = "us";
-      xkbOptions = "caps:escape";
 
-      libinput = {
-        enable = true;
-        touchpad.disableWhileTyping = true;
+      xkb = {
+        layout = "us";
+        options = "caps:escape";
       };
 
       desktopManager = {
         xterm.enable = false;
         xfce.enable = !config.machineVars.headless;
       };
+
+      displayManager.lightdm.enable = !config.machineVars.headless;
 
       windowManager.xmonad = {
         enable = true;
@@ -366,8 +373,6 @@ in {
         ];
       };
 
-      displayManager.lightdm.enable = !config.machineVars.headless;
-      displayManager.defaultSession = "none+xmonad";
     };
 
   };
@@ -381,7 +386,7 @@ in {
     zsh.enable = true;
 
     gnupg.agent.enable = true;
-    gnupg.agent.pinentryFlavor = "curses";
+    gnupg.agent.pinentryPackage = pkgs.pinentry-curses;
 
     neovim = {
       enable = true;

@@ -37,8 +37,6 @@ in {
     ouch
     pandoc
     parallel
-    pinentry
-    pinentry-curses
     progress
     python3
     rclone
@@ -141,10 +139,11 @@ in {
     ] ++ lib.optionals (machineVars.laptop) [
       touchegg
     ] ++ lib.optionals (machineVars.gaming) [
-      citra
       desmume
-      minecraft
       osu-lazer
+      (prismlauncher.override {
+        jdk17 = jdk21;
+      })
       retroarchFull
       steam
       steam-tui
