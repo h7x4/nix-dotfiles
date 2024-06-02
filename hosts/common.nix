@@ -4,6 +4,14 @@ let
 in {
   sops.defaultSopsFile = ../secrets/default.yaml;
 
+  sops.secrets = {
+    "ssh/nix-builders/tsuki/key" = { };
+    "ssh/nix-builders/tsuki/pub" = { };
+    "ssh/nix-builders/isvegg/key" = { };
+    "ssh/nix-builders/bob/key" = { };
+    # "ssh/nix-builders/isvegg/pub" = { };
+  };
+
   nix = {
     package = unstable-pkgs.nixVersions.stable;
     distributedBuilds = config.networking.hostName != "tsuki";
@@ -20,34 +28,46 @@ in {
     };
 
     buildMachines = [
+      # {
+      #   # Login details configured in ssh module in nix-secrets
+      #   hostName = "nix-builder-tsukir";
+      #   system = "x86_64-linux";
+      #   speedFactor = 2;
+      #   maxJobs = 8;
+      #   supportedFeatures = [
+      #     "nixos-test"
+      #     "benchmark"
+      #     "big-paralell"
+      #   ];
+      #   mandatoryFeatures = [ ];
+      #   sshUser = "nix-ssh";
+      #   sshKey = config.sops.secrets."ssh/nix-builders/tsuki/key".path;
+      # }
       {
         # Login details configured in ssh module in nix-secrets
-        hostName = "nix-builder-tsukir";
+        hostName = "nix-builder-isvegg";
+        system = "x86_64-linux";
+        speedFactor = 1;
+        maxJobs = 8;
+        supportedFeatures = [ ];
+        mandatoryFeatures = [ ];
+        sshUser = secrets.ssh.users.pvv.normalUser;
+        sshKey = config.sops.secrets."ssh/nix-builders/isvegg/key".path;
+      }
+      {
+        # Login details configured in ssh module in nix-secrets
+        hostName = "nix-builder-bob";
         system = "x86_64-linux";
         speedFactor = 5;
-        maxJobs = 8;
+        maxJobs = 24;
         supportedFeatures = [
           "nixos-test"
           "benchmark"
           "big-paralell"
         ];
-        mandatoryFeatures = [];
-        sshUser = "nix-ssh";
-        sshKey = secrets.keys.ssh.nixBuilders.tsuki.private;
-      }
-      {
-        # Login details configured in ssh module in nix-secrets
-        hostName = "nix-builder-isvegg";
-        system = "x86_64-linux";
-        speedFactor = 7;
-        maxJobs = 16;
-        supportedFeatures = [
-          "benchmark"
-          "big-paralell"
-        ];
-        mandatoryFeatures = [];
-        sshUser = secrets.ssh.users.pvv.normalUser;
-        sshKey = secrets.keys.ssh.nixBuilders.isvegg.private;
+        mandatoryFeatures = [ ];
+        # sshUser = secrets.ssh.users.pvv.normalUser;
+        # sshKey = config.sops.secrets."ssh/nix-builders/bob/key".path;
       }
     ];
     registry = {
@@ -70,16 +90,48 @@ in {
     extraConfig = ''
       Host nix-builder-isvegg
         HostName isvegg.pvv.ntnu.no
+        User oysteikt
+        IdentityFile ${config.sops.secrets."ssh/nix-builders/isvegg/key".path}
+
+      Host nix-builder-bob
+        HostName bob.pvv.ntnu.no
+        ProxyJump nix-builder-isvegg
+        User oysteikt
+        IdentityFile ${config.sops.secrets."ssh/nix-builders/bob/key".path}
 
       Host nix-builder-tsukir
         HostName gingakei.loginto.me
         Port ${toString secrets.ports.ssh.home-in}
     '';
     knownHosts = {
-      tsukir = {
-        hostNames = [ "nani.wtf" "gingakei.loginto.me" ];
-        publicKeyFile = secrets.keys.ssh.nixBuilders.tsuki.public;
+      bob = {
+        hostNames = [
+          "bob.pvv.ntnu.no"
+          "bob.pvv.org"
+        ];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGJSgh20qDIYEXiK4MUZhc879dJIyH0K/s0RZ+9wFI0F";
       };
+      hildring = {
+        hostNames = [
+          "hildring.pvv.ntnu.no"
+          "hildring.pvv.org"
+          "login.pvv.ntnu.no"
+          "login.pvv.org"
+        ];
+        publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGurF7rdnrDP/VgIK2Tx38of+bX/QGCGL+alrWnZ1Ca5llGneMulUt1RB9xZzNLHiaWIE+HOP0i4spEaeZhilfU=";
+      };
+      isvegg = {
+        hostNames = [
+          "isvegg.pvv.ntnu.no"
+          "isvegg.pvv.org"
+        ];
+        publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGurF7rdnrDP/VgIK2Tx38of+bX/QGCGL+alrWnZ1Ca5llGneMulUt1RB9xZzNLHiaWIE+HOP0i4spEaeZhilfU=";
+      };
+    #   tsukir = {
+    #     hostNames = [ "nani.wtf" "gingakei.loginto.me" ];
+    #     # publicKeyFile = config.sops.secrets."ssh/nix-builders/tsuki/pub".path;
+    #     publicKeyFile = "/var/keys/tsuki_nix-builder.pub";
+    #   };
     };
   };
 
