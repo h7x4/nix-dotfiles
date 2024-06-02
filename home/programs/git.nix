@@ -22,15 +22,15 @@
     };
 
     aliases = {
-        aliases = "!git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1 = \\2/g'";
-        delete-merged = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d";
-        graph = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all";
-        graphv = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all";
-        forcepush = "push --force-with-lease --force-if-includes";
-        authors = "shortlog --summary --numbered --email";
-        switch-interactive = "!cat <(git branch) <(git branch -r) | grep -v '^\\*\\|HEAD ->' | ${pkgs.fzf}/bin/fzf --reverse --info=inline --preview 'echo {} | xargs git show --color' | sed 's|\\s*.*/||' | xargs git switch";
-        si = "switch-interactive";
-        rebase-author = "rebase -i -x \"git commit --amend --reset-author -CHEAD\"";
+      aliases = "!git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1 = \\2/g'";
+      delete-merged = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d";
+      graph = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all";
+      graphv = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all";
+      forcepush = "push --force-with-lease --force-if-includes";
+      authors = "shortlog --summary --numbered --email";
+      switch-interactive = "!cat <(git branch) <(git branch -r) | grep -v '^\\*\\|HEAD ->' | ${pkgs.fzf}/bin/fzf --reverse --info=inline --preview 'echo {} | xargs git show --color' | sed 's|\\s*.*/||' | xargs git switch";
+      si = "switch-interactive";
+      rebase-author = "rebase -i -x \"git commit --amend --reset-author -CHEAD\"";
     };
 
     extraConfig = {
@@ -39,6 +39,10 @@
         untrackedCache = true;
         editor = "nvim";
       };
+
+      rerere.enabled = true;
+
+      branch.sort = "-committerdate";
 
       "color \"branch\"".upstream = "cyan";
       color.ui = "auto";
@@ -76,6 +80,8 @@
       };
 
       github.user = "h7x4";
+
+      "url \"git@github:\"".insteadOf = "https://github.com/";
 
       web.browser = "google-chrome-stable";
 
