@@ -50,9 +50,20 @@ in {
         sshKey = secrets.keys.ssh.nixBuilders.isvegg.private;
       }
     ];
-    # registry = {
-
-    # };
+    registry = {
+      home.to = {
+        type = "path";
+        path = "/home/h7x4/nix";
+      };
+      wack.to = {
+        type = "path";
+        path = "/home/h7x4/git/wack-ctf-flake";
+      };
+      nxpt.to = {
+        type = "path";
+        path = "/home/h7x4/git/nixpkgs-tools";
+      };
+    };
   };
 
   programs.ssh = {
