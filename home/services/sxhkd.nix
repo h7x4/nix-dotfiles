@@ -1,7 +1,15 @@
-{ pkgs, ... }:
+{ config, pkgs, lib, ... }:
+let
+  cfg = config.services.sxhkd;
+  keybindingsStr = lib.concatStringsSep "\n" (lib.mapAttrsToList (hotkey: command:
+    lib.optionalString (command != null) ''
+      ${hotkey}
+        ${command}
+    '') cfg.keybindings);
+in
 {
   services.sxhkd = {
-    enable = true;
+    enable = false;
     keybindings = {
 
       # make sxhkd reload its configuration files:
@@ -44,8 +52,7 @@
 
       "super + a" = "${pkgs.copyq}/bin/copyq toggle";
 
-      # fcitx
-      # "super + {b,n,m}" = "${pkgs.fcitx}/bin/fcitx-remote -s {mozc,fcitx-keyboard-no,fcitx-keyboard-us}";
+      # fcitx "super + {b,n,m}" = "${pkgs.fcitx}/bin/fcitx-remote -s {mozc,fcitx-keyboard-no,fcitx-keyboard-us}";
 
       # fcitx5
       "super + {b,n,m}" = "${pkgs.fcitx5}/bin/fcitx5-remote -s {mozc,keyboard-no,keyboard-us}";
@@ -71,5 +78,25 @@
       # é
       "super + shift + e" = "sleep 0.3; ${pkgs.xdotool}/bin/xdotool key U00E9";
     };
+  };
+
+  xdg.configFile."sxhkd/sxhkdrc".text =
+    lib.concatStringsSep "\n" [ keybindingsStr cfg.extraConfig ];
+
+  home.packages = [ cfg.package ];
+
+  systemd.user.services.sxhkd = {
+    Unit = {
+      Description = "Simple X hotkey daemon";
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+    };
+
+    Service = {
+      ExecStart = "${cfg.package}/bin/sxhkd ${toString cfg.extraOptions}";
+      Restart = "always";
+    };
+
+    Install.WantedBy = [ "graphical-session.target" ];
   };
 }
