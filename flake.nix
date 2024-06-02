@@ -99,7 +99,7 @@
       in [
         (self: super: { kanidm = nonrecursive-unstable-pkgs.kanidm; })
         (self: super: { pgadmin4 = nonrecursive-unstable-pkgs.pgadmin4; })
-        (self: super: { pcloud = unstable-pkgs.callPackage ./package-overrides/pcloud.nix {}; })
+        # (self: super: { pcloud = nonrecursive-unstable-pkgs.pcloud; })
         osuchan.overlays.default
         (self: super: {
           mpv-unwrapped = super.mpv-unwrapped.override {

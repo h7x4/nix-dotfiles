@@ -107,7 +107,7 @@ in {
       mpc_cli
       nyxt
       # obsidian
-      pcloud
+      # pcloud
       pulseaudio
       pulsemixer
       # scrcpy
