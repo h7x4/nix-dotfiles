@@ -7,7 +7,7 @@
     ./services/postgres.nix
     ./services/stable-diffusion.nix
     ./services/tailscale.nix
-  ];
+    ./services/keybase.nix
 
   machineVars = {
     headless = false;
