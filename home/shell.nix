@@ -92,9 +92,6 @@ in {
       nxr-hm = "sudo nixos-rebuild switch --flake ~/nix#home-manager-tester";
       nxr-ks = "sudo nixos-rebuild switch --flake ~/nix#kasei";
 
-      hms = toString inputs.nix-attr-search.packages.${pkgs.system}.home-manager-search;
-      nxo = toString inputs.nix-attr-search.packages.${pkgs.system}.nix-option-search;
-
       # TODO: does this need to be a function?
       # ofborg-build = {};
 
