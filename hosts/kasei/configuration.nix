@@ -8,6 +8,16 @@
     ./services/stable-diffusion.nix
     ./services/tailscale.nix
     ./services/keybase.nix
+  nix.settings.system-features = [
+    "kvm"
+    "benchmark"
+    "big-parallel"
+    "nixos-test"
+  ];
+
+  i18n.extraLocaleSettings = {
+    LC_ALL = "en_US.UTF-8";
+  };
 
   machineVars = {
     headless = false;
@@ -46,7 +56,7 @@
     hostName = "kasei";
     networkmanager.enable = true;
     interfaces.enp6s0.useDHCP = true;
-    firewall.enable = true;
+    firewall.enable = false;
     hostId = "f0660cef";
   };
 
@@ -55,8 +65,18 @@
       enable = true;
       settings.X11Forwarding = true;
     };
-    xserver.videoDrivers = ["nvidia"];
+    xserver.videoDrivers = [ "nvidia" ];
     tailscale.enable = true;
+    avahi = {
+      enable = true;
+      publish.enable = true;
+      publish.addresses = true;
+      publish.domain = true;
+      publish.hinfo = true;
+      publish.userServices = true;
+      publish.workstation = true;
+      extraServiceFiles.ssh = "${pkgs.avahi}/etc/avahi/services/ssh.service";
+    };
   };
 
   boot = {
@@ -111,5 +131,15 @@
     cpu.amd.updateMicrocode = true;
     enableRedistributableFirmware = true;
     keyboard.zsa.enable = true;
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+    };
+
+    nvidia = {
+      modesetting.enable = true;
+      nvidiaSettings = true;
+    };
   };
 }
