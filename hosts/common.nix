@@ -131,12 +131,6 @@ in {
     ];
 
     etc = {
-      # TODO: move this out of etc, and reference it directly in sudo config.
-      sudoLecture = {
-        target = "sudo.lecture";
-        text = extendedLib.termColors.front.red "Be careful or something, idk...\n";
-      };
-
       currentSystemPackages = {
         target = "current-system-packages";
         text = let
@@ -377,9 +371,11 @@ in {
 
   hardware.pulseaudio.enable = !config.machineVars.headless;
 
-  security.sudo.extraConfig = ''
+  security.sudo.extraConfig = let
+    sudoLecture = pkgs.writeText "sudo-lecture.txt" (extendedLib.termColors.front.red "Be careful or something, idk...\n");
+  in ''
     Defaults    lecture = always
-    Defaults    lecture_file = /etc/${config.environment.etc.sudoLecture.target}
+    Defaults    lecture_file = ${sudoLecture}
   '';
 
   system.stateVersion = "22.05";
