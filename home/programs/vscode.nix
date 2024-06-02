@@ -304,8 +304,12 @@ in
       shardulm94.trailing-spaces
       usernamehw.errorlens
       rust-lang.rust-analyzer
+      mkhl.direnv
+      waderyan.gitblame
       # vs-liveshare
       vscodevim.vim
+
+      ms-dotnettools.csharp
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
         name = "monokai-st3";
