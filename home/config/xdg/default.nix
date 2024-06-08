@@ -1,6 +1,9 @@
 { config, ... }:
 {
-  imports = [ ./mimetypes.nix ];
+  imports = [
+    ./mimetypes.nix
+    ./directory-spec-overrides.nix
+  ];
   xdg = {
     enable = true;
     userDirs = {

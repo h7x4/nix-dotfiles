@@ -25,6 +25,7 @@ in {
       experimental-features = [ "nix-command" "flakes" "repl-flake" ];
       log-lines = 50;
       trusted-users = [ "h7x4" "nix-builder" ];
+      use-xdg-base-directories = true;
     };
 
     buildMachines = [

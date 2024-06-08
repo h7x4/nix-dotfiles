@@ -48,29 +48,18 @@ in {
     ./services/copyq.nix
   ];
 
+  nix.settings = {
+    use-xdg-base-directories = true;
+  };
+
   home = {
     stateVersion = "22.05";
     username = "h7x4";
     homeDirectory = "/home/h7x4";
-    file = {
-      ".ghci".text = ''
-        :set prompt "${extendedLib.termColors.front.magenta "[GHCi]λ"} ".
-      '';
 
-      ".pyrc".text = ''
-        #!/usr/bin/env python3
-        import sys
-
-        # You also need \x01 and \x02 to separate escape sequence, due to:
-        # https://stackoverflow.com/a/9468954/1147688
-        sys.ps1='\x01\x1b${extendedLib.termColors.front.blue "[Python]> "}\x02>>>\x01\x1b[0m\x02 '  # bright yellow
-        sys.ps2='\x01\x1b[1;49;31m\x02...\x01\x1b[0m\x02 '  # bright red
-      '';
-    };
-
-    sessionVariables = {
-      TEXMFHOME = "$HOME/documents/texmf";
-    };
+    sessionPath = [
+      "$HOME/.local/bin"
+    ];
 
     pointerCursor = mkIf graphics  {
       package = pkgs.capitaine-cursors;
@@ -79,6 +68,26 @@ in {
     };
 
     keyboard.options = [ "caps:escape" ];
+
+    sessionVariables = {
+      PYTHONSTARTUP = "${config.xdg.configHome}/python/pyrc";
+    };
+  };
+
+  xdg.configFile = {
+    "ghc/ghci.conf".text = ''
+      :set prompt "${extendedLib.termColors.front.magenta "[GHCi]λ"} "
+    '';
+
+    "python/pyrc".text = ''
+      #!/usr/bin/env python3
+      import sys
+
+      # You also need \x01 and \x02 to separate escape sequence, due to:
+      # https://stackoverflow.com/a/9468954/1147688
+      sys.ps1='\x01\x1b${extendedLib.termColors.front.blue "[Python]> "}\x02>>>\x01\x1b[0m\x02 '  # bright yellow
+      sys.ps2='\x01\x1b[1;49;31m\x02...\x01\x1b[0m\x02 '  # bright red
+    '';
   };
 
   news.display = "silent";
@@ -87,6 +96,12 @@ in {
 
   programs = {
     home-manager.enable = true;
+
+    bash = {
+      enable = true;
+      historyFile = "${config.xdg.dataHome}/bash_history";
+      historySize = 100000;
+    };
 
     bat.enable = true;
     bottom.enable = true;

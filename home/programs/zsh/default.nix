@@ -13,7 +13,9 @@
     '';
 
     # TODO: Regenerate zcompdump with a systemd timer
-    completionInit = "autoload -Uz compinit && compinit -C";
+    completionInit = ''
+      autoload -Uz compinit && compinit -C -d "${config.xdg.cacheHome}/zsh/zcompdump-$ZSH_VERSION"
+    '';
 
     history = {
       extended = true;
