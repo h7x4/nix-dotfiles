@@ -94,7 +94,10 @@
       };
 
       overlays = let
-        nonrecursive-unstable-pkgs = nixpkgs-unstable.legacyPackages.${system};
+        nonrecursive-unstable-pkgs = import nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
+        };
       in [
         (self: super: { pgadmin4 = nonrecursive-unstable-pkgs.pgadmin4; })
         # (self: super: { pcloud = nonrecursive-unstable-pkgs.pcloud; })
