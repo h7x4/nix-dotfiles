@@ -87,6 +87,13 @@ in {
     };
   };
 
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      libusb1
+    ];
+  };
+
   programs.ssh = {
     extraConfig = ''
       Host nix-builder-isvegg
