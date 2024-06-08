@@ -22,7 +22,7 @@ in {
       auto-optimise-store = true;
       binary-caches = [ "https://cache.nixos.org/" ];
       builders-use-substitutes = true;
-      experimental-features = [ "nix-command" "flakes" "repl-flake" ];
+      experimental-features = [ "nix-command" "flakes" ];
       log-lines = 50;
       trusted-users = [ "h7x4" "nix-builder" ];
       use-xdg-base-directories = true;
