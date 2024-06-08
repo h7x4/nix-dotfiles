@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs; [
     beets
+    binutils
     cloc
     czkawka
     delta
@@ -21,6 +22,7 @@
     lolcat
     mdcat
     mediainfo
+    meli
     mkvtoolnix
     mmv
     mtr
@@ -64,7 +66,7 @@
 
     # Needed for VSCode liveshare
     desktop-file-utils
-    krb5
+    # krb5
     zlib
     icu
     openssl
@@ -77,7 +79,7 @@
       birdtray
       calibre
       cool-retro-term
-      # darktable
+      darktable
       discord
       element-desktop
       geogebra
@@ -114,7 +116,7 @@
       # swiPrologWithGui
       sxiv
       # tagainijisho
-      teams
+
       tenacity
       thunderbird
       # transcribe
@@ -122,6 +124,7 @@
       xcalib
       xclip
       xdotool
+      xorg.xmodmap
       (xfce.thunar.override {
         thunarPlugins = with xfce; [
           thunar-volman
