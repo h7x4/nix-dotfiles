@@ -4,6 +4,7 @@
     "ntnu" = {
       user = "oysteikt";
       hostname = "login.stud.ntnu.no";
+      proxyJump = "pvv";
     };
     "gitlab.stud.idi.ntnu.no" = {
       user = "git";
