@@ -96,7 +96,6 @@
       overlays = let
         nonrecursive-unstable-pkgs = nixpkgs-unstable.legacyPackages.${system};
       in [
-        (self: super: { kanidm = nonrecursive-unstable-pkgs.kanidm; })
         (self: super: { pgadmin4 = nonrecursive-unstable-pkgs.pgadmin4; })
         # (self: super: { pcloud = nonrecursive-unstable-pkgs.pcloud; })
         osuchan.overlays.default
@@ -105,11 +104,6 @@
             ffmpeg = super.ffmpeg_6-full;
           };
         })
-        # (self: super: {
-        #   systemd = super.systemd.overrideAttrs (final: prev: {
-        #     mesonFlags = prev.mesonFlags ++ [ "-Dsystemd-socket-proxyd=true" ];
-        #   });
-        # })
       ];
     };
 
