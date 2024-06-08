@@ -54,6 +54,7 @@
     toilet
     tokei
     unpaper
+    unzip
     usbutils
     waifu2x-converter-cpp
     wavemon
