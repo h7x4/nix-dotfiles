@@ -77,7 +77,6 @@
     matrix-synapse-next,
     maunium-stickerpicker,
     minecraft,
-    nix-attr-search,
     osuchan,
     secrets,
     sops-nix,
