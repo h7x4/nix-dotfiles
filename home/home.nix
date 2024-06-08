@@ -105,7 +105,10 @@ in {
     };
 
     bat.enable = true;
-    bottom.enable = true;
+    bottom = {
+      enable = true;
+      settings.flags.enable_gpu = true;
+    };
     eza.enable = true;
     feh.enable = mkIf graphics true;
     fzf = {
