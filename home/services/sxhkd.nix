@@ -50,6 +50,8 @@ in
 
       # Misc
 
+      "super + l" = "loginctl lock-session";
+
       "super + a" = "${pkgs.copyq}/bin/copyq toggle";
 
       # fcitx "super + {b,n,m}" = "${pkgs.fcitx}/bin/fcitx-remote -s {mozc,fcitx-keyboard-no,fcitx-keyboard-us}";

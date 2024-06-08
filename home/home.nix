@@ -43,6 +43,7 @@ in {
     ./services/mpd.nix
     ./services/picom.nix
     ./services/polybar.nix
+    ./services/screen-locker.nix
     ./services/stalonetray.nix
     ./services/sxhkd.nix
     ./services/copyq.nix
