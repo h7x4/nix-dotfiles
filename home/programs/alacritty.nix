@@ -26,14 +26,14 @@
         in
           {
             primary = getAttrs primaryColors config.colors.defaultColorSet;
-            normal = let
-              removePrimaryColorAttrs = n: v: !(any (pc: n ? pc) primaryColors);
-            in filterAttrs removePrimaryColorAttrs config.colors.defaultColorSet;
+            normal = builtins.removeAttrs config.colors.defaultColorSet (primaryColors ++ [ "name" ]);
           };
 
       cursor = {
-        style = "Block";
-        blinking = "On";
+        style = {
+          shape = "Block";
+          blinking = "On";
+        };
         unfocused_hollow = true;
       };
 
