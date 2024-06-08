@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: let
+{ config, pkgs, machineVars, ... }: let
   inherit (pkgs) lib;
 in {
   programs.xmobar = let
@@ -7,8 +7,8 @@ in {
     # TODO: loop over dataDrives
     disks = [
       "/"
-      "${config.machineVars.dataDrives.default}"
-      "${config.machineVars.dataDrives.default}/disks/data2"
+      "${machineVars.dataDrives.default}"
+      "${machineVars.dataDrives.default}/disks/data2"
     ];
 
     mpd_status_script = pkgs.writeShellScript "mpd-status" ''

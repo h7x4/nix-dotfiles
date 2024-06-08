@@ -195,15 +195,12 @@
                 extraSpecialArgs = {
                   inherit inputs;
                   inherit (self) extendedLib;
+                  inherit (config) machineVars;
                   secrets = secrets.outputs.settings;
                 };
 
-                users.h7x4 = import ./home/home.nix {
-                  inherit pkgs;
-                  inherit inputs;
-                  inherit (pkgs) lib;
-                  inherit (config) machineVars;
-                  inherit (self) extendedLib;
+                users.h7x4 = {
+                  imports = [ ./home/home.nix ];
                 };
               };
             })

@@ -1,9 +1,7 @@
-{ pkgs, lib, extendedLib, inputs, machineVars, ... } @ args: let
+{ config, pkgs, lib, extendedLib, inputs, machineVars, ... } @ args: let
   inherit (lib) mkForce mkIf optionals;
   graphics = !machineVars.headless;
 in {
-  inherit machineVars;
-
   imports = [
     ./shell.nix
     ./packages.nix
@@ -26,7 +24,6 @@ in {
     ./programs/tmux.nix
     ./programs/zsh
 
-    ../modules/machineVars.nix
     ./modules/colors.nix
     ./modules/shellAliases.nix
   ] ++ optionals graphics [

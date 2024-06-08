@@ -1,6 +1,5 @@
-{ pkgs, config, ... }: let
-  inherit (config) machineVars;
-in {
+{ pkgs, config, machineVars, ... }:
+{
   home.packages = with pkgs; [
     beets
     cloc

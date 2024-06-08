@@ -1,6 +1,5 @@
-{ pkgs, config, ... }: let
+{ pkgs, config, machineVars, ... }: let
   colors = config.colors.defaultColorSet;
-  inherit (config) machineVars;
 in {
   services.polybar = {
     enable = true;
