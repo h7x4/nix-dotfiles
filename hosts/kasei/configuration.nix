@@ -1,6 +1,7 @@
 { config, lib, pkgs, inputs, specialArgs, ... }:
 {
   imports = [
+    ./services/avahi.nix
     ./services/docker.nix
     ./services/libvirtd.nix
     ./services/logiops.nix
