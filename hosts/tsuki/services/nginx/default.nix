@@ -64,6 +64,20 @@
         sha256 = "0hxqszqfzsbmgksfm6k0gp0hsx9k1gqx24gakxqv0391wl6fsky1";
       };
 
+      # nonCFHost =
+      #   subdomains: extraSettings: let
+      #     settings = with keys.certificates; {
+      #       useACMEHost = "nani.wtf";
+      #       forceSSL = true;
+      #       kTLS = true;
+      #     };
+      #   in
+      #     nameValuePair "${head subdomains}.${head domains}" (recursiveUpdate settings extraSettings);
+
+      # nonCFProxy =
+      #   subdomains: url: extraSettings:
+      #   nonCFHost subdomains (recursiveUpdate { locations."/".proxyPass = url; } extraSettings);
+
       host =
         subdomains: extraSettings: let
           settings = with keys.certificates; {
@@ -155,7 +169,16 @@
       (proxy ["map"] "http://dynmap" {})
       (proxy ["osu"] "http://osuchan" {})
       (proxy ["plex"] "http://plex" {})
-      (proxy ["vpn"] "http://headscale" enableWebsockets)
+      # (proxy ["vpn"] "http://headscale" {
+      #   locations."/" = {
+      #     proxyWebsockets = true;
+      #     extraConfig = ''
+      #       add_header Access-Control-Allow-Origin *;
+      #       add_header Access-Control-Allow-Methods GET,HEAD,POST,OPTIONS;
+      #       add_header Access-Control-Max-Age 86400;
+      #     '';
+      #   };
+      # })
       (proxy ["yt"] "http://invidious" {})
 
       (host ["h7x4-stickers"] {})

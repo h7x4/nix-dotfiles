@@ -13,7 +13,7 @@ in {
   };
 
   services.headscale = {
-    enable = true;
+    enable = false;
 
     port = 39304;
 
