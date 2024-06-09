@@ -37,8 +37,8 @@
     };
 
     maunium-stickerpicker = {
-      # url = "git+file:///home/h7x4/git/maunium-stickerpicker-nix";
-      url = "github:h7x4/maunium-stickerpicker-nix/project-rewrite";
+      url = "github:h7x4/maunium-stickerpicker-nix/0.1.0";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     minecraft = {

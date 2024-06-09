@@ -8,7 +8,7 @@ in {
       stickerMatrixDomain = "pingu-stickers.nani.wtf";
       # These will be defined by `useACMECert` in nginx config
       enableACME = false;
-      stickerpacks = with stickerpacks; [
+      stickerPacks = with stickerpacks; [
         dogCatCatgirlSide
         frownCat1
         niniCouple1
@@ -23,7 +23,7 @@ in {
       realMatrixDomain = "matrix.nani.wtf";
       stickerMatrixDomain = "h7x4-stickers.nani.wtf";
       enableACME = false;
-      stickerpacks = with stickerpacks; [
+      stickerPacks = with stickerpacks; [
         dogCatDogboySide
         niniCouple1
         niniCouple2
