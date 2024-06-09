@@ -8,6 +8,7 @@
     ./services/atuin.nix
     ./services/borg.nix
     ./services/gitea
+    ./services/gitea-runners.nix
     ./services/grafana
     ./services/headscale.nix
     ./services/hedgedoc.nix
