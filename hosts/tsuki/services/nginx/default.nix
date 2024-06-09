@@ -47,7 +47,6 @@
       "grafana".servers."unix:/run/grafana/grafana.sock" = { };
       "headscale".servers."localhost:${s srv.headscale.port}" = { };
       "hedgedoc".servers."unix:${srv.hedgedoc.settings.path}" = { };
-      "hydra".servers."localhost:${s srv.hydra.port}" = { };
       "idrac".servers."${ips.idrac}" = { };
       "invidious".servers."unix:${sa.invidious.newSocketAddress}" = { };
       "jupyter".servers."unix:${sa.jupyter.newSocketAddress}" = { };
@@ -152,7 +151,6 @@
       (proxy ["bw"] "http://vaultwarden" {})
       (proxy ["docs"] "http://hedgedoc" {})
       (proxy ["git"] "http://gitea" {})
-      (proxy ["hydra"] "http://hydra" {})
       (proxy ["idrac"] "https://idrac" {})
       (proxy ["log"] "http://grafana" enableWebsockets)
       (proxy ["map"] "http://dynmap" {})

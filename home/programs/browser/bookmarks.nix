@@ -99,7 +99,6 @@ in [
     (link "WWW" "https://www.nani.wtf/")
     (link "MAdmin" "https://madmin.nani.wtf")
     (link "Git" "https://git.nani.wtf/explore/repos/")
-    (link "Hydra" "https://hydra.nani.wtf/")
     (link "Docs" "https://docs.nani.wtf/")
     (link "Grafana" "https://log.nani.wtf/")
   ])
