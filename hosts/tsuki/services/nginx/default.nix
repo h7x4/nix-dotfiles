@@ -125,6 +125,16 @@
         };
       }
       # (host ["www"] { root = "${inputs.website.packages.${pkgs.system}.default}/"; })
+      (host ["testmap"] {
+        root = "/var/lib/mcmap";
+        locations = {
+          "~* ^/maps/[^/]*/tiles/[^/]*.json$".extraConfig = ''
+            error_page 404 =200 /assets/emptyTile.json;
+            gzip_static always;
+          '';
+          "~* ^/maps/[^/]*/tiles/[^/]*.png$".tryFiles = "$uri =204";
+        };
+      })
       (host ["www"] {
         locations."/" = {
           tryFiles = "$uri /index.html";
