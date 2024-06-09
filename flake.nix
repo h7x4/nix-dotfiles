@@ -100,6 +100,7 @@
         };
       in [
         # (self: super: { pcloud = nonrecursive-unstable-pkgs.pcloud; })
+        minecraft.overlays.default
         osuchan.overlays.default
         (self: super: {
           mpv-unwrapped = super.mpv-unwrapped.override {
