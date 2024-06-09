@@ -2,7 +2,6 @@
   # TODO: Autogenerate port infrastructure
 
   imports = [
-    ./prometheus-exporters/gitea.nix
     ./prometheus-exporters/hedgedoc.nix
     ./prometheus-exporters/matrix-synapse.nix
     ./prometheus-exporters/minecraft.nix

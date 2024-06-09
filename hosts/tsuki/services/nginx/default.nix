@@ -43,7 +43,6 @@
     in {
       "atuin".servers."unix:${sa.atuin.newSocketAddress}" = { };
       "dynmap".servers."localhost:${s ports.minecraft.dynmap}" = { };
-      "gitea".servers."unix:/run/gitea/gitea.sock" = { };
       "grafana".servers."unix:/run/grafana/grafana.sock" = { };
       "headscale".servers."localhost:${s srv.headscale.port}" = { };
       "hedgedoc".servers."unix:${srv.hedgedoc.settings.path}" = { };
@@ -135,7 +134,23 @@
       (proxy ["auth"] "https://kanidm" { extraConfig = "proxy_ssl_verify off;"; })
       (proxy ["bw"] "http://vaultwarden" {})
       (proxy ["docs"] "http://hedgedoc" {})
-      (proxy ["git"] "http://gitea" {})
+      (host ["git"] {
+        locations."/".extraConfig = ''
+          location /h7x4 {
+            location ~ /h7x4/(?<project>[a-zA-Z0-9\./_-]*) {
+              return 301 $scheme://git.pvv.ntnu.no/oysteikt/$project;
+            }
+            return 301 $scheme://git.pvv.ntnu.no/oysteikt/;
+          }
+          location ~ /[Ss]chool[Ww]ork {
+            location ~ /[Ss]chool[Ww]ork/(?<project>[a-zA-Z0-9\./_-]*) {
+              return 301 $scheme://git.pvv.ntnu.no/oysteikt-skolearbeid/$project;
+            }
+            return 301 $scheme://git.pvv.ntnu.no/oysteikt-skolearbeid/;
+          }
+          return 301 $scheme://git.pvv.ntnu.no$request_uri;
+        '';
+      })
       (proxy ["idrac"] "https://idrac" {})
       (proxy ["log"] "http://grafana" enableWebsockets)
       (proxy ["map"] "http://dynmap" {})

@@ -13,7 +13,6 @@ in {
   in {
     postgres = createJob config.services.postgresqlBackup.location "postgres";
     minecraft = createJob config.services.minecraft-servers.dataDir "minecraft";
-    gitea = createJob config.services.gitea.dump.backupDir "gitea";
   };
 
   systemd.services = lib.mkMerge ((lib.flip map) (builtins.attrNames cfg.jobs) (name: {

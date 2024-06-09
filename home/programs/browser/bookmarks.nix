@@ -6,7 +6,6 @@ in [
   (short "tr" "Translate" "https://translate.google.no/?hl=no")
   (short "gm" "Gmail" "https://mail.google.com/mail/u/0/#inbox")
   (short "辞書" "Jisho" "https://jisho.org/?color_theme=dark")
-  (short "Gitea" "Gitea - nani.wtf" "https://git.nani.wtf/explore/repos")
   (link "GitHub" "http://github.com")
   (short "/u/" "danger/u/" "https://dangeru.us/")
   (link "PVV" "https://www.pvv.ntnu.no/")
