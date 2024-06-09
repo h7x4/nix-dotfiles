@@ -1,7 +1,6 @@
 { pkgs, lib, config, secrets, ... }: {
 
   imports = [
-    ./bridges/mautrix-facebook.nix
     ./bridges/mx-puppet-discord.nix
     ./bridges/matrix-appservice-irc.nix
 
@@ -77,8 +76,6 @@
       #       The files need to be owned by matrix-synapse
       app_service_config_files = [
         "/var/lib/matrix-synapse/discord-registration.yaml"
-        # (pkgs.writeText "facebook-registrations.yaml" (builtins.toJSON config.services.mautrix-facebook.registrationData))
-        "/var/lib/matrix-synapse/facebook-registration.yaml"
         "/var/lib/matrix-synapse/irc-registration.yml"
       ];
 
