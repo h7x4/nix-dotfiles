@@ -83,6 +83,14 @@
     };
   };
 
+  systemd.slices.system-matrix-synapse = {
+    requires = [
+      "postgresql.service"
+      "redis.service"
+      "kanidm.service"
+    ];
+  };
+
   services.redis.servers."".enable = true;
 
   networking.firewall = {
