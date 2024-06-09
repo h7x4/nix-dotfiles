@@ -55,14 +55,10 @@ in {
   services.postgresql = lib.mkIf cfg.enable {
     enable = true;
     ensureDatabases = [ "headscale" ];
-    ensureUsers = [
-      (rec {
+    ensureUsers = [{
         name = "headscale";
-        ensurePermissions = {
-          "DATABASE \"${name}\"" = "ALL PRIVILEGES";
-        };
-      })
-    ];
+        ensureDBOwnership = true;
+    }];
   };
 
   environment.systemPackages = lib.mkIf cfg.enable [ pkgs.headscale ];

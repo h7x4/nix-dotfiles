@@ -5,9 +5,7 @@
     cfg = config.services;
     db = name: {
       inherit name;
-      ensurePermissions = {
-        "DATABASE \"${name}\"" = "ALL PRIVILEGES";
-      };
+      ensureDBOwnership = true;
     };
   in {
     enable = true;

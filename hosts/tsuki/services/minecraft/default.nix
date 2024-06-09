@@ -170,9 +170,7 @@ in
     o = lib.optional;
     db = name: {
       inherit name;
-      ensurePermissions = {
-        "DATABASE \"${name}\"" = "ALL PRIVILEGES";
-      };
+      ensureDBOwnership = true;
     };
   in {
     enable = true;

@@ -59,14 +59,10 @@ in {
   services.postgresql = lib.mkIf cfg.enable {
     enable = true;
     ensureDatabases = [ "vaultwarden" ];
-    ensureUsers = [
-      (rec {
-        name = "vaultwarden";
-        ensurePermissions = {
-          "DATABASE \"${name}\"" = "ALL PRIVILEGES";
-        };
-      })
-    ];
+    ensureUsers = [{
+      name = "vaultwarden";
+      ensureDBOwnership = true;
+    }];
   };
 
   local.socketActivation.vaultwarden = {

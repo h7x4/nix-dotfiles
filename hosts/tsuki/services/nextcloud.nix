@@ -58,13 +58,9 @@
   services.postgresql = {
     enable = true;
     ensureDatabases = [ "nextcloud" ];
-    ensureUsers = [
-      (rec {
-        name = "nextcloud";
-        ensurePermissions = {
-          "DATABASE \"${name}\"" = "ALL PRIVILEGES";
-        };
-      })
-    ];
+    ensureUsers = [{
+      name = "nextcloud";
+      ensureDBOwnership = true;
+    }];
   };
 }
