@@ -13,7 +13,6 @@
     ./services/headscale.nix
     ./services/hedgedoc.nix
     ./services/invidious.nix
-    ./services/jupyter.nix
     ./services/kanidm.nix
     ./services/matrix
     ./services/minecraft

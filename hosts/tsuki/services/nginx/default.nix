@@ -49,7 +49,6 @@
       "hedgedoc".servers."unix:${srv.hedgedoc.settings.path}" = { };
       "idrac".servers."${ips.idrac}" = { };
       "invidious".servers."unix:${sa.invidious.newSocketAddress}" = { };
-      "jupyter".servers."unix:${sa.jupyter.newSocketAddress}" = { };
       "kanidm".servers."localhost:8300" = { };
       "navidrome".servers."unix:${sa.navidrome.newSocketAddress}" = { };
       "osuchan".servers."localhost:${s ports.osuchan}" = { };
@@ -143,7 +142,6 @@
       (proxy ["osu"] "http://osuchan" {})
       (proxy ["plex"] "http://plex" {})
       (proxy ["mus"] "http://navidrome" enableWebsockets)
-      (proxy ["py"] "http://jupyter" enableWebsockets)
       (proxy ["vpn"] "http://headscale" enableWebsockets)
       (proxy ["yt"] "http://invidious" {})
 
