@@ -49,7 +49,6 @@
       "idrac".servers."${ips.idrac}" = { };
       "invidious".servers."unix:${sa.invidious.newSocketAddress}" = { };
       "kanidm".servers."localhost:8300" = { };
-      "navidrome".servers."unix:${sa.navidrome.newSocketAddress}" = { };
       "osuchan".servers."localhost:${s ports.osuchan}" = { };
       "plex".servers."localhost:${s ports.plex}" = { };
       "vaultwarden".servers."unix:${sa.vaultwarden.newSocketAddress}" = { };
@@ -156,7 +155,6 @@
       (proxy ["map"] "http://dynmap" {})
       (proxy ["osu"] "http://osuchan" {})
       (proxy ["plex"] "http://plex" {})
-      (proxy ["mus"] "http://navidrome" enableWebsockets)
       (proxy ["vpn"] "http://headscale" enableWebsockets)
       (proxy ["yt"] "http://invidious" {})
 
