@@ -15,10 +15,10 @@ in {
       ProtectProc = "invisible";
       ProtectSystem = "strict";
       WorkingDirectory = "/data/scrapers/nhk-easy-news";
-      BindPaths = [ WorkingDirectory ];
+      # BindPaths = [ WorkingDirectory ];
       ReadWritePaths = [ WorkingDirectory ];
-      StateDirectory = "nhk-easy-news-scraper";
-      StateDirectoryMode = "0755";
+      # StateDirectory = "nhk-easy-news-scraper";
+      # StateDirectoryMode = "0755";
     };
   };
 
