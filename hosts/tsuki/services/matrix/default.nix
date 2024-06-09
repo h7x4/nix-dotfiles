@@ -1,7 +1,6 @@
 { pkgs, lib, config, secrets, ... }: {
 
   imports = [
-    ./bridges/mx-puppet-discord.nix
     ./bridges/matrix-appservice-irc.nix
 
     ./maunium-stickerpicker.nix
@@ -75,7 +74,6 @@
       # TODO: Figure out a way to do this declaratively.
       #       The files need to be owned by matrix-synapse
       app_service_config_files = [
-        "/var/lib/matrix-synapse/discord-registration.yaml"
         "/var/lib/matrix-synapse/irc-registration.yml"
       ];
 
