@@ -78,7 +78,7 @@
     id = "hutao";
     title = "Hu Tao";
     stickers = ./json/hutao.json;
-    hash = "sha256-ECEK7bYa9dyPBAi74A/Gjt08MHUBTZHAPzAeusynEjM=";
+    hash = "sha256-953otzYwn6/iOeLYGoMA+wpnH8S7nNqTs/XCLU1eM0E=";
   };
 
   pokemonPiplup = {
