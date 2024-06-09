@@ -20,7 +20,6 @@
     ./services/navidrome.nix
     ./services/nginx
     ./services/osuchan.nix
-    ./services/pgadmin.nix
     ./services/plex.nix
     ./services/postgres.nix
     ./services/samba.nix

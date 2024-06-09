@@ -53,7 +53,6 @@
       "kanidm".servers."localhost:8300" = { };
       "navidrome".servers."unix:${sa.navidrome.newSocketAddress}" = { };
       "osuchan".servers."localhost:${s ports.osuchan}" = { };
-      "pgadmin".servers."unix:${srv.uwsgi.instance.vassals.pgadmin.socket}" = { };
       "plex".servers."localhost:${s ports.plex}" = { };
       "vaultwarden".servers."unix:${sa.vaultwarden.newSocketAddress}" = { };
     };
@@ -122,19 +121,6 @@
           root = pkgs.writeTextDir "index.html" (lib.fileContents ./temp-website.html);
         };
       })
-      (host ["pg"] {
-        locations."/" = {
-        extraConfig = ''
-          include ${pkgs.nginx}/conf/uwsgi_params;
-          uwsgi_pass pgadmin;
-        '';
-        };
-      })
-      # (proxy ["pg"] "http://localhost:${s ports.pgadmin}" {
-      #   extraConfig = ''
-      #     proxy_set_header X-CSRF-Token $http_x_pga_csrftoken;
-      #   '';
-      # })
       # (proxy ["matrix"] "http://localhost:${s ports.matrix.listener}" {})
       (host ["matrix"] {
         enableACME = lib.mkForce false;

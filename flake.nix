@@ -99,7 +99,6 @@
           config.allowUnfree = true;
         };
       in [
-        (self: super: { pgadmin4 = nonrecursive-unstable-pkgs.pgadmin4; })
         # (self: super: { pcloud = nonrecursive-unstable-pkgs.pcloud; })
         osuchan.overlays.default
         (self: super: {
