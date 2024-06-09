@@ -47,7 +47,6 @@
       "headscale".servers."localhost:${s srv.headscale.port}" = { };
       "hedgedoc".servers."unix:${srv.hedgedoc.settings.path}" = { };
       "idrac".servers."${ips.idrac}" = { };
-      "invidious".servers."unix:${sa.invidious.newSocketAddress}" = { };
       "kanidm".servers."localhost:8300" = { };
       "osuchan".servers."localhost:${s ports.osuchan}" = { };
       "plex".servers."localhost:${s ports.plex}" = { };
@@ -179,7 +178,6 @@
       #     '';
       #   };
       # })
-      (proxy ["yt"] "http://invidious" {})
 
       (host ["h7x4-stickers"] {})
       (host ["pingu-stickers"] {})
