@@ -6,6 +6,10 @@
       hostname = "login.stud.ntnu.no";
       proxyJump = "pvv";
     };
+    "github" = {
+      user = "git";
+      hostname = "github.com";
+    };
     "gitlab.stud.idi.ntnu.no" = {
       user = "git";
       proxyJump = "pvv";

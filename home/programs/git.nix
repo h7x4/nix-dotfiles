@@ -83,7 +83,8 @@
 
       github.user = "h7x4";
 
-      "url \"git@github:\"".insteadOf = "https://github.com/";
+      "url \"github:\"".insteadOf = "https://github.com/";
+
 
       web.browser = "google-chrome-stable";
 
