@@ -47,8 +47,6 @@
     rsync
     # sc-im
     slack-term
-    taskwarrior
-    taskwarrior-tui
     tea
     tealdeer
     terminal-parrot
