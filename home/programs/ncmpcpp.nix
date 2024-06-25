@@ -332,12 +332,12 @@
       window_border_color = "green";
       active_window_border = "red";
 
-      # visualizer_fifo_path = "/tmp/mpd.fifo";
-      # visualizer_output_name = "my_fifo";
-      # visualizer_sync_interval = "30";
-      # visualizer_in_stereo = "no";
-      # visualizer_type = "spectrum"; # spectrum, ellipse, wave_filled, wave
-      # visualizer_look = "+█"; # wave | spectrum, ellipse, wave_filled
+      visualizer_fifo_path = "/tmp/mpd.fifo";
+      visualizer_output_name = "Visualizer feed";
+      visualizer_sync_interval = "30";
+      visualizer_in_stereo = "no";
+      visualizer_type = "spectrum"; # spectrum, ellipse, wave_filled, wave
+      visualizer_look = "+█"; # wave | spectrum, ellipse, wave_filled
     };
   };
 }
