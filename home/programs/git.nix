@@ -12,6 +12,8 @@
       signByDefault = true;
     };
 
+    lfs.enable = true;
+
     delta = {
       enable = true;
       options = {
