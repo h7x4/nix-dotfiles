@@ -3,7 +3,7 @@ let
   inherit (lib) mkOption types mdDoc;
 in
 {
-  options.socketActivation = mkOption {
+  options.local.socketActivation = mkOption {
     type = types.attrsOf (types.submodule ({ name, ... }: {
       options = {
         enable = lib.mkEnableOption "socket activation for a systemd service";
@@ -109,7 +109,7 @@ in
   };
 
   config = let
-    activeServices = lib.filterAttrs (_: value: value.enable) config.socketActivation;
+    activeServices = lib.filterAttrs (_: value: value.enable) config.local.socketActivation;
     foreachService = f: lib.mapAttrsToList f activeServices;
   in {
     assertions = foreachService (name: value: {
@@ -130,13 +130,17 @@ in
       '';
     });
 
-    services.nginx.upstreams = let
-      servicesWithNginxUpstream = lib.filterAttrs (_: value: value.createNginxUpstream) activeServices;
-    in lib.mapAttrsToList (name: value: let
-      protocol = if lib.any (p: lib.hasPrefix p value.newSocketAddress) [ "/" "@" ]  then "unix" else "http";
-    in {
-      ${name}.servers."${protocol}:${value.newSocketAddress}" = { };
-    }) servicesWithNginxUpstream;
+    services.nginx.upstreams = lib.pipe activeServices [
+      (lib.filterAttrs (_: value: value.createNginxUpstream))
+      (lib.mapAttrsToList
+        (name: value: let
+          protocol = if lib.any (p: lib.hasPrefix p value.newSocketAddress) [ "/" "@" ]  then "unix" else "http";
+        in {
+          ${name}.servers."${protocol}:${value.newSocketAddress}" = { };
+        })
+      )
+      (lib.foldl lib.recursiveUpdate { })
+    ];
 
     systemd = lib.mkMerge (foreachService (name: value: let
       originalService = config.systemd.services.${value.service};

@@ -50,6 +50,7 @@
 
   networking = {
     hostName = "tsuki";
+    hostId = "8425e349";
     networkmanager.enable = true;
     interfaces.ens18.useDHCP = true;
     firewall.enable=true;
