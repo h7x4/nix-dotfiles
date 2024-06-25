@@ -4,10 +4,24 @@ keys:
   - &host_kasei age1eu2a6m3adakfzelfa9pqpl74a5dz0wkyr0v7gegm5ajnx7aqmqcqsp2ftc
 
 creation_rules:
-  - path_regex: secrets/[^/]+\.(yaml|json|env)$
+  - path_regex: secrets/common.yaml
     key_groups:
       - pgp:
         - *gpg_h7x4
         age:
         - *host_tsuki
         - *host_kasei
+
+  - path_regex: secrets/kasei.yaml
+    key_groups:
+      - pgp:
+        - *gpg_h7x4
+        age:
+        - *host_kasei
+
+  - path_regex: secrets/tsuki.yaml
+    key_groups:
+      - pgp:
+        - *gpg_h7x4
+        age:
+        - *host_tsuki

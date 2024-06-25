@@ -2,13 +2,13 @@
 let
   inherit (config) machineVars;
 in {
-  sops.defaultSopsFile = ../secrets/default.yaml;
+  sops.defaultSopsFile = ./.. + "secrets/${config.networking.hostName}.yaml";
 
   sops.secrets = {
-    "ssh/nix-builders/tsuki/key" = { };
-    "ssh/nix-builders/tsuki/pub" = { };
-    "ssh/nix-builders/isvegg/key" = { };
-    "ssh/nix-builders/bob/key" = { };
+    "ssh/nix-builders/tsuki/key" = { sopsFile = ./../secrets/common.yaml; };
+    "ssh/nix-builders/tsuki/pub" = { sopsFile = ./../secrets/common.yaml; };
+    "ssh/nix-builders/isvegg/key" = { sopsFile = ./../secrets/common.yaml; };
+    "ssh/nix-builders/bob/key" = { sopsFile = ./../secrets/common.yaml; };
     # "ssh/nix-builders/isvegg/pub" = { };
   };
 
