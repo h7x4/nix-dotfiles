@@ -23,18 +23,22 @@
       flake = false;
     };
 
-    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     osuchan = {
       url = "git+file:///home/h7x4/git/osuchan-line-bot";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    website = {
-      url = "git+https://git.pvv.ntnu.no/oysteikt/nani.wtf?ref=main";
+    # TODO: fix website
+    # website = {
+    #   url = "git+https://git.pvv.ntnu.no/oysteikt/nani.wtf?ref=main";
       # url = "path:/home/h7x4/git/nani.wtf";
       # inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # };
 
     maunium-stickerpicker = {
       url = "github:h7x4/maunium-stickerpicker-nix/0.1.0";
@@ -48,10 +52,12 @@
 
     matrix-synapse-next = {
       url = "github:dali99/nixos-matrix-modules/v0.6.0";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     vscode-server = {
       url = "github:nix-community/nixos-vscode-server";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Nix expressions and keys (TODO: move keys to another solution like agenix)
@@ -81,7 +87,7 @@
     secrets,
     sops-nix,
     vscode-server,
-    website
+    # website
   }: let
     system = "x86_64-linux";
 
