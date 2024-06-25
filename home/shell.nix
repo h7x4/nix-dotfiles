@@ -133,11 +133,17 @@ in {
     # Systemd related aliases
 
     "Systemd Stuff" = {
-      scr = "sudo systemctl restart";
+      sc = "systemctl";
+      scu = "systemctl --user";
+
       scs = "systemctl status";
+      scus = "systemctl --user status";
+
       scc = "systemctl cat";
-      scf = "systemctl list-units --failed";
-      je = "journalctl -eu";
+      scuc = "systemctl --user cat";
+
+      jeu = "journalctl -eu";
+      jeuu = "journalctl --user -eu";
     };
 
     # ░█▀▀░█▀█░█▀▀░▀█▀░█░█░█▀█░█▀▄░█▀▀
