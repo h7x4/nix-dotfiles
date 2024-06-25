@@ -192,8 +192,13 @@
                   inherit inputs;
                   inherit (self) extendedLib;
                   inherit (config) machineVars;
+                  hostname = name;
                   secrets = secrets.outputs.settings;
                 };
+
+                sharedModules = [
+                  inputs.sops-nix.homeManagerModules.sops
+                ];
 
                 users.h7x4 = {
                   imports = [ ./home/home.nix ];

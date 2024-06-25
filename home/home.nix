@@ -1,4 +1,4 @@
-{ config, pkgs, lib, extendedLib, inputs, machineVars, ... } @ args: let
+{ config, pkgs, lib, extendedLib, inputs, machineVars, hostname, ... } @ args: let
   inherit (lib) mkForce mkIf optionals;
   graphics = !machineVars.headless;
 in {
@@ -51,8 +51,18 @@ in {
     ./services/copyq.nix
   ];
 
-  nix.settings = {
-    use-xdg-base-directories = true;
+  sops.defaultSopsFile = ./secrets/${hostname}.yaml;
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
+  sops.secrets."nix/access-tokens" = {
+    sopsFile = ../secrets/common.yaml;
+  };
+
+  nix = {
+    settings.use-xdg-base-directories = true;
+    extraOptions = ''
+      !include ${config.sops.secrets."nix/access-tokens".path}
+    '';
   };
 
   home = {
