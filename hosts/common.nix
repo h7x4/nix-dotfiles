@@ -158,54 +158,7 @@ in {
     ];
   };
 
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-    inputMethod = lib.mkIf (!machineVars.headless) {
-      # enabled = "fcitx";
-      # engines = with pkgs.fcitx-engines; [ mozc ];
-      enabled = "fcitx5";
-      fcitx5.addons = with pkgs; [
-        fcitx5-mozc
-        fcitx5-gtk
-        # fcitx5-chinese-addons
-      ];
-
-      fcitx5.ignoreUserConfig = true;
-      fcitx5.settings.inputMethod = {
-        "Groups/0" = {
-          "Name" = "Default";
-          "Default Layout" = "ch";
-          "DefaultIM" = "mozc";
-        };
-        "Groups/0/Items/0" = {
-          "Name" = "keybord-us";
-          "Layout" = null;
-        };
-        "Groups/0/Items/1" = {
-          "Name" = "keybord-no";
-          "Layout" = null;
-        };
-        "Groups/0/Items/2" = {
-          "Name" = "mozc";
-          "Layout" = null;
-        };
-        "GroupOrder" = {
-          "0" = "Default";
-        };
-      };
-    };
-  };
-
-  systemd.user.services."fcitx5" = lib.mkIf (config.i18n.inputMethod.enabled == "fcitx5") {
-    description = "Fcitx5 IME";
-    wantedBy = [ "graphical.target" ];
-    serviceConfig = {
-      Type = "simple";
-      ExecStart = "${config.i18n.inputMethod.package}/bin/fcitx5";
-      ExecReload = "/bin/kill -HUP $MAINPID";
-      Restart="on-failure";
-    };
-  };
+  i18n.defaultLocale = "en_US.UTF-8";
 
   environment = {
     variables = {

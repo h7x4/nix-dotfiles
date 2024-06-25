@@ -40,6 +40,7 @@ in {
     ./programs/zathura.nix
 
     ./services/dunst.nix
+    ./services/fcitx5.nix
     ./services/mpd.nix
     ./services/picom.nix
     ./services/polybar.nix
