@@ -17,26 +17,29 @@ in
   xdg.configFile = let
     format = pkgs.formats.ini { };
   in {
-    "fcitx5/profile".source = format.generate "fcitx5-profile" {
-      "Groups/0" = {
-        Name = "Default";
-        "Default Layout" = "us";
-        DefaultIM = "mozc";
-      };
-      "Groups/0/Items/0" = {
-        Name = "keyboard-us";
-        Layout = "";
-      };
-      "Groups/0/Items/1" = {
-        Name = "keyboard-no";
-        Layout = "";
-      };
-      "Groups/0/Items/2" = {
-        Name = "mozc";
-        Layout = "";
-      };
-      GroupOrder = {
-        "0" = "Default";
+    "fcitx5/profile" = {
+      force = true;
+      source = format.generate "fcitx5-profile" {
+        "Groups/0" = {
+          Name = "Default";
+          "Default Layout" = "us";
+          DefaultIM = "mozc";
+        };
+        "Groups/0/Items/0" = {
+          Name = "keyboard-us";
+          Layout = "";
+        };
+        "Groups/0/Items/1" = {
+          Name = "keyboard-no";
+          Layout = "";
+        };
+        "Groups/0/Items/2" = {
+          Name = "mozc";
+          Layout = "";
+        };
+        GroupOrder = {
+          "0" = "Default";
+        };
       };
     };
 
