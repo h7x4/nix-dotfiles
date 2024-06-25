@@ -10,6 +10,8 @@
     duf
     duff
     ffmpeg
+    file
+    gh-dash
     gpg-tui
     graphviz
     httpie
