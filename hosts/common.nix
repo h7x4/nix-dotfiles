@@ -10,6 +10,8 @@ in {
     "ssh/nix-builders/isvegg/key" = { sopsFile = ./../secrets/common.yaml; };
     "ssh/nix-builders/bob/key" = { sopsFile = ./../secrets/common.yaml; };
     # "ssh/nix-builders/isvegg/pub" = { };
+
+    "nix/access-tokens" = { sopsFile = ./../secrets/common.yaml; };
   };
 
   nix = {
@@ -27,6 +29,10 @@ in {
       trusted-users = [ "h7x4" "nix-builder" ];
       use-xdg-base-directories = true;
     };
+
+    extraOptions = ''
+      !include ${config.sops.secrets."nix/access-tokens".path}
+    '';
 
     buildMachines = [
       # {
