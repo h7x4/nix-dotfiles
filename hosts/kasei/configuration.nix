@@ -9,6 +9,8 @@
     ./services/stable-diffusion.nix
     ./services/tailscale.nix
     ./services/keybase.nix
+  ];
+
   boot.binfmt.emulatedSystems = [
     "x86_64-windows"
     "aarch64-linux"
