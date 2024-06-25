@@ -12,6 +12,11 @@ in {
     # "ssh/nix-builders/isvegg/pub" = { };
 
     "nix/access-tokens" = { sopsFile = ./../secrets/common.yaml; };
+
+    "ssh/secret-config/global" = {
+      sopsFile = ./../secrets/common.yaml;
+      mode = "0444";
+    };
   };
 
   nix = {
@@ -102,6 +107,8 @@ in {
 
   programs.ssh = {
     extraConfig = ''
+      Include ${config.sops.secrets."ssh/secret-config/global".path}
+
       Host nix-builder-isvegg
         HostName isvegg.pvv.ntnu.no
         User oysteikt
