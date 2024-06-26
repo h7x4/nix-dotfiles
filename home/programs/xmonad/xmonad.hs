@@ -339,8 +339,8 @@ myPolybarLogHook dbus = dynamicLogWithPP (polybarHook dbus)
 -- per-workspace layout choices.
 --
 myStartupHook :: X ()
-myStartupHook = 
-  spawnOnce "sxhkd &"
+myStartupHook = return ()
+  -- spawnOnce "sxhkd &"
   -- spawnOnce "$HOME/.xmonad/setup-script/xinit.sh"
 
 myRestartHook :: X ()
