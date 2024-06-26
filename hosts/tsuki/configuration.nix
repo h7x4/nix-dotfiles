@@ -1,7 +1,5 @@
 { config, lib, secrets, modulesPath, ... }:
 {
-  system.stateVersion = "22.05";
-
   imports = [
     ./hardware-configuration.nix
 
@@ -25,6 +23,8 @@
 
     ./services/scrapers/nhk-easy-news/default.nix
   ];
+
+  system.stateVersion = "22.05";
 
   machineVars = {
     headless = true;

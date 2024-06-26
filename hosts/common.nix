@@ -445,6 +445,4 @@ in {
     Defaults    lecture = always
     Defaults    lecture_file = ${sudoLecture}
   '';
-
-  system.stateVersion = "22.05";
 }

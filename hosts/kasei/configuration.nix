@@ -9,7 +9,8 @@
     ./services/stable-diffusion.nix
     ./services/tailscale.nix
     ./services/keybase.nix
-  ];
+
+  system.stateVersion = "22.05";
 
   boot.binfmt.emulatedSystems = [
     "x86_64-windows"
