@@ -36,7 +36,7 @@ in {
     ./programs/rofi.nix
     ./programs/taskwarrior.nix
     ./programs/vscode.nix
-    ./programs/xmobar
+    # ./programs/xmobar
     ./programs/xmonad
     ./programs/zathura.nix
 
@@ -46,7 +46,7 @@ in {
     ./services/picom.nix
     ./services/polybar.nix
     ./services/screen-locker.nix
-    ./services/stalonetray.nix
+    # ./services/stalonetray.nix
     ./services/sxhkd.nix
     ./services/copyq.nix
   ];
