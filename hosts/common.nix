@@ -304,6 +304,7 @@ in {
     udev.packages = with pkgs; [
       yubikey-personalization
       android-udev-rules
+      light
     ];
 
     pcscd.enable = true;
@@ -354,7 +355,6 @@ in {
   programs = {
     dconf.enable = !config.machineVars.headless;
     git.enable = true;
-    light.enable = !config.machineVars.headless;
     npm.enable = true;
     tmux.enable = true;
     zsh.enable = true;
