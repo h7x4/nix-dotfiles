@@ -8,14 +8,14 @@
     buildPhase = ''
       emacs --batch --eval "(require 'org)" --eval '(org-babel-tangle-file "config.org")'
     '';
-  
+
     installPhase = ''
       cp config.el $out
     '';
   };
 
 in {
-  home.file.".emacs".source = configEl.outPath;
+  xdg.configFile."emacs/init.el".source = configEl.outPath;
 
   programs.emacs = {
     enable = true;
