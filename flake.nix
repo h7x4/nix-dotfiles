@@ -97,6 +97,10 @@
       config = {
         allowUnfree = true;
         android_sdk.accept_license = true;
+        segger-jlink.acceptLicense = true;
+        permittedInsecurePackages = [
+          "segger-jlink-qt4-794l"
+        ];
       };
 
       overlays = let
@@ -218,22 +222,7 @@
       tsuki = nixSys "tsuki";
       Eisei = nixSys "eisei";
       kasei = nixSys "kasei";
-      home-manager-tester = nixpkgs-unstable.lib.nixosSystem {
-        inherit system;
-        pkgs = unstable-pkgs;
-        inherit (unstable-pkgs) lib;
-        modules = [
-          "${home-manager-local}/nixos"
-          ./hosts/special/home-manager-tester/configuration.nix
-          {
-            config._module.args = {
-              pkgs = unstable-pkgs;
-              # inherit (self) extendedLib;
-              # secrets = secrets.outputs.settings;
-            };
-          }
-        ];
-      };
+      dosei = nixSys "dosei";
     };
   };
 }

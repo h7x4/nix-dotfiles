@@ -22,6 +22,7 @@ Here are some of the interesting files and dirs:
 |------|--------------|---------|
 | `Tsuki` | Dell Poweredge r710 server | Data storage / Build server / Selfhosted services. This server hosts a wide variety of services, including websites, matrix server, git repos, CI/CD and more. **This is probably the most interesting machine to pick config from** |
 | `Kasei` | AMD Zen 2 CPU / Nvidia GPU - desktop computer | Semi-daily driver. This is my main computer at home. Most of the configuration written in `/home` is made specifically for this computer, since `Eisei` is out of service at the moment. |
+| `Dosei` | Dell Optiplex | Work computer, mostly used for development and testing. |
 | `Eisei` | HP Laptop | At the moment, this laptop is not in use. I've found that I'm not able to use NixOS quickly enough in a university environment where I need to rapidly install software and maintain project configurations (Makefile, Maven, django, npm, etc...) for several subjects. In addition to the configurations, some of the software is not available on NixOS. As a result, I would the be forced to package or FHS a lot of stuff in order to do anything productive. I might return to using NixOS on my laptop in the future. |
 
 ## home-manager configuration
