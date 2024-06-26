@@ -11,4 +11,6 @@
       uda.taskwarrior-tui.task-report.next.filter = report.minimal.filter;
     };
   };
+
+  home.packages = with pkgs; [ taskwarrior-tui ];
 }
