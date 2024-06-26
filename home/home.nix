@@ -12,16 +12,12 @@ in {
     ./programs/atuin.nix
     ./programs/comma.nix
     ./programs/direnv.nix
-    ./programs/firefox.nix
     ./programs/gdb.nix
     ./programs/gh.nix
     ./programs/git.nix
     ./programs/gpg.nix
     ./programs/less.nix
-    ./programs/ncmpcpp.nix
     ./programs/neovim.nix
-    ./programs/newsboat
-    ./programs/taskwarrior.nix
     ./programs/tmux.nix
     ./programs/zsh
 
@@ -32,9 +28,13 @@ in {
 
     ./programs/alacritty.nix
     ./programs/emacs
+    ./programs/firefox.nix
     ./programs/ncmpcpp.nix
+    ./programs/ncmpcpp.nix
+    ./programs/newsboat
     ./programs/qutebrowser.nix
     ./programs/rofi.nix
+    ./programs/taskwarrior.nix
     ./programs/vscode.nix
     ./programs/xmobar
     ./programs/xmonad
