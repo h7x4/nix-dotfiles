@@ -27,6 +27,7 @@
     DOT_SAGE = "${configHome}/sagemath";
     ELM_HOME = "${configHome}/";
     GOPATH = "${dataHome}/go";
+    GRIPHOME = "${configHome}/grip";
     GRADLE_USER_HOME = "${dataHome}/gradle";
     ICEAUTHORITY = "${cacheHome}/ICEauthority";
     NIMBLE_DIR = "${dataHome}/nimble";
@@ -36,6 +37,7 @@
     PARALLEL_HOME = "${configHome}/parallel";
     PYENV_ROOT = "${dataHome}/pyenv";
     RUSTUP_HOME = "${dataHome}/rustup";
+    RYE_HOME = "${dataHome}/rye";
     STACK_ROOT = "${dataHome}/stack";
     W3M_DIR = "${dataHome}/w3m";
     WINEPREFIX = "${dataHome}/wine";
