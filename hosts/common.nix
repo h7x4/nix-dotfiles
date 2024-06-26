@@ -431,12 +431,13 @@ in {
       sqlite-web
     ]);
 
-  sound = {
+  security.rtkit.enable = !config.machineVars.headless;
+  services.pipewire = {
     enable = !config.machineVars.headless;
-    mediaKeys.enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
   };
-
-  hardware.pulseaudio.enable = !config.machineVars.headless;
 
   security.sudo.extraConfig = let
     sudoLecture = pkgs.writeText "sudo-lecture.txt" (extendedLib.termColors.front.red "Be careful or something, idk...\n");
