@@ -308,8 +308,6 @@ in
       waderyan.gitblame
       # vs-liveshare
       vscodevim.vim
-
-      ms-dotnettools.csharp
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
         name = "monokai-st3";
