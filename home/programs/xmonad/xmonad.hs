@@ -65,7 +65,7 @@ myModMask :: KeyMask
 myModMask = mod4Mask
 
 myWorkspaces :: [WorkspaceId]
-myWorkspaces = map (UTF8.decode . UTF8.encode) ["総","草","書","企","連","総2","総3"]
+myWorkspaces = map (UTF8.decode . UTF8.encode) ["gen","www","dev","dev2","com","wsa","wsb","wsc"]
 
 wsWeb = myWorkspaces !! 1
 wsDev = myWorkspaces !! 2
@@ -181,14 +181,14 @@ termIsOpen = isOpen
              <$> (listToMaybe . filter (L.isInfixOf "term") . lines))
              <$> output
 
-viewDropboxStatus :: X ()
-viewDropboxStatus = spawn =<< ((++) "notify-send -t 3000 " . unpack) <$> status
-  where
-    status :: X String
-    status = liftIO $ runProcessWithInput "python" ["$HOME/.scripts/dropbox.py", "status"] ""
+-- viewDropboxStatus :: X ()
+-- viewDropboxStatus = spawn =<< ((++) "notify-send -t 3000 " . unpack) <$> status
+--   where
+--     status :: X String
+--     status = liftIO $ runProcessWithInput "python" ["$HOME/.scripts/dropbox.py", "status"] ""
 
-    unpack :: String -> String
-    unpack =  wrap "\" " "\"" . unwords . map (wrap " [" "] "). lines
+--     unpack :: String -> String
+--     unpack =  wrap "\" " "\"" . unwords . map (wrap " [" "] "). lines
 
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
@@ -346,7 +346,7 @@ myStartupHook = return ()
 myRestartHook :: X ()
 myRestartHook = do
   spawn "notify-send 'XMonad' 'Restarted XMonad/Polybar' --icon=dialog-information"
-  spawn "xmonad --recompile"
+  -- spawn "xmonad --recompile"
   spawn "xmonad --restart"
   spawn "systemctl --user restart polybar"
 
