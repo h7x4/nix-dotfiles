@@ -355,7 +355,6 @@ in {
   programs = {
     dconf.enable = !config.machineVars.headless;
     git.enable = true;
-    npm.enable = true;
     tmux.enable = true;
     zsh.enable = true;
 
