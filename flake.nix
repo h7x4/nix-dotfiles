@@ -106,8 +106,9 @@
         };
       in [
         # (self: super: { pcloud = nonrecursive-unstable-pkgs.pcloud; })
-        minecraft.overlays.default
-        osuchan.overlays.default
+        (self: super: {
+          inherit (nonrecursive-unstable-pkgs) atuin;
+        })
         (self: super: {
           mpv-unwrapped = super.mpv-unwrapped.override {
             ffmpeg = super.ffmpeg_6-full;

@@ -1,4 +1,10 @@
 { config, ... }:
+let
+  cfg = config.programs.atuin;
+
+  # TODO: retrieve this in a more dynamic and correct manner
+  xdg_runtime_dir = "/run/user/1000";
+in
 {
   programs.atuin = {
     enable = true;
@@ -17,6 +23,44 @@
       sync_frequency = "1h";
       auto_sync = true;
       update_check = true;
+
+      daemon = {
+        enabled = true;
+        socket_path = "${xdg_runtime_dir}/atuin.socket";
+        # systemd = true;
+      };
+    };
+  };
+
+  # TODO: fix socket activation
+  # systemd.user.sockets.atuin-daemon = {
+  #   Unit.Description = "Socket activation for atuin shell history daemon";
+
+  #   Socket = {
+  #     ListenStream = "%t/atuin.socket";
+  #     SocketMode = "0600";
+  #     RemoveOnStop = true;
+  #   };
+
+  #   Install.WantedBy = [ "sockets.target" ];
+  # };
+
+  systemd.user.services.atuin-daemon = {
+    Unit = {
+      Description = "Atuin shell history daemon";
+      # Requires = "atuin-daemon.socket";
+    };
+
+    Service = {
+      ExecStart = "${cfg.package}/bin/atuin daemon";
+      # Environment = [
+      #   "ATUIN_DAEMON__SYSTEMD_SOCKET=true"
+      # ];
+    };
+
+    Install = {
+      # Also = [ "atuin-daemon.socket" ];
+      WantedBy = [ "default.target" ];
     };
   };
 }
