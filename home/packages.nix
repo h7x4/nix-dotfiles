@@ -75,6 +75,7 @@
   ] ++ (
     lib.optionals (!machineVars.headless) [
       ahoviewer
+      alsa-utils
       # anki
       ark
       birdtray
@@ -108,8 +109,7 @@
       nyxt
       # obsidian
       # pcloud
-      pulseaudio
-      pulsemixer
+      pwvucontrol
       # scrcpy
       shellcheck
       slack
