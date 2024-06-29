@@ -74,6 +74,12 @@ in {
       "$HOME/.local/bin"
     ];
 
+    # TODO: fix overriding home.file in home-manager
+    # file = mkIf graphics {
+    #   ".icons/default/index.theme".source = lib.mkForce null;
+    #   ".icons/default/${config.home.pointerCursor.name}.theme".source = lib.mkForce null;
+    # };
+
     pointerCursor = mkIf graphics  {
       package = pkgs.capitaine-cursors;
       name = "capitaine-cursors";
