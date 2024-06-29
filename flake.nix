@@ -220,7 +220,6 @@
         };
     in {
       tsuki = nixSys "tsuki";
-      Eisei = nixSys "eisei";
       kasei = nixSys "kasei";
       dosei = nixSys "dosei";
     };
