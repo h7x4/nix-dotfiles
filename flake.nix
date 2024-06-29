@@ -109,7 +109,6 @@
           config.allowUnfree = true;
         };
       in [
-        # (self: super: { pcloud = nonrecursive-unstable-pkgs.pcloud; })
         (self: super: {
           inherit (nonrecursive-unstable-pkgs) atuin wstunnel;
         })
