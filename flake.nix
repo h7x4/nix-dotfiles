@@ -162,66 +162,75 @@
     };
 
     nixosConfigurations = let
-      nixSys = name:
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          inherit pkgs;
-          inherit (pkgs) lib;
-          modules = [
-            "${home-manager}/nixos"
-            ./modules/machineVars.nix
-            ./modules/socketActivation.nix
-            ./hosts/common
-            ./hosts/${name}/configuration.nix
+      nixSys = name: extraConfig:
+        nixpkgs.lib.nixosSystem
+          ({
+            inherit system;
+            inherit pkgs;
+            inherit (pkgs) lib;
 
-            matrix-synapse-next.nixosModules.default
-            osuchan.outputs.nixosModules.default
-            secrets.outputs.nixos-config
-            sops-nix.nixosModules.sops
-            vscode-server.nixosModules.default
-            maunium-stickerpicker.nixosModules.default
+            specialArgs = {
+              inherit inputs;
+              inherit unstable-pkgs;
+              inherit (self) extendedLib;
+              secrets = secrets.outputs.settings;
+            } // (extraConfig.specialArgs or { });
 
-            (args: import minecraft.outputs.nixosModules.minecraft-servers (args // {
-              pkgs = unstable-pkgs;
-              lib = unstable-pkgs.lib;
-            }))
+            modules = [
+              "${home-manager}/nixos"
 
-            {
-              config._module.args = {
-                inherit inputs;
-                inherit unstable-pkgs;
-                inherit (self) extendedLib;
-                secrets = secrets.outputs.settings;
-              };
-            }
+              ./hosts/common
+              ./hosts/${name}/configuration.nix
 
-            ({ config, ... }:
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                extraSpecialArgs = {
-                  inherit inputs;
-                  inherit (self) extendedLib;
-                  inherit (config) machineVars;
-                  hostname = name;
-                  secrets = secrets.outputs.settings;
+              ./modules/machineVars.nix
+              ./modules/socketActivation.nix
+
+              secrets.outputs.nixos-config
+              sops-nix.nixosModules.sops
+
+              ({ config, ... }:
+              {
+                home-manager = {
+                  useGlobalPkgs = true;
+                  extraSpecialArgs = {
+                    inherit inputs;
+                    inherit (self) extendedLib;
+                    inherit (config) machineVars;
+                    hostname = name;
+                    secrets = secrets.outputs.settings;
+                  };
+
+                  sharedModules = [
+                    inputs.sops-nix.homeManagerModules.sops
+                  ];
+
+                  users.h7x4.imports = [ ./home/home.nix ];
                 };
-
-                sharedModules = [
-                  inputs.sops-nix.homeManagerModules.sops
-                ];
-
-                users.h7x4 = {
-                  imports = [ ./home/home.nix ];
-                };
-              };
-            })
-          ];
-        };
+              })
+            ] ++ (extraConfig.modules or [ ]);
+          }
+          //
+          (builtins.removeAttrs extraConfig [
+            "modules"
+            "specialArgs"
+          ]));
     in {
-      tsuki = nixSys "tsuki";
-      kasei = nixSys "kasei";
-      dosei = nixSys "dosei";
+      dosei = nixSys "dosei" { };
+      kasei = nixSys "kasei" { };
+      tsuki = nixSys "tsuki" {
+        modules = [
+          matrix-synapse-next.nixosModules.default
+          osuchan.outputs.nixosModules.default
+          sops-nix.nixosModules.sops
+          vscode-server.nixosModules.default
+          maunium-stickerpicker.nixosModules.default
+
+          (args: import minecraft.outputs.nixosModules.minecraft-servers (args // {
+            pkgs = unstable-pkgs;
+            lib = unstable-pkgs.lib;
+          }))
+        ];
+      };
     };
   };
 }
