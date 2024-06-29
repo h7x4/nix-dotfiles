@@ -8,7 +8,7 @@ in {
     ./hardware-configuration.nix
   ];
 
-  # TODO: See ../common.nix
+  # TODO: See ../common/default.nix
   services.xserver.enable = true;
   services.xserver.displayManager.lightdm.enable = true;
 

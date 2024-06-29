@@ -9,7 +9,7 @@ Here are some of the interesting files and dirs:
 |------|---------|
 | `/home` | [home-manager][home-manager] configuration. |
 | `/hosts` | Machine specific NixOS configurations. |
-| `/hosts/common.nix` | Configuration that is equal for all hosts. |
+| `/hosts/common/default.nix` | Configuration that is equal for all hosts. |
 | `/lib` | Custom lib functions that has not been upstreamed (or should not be) to nixpkgs. I'm trying to phase these out as much as possible. |
 | `/modules` | Custom nixos modules that I use in my own configuration. If you see options that does not appear in [NixOS Search][nixos-search], they might be defined here. |
 | `/package-overrides` | Updated or pinned versions of packages that have not been upstreamed to nixpkgs (yet). |

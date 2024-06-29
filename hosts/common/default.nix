@@ -2,19 +2,19 @@
 let
   inherit (config) machineVars;
 in {
-  sops.defaultSopsFile = ./.. + "/secrets/${config.networking.hostName}.yaml";
+  sops.defaultSopsFile = ./../.. + "/secrets/${config.networking.hostName}.yaml";
 
   sops.secrets = {
-    "ssh/nix-builders/tsuki/key" = { sopsFile = ./../secrets/common.yaml; };
-    "ssh/nix-builders/tsuki/pub" = { sopsFile = ./../secrets/common.yaml; };
-    "ssh/nix-builders/isvegg/key" = { sopsFile = ./../secrets/common.yaml; };
-    "ssh/nix-builders/bob/key" = { sopsFile = ./../secrets/common.yaml; };
+    "ssh/nix-builders/tsuki/key" = { sopsFile = ./../../secrets/common.yaml; };
+    "ssh/nix-builders/tsuki/pub" = { sopsFile = ./../../secrets/common.yaml; };
+    "ssh/nix-builders/isvegg/key" = { sopsFile = ./../../secrets/common.yaml; };
+    "ssh/nix-builders/bob/key" = { sopsFile = ./../../secrets/common.yaml; };
     # "ssh/nix-builders/isvegg/pub" = { };
 
-    "nix/access-tokens" = { sopsFile = ./../secrets/common.yaml; };
+    "nix/access-tokens" = { sopsFile = ./../../secrets/common.yaml; };
 
     "ssh/secret-config/global" = {
-      sopsFile = ./../secrets/common.yaml;
+      sopsFile = ./../../secrets/common.yaml;
       mode = "0444";
     };
   };

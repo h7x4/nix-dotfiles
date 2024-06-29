@@ -171,7 +171,7 @@
             "${home-manager}/nixos"
             ./modules/machineVars.nix
             ./modules/socketActivation.nix
-            ./hosts/common.nix
+            ./hosts/common
             ./hosts/${name}/configuration.nix
 
             matrix-synapse-next.nixosModules.default
