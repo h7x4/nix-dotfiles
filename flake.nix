@@ -208,7 +208,6 @@
         modules = [
           matrix-synapse-next.nixosModules.default
           osuchan.outputs.nixosModules.default
-          sops-nix.nixosModules.sops
           vscode-server.nixosModules.default
           maunium-stickerpicker.nixosModules.default
 
