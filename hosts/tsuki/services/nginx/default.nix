@@ -51,6 +51,11 @@
       "osuchan".servers."localhost:${s ports.osuchan}" = { };
       "plex".servers."localhost:${s ports.plex}" = { };
       "vaultwarden".servers."unix:${sa.vaultwarden.newSocketAddress}" = { };
+      "wstunnel".servers = let
+        inherit (config.services.wstunnel.servers."ws-tsuki".listen) host port;
+      in {
+        "${host}:${s port}" = { };
+      };
     };
 
     virtualHosts = let
@@ -188,6 +193,8 @@
       #     '';
       #   };
       # })
+
+      (proxy ["ws"] "http://wstunnel" enableWebsockets)
 
       (host ["h7x4-stickers"] {})
       (host ["pingu-stickers"] {})

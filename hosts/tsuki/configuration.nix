@@ -20,6 +20,7 @@
     ./services/taskserver.nix
     ./services/vaultwarden.nix
     ./services/vscode-server.nix
+    ./services/wstunnel.nix
 
     ./services/scrapers/nhk-easy-news/default.nix
   ];

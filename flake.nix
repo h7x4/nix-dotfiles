@@ -111,7 +111,7 @@
       in [
         # (self: super: { pcloud = nonrecursive-unstable-pkgs.pcloud; })
         (self: super: {
-          inherit (nonrecursive-unstable-pkgs) atuin;
+          inherit (nonrecursive-unstable-pkgs) atuin wstunnel;
         })
         (self: super: {
           mpv-unwrapped = super.mpv-unwrapped.override {

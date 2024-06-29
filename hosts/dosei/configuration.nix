@@ -6,6 +6,7 @@
     ./services/avahi.nix
     ./services/docker.nix
     ./services/jenkins.nix
+    ./services/wstunnel.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
