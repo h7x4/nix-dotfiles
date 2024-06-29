@@ -167,14 +167,13 @@ in {
 
     enableDefaultPackages = true;
     packages = with pkgs; [
+      ark-pixel-font
       cm_unicode
+      corefonts
       dejavu_fonts
       fira-code
       fira-code-symbols
-      powerline-fonts
       iosevka
-      symbola
-      corefonts
       ipaexfont
       ipafont
       liberation_ttf
@@ -185,12 +184,15 @@ in {
       noto-fonts-emoji
       ocr-a
       open-sans
+      powerline-fonts
       source-han-sans
       source-sans
+      symbola
+      texlivePackages.asana-math
       ubuntu_font_family
       victor-mono
+      yasashisa-gothic
       (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
-      inputs.fonts
     ];
 
     fontconfig = {

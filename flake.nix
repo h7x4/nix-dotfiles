@@ -18,11 +18,6 @@
       flake = false;
     };
 
-    fonts = {
-      url = "path:/home/h7x4/git/fonts";
-      flake = false;
-    };
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -79,7 +74,6 @@
     home-manager-local,
 
     dotfiles,
-    fonts,
     matrix-synapse-next,
     maunium-stickerpicker,
     minecraft,
