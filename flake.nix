@@ -8,11 +8,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    home-manager-local = {
-      url = "git+file:///home/h7x4/git/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
     dotfiles = {
       url = "git+https://git.pvv.ntnu.no/oysteikt/dotfiles?ref=master";
       flake = false;
@@ -71,7 +66,6 @@
     nixpkgs,
     nixpkgs-unstable,
     home-manager,
-    home-manager-local,
 
     dotfiles,
     matrix-synapse-next,
