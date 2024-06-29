@@ -2,15 +2,15 @@
 let
   inherit (config) machineVars;
 in {
+  imports = [
+    ./nix-builders/bob.nix
+    ./nix-builders/isvegg.nix
+    ./nix-builders/tsuki.nix
+  ];
+
   sops.defaultSopsFile = ./../.. + "/secrets/${config.networking.hostName}.yaml";
 
   sops.secrets = {
-    "ssh/nix-builders/tsuki/key" = { sopsFile = ./../../secrets/common.yaml; };
-    "ssh/nix-builders/tsuki/pub" = { sopsFile = ./../../secrets/common.yaml; };
-    "ssh/nix-builders/isvegg/key" = { sopsFile = ./../../secrets/common.yaml; };
-    "ssh/nix-builders/bob/key" = { sopsFile = ./../../secrets/common.yaml; };
-    # "ssh/nix-builders/isvegg/pub" = { };
-
     "nix/access-tokens" = { sopsFile = ./../../secrets/common.yaml; };
 
     "ssh/secret-config/global" = {
@@ -39,49 +39,6 @@ in {
       !include ${config.sops.secrets."nix/access-tokens".path}
     '';
 
-    buildMachines = [
-      # {
-      #   # Login details configured in ssh module in nix-secrets
-      #   hostName = "nix-builder-tsukir";
-      #   system = "x86_64-linux";
-      #   speedFactor = 2;
-      #   maxJobs = 8;
-      #   supportedFeatures = [
-      #     "nixos-test"
-      #     "benchmark"
-      #     "big-paralell"
-      #   ];
-      #   mandatoryFeatures = [ ];
-      #   sshUser = "nix-ssh";
-      #   sshKey = config.sops.secrets."ssh/nix-builders/tsuki/key".path;
-      # }
-      {
-        # Login details configured in ssh module in nix-secrets
-        hostName = "nix-builder-isvegg";
-        system = "x86_64-linux";
-        speedFactor = 1;
-        maxJobs = 8;
-        supportedFeatures = [ ];
-        mandatoryFeatures = [ ];
-        sshUser = secrets.ssh.users.pvv.normalUser;
-        sshKey = config.sops.secrets."ssh/nix-builders/isvegg/key".path;
-      }
-      {
-        # Login details configured in ssh module in nix-secrets
-        hostName = "nix-builder-bob";
-        system = "x86_64-linux";
-        speedFactor = 5;
-        maxJobs = 24;
-        supportedFeatures = [
-          "nixos-test"
-          "benchmark"
-          "big-paralell"
-        ];
-        mandatoryFeatures = [ ];
-        # sshUser = secrets.ssh.users.pvv.normalUser;
-        # sshKey = config.sops.secrets."ssh/nix-builders/bob/key".path;
-      }
-    ];
     registry = {
       home.to = {
         type = "path";
@@ -108,22 +65,8 @@ in {
   programs.ssh = {
     extraConfig = ''
       Include ${config.sops.secrets."ssh/secret-config/global".path}
-
-      Host nix-builder-isvegg
-        HostName isvegg.pvv.ntnu.no
-        User oysteikt
-        IdentityFile ${config.sops.secrets."ssh/nix-builders/isvegg/key".path}
-
-      Host nix-builder-bob
-        HostName bob.pvv.ntnu.no
-        ProxyJump nix-builder-isvegg
-        User oysteikt
-        IdentityFile ${config.sops.secrets."ssh/nix-builders/bob/key".path}
-
-      Host nix-builder-tsukir
-        HostName gingakei.loginto.me
-        Port ${toString secrets.ports.ssh.home-in}
     '';
+
     knownHosts = {
       bob = {
         hostNames = [
