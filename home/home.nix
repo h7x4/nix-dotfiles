@@ -21,6 +21,8 @@ in {
     ./programs/tmux.nix
     ./programs/zsh
 
+    ./services/git-maintenance.nix
+
     ./modules/colors.nix
     ./modules/shellAliases.nix
   ] ++ optionals graphics [
