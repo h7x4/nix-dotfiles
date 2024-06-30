@@ -1,6 +1,6 @@
 { config, ... }:
 {
-  home.stateVersion = "22.05";
+  home.stateVersion = "24.05";
 
   programs.git.extraConfig.maintenance.repo = let
     home = config.home.homeDirectory;
