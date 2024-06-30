@@ -1,5 +1,21 @@
 { pkgs, lib, config, ... }:
+let
+  cfg = config.programs.zsh;
+in
 {
+  home.file."${cfg.dotDir}/.zshrc".onChange = ''
+    ${lib.getExe (pkgs.writeTextFile {
+      name = "zsh-compinit-oneshot.zsh";
+      executable = true;
+      destination = "/bin/zsh-compinit-oneshot.zsh";
+      text = ''
+        #!${lib.getExe cfg.package}
+
+        autoload -Uz compinit && compinit -C -d "${config.xdg.cacheHome}/zsh/zcompdump-$ZSH_VERSION"
+      '';
+    })}
+  '';
+
   programs.zsh = {
 
     enable = true;
@@ -12,10 +28,7 @@
       fpath+=(${pkgs.zsh-completions}/share/zsh/site-functions)
     '';
 
-    # TODO: Regenerate zcompdump with a systemd timer
-    completionInit = ''
-      autoload -Uz compinit && compinit -C -d "${config.xdg.cacheHome}/zsh/zcompdump-$ZSH_VERSION"
-    '';
+    completionInit = "";
 
     history = {
       extended = true;
