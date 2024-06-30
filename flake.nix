@@ -191,7 +191,10 @@
                     inputs.sops-nix.homeManagerModules.sops
                   ];
 
-                  users.h7x4.imports = [ ./home/home.nix ];
+                  users.h7x4.imports = [
+                    ./home/home.nix
+                    ./hosts/${name}/home
+                  ];
                 };
               })
             ] ++ (extraConfig.modules or [ ]);
