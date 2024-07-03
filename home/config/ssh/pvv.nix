@@ -88,8 +88,14 @@ let
     machines: pipe machines pipeline;
 in
   {
-    programs.ssh.matchBlocks = extendedLib.attrsets.concatAttrs [
+    programs.ssh.matchBlocks = (extendedLib.attrsets.concatAttrs [
       (convertMachinesWith convertNormalMachine normalMachines)
       (convertMachinesWith convertAdminMachine rootMachines)
-    ];
+    ]) // {
+      "pvv-git git.pvv.ntnu.no" = {
+        hostname = "git.pvv.ntnu.no";
+        user = "gitea";
+        port = 2222;
+      };
+    };
   }

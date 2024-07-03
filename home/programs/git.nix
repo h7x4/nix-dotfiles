@@ -42,6 +42,8 @@
         editor = "nvim";
       };
 
+      safe.directory = "*";
+
       rerere.enabled = true;
 
       branch.sort = "-committerdate";
@@ -50,8 +52,24 @@
       color.ui = "auto";
 
       init.defaultBranch = "main";
-      fetch.prune = true;
+
+      fetch = {
+        prune = true;
+        fsckObjects = true;
+      };
+
+      transfer.fsckObjects = true;
+
+      receive.fsckObjects = true;
+
       pull.rebase = true;
+
+      rebase = {
+        autoStash = true;
+        autoSquash = true;
+        abbreviateCommands = true;
+        updateRefs = true;
+      };
 
       push = {
         default = "current";
@@ -72,7 +90,18 @@
         mnemonicPrefix = true;
         renames = true;
         tool = "nvimdiff";
+        submodule = "log";
       };
+
+      status = {
+        showUntrackedFiles = "all";
+        relativePaths = true;
+        submoduleSummary = true;
+      };
+
+      log.date = "iso";
+
+      submodule.recurse = true;
 
       grep = {
         break = true;
@@ -81,10 +110,25 @@
         extendedRegexp = true;
       };
 
+      # Run autocorrected command after 3 seconds
+      help.autocorrect = "30";
+
       github.user = "h7x4";
 
-      "url \"github:\"".insteadOf = "https://github.com/";
+      "url \"github:\"".insteadOf = [
+        "https://github.com/"
+        "ssh://git@github.com:"
+        "git@github.com:"
+        "github.com:"
+      ];
 
+      "url \"pvv-git:\"".insteadOf = [
+        "https://git.pvv.org/"
+        "ssh://gitea@git.pvv.ntnu.no:2222/"
+        "gitea@git.pvv.ntnu.no:2222/"
+        "gitea@git.pvv.ntnu.no:"
+        "git.pvv.ntnu.no:"
+      ];
 
       web.browser = "google-chrome-stable";
 
