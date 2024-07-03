@@ -14,7 +14,7 @@ in {
     ./programs/direnv.nix
     ./programs/gdb.nix
     ./programs/gh.nix
-    ./programs/git.nix
+    ./programs/git
     ./programs/gpg.nix
     ./programs/less.nix
     ./programs/neovim.nix

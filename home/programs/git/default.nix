@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{ config, pkgs, lib, ... }:
+let
+  cfg = config.programs.git;
+in
 {
   programs.git = {
     enable = true;
@@ -30,7 +33,6 @@
       graphv = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all";
       forcepush = "push --force-with-lease --force-if-includes";
       authors = "shortlog --summary --numbered --email";
-      switch-interactive = "!cat <(git branch) <(git branch -r) | grep -v '^\\*\\|HEAD ->' | ${pkgs.fzf}/bin/fzf --reverse --info=inline --preview 'echo {} | xargs git show --color' | sed 's|\\s*.*/||' | xargs git switch";
       si = "switch-interactive";
       rebase-author = "rebase -i -x \"git commit --amend --reset-author -CHEAD\"";
     };
@@ -147,4 +149,20 @@
       "shell.nix"
     ];
   };
+
+  home.packages = [
+    (pkgs.writeShellApplication {
+      name = "git-tcommit";
+      runtimeInputs = with pkgs; [ cfg.package coreutils ];
+      text = lib.fileContents ./scripts/git-tcommit.sh;
+    })
+    (pkgs.writeShellApplication {
+      name = "git-switch-interactive";
+      runtimeInputs = with pkgs; [ cfg.package fzf gnused coreutils ];
+      text = lib.fileContents ./scripts/git-switch-interactive.sh;
+      excludeShellChecks = [
+        "SC2001" # (style): See if you can use ${variable//search/replace} instead. (sed invocation)
+      ];
+    })
+  ];
 }
