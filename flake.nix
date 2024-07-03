@@ -100,6 +100,13 @@
         (self: super: {
           inherit (nonrecursive-unstable-pkgs) atuin wstunnel;
         })
+
+        # https://github.com/NixOS/nixpkgs/pull/251706
+        (self: super: {
+          mozc = self.qt6Packages.callPackage ./package-overrides/mozc.nix { };
+          fcitx5-mozc = self.callPackage ./package-overrides/fcitx5-mozc.nix { };
+        })
+
         (self: super: {
           mpv-unwrapped = super.mpv-unwrapped.override {
             ffmpeg = super.ffmpeg_6-full;
