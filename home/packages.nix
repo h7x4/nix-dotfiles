@@ -90,12 +90,12 @@
       gnome.seahorse
       google-chrome
       inkscape
-      # insomnia
+      insomnia
       iwgtk
       # keybase-gui
       kid3
       koreader
-      # krita
+      krita
       ktouch
       libnotify
       libreoffice
@@ -107,7 +107,7 @@
       mopidy-youtube
       mpc_cli
       nyxt
-      # obsidian
+      obsidian
       # pcloud
       pwvucontrol
       # scrcpy
@@ -116,7 +116,7 @@
       # sublime3
       # swiPrologWithGui
       sxiv
-      # tagainijisho
+      tagainijisho
 
       tenacity
       thunderbird
