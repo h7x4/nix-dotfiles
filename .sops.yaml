@@ -3,6 +3,7 @@ keys:
   - &host_tsuki age1c92j4w0gqh32hwssl5m2mfrggssxax9pge8qxwytv9lmrnfttcvqdrgsst
   - &host_kasei age1eu2a6m3adakfzelfa9pqpl74a5dz0wkyr0v7gegm5ajnx7aqmqcqsp2ftc
   - &host_dosei age179y7apa80p9unvyjtsphpzyhve90ex986vlxkx43xt9n6m7en3csqnug7c
+  - &home age10f4a5acpar8vwz3v298r3nv7gggfpmyh4wxpkc2hwq9paq0scf8qee8lau
 
 creation_rules:
   - path_regex: secrets/common.yaml
@@ -13,6 +14,14 @@ creation_rules:
         - *host_tsuki
         - *host_kasei
         - *host_dosei
+        - *home
+
+  - path_regex: secrets/home.yaml
+    key_groups:
+      - pgp:
+        - *gpg_h7x4
+        age:
+        - *home
 
   - path_regex: secrets/kasei.yaml
     key_groups:

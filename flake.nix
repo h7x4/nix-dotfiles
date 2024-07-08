@@ -190,7 +190,6 @@
                     inherit inputs;
                     inherit (self) extendedLib;
                     inherit (config) machineVars;
-                    hostname = name;
                     secrets = secrets.outputs.settings;
                   };
 

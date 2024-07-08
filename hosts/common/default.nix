@@ -13,7 +13,7 @@ in {
   sops.secrets = {
     "nix/access-tokens" = { sopsFile = ./../../secrets/common.yaml; };
 
-    "ssh/secret-config/global" = {
+    "ssh/secret-config" = {
       sopsFile = ./../../secrets/common.yaml;
       mode = "0444";
     };
@@ -64,7 +64,7 @@ in {
 
   programs.ssh = {
     extraConfig = ''
-      Include ${config.sops.secrets."ssh/secret-config/global".path}
+      Include ${config.sops.secrets."ssh/secret-config".path}
     '';
 
     knownHosts = {

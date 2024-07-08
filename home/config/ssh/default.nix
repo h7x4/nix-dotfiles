@@ -6,10 +6,9 @@
     ./pvv.nix
   ];
 
-  sops.secrets."ssh/secret-config/home" = {
-    sopsFile = ../../../secrets/common.yaml;
+  sops.secrets."ssh/secret-config" = {
     mode = "0444";
   };
 
-  programs.ssh.includes = [ config.sops.secrets."ssh/secret-config/home".path ];
+  programs.ssh.includes = [ config.sops.secrets."ssh/secret-config".path ];
 }
