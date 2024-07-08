@@ -9,6 +9,18 @@
     "github" = {
       user = "git";
       hostname = "github.com";
+      identityFile = [ "~/.ssh/id_ed25519" ];
+    };
+    "github-nordicsemi" = {
+      user = "git";
+      hostname = "github.com";
+      identityFile = [ "~/.ssh/id_ed25519_nordicsemi" ];
+    };
+    "bitbucket-nordicsemi" = {
+      user = "git";
+      hostname = "bitbucket.nordicsemi.no";
+      port = 7999;
+      identityFile = [ "~/.ssh/id_ed25519_nordicsemi" ];
     };
     "gitlab.stud.idi.ntnu.no" = {
       user = "git";
