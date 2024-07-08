@@ -152,9 +152,6 @@
         locations."/_synapse".proxyPass = "http://$synapse_backend";
       })
       (host ["madmin"] { root = "${pkgs.synapse-admin}/"; })
-      # This one gets properly configured by the nextcloud module itself.
-      # It just needs the cloudflare and SSL settings.
-      (host ["cloud"] {})
       # (host ["cache"] { root = "/var/lib/nix-cache"; })
       # (proxy ["slack-bot"] "http://localhost:9898" {})
       (proxy ["atuin"] "http://atuin" {})
