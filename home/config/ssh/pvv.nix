@@ -5,7 +5,11 @@ let
 
   # http://www.pvv.ntnu.no/pvv/Maskiner
   normalMachines = [
-    [ "hildring" "pvv-login" "pvv" ]
+    {
+      names = [ "hildring" "pvv-login" "pvv" ];
+      proxyJump = lib.mkDefault null;
+    }
+    "dagali"
     "demiurgen"
     "eirin"
     "bekkalokk"
@@ -13,10 +17,7 @@ let
     "shark"
     "buskerud"
     "bicep"
-    {
-      names = [ "bob" ];
-      proxyJump = "hildring";
-    }
+    "bob"
     "knutsen"
     "isvegg"
     [ "microbel" "pvv-users" "pvv-mail" ]
@@ -70,10 +71,10 @@ let
     nameValuePair name value;
 
   # AttrSet -> AttrSet
-  convertNormalMachine = convertMachineWithDefaults { user = normalUser; };
+  convertNormalMachine = convertMachineWithDefaults { user = normalUser; proxyJump = "pvv"; };
   # AttrSet -> AttrSet
   convertAdminMachine =
-    convertMachineWithDefaults { user = adminUser; proxyJump = "hildring"; };
+    convertMachineWithDefaults { user = adminUser; proxyJump = "pvv"; };
 
   # ListOf (Either(String ListOf(String) AttrsOf(String))) -> (AttrSet -> AttrSet) -> AttrSet
   convertMachinesWith = convertMachineFunction: let
@@ -96,6 +97,7 @@ in
         hostname = "git.pvv.ntnu.no";
         user = "gitea";
         port = 2222;
+        proxyJump = "pvv";
       };
     };
   }
