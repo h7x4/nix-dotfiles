@@ -355,7 +355,7 @@ in {
       ghcid
       # haskellPackages.Cabal_3_6_3_0
       maven
-      nixfmt
+      nixfmt-rfc-style
       nixpkgs-fmt
       # nixpkgs-hammering
       nodePackages.node2nix
