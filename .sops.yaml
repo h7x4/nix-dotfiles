@@ -3,6 +3,7 @@ keys:
   - &host_tsuki age1c92j4w0gqh32hwssl5m2mfrggssxax9pge8qxwytv9lmrnfttcvqdrgsst
   - &host_kasei age1eu2a6m3adakfzelfa9pqpl74a5dz0wkyr0v7gegm5ajnx7aqmqcqsp2ftc
   - &host_dosei age179y7apa80p9unvyjtsphpzyhve90ex986vlxkx43xt9n6m7en3csqnug7c
+  - &host_europa age14mer45e52r2q4uz8n3fmv69tvk8gvwany4m4ndudud8ajv3jm4nqdj9m6a
   - &home age10f4a5acpar8vwz3v298r3nv7gggfpmyh4wxpkc2hwq9paq0scf8qee8lau
 
 creation_rules:
@@ -14,6 +15,7 @@ creation_rules:
         - *host_tsuki
         - *host_kasei
         - *host_dosei
+        - *host_europa
         - *home
 
   - path_regex: secrets/home.yaml
@@ -43,3 +45,10 @@ creation_rules:
         - *gpg_h7x4
         age:
         - *host_dosei
+
+  - path_regex: secrets/europa.yaml
+    key_groups:
+      - pgp:
+        - *gpg_h7x4
+        age:
+        - *host_europa

@@ -213,6 +213,7 @@
     in {
       dosei = nixSys "dosei" { };
       kasei = nixSys "kasei" { };
+      europa = nixSys "europa" { };
       tsuki = nixSys "tsuki" {
         modules = [
           matrix-synapse-next.nixosModules.default
