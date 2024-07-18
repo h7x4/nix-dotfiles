@@ -4,6 +4,7 @@
     beets
     binutils
     cloc
+    cyme
     czkawka
     delta
     diskonaut
@@ -106,6 +107,7 @@
       mopidy-soundcloud
       mopidy-youtube
       mpc_cli
+      naps2
       nyxt
       obsidian
       # pcloud
