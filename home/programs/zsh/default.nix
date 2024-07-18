@@ -84,6 +84,8 @@ in
       if ! { [ "$TERM" = "screen" ] && [ -n "$TMUX" ]; } then
         zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
       fi
+
+      source "${config.xdg.configHome}/mutable_env.sh"
     '';
   };
 }
