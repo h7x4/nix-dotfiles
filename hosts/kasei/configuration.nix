@@ -75,7 +75,7 @@
       enable = true;
       settings.X11Forwarding = true;
     };
-    xserver.videoDrivers = [ "nvidia" ];
+    xserver.videoDrivers = [ "amdgpu" ];
     tailscale.enable = true;
     avahi = {
       enable = true;
@@ -91,13 +91,11 @@
 
   boot = {
     initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
-    initrd.kernelModules = [ ];
+    initrd.kernelModules = [ "amdgpu" ];
 
     # kernelPackages = pkgs.linuxKernel.packages.linux_zen.zfs;
     kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
     kernelModules = [ "kvm-amd" ];
-    blacklistedKernelModules = [ "nouveau" ];
-    kernelParams = [ "nomodeset" ];
     supportedFilesystems = [ "zfs" ];
 
     loader = {
@@ -145,11 +143,6 @@
       enable = true;
       driSupport = true;
       driSupport32Bit = true;
-    };
-
-    nvidia = {
-      modesetting.enable = true;
-      nvidiaSettings = true;
     };
   };
 }
