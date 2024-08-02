@@ -216,9 +216,11 @@ in {
         "docker"
         "input"
         "libvirtd"
+        "lp"
         "media"
         "minecraft"
         "networkmanager"
+        "scanner"
         "video"
         "wheel"
         "wireshark"
@@ -233,6 +235,7 @@ in {
   services = {
     tumbler.enable = !config.machineVars.headless;
     gnome.gnome-keyring.enable = !config.machineVars.headless;
+    printing.enable = !config.machineVars.headless;
 
     resolved.enable = true;
 
