@@ -57,6 +57,7 @@
     unpaper
     unzip
     usbutils
+    uutils-coreutils
     waifu2x-converter-cpp
     wavemon
     wiki-tui
@@ -77,7 +78,7 @@
     lib.optionals (!machineVars.headless) [
       ahoviewer
       alsa-utils
-      # anki
+      anki
       ark
       birdtray
       calibre
@@ -87,13 +88,12 @@
       element-desktop
       geogebra
       gimp
-      # gnome.gnome-font-viewer
+      gnome.gnome-font-viewer
       gnome.seahorse
       google-chrome
       inkscape
       insomnia
       iwgtk
-      # keybase-gui
       kid3
       koreader
       krita
@@ -101,7 +101,6 @@
       libnotify
       libreoffice
       light
-      # maim
       mopidy
       mopidy-mpd
       mopidy-soundcloud
@@ -111,6 +110,7 @@
       nyxt
       obsidian
       # pcloud
+      pdfarranger
       pwvucontrol
       # scrcpy
       shellcheck
