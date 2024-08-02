@@ -21,5 +21,8 @@
       }
     '';
   };
+
+  # TODO: disable auto_update and use systemd path to listen for changes
+  # TODO: upstream unix socket support to home-manager
 }
 
