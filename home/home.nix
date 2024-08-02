@@ -15,7 +15,7 @@ in {
     ./programs/gdb.nix
     ./programs/gh.nix
     ./programs/git
-    ./programs/gpg.nix
+    ./programs/gpg
     ./programs/less.nix
     ./programs/neovim.nix
     ./programs/tmux.nix

@@ -1,15 +1,22 @@
 { pkgs, config, ... }:
 {
+  imports = [
+    ./auto-refresh-keys.nix
+  ];
+
   programs.gpg = {
     enable = true;
     homedir = "${config.xdg.configHome}/gnupg";
-    # TODO: declare public keys and trust declaratively
-    # mutableKeys = false;
-    # mutableTrust = false;
-    # publicKeys = [];
-    # settings = {
 
-    # };
+    auto-refresh-keys.enable = true;
+
+    settings = {
+      keyserver = [
+        "hkps://keys.openpgp.org"
+        "hkps://keyserver.ubuntu.com"
+        "hkps://pgp.mit.edu"
+      ];
+    };
   };
 
   services.gpg-agent = {
