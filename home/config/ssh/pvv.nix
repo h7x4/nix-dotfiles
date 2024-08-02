@@ -10,35 +10,24 @@ let
       proxyJump = lib.mkDefault null;
     }
     "dagali"
+    "drolsum"
     "demiurgen"
     "eirin"
-    "bekkalokk"
+    [ "bekkalokk" "pvv-web" "pvv-wiki" "pvv-webmail" ]
     "ildkule"
     "shark"
     "buskerud"
-    "bicep"
+    [ "bicep" "pvv-databases" ]
     "bob"
     "knutsen"
     "isvegg"
+    "tom"
     [ "microbel" "pvv-users" "pvv-mail" ]
   ];
 
   rootMachines = [
-    [ "knakelibrak" "pvv-databases" ]
-    [ "spikkjeposche" "pvv-web" "pvv-wiki" "pvv-webmail" ]
-    "sleipner"
-    # "fenris"
-    "balduzius"
-    "joshua"
-    # "skrotnisse"
-    "principal"
-    "tom"
-    # "monty"
-    # {
-    #   names = [ "dvask" ];
-    #   proxyJump = "monty";
-    # }
-
+    [ "sleipner" "pvv-salt" ]
+    [ "balduzius" "pvv-krb" ]
     [ "innovation" "pvv-minecraft" ]
   ];
 
