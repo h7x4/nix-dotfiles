@@ -1,5 +1,10 @@
-{ lib, ... }:
+{ config, pkgs, lib, ... }:
 let
+  cfg = config.programs.newsboat;
+
+  # package = cfg.package;
+  package = pkgs.newsboat;
+
   defaultBrowser = "google-chrome-stable %u";
   videoViewer = "mpv %u";
 in {
@@ -60,5 +65,78 @@ in {
         highlight article ":.*\\(embedded flash\\)$" magenta default
       ''
     ];
+  };
+
+  systemd.user.slices.app-newsboat = {
+    Unit = {
+      Description = "Newsboat automation";
+      Documentation = [ "man:newsboat(1)" ];
+    };
+  };
+
+  # TODO: wait for internet
+  systemd.user.services.newsboat-fetch-articles = {
+    Unit = {
+      Description = "Automatically fetch new articles for newsboat";
+      Documentation = [ "man:newsboat(1)" ];
+    };
+
+    Service = {
+      Type = "oneshot";
+      Slice = "app-newsboat.slice";
+      CPUSchedulingPolicy = "idle";
+      IOSchedulingClass = "idle";
+      ExecStart = "${lib.getExe pkgs.flock} %t/newsboat.lock ${lib.getExe package} --execute=reload";
+    };
+  };
+
+  systemd.user.timers.newsboat-fetch-articles = {
+    Unit = {
+      Description = "Automatically fetch new articles for newsboat";
+      Documentation = [ "man:newsboat(1)" ];
+      After = [ "network.target" ];
+    };
+
+    Timer = {
+      Unit = "newsboat-fetch-articles.service";
+      OnCalendar = lib.mkDefault "daily";
+      Persistent = true;
+    };
+
+    Install = {
+      WantedBy = [ "timers.target" ];
+    };
+  };
+
+  systemd.user.services.newsboat-vacuum = {
+    Unit = {
+      Description = "Automatically clean newsboat cache";
+      Documentation = [ "man:newsboat(1)" ];
+    };
+
+    Service = {
+      Type = "oneshot";
+      Slice = "app-newsboat.slice";
+      CPUSchedulingPolicy = "idle";
+      IOSchedulingClass = "idle";
+      ExecStart = "${lib.getExe pkgs.flock} %t/newsboat.lock ${lib.getExe package} --vacuum";
+    };
+  };
+
+  systemd.user.timers.newsboat-vacuum = {
+    Unit = {
+      Description = "Automatically clean newsboat cache";
+      Documentation = [ "man:newsboat(1)" ];
+    };
+
+    Timer = {
+      Unit = "newsboat-vacuum.service";
+      OnCalendar = lib.mkDefault "weekly";
+      Persistent = true;
+    };
+
+    Install = {
+      WantedBy = [ "timers.target" ];
+    };
   };
 }
