@@ -139,6 +139,7 @@
     cpu.amd.updateMicrocode = true;
     enableRedistributableFirmware = true;
     keyboard.zsa.enable = true;
+    sane.enable = true;
     opengl = {
       enable = true;
       driSupport = true;
