@@ -61,9 +61,16 @@ in
 
         safe.directory = "*";
 
+        interactive.singleKey = true;
+
+        advice.detachedHead = false;
+
         rerere.enabled = true;
 
-        branch.sort = "-committerdate";
+        branch = {
+          sort = "-committerdate";
+          autoSetupRebase = "always";
+        };
 
         "color \"branch\"".upstream = "cyan";
         color.ui = "auto";
@@ -125,6 +132,18 @@ in
           heading= true;
           lineNumber = true;
           extendedRegexp = true;
+        };
+
+        "notes \"rewrite\"" = {
+          amend = true;
+          rebase = true;
+        };
+
+        versionsort = {
+          prereleaseSuffix = lib.mapCartesianProduct ({ binding, suffix }: "${binding}${suffix}") {
+            binding = [ "-" "." "/" ];
+            suffix = [ "pre" "alpha" "beta" "rc" ];
+          };
         };
 
         # Run autocorrected command after 3 seconds
@@ -201,6 +220,7 @@ in
           "NordicSemiconductor"
           "NordicPlayground"
           "nrfconnect"
+          "oysteintveit-nordicsemi"
         ];
       in lib.genAttrs organizations (org: map (uri-prefix: "${uri-prefix}${org}") github-uri-prefixes);
     in {
@@ -236,5 +256,7 @@ in
         "SC2001" # (style): See if you can use ${variable//search/replace} instead. (sed invocation)
       ];
     })
+
+    pkgs.git-absorb
   ];
 }
