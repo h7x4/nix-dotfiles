@@ -18,6 +18,7 @@ in {
     ./programs/gpg
     ./programs/less.nix
     ./programs/neovim.nix
+    ./programs/nix-index
     ./programs/tmux.nix
     ./programs/zsh
 
