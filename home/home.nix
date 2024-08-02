@@ -19,6 +19,7 @@ in {
     ./programs/less.nix
     ./programs/neovim.nix
     ./programs/nix-index
+    ./programs/tealdeer.nix
     ./programs/tmux.nix
     ./programs/zsh
 
@@ -152,10 +153,6 @@ in {
     texlive = {
       enable = true;
       # packageSet = pkgs.texlive.combined.scheme-medium;
-    };
-    tealdeer = {
-      enable = true;
-      settings.updates.auto_update = true;
     };
     zoxide.enable = true;
   };
