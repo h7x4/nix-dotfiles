@@ -84,6 +84,8 @@
     #   # videoDrivers = [ "nvidia" ];
     # };
     # tailscale.enable = true;
+    blueman.enable = true;
+    fstrim.enable = true;
   };
 
   hardware = {
