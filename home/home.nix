@@ -24,6 +24,7 @@ in {
     ./programs/zsh
 
     ./services/git-maintenance.nix
+    ./services/nix-channel-update.nix
 
     ./modules/colors.nix
     ./modules/shellAliases.nix
