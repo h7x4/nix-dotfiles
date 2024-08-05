@@ -6,6 +6,7 @@
     ./services/avahi.nix
     ./services/docker.nix
     ./services/jenkins.nix
+    ./services/logiops.nix
     ./services/wstunnel.nix
   ];
 
