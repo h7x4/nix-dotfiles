@@ -156,6 +156,13 @@ in
       "vsintellicode.modify.editor.suggestSelection" = "automaticallyOverrodeDefaultValue";
       "window.zoomLevel" = 1;
 
+      "search.exclude" = {
+        "**/node_modules" = true;
+        "**/bower_components" = true;
+        "**/*.code-search" = true;
+        "**/.direnv/" = true;
+      };
+
       # This setting does not support language overrides
       "files.exclude" = {
         # Java
