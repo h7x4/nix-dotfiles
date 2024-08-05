@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 {
   home.stateVersion = "24.05";
 
@@ -11,4 +11,10 @@
 
     "hildring pvv-login pvv".proxyJump = "tsuki-ws";
   };
+
+  sops.secrets."git/nordicsemi-maintenance-repos-config" = { };
+
+  programs.git.includes = [
+    { path = config.sops.secrets."git/nordicsemi-maintenance-repos-config".path; }
+  ];
 }
