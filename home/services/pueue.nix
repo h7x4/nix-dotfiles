@@ -1,0 +1,6 @@
+{ ... }:
+{
+  services.pueue = {
+    enable = true;
+  };
+}

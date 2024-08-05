@@ -25,6 +25,7 @@ in {
 
     ./services/git-maintenance.nix
     ./services/nix-channel-update.nix
+    ./services/pueue.nix
 
     ./modules/colors.nix
     ./modules/shellAliases.nix
