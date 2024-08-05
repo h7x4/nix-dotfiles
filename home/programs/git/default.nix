@@ -82,6 +82,8 @@ in
           fsckObjects = true;
         };
 
+        maintenance.strategy = "incremental";
+
         transfer.fsckObjects = true;
 
         receive.fsckObjects = true;
