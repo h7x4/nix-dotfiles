@@ -52,6 +52,7 @@ in {
     ./services/screen-locker.nix
     # ./services/stalonetray.nix
     ./services/sxhkd.nix
+    ./services/tumblerd.nix
   ];
 
   sops.defaultSopsFile = ../secrets/home.yaml;
