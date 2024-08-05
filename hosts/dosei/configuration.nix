@@ -59,15 +59,9 @@
 
   # security.pam.services.login.unixAuth = true;
 
-  systemd.network = {
-    enable = true;
-    # broken
-    wait-online.enable = false;
-  };
-
   networking = {
     hostName = "dosei";
-    # networkmanager.enable = true;
+    networkmanager.enable = true;
     # TODO: reenable
     firewall.enable = false;
     # hostId = "";
