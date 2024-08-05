@@ -57,8 +57,6 @@
     hybrid-sleep.enable = false;
   };
 
-  # security.pam.services.login.unixAuth = true;
-
   networking = {
     hostName = "dosei";
     networkmanager.enable = true;
@@ -67,24 +65,19 @@
     # hostId = "";
   };
 
+  programs.usbtop.enable = true;
+
   services = {
     openssh = {
       enable = true;
       settings.X11Forwarding = true;
     };
-    # xserver = {
-    #   # displayManager.gdm.enable = true;
-    #   # desktopManager.gnome.enable = true;
-    #   # videoDrivers = [ "nvidia" ];
-    # };
-    # tailscale.enable = true;
     blueman.enable = true;
     fstrim.enable = true;
   };
 
   hardware = {
     bluetooth.enable = true;
-    # cpu.amd.updateMicrocode = true;
     enableRedistributableFirmware = true;
     keyboard.zsa.enable = true;
     opengl = {
@@ -92,12 +85,5 @@
       driSupport = true;
       driSupport32Bit = true;
     };
-
-    # nvidia = {
-    #   modesetting.enable = true;
-    #   nvidiaSettings = true;
-    # };
   };
-
-  programs.usbtop.enable = true;
 }
