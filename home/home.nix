@@ -34,7 +34,6 @@ in {
     ./programs/emacs
     ./programs/firefox.nix
     ./programs/ncmpcpp.nix
-    ./programs/ncmpcpp.nix
     ./programs/newsboat
     ./programs/qutebrowser.nix
     ./programs/rofi.nix
@@ -44,6 +43,7 @@ in {
     ./programs/xmonad
     ./programs/zathura.nix
 
+    ./services/copyq.nix
     ./services/dunst.nix
     ./services/fcitx5.nix
     ./services/mpd.nix
@@ -52,7 +52,6 @@ in {
     ./services/screen-locker.nix
     # ./services/stalonetray.nix
     ./services/sxhkd.nix
-    ./services/copyq.nix
   ];
 
   sops.defaultSopsFile = ../secrets/home.yaml;
