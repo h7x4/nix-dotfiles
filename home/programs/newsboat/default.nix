@@ -17,6 +17,10 @@ in {
     browser = ''"${defaultBrowser}"'';
     extraConfig = lib.strings.concatStringsSep "\n" [
       ''
+        auto-reload no
+      ''
+
+      ''
         macro m set browser "${videoViewer}"; open-in-browser ; set browser "${defaultBrowser}"
         macro l set browser "${defaultBrowser}"; open-in-browser ; set browser "${defaultBrowser}"
       ''
