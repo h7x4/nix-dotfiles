@@ -37,5 +37,6 @@ in {
     (mkSource [ "tech" "linux" "nixos" ] "https://myme.no/feed.xml")
     (mkSource [ "tech" "linux" "nixos" "compilers" ] "https://flyx.org/feed.xml")
     (mkSource [ "tech" "linux" ] "https://blog.jfx.ac/feed.xml")
+    (mkSource [ "tech" "linux" "nixos" ] "https://dandellion.xyz/atom.xml")
   ];
 }
