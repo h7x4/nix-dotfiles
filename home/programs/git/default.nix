@@ -54,6 +54,7 @@ in
         authors = "shortlog --summary --numbered --email";
         si = "switch-interactive";
         rebase-author = "rebase -i -x \"git commit --amend --reset-author -CHEAD\"";
+        git = "!git";
       };
 
       extraConfig = {
