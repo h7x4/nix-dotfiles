@@ -23,7 +23,6 @@ in {
     ./programs/tmux.nix
     ./programs/zsh
 
-    ./services/git-maintenance.nix
     ./services/nix-channel-update.nix
     ./services/pueue.nix
 

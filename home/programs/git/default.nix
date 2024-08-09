@@ -14,6 +14,10 @@ let
   ];
 in
 {
+  imports = [
+    ./maintenance-timers.nix
+  ];
+
   # TODO: convert to template once nix-sops supports it in hm module
   sops.secrets."git/nordicsemi-config" = { };
 
@@ -83,6 +87,10 @@ in
         };
 
         maintenance.strategy = "incremental";
+
+        scalar = {
+          repo = [ "${config.home.homeDirectory}/nixpkgs" ];
+        };
 
         transfer.fsckObjects = true;
 
