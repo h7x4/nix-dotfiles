@@ -1,10 +1,8 @@
 { pkgs, lib, ... }:
 {
-  programs.tealdeer.enable = true;
-
-  systemd.user.services.tealdeer-refresh = {
+  systemd.user.services.update-tldr-db = {
     Unit = {
-      Description = "Refresh tealdeer contents";
+      Description = "Update tealdeer database";
     };
 
     Service = {
@@ -15,13 +13,13 @@
     };
   };
 
-  systemd.user.timers.tealdeer-refresh = {
+  systemd.user.timers.update-tldr-db = {
     Unit = {
-      Description = "Refresh tealdeer contents";
+      Description = "Update tealdeer database";
     };
 
     Timer = {
-      Unit = "tealdeer-refresh.service";
+      Unit = "update-tldr-db.service";
       OnCalendar = "daily";
       Persistent = true;
     };

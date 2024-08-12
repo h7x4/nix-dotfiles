@@ -19,7 +19,7 @@ in {
     ./programs/less.nix
     ./programs/neovim.nix
     ./programs/nix-index
-    ./programs/tealdeer.nix
+    ./programs/tealdeer
     ./programs/tmux.nix
     ./programs/zsh
 
