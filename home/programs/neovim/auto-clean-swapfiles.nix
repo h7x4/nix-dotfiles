@@ -28,7 +28,7 @@ in
 
             for swapfile in $OLD_SWAPFILES; do
               echo "Removing $swapfile"
-              rm -- "$swapfile"
+              rm -- "$swapfile" ||  echo "Could not remove $swapfile, is it still in use?"
             done
 
             echo "Done"
