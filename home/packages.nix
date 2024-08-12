@@ -13,7 +13,9 @@
     ffmpeg
     file
     gh-dash
+    glances
     gpg-tui
+    gping
     graphviz
     httpie
     imagemagick
