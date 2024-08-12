@@ -42,6 +42,7 @@ in
 
     Timer = {
       Persistent = true;
+      OnCalendar = "%i";
     };
 
     Install = {
