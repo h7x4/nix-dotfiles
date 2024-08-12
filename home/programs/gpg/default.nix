@@ -2,6 +2,7 @@
 {
   imports = [
     ./auto-refresh-keys.nix
+    ./auto-update-trust-db.nix
     ./declarative-key-fetcher.nix
   ];
 
