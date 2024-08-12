@@ -43,6 +43,7 @@ in {
     # ./programs/xmobar
     ./programs/xmonad
     ./programs/zathura.nix
+    ./programs/zed
 
     ./services/copyq.nix
     ./services/dunst.nix
