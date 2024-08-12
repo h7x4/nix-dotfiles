@@ -11,7 +11,7 @@ in {
 
     ./programs/atuin.nix
     ./programs/comma.nix
-    ./programs/direnv.nix
+    ./programs/direnv
     ./programs/gdb.nix
     ./programs/gh.nix
     ./programs/git
