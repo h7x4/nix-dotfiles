@@ -14,6 +14,11 @@ let
   configFilePath = "${userDir}/settings.json";
 in
 {
+  imports = [
+    ./auto-update-extensions.nix
+    # ./extensions
+  ];
+
   home.file.${configFilePath} = {
     target = "${configFilePath}.ro";
     onChange = ''install -m660 $(realpath "${configFilePath}.ro") "${configFilePath}"'';

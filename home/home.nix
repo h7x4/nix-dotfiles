@@ -39,7 +39,7 @@ in {
     ./programs/qutebrowser.nix
     ./programs/rofi.nix
     ./programs/taskwarrior.nix
-    ./programs/vscode.nix
+    ./programs/vscode
     # ./programs/xmobar
     ./programs/xmonad
     ./programs/zathura.nix
