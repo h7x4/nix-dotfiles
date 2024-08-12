@@ -17,7 +17,7 @@ in {
     ./programs/git
     ./programs/gpg
     ./programs/less.nix
-    ./programs/neovim.nix
+    ./programs/neovim
     ./programs/nix-index
     ./programs/tealdeer
     ./programs/tmux.nix

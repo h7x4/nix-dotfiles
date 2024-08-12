@@ -1,5 +1,9 @@
 { pkgs, home, ... }:
 {
+  imports = [
+    ./auto-clean-swapfiles.nix
+  ];
+
   programs.neovim = {
     enable = true;
 
