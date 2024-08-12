@@ -34,6 +34,7 @@ in
         ExecStart = lib.getExe (pkgs.writeShellApplication {
           name = "fetch-nix-index-database";
           runtimeInputs = with pkgs; [
+            coreutils
             gnused
             wget
           ];
