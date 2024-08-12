@@ -3,101 +3,27 @@ let
   inherit (config) machineVars;
 in {
   imports = [
-    ./nix-builders/bob.nix
-    ./nix-builders/isvegg.nix
-    ./nix-builders/tsuki.nix
+    ./fonts.nix
+    ./nix.nix
+
+    ./programs/gnupg.nix
+    ./programs/neovim.nix
+    ./programs/nix-ld.nix
+    ./programs/ssh.nix
+    ./programs/usbtop.nix
+
+    ./services/dbus.nix
+    ./services/openssh.nix
+    ./services/pcscd.nix
+    ./services/pipewire.nix
+    ./services/printing.nix
+    ./services/resolved.nix
+    ./services/smartd.nix
+    ./services/systemd-lock-handler.nix
+    ./services/xserver.nix
   ];
 
   sops.defaultSopsFile = ./../.. + "/secrets/${config.networking.hostName}.yaml";
-
-  sops.secrets = {
-    "nix/access-tokens" = { sopsFile = ./../../secrets/common.yaml; };
-
-    "ssh/secret-config" = {
-      sopsFile = ./../../secrets/common.yaml;
-      mode = "0444";
-    };
-  };
-
-  nix = {
-    package = unstable-pkgs.nixVersions.stable;
-    distributedBuilds = config.networking.hostName != "tsuki";
-
-    settings = {
-      allow-dirty = true;
-      allowed-uris = [ "http://" "https://" ];
-      auto-optimise-store = true;
-      binary-caches = [ "https://cache.nixos.org/" ];
-      builders-use-substitutes = true;
-      experimental-features = [ "nix-command" "flakes" ];
-      log-lines = 50;
-      trusted-users = [ "h7x4" "nix-builder" ];
-      use-xdg-base-directories = true;
-    };
-
-    extraOptions = ''
-      !include ${config.sops.secrets."nix/access-tokens".path}
-    '';
-
-    registry = {
-      home.to = {
-        type = "path";
-        path = "/home/h7x4/nix";
-      };
-      wack.to = {
-        type = "path";
-        path = "/home/h7x4/git/wack-ctf-flake";
-      };
-      nxpt.to = {
-        type = "path";
-        path = "/home/h7x4/git/nixpkgs-tools";
-      };
-    };
-  };
-
-  programs.nix-ld = {
-    enable = true;
-    libraries = with pkgs; [
-      libusb1
-    ];
-  };
-
-  programs.ssh = {
-    extraConfig = ''
-      Include ${config.sops.secrets."ssh/secret-config".path}
-    '';
-
-    knownHosts = {
-      bob = {
-        hostNames = [
-          "bob.pvv.ntnu.no"
-          "bob.pvv.org"
-        ];
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGJSgh20qDIYEXiK4MUZhc879dJIyH0K/s0RZ+9wFI0F";
-      };
-      hildring = {
-        hostNames = [
-          "hildring.pvv.ntnu.no"
-          "hildring.pvv.org"
-          "login.pvv.ntnu.no"
-          "login.pvv.org"
-        ];
-        publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGurF7rdnrDP/VgIK2Tx38of+bX/QGCGL+alrWnZ1Ca5llGneMulUt1RB9xZzNLHiaWIE+HOP0i4spEaeZhilfU=";
-      };
-      isvegg = {
-        hostNames = [
-          "isvegg.pvv.ntnu.no"
-          "isvegg.pvv.org"
-        ];
-        publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGurF7rdnrDP/VgIK2Tx38of+bX/QGCGL+alrWnZ1Ca5llGneMulUt1RB9xZzNLHiaWIE+HOP0i4spEaeZhilfU=";
-      };
-    #   tsukir = {
-    #     hostNames = [ "nani.wtf" "gingakei.loginto.me" ];
-    #     # publicKeyFile = config.sops.secrets."ssh/nix-builders/tsuki/pub".path;
-    #     publicKeyFile = "/var/keys/tsuki_nix-builder.pub";
-    #   };
-    };
-  };
 
   time.timeZone = "Europe/Oslo";
 
@@ -162,49 +88,6 @@ in {
           else (lib.mkIf (fixDisplayCommand != null) fixDisplayCommand));
   };
 
-  fonts = {
-    fontDir.enable = true;
-
-    enableDefaultPackages = true;
-    packages = with pkgs; [
-      ark-pixel-font
-      cm_unicode
-      corefonts
-      dejavu_fonts
-      fira-code
-      fira-code-symbols
-      iosevka
-      ipaexfont
-      ipafont
-      liberation_ttf
-      migmix
-      noto-fonts
-      noto-fonts-cjk-sans
-      noto-fonts-cjk-serif
-      noto-fonts-emoji
-      ocr-a
-      open-sans
-      powerline-fonts
-      source-han-sans
-      source-sans
-      symbola
-      texlivePackages.asana-math
-      ubuntu_font_family
-      victor-mono
-      yasashisa-gothic
-      (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
-    ];
-
-    fontconfig = {
-      defaultFonts = {
-        serif = [ "Droid Sans Serif" "Ubuntu" ];
-        sansSerif = [ "Droid Sans" "Ubuntu" ];
-        monospace = [ "Fira Code" "Ubuntu" ];
-        emoji = [ "Noto Sans Emoji" ];
-      };
-    };
-  };
-
   users = {
     users.h7x4 = {
       isNormalUser = true;
@@ -233,21 +116,7 @@ in {
   };
 
   services = {
-    tumbler.enable = !config.machineVars.headless;
     gnome.gnome-keyring.enable = !config.machineVars.headless;
-    printing.enable = !config.machineVars.headless;
-
-    resolved.enable = true;
-
-    openssh = {
-      startWhenNeeded = true;
-      settings = {
-        StreamLocalBindUnlink = true;
-        PasswordAuthentication = false;
-        KbdInteractiveAuthentication = false;
-        PermitRootLogin = "no";
-      };
-    };
 
     udev.packages = with pkgs; [
       yubikey-personalization
@@ -255,49 +124,12 @@ in {
       light
     ];
 
-    pcscd.enable = true;
-
-    dbus = {
-      enable = true;
-      packages = with pkgs; [
-        gcr
-        dconf
-      ];
-    };
-
     libinput = {
       enable = !config.machineVars.headless;
       touchpad.disableWhileTyping = true;
     };
 
     displayManager.defaultSession = "none+xmonad";
-
-    xserver = {
-      enable = !config.machineVars.headless;
-
-      xkb = {
-        layout = "us";
-        options = "caps:escape";
-      };
-
-      desktopManager = {
-        xterm.enable = false;
-        xfce.enable = !config.machineVars.headless;
-      };
-
-      displayManager.lightdm.enable = !config.machineVars.headless;
-
-      windowManager.xmonad = {
-        enable = true;
-        enableContribAndExtras = true;
-        enableConfiguredRecompile = true;
-        extraPackages = hPkgs: with hPkgs; [
-          dbus
-        ];
-      };
-
-    };
-
   };
 
   programs = {
@@ -305,38 +137,6 @@ in {
     git.enable = true;
     tmux.enable = true;
     zsh.enable = true;
-
-    gnupg.agent.enable = true;
-    gnupg.agent.pinentryPackage = pkgs.pinentry-curses;
-
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-      viAlias = true;
-      vimAlias = true;
-      configure = {
-        packages.myVimPackage = with pkgs.vimPlugins; {
-          start = [
-            direnv-vim
-            vim-nix
-            vim-polyglot
-          ];
-
-          opt = [
-            vim-monokai
-          ];
-        };
-
-        customRC = ''
-          set number relativenumber
-          set undofile
-          set undodir=~/.cache/vim/undodir
-
-          packadd! vim-monokai
-          colorscheme monokai
-        '';
-      };
-    };
   };
 
   system.extraDependencies =
@@ -379,12 +179,6 @@ in {
     ]);
 
   security.rtkit.enable = !config.machineVars.headless;
-  services.pipewire = {
-    enable = !config.machineVars.headless;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
 
   security.sudo.extraConfig = let
     sudoLecture = pkgs.writeText "sudo-lecture.txt" (extendedLib.termColors.front.red "Be careful or something, idk...\n");

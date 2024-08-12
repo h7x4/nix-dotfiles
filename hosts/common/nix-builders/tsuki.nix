@@ -22,9 +22,17 @@
     sshKey = config.sops.secrets."ssh/nix-builders/tsuki/key".path;
   }];
 
-  programs.ssh.extraConfig = ''
-    Host nix-builder-tsukir
-      HostName gingakei.loginto.me
-      Port ${toString secrets.ports.ssh.home-in}
-  '';
+  programs.ssh = {
+    extraConfig = ''
+      Host nix-builder-tsukir
+        HostName gingakei.loginto.me
+        Port ${toString secrets.ports.ssh.home-in}
+    '';
+
+    # knownHosts.tsukir = {
+    #   hostNames = [ "nani.wtf" "gingakei.loginto.me" ];
+    #   # publicKeyFile = config.sops.secrets."ssh/nix-builders/tsuki/pub".path;
+    #   publicKeyFile = "/var/keys/tsuki_nix-builder.pub";
+    # };
+  };
 }

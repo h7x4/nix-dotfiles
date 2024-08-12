@@ -66,8 +66,6 @@
     # hostId = "";
   };
 
-  programs.usbtop.enable = true;
-
   services = {
     openssh = {
       enable = true;
