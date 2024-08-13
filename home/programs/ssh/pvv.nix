@@ -8,6 +8,7 @@ let
     {
       names = [ "hildring" "pvv-login" "pvv" ];
       proxyJump = lib.mkDefault null;
+      addressFamily = "inet";
     }
     "dagali"
     "drolsum"
@@ -85,6 +86,7 @@ in
       "pvv-git git.pvv.ntnu.no" = {
         hostname = "git.pvv.ntnu.no";
         user = "gitea";
+        addressFamily = "inet";
         port = 2222;
         proxyJump = "pvv";
       };

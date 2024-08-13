@@ -6,7 +6,6 @@ in {
     ./shell.nix
     ./packages.nix
 
-    ./config/ssh
     ./config/xdg
 
     ./programs/atuin.nix
@@ -19,6 +18,7 @@ in {
     ./programs/less.nix
     ./programs/neovim
     ./programs/nix-index
+    ./programs/ssh
     ./programs/tealdeer
     ./programs/tmux.nix
     ./programs/zsh
