@@ -18,8 +18,12 @@
 
     GHCUP_USE_XDG_DIRS = "true";
 
+    __GL_SHADER_DISK_CACHE_PATH = "${cacheHome}/nv";
     ANDROID_USER_HOME = "${dataHome}/android";
     AZURE_CONFIG_DIR = "${dataHome}/azure";
+    BZRPATH = "${configHome}/bazaar";
+    BZR_PLUGIN_PATH = "${dataHome}/bazaar";
+    BZR_HOME = "${cacheHome}/bazaar";
     CARGO_HOME = "${dataHome}/cargo";
     CUDA_CACHE_PATH = "${cacheHome}/nv";
     DOCKER_CONFIG = "${configHome}/docker";
