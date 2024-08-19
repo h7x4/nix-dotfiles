@@ -1,3 +1,5 @@
+# Dogfooding of https://github.com/NixOS/nixpkgs/pull/251706
+
 { bazel
 , buildBazelPackage
 , fcitx5
