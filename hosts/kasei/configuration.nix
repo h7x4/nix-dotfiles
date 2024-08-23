@@ -2,6 +2,7 @@
 {
   imports = [
     ./services/avahi.nix
+    ./services/btrfs.nix
     ./services/docker.nix
     ./services/libvirtd.nix
     ./services/logiops.nix
