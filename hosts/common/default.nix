@@ -129,6 +129,8 @@ in {
       touchpad.disableWhileTyping = true;
     };
 
+    irqbalance.enable = true;
+
     displayManager.defaultSession = "none+xmonad";
   };
 
