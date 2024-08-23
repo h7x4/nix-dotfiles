@@ -8,6 +8,7 @@ in {
 
     ./config/xdg
 
+    ./programs/aria2.nix
     ./programs/atuin.nix
     ./programs/comma.nix
     ./programs/direnv
