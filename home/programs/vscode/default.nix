@@ -296,7 +296,7 @@ in
       # jock.svg
       # ms-azuretools.vscode-docker
       # ms-toolsai.jupyter
-      ms-vscode-remote.remote-ssh
+      # ms-vscode-remote.remote-ssh
       # ms-vsliveshare.vsliveshare
       bbenoist.nix
       christian-kohler.path-intellisense
@@ -318,8 +318,12 @@ in
       rust-lang.rust-analyzer
       mkhl.direnv
       waderyan.gitblame
-      # vs-liveshare
       vscodevim.vim
+      hbenl.vscode-test-explorer
+      # vitaliymaz.vscode-svg-previewer
+      ms-vscode.test-adapter-converter
+      visualstudioexptteam.vscodeintellicode
+      tamasfe.even-better-toml
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
         name = "monokai-st3";
@@ -328,46 +332,16 @@ in
         sha256 = "1rvz5hlrfshy9laybxzvrdklx328s13j0lb8ljbda9zkadi3wcad";
       }
       {
-        name = "vscode-svgviewer";
-        publisher = "cssho";
-        version = "2.0.0";
-        sha256 = "06swlqiv3gc7plcbmzz795y6zwpxsdhg79k1n3jj6qngfwnv2p6z";
-      }
-      {
         name = "comment-anchors";
         publisher = "ExodiusStudios";
-        version = "1.10.3";
-        sha256 = "sha256-IyiiS4jpcghwKI0j8s69uGNZlKnZ0o78ZCT0oZeJER0=";
-      }
-      {
-        name = "vscode-test-explorer";
-        publisher = "hbenl";
-        version = "2.21.1";
-        sha256 = "022lnkq278ic0h9ggpqcwb3x3ivpcqjimhgirixznq0zvwyrwz3w";
+        version = "1.10.4";
+        sha256 = "sha256-FvfjPpQsgCsnY1BylhLCM/qDQChf9/iTr3cKkCGfMVI=";
       }
       {
         name = "vscode-gutter-preview";
         publisher = "kisstkondoros";
-        version = "0.29.0";
-        sha256 = "00vibv9xmhwaqiqzp0y2c246pqiqfjsw4bqx4vcdd67pz1wnqhg1";
-      }
-      {
-        name = "test-adapter-converter";
-        publisher = "ms-vscode";
-        version = "0.1.9";
-        sha256 = "sha256-M53jhAVawk2yCeSrLkWrUit3xbDc0zgCK2snbK+BaSs=";
-      }
-      # {
-      #   name = "indent-rainbow";
-      #   publisher = "oderwat";
-      #   version = "8.2.2";
-      #   sha256 = "1xxljwh66f21fzmhw8icrmxxmfww1s67kf5ja65a8qb1x1rhjjgf";
-      # }
-      {
-        name = "vscodeintellicode";
-        publisher = "VisualStudioExptTeam";
-        version = "1.2.30";
-        sha256 = "sha256-f2Gn+W0QHN8jD5aCG+P93Y+JDr/vs2ldGL7uQwBK4lE=";
+        version = "0.31.2";
+        sha256 = "sha256-2/RvDSsVL06UmNG9HchXaJMJ4FYtnpuJ2Bn53JVv1t8=";
       }
       {
         name = "keyboard-quickfix";
