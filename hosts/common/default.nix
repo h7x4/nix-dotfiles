@@ -12,6 +12,7 @@ in {
     ./programs/ssh.nix
     ./programs/usbtop.nix
 
+    ./services/cups.nix
     ./services/dbus.nix
     ./services/openssh.nix
     ./services/pcscd.nix
