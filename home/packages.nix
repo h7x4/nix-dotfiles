@@ -24,6 +24,7 @@
     # keybase
     keymapviz
     libwebp
+    lnav
     lolcat
     mdcat
     mediainfo
