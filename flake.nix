@@ -188,6 +188,7 @@
                   useGlobalPkgs = true;
                   extraSpecialArgs = {
                     inherit inputs;
+                    inherit unstable-pkgs;
                     inherit (self) extendedLib;
                     inherit (config) machineVars;
                     secrets = secrets.outputs.settings;

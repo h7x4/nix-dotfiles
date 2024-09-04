@@ -1,6 +1,6 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, unstable-pkgs, lib, ... }:
 {
-  home.packages = with pkgs; [ zed-editor ];
+  home.packages = with unstable-pkgs; [ zed-editor ];
 
   xdg.configFile."zed/settings.json".source = let
     format = pkgs.formats.json { };
