@@ -4,7 +4,7 @@
     enable = true;
     settings = {
       gitProtocol = "ssh";
-      pager = "${pkgs.bat}/git/bat";
+      pager = "${pkgs.bat}/bin/bat";
       aliases = {
         co = "pr checkout";
         pv = "pr view";
