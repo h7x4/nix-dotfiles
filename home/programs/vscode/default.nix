@@ -24,7 +24,7 @@ in
     onChange = ''install -m660 $(realpath "${configFilePath}.ro") "${configFilePath}"'';
   };
 
-  programs.vscode ={
+  programs.vscode = {
     enable = true;
 
     package = pkgs.vscode;
