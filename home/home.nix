@@ -97,6 +97,7 @@ in {
     sessionVariables = {
       CARGO_NET_GIT_FETCH_WITH_CLI = "true";
       PYTHONSTARTUP = "${config.xdg.configHome}/python/pyrc";
+      _JAVA_AWT_WM_NONREPARENTING = "1";
     };
   };
 
