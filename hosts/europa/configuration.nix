@@ -5,6 +5,7 @@
 
     ./services/avahi.nix
     ./services/docker.nix
+    ./services/journald-remote.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
