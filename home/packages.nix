@@ -17,6 +17,7 @@
     gpg-tui
     gping
     graphviz
+    hexyl
     httpie
     imagemagick
     jq
@@ -45,6 +46,7 @@
     pandoc
     parallel
     progress
+    pwntools
     python3
     rclone
     ripgrep
@@ -90,10 +92,12 @@
       discord
       element-desktop
       geogebra
+      ghidra
       gimp
       gnome.gnome-font-viewer
       gnome.seahorse
       google-chrome
+      imhex
       inkscape
       insomnia
       iwgtk
