@@ -10,26 +10,35 @@ let
       proxyJump = lib.mkDefault null;
       addressFamily = "inet";
     }
-    "dagali"
-    "drolsum"
-    "demiurgen"
-    "eirin"
     [ "bekkalokk" "pvv-web" "pvv-wiki" "pvv-webmail" ]
-    "ildkule"
-    "shark"
-    "buskerud"
     [ "bicep" "pvv-databases" ]
     "bob"
-    "knutsen"
+    [ "brzeczyszczykiewicz" "brez" "bokhylle" ]
+    "buskerud"
+    "dagali"
+    "demiurgen"
+    "drolsum"
+    "eirin"
+    "georg"
+    "ildkule"
     "isvegg"
-    "tom"
+    "knutsen"
     [ "microbel" "pvv-users" "pvv-mail" ]
+    "orchid"
+    "shark"
+    "tallulah"
+    "tom"
+    "venture"
   ];
 
   rootMachines = [
-    [ "sleipner" "pvv-salt" ]
+    [ "ameno" "pvv-dns" ]
     [ "balduzius" "pvv-krb" ]
     [ "innovation" "pvv-minecraft" ]
+    "ludvigsen"
+    [ "principal" "pvv-backup" ]
+    [ "skrott" "dibbler" ]
+    [ "sleipner" "pvv-salt" ]
   ];
 
   # Either( String [String] AttrSet{String} ) -> AttrSet{String}
