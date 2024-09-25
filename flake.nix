@@ -95,10 +95,19 @@
         nonrecursive-unstable-pkgs = import nixpkgs-unstable {
           inherit system;
           config.allowUnfree = true;
+          config.segger-jlink.acceptLicense = true;
+          config.permittedInsecurePackages = [
+            "segger-jlink-qt4-794s"
+          ];
         };
       in [
         (self: super: {
-          inherit (nonrecursive-unstable-pkgs) atuin wstunnel;
+          inherit (nonrecursive-unstable-pkgs)
+            atuin
+            wstunnel
+            nrf-udev
+            nrfutil
+            ;
         })
 
         # https://github.com/NixOS/nixpkgs/pull/251706

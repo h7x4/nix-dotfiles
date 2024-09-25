@@ -3,6 +3,8 @@
   imports = [
     ./hardware-configuration.nix
 
+    ./programs/nrfutil.nix
+
     ./services/avahi.nix
     ./services/docker.nix
     ./services/jenkins.nix
