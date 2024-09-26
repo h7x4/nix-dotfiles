@@ -185,10 +185,7 @@ in {
 
   qt = mkIf graphics {
     enable = true;
-    platformTheme.name = "gtk";
-    style = {
-      name = "adwaita-dark";
-      package = pkgs.adwaita-qt;
-    };
+    platformTheme.name = "adwaita";
+    style.name = "adwaita-dark";
   };
 }
