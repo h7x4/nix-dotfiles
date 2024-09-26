@@ -1,4 +1,4 @@
-{ pkgs, unstable-pkgs, lib, extendedLib, config, inputs, secrets, ... }:
+{ config, pkgs, lib, extendedLib, ... }:
 let
   inherit (config) machineVars;
 in {
