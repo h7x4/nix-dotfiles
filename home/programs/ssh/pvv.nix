@@ -1,4 +1,4 @@
-{ pkgs, lib, extendedLib, ... }:
+{ pkgs, lib, ... }:
 let
   adminUser = "root";
   normalUser = "oysteikt";
@@ -88,16 +88,17 @@ let
     machines: pipe machines pipeline;
 in
   {
-    programs.ssh.matchBlocks = (extendedLib.attrsets.concatAttrs [
+    programs.ssh.matchBlocks = lib.mergeAttrsList [
       (convertMachinesWith convertNormalMachine normalMachines)
       (convertMachinesWith convertAdminMachine rootMachines)
-    ]) // {
-      "pvv-git git.pvv.ntnu.no" = {
-        hostname = "git.pvv.ntnu.no";
-        user = "gitea";
-        addressFamily = "inet";
-        port = 2222;
-        proxyJump = "pvv";
-      };
-    };
+      {
+        "pvv-git git.pvv.ntnu.no" = {
+          hostname = "git.pvv.ntnu.no";
+          user = "gitea";
+          addressFamily = "inet";
+          port = 2222;
+          proxyJump = "pvv";
+        };
+      }
+    ];
   }

@@ -7,9 +7,6 @@ in rec {
   mapToAttrsWithConst = constant: items:
     listToAttrs (map (name: nameValuePair name constant) items);
 
-  # [AttrSet] -> AttrSet
-  concatAttrs = foldr (a: b: a // b) {};
-
   # (Int -> String -> a -> a) -> AttrSet -> AttrSet
   imap0Attrs = f: set:
     listToAttrs (imap0 (i: attr: nameValuePair attr (f i attr set.${attr})) (attrNames set));
