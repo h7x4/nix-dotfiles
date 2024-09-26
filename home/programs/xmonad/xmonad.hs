@@ -89,7 +89,7 @@ myScratchpads = [ NS "ncmpcpp"     spawnNC findNC layoutA
     -- spawnMX = "element"
     spawnFB = "thunar --class=floatingThunar"
     spawnEX = "emacs --name=floatingEmacs"
-    spawnSC = "sxiv -N floatingSchedule ~/uni/schedule.png"
+    spawnSC = "nsxiv -N floatingSchedule ~/uni/schedule.png"
     spawnHP = "echo \"" ++ help ++ "\" | xmessage -file -"
 
     findNC = title =? "ncmpcppScratchpad"

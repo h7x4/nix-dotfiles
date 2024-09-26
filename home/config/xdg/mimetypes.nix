@@ -95,7 +95,7 @@ let
   vscode = "code.desktop";
   mpv = "mpv.desktop";
   zathura = "org.pwmt.zathura.desktop";
-  sxiv = "sxiv.desktop";
+  nsxiv = "nsxiv.desktop";
   font-viewer = "org.gnome.font-viewer.desktop";
 in {
   xdg.configFile."mimeapps.list".force = true;
@@ -104,7 +104,7 @@ in {
     # associations.added = {};
     # associations.removed = {};
     defaultApplications =
-      (lib.mapAttrs' (_: v: lib.nameValuePair v sxiv) mime.image)
+      (lib.mapAttrs' (_: v: lib.nameValuePair v nsxiv) mime.image)
     // (lib.mapAttrs' (_: v: lib.nameValuePair v mpv) mime.audio)
     // (lib.mapAttrs' (_: v: lib.nameValuePair v mpv) mime.video)
     // (lib.mapAttrs' (_: v: lib.nameValuePair v font-viewer) mime.font)

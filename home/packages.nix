@@ -109,6 +109,7 @@
       mopidy-youtube
       mpc_cli
       naps2
+      nsxiv
       nyxt
       obsidian
       # pcloud
@@ -119,7 +120,6 @@
       slack
       # sublime3
       # swiPrologWithGui
-      sxiv
       tagainijisho
 
       tenacity
