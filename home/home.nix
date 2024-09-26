@@ -105,6 +105,13 @@ in {
     };
   };
 
+  xsession = {
+    enable = true;
+    # TODO: declare using xdg config home
+    scriptPath = ".config/X11/xsession";
+    profilePath = ".config/X11/xprofile";
+  };
+
   xdg.configFile = {
     "ghc/ghci.conf".text = ''
       :set prompt "${extendedLib.termColors.front.magenta "[GHCi]λ"} "
