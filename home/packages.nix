@@ -1,7 +1,6 @@
 { pkgs, config, machineVars, ... }:
 {
   home.packages = with pkgs; [
-    beets
     binutils
     cloc
     cyme
@@ -12,7 +11,6 @@
     duff
     ffmpeg
     file
-    gh-dash
     glances
     gpg-tui
     gping
@@ -20,7 +18,6 @@
     hexyl
     httpie
     imagemagick
-    jq
     kepubify
     # keybase
     keymapviz
@@ -35,7 +32,6 @@
     mtr
     neofetch
     nix-diff
-    nix-index
     nix-output-monitor
     nix-tree
     nix-update
@@ -85,7 +81,6 @@
       alsa-utils
       anki
       ark
-      birdtray
       calibre
       cool-retro-term
       darktable
@@ -128,7 +123,6 @@
       tagainijisho
 
       tenacity
-      thunderbird
       # transcribe
       wireshark
       xcalib

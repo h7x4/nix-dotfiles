@@ -10,17 +10,21 @@ in {
 
     ./programs/aria2.nix
     ./programs/atuin.nix
+    ./programs/beets.nix
     ./programs/comma.nix
     ./programs/direnv
     ./programs/gdb.nix
     ./programs/gh.nix
+    ./programs/gh-dash.nix
     ./programs/git
     ./programs/gpg
+    ./programs/jq.nix
     ./programs/less.nix
     ./programs/neovim
     ./programs/nix-index
     ./programs/ssh
     ./programs/tealdeer
+    ./programs/thunderbird.nix
     ./programs/tmux.nix
     ./programs/zsh
 
