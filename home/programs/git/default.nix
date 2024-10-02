@@ -128,6 +128,8 @@ in
           submodule = "log";
         };
 
+        pager.show = lib.getExe pkgs.bat;
+
         status = {
           showUntrackedFiles = "all";
           relativePaths = true;
