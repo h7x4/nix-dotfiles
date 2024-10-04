@@ -53,6 +53,7 @@ in
         forcepush = "push --force-with-lease --force-if-includes";
         authors = "shortlog --summary --numbered --email";
         si = "switch-interactive";
+        subs = "submodule update --init --recursive";
         rebase-author = "rebase -i -x \"git commit --amend --reset-author -CHEAD\"";
         git = "!git";
       };
