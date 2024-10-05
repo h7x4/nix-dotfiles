@@ -263,6 +263,14 @@ in
       text = lib.fileContents ./scripts/git-tcommit.sh;
     })
     (pkgs.writeShellApplication {
+      name = "git-tmcommit";
+      runtimeInputs = with pkgs; [ cfg.package coreutils ];
+      text = lib.pipe ./scripts/git-tcommit.sh [
+        lib.fileContents
+        (builtins.replaceStrings ["hours" "tcommit"] ["minutes" "tmcommit"])
+      ];
+    })
+    (pkgs.writeShellApplication {
       name = "git-switch-interactive";
       runtimeInputs = with pkgs; [ cfg.package fzf gnused coreutils ];
       text = lib.fileContents ./scripts/git-switch-interactive.sh;

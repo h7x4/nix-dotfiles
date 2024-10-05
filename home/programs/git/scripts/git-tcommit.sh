@@ -1,5 +1,10 @@
 set -euo pipefail
 
+if [[ $# -lt 1 ]]; then
+  echo "Usage: git tcommit [-]<hours>"
+  exit 1
+fi
+
 HOUR_SHIFT="$1"
 shift
 
