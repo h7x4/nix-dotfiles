@@ -11,6 +11,9 @@
     ./services/tailscale.nix
     ./services/keybase.nix
 
+    ./nspawn-containers/arch.nix
+  ];
+
   system.stateVersion = "22.05";
 
   boot.binfmt.emulatedSystems = [
