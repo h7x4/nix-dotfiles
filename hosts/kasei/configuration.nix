@@ -20,6 +20,7 @@
     "x86_64-windows"
     "aarch64-linux"
     "armv7l-linux"
+    "i686-linux"
   ];
 
   nix.settings.system-features = [
