@@ -12,6 +12,8 @@
     ./services/keybase.nix
 
     ./nspawn-containers/arch.nix
+
+    ./testconfig.nix
   ];
 
   system.stateVersion = "22.05";
