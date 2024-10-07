@@ -12,6 +12,8 @@
     ffmpeg
     file
     glances
+    gpauth
+    gpclient
     gpg-tui
     gping
     graphviz
