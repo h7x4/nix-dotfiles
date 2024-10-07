@@ -168,7 +168,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask , xK_space ),    spawn $ myTerminal ++ " -e tmux")
 
     -- , ((modm               , xK_v ),        spawn "rofi -modi lpass:$HOME/.scripts/rofi/lpass//rofi-lpass -show lpass")
-    , ((modm .|. shiftMask, xK_d     ), viewDropboxStatus)
+    -- , ((modm .|. shiftMask, xK_d     ), viewDropboxStatus)
     ]
 
 termIsOpen :: X Bool
