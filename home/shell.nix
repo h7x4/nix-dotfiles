@@ -14,6 +14,19 @@
       exe = if pkg.meta ? mainProgram then pkg.meta.mainProgram else name;
     in "${pkg}/bin/${exe}";
 in {
+  sops.secrets."nordicsemi/envvars" = {
+    sopsFile = ../secrets/home.yaml;
+  };
+
+
+  programs.bash.bashrcExtra = ''
+    source "${config.sops.secrets."nordicsemi/envvars".path}"
+  '';
+
+  programs.zsh.envExtra = ''
+    source "${config.sops.secrets."nordicsemi/envvars".path}"
+  '';
+
   local.shell.aliases = {
 
     # ░█▀▄░█▀▀░█▀█░█░░░█▀█░█▀▀░█▀▀░█▄█░█▀▀░█▀█░▀█▀░█▀▀
@@ -290,6 +303,11 @@ in {
       view-latex = "${pkgs.texlive.combined.scheme-full}/bin/latexmk -pdf -pvc main.tex";
 
       reload-tmux = "${p "tmux"} source $HOME/.config/tmux/tmux.conf";
+
+      nordic-vpn = lib.concatStringsSep " | " [
+        "${p "gpauth"} \"$NORDIC_VPN_ENDPOINT\" --gateway --browser default 2>/dev/null"
+        "sudo ${p "gpclient"} connect \"$NORDIC_VPN_ENDPOINT\" --as-gateway --cookie-on-stdin"
+      ];
     };
 
     # ░█▀▀░█▀▀░█▀█░█▀▀░█▀▄░█▀█░▀█▀░█▀▀░█▀▄

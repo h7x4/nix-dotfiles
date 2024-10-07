@@ -107,6 +107,8 @@
             wstunnel
             nrf-udev
             nrfutil
+            gpclient
+            gpauth
             ;
         })
 
