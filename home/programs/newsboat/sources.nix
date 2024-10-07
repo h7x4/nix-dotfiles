@@ -37,6 +37,7 @@ in {
     (mkSource [ "japanese" "language" ] "https://www.outlier-linguistics.com/blogs/japanese.atom")
     (mkSource [ "language" ] "https://feeds.feedburner.com/blogspot/Ckyi")
     (mkSource [ "japanese" "language" "old" ] "http://feeds.feedburner.com/LocalizingJapan")
+    (mkSource [ "japanese" "language" ] "https://wesleycrobertson.wordpress.com/feed/")
     (mkSource [ "tech" "vim" "old" ] "https://castel.dev/rss.xml")
     (mkSource [ "tech" "functional-programming" "old" ] "https://skilpat.tumblr.com/rss")
     (mkSource [ "tech" ] "https://resocoder.com/feed/")
