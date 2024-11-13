@@ -223,7 +223,11 @@
             "specialArgs"
           ]));
     in {
-      dosei = nixSys "dosei" { };
+      dosei = nixSys "dosei" {
+        modules = [{
+          home-manager.users.h7x4.home.uid = 1001;
+        }];
+      };
       kasei = nixSys "kasei" { };
       europa = nixSys "europa" { };
       tsuki = nixSys "tsuki" {

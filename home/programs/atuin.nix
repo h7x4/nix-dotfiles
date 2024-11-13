@@ -1,9 +1,7 @@
 { config, ... }:
 let
   cfg = config.programs.atuin;
-
-  # TODO: retrieve this in a more dynamic and correct manner
-  xdg_runtime_dir = "/run/user/1000";
+  xdg_runtime_dir = "/run/user/${toString config.home.uid}";
 in
 {
   programs.atuin = {

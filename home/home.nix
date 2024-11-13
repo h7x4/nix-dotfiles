@@ -33,6 +33,7 @@ in {
 
     ./modules/colors.nix
     ./modules/shellAliases.nix
+    ./modules/uidGid.nix
   ] ++ optionals graphics [
     ./config/gtk.nix
 
