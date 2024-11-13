@@ -48,8 +48,6 @@ in
       aliases = {
         aliases = "!git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1 = \\2/g'";
         delete-merged = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d";
-        graph = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all";
-        graphv = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all";
         forcepush = "push --force-with-lease --force-if-includes";
         authors = "shortlog --summary --numbered --email";
         si = "switch-interactive";
@@ -59,7 +57,61 @@ in
         subs = "submodule update --init --recursive";
         rebase-author = "rebase -i -x \"git commit --amend --reset-author -CHEAD\"";
         git = "!git";
-      };
+      } // (let
+        c = c: s: "%C(${c})${s}%C(reset)";
+      in {
+        graph = let
+          fmt = lib.concatStringsSep "" [
+            " - "
+            (c "bold blue" "%h")
+            " - "
+            (c "bold green" "(%ar)")
+            " "
+            (c "white" "> %s")
+            " "
+            (c "dim white" "- %an")
+            (c "bold yellow" "%d")
+          ];
+        in "log --graph --abbrev-commit --decorate --format=format:'${fmt}' --all";
+
+        graphv = let
+          fmt = lib.concatStringsSep "" [
+            (c "bold blue" "%h")
+            " - "
+            (c "bold cyan" "%aD")
+            " "
+            (c "bold green" "(%ar)")
+            (c "bold yellow" "%d")
+            "%n"
+            "          "
+            (c "white" "%s")
+            " "
+            (c "dim white" "- %an")
+          ];
+        in "log --graph --abbrev-commit --decorate --format=format:'${fmt}' --all";
+
+        l = let
+          fmt = lib.concatStringsSep "%n" (map (x: if builtins.isList x then lib.concatStringsSep " " x else x) [
+            [ (c "bold yellow" "%H") (c "auto" "%d") ]
+            [ (c "bold white" "Author:") (c "bold cyan" "%aN <%aE>") (c "bold green" "(%ah)") ]
+            [ (c "bold white" "Committer:") (c "bold cyan" "%cN <%cE>") (c "bold green" "(%ah)") ]
+            [ (c "bold white" "GPG: (%G?)") (c "bold magenta" "%GF") "-" (c "bold cyan" "%GS") (c "bold blue" "(%GT) ") ]
+            ""
+            (c "bold white" "# %s")
+            "%+b"
+            (c "dim yellow" "%+N")
+          ]);
+          # sedExpressions = let
+          #   colorExpr = "\\x1B\\[([0-9]{1,3}(;[0-9]{1,2};?)?)?[mGK]";
+          #   colorEndExpr = "\\x1B\\[m";
+          #   colored = x: "${colorExpr}${x}${colorEndExpr}";
+          # in lib.concatMapStringsSep " " (x: "-e '${x}'") [
+          #   "s|${colored "GPG: \\(N\\)"} ${colored "F3CDA86CC55A9F10D7A069819F2F7D8250F35146"} - ${colored "h7x4 <h7x4@nani.wtf>"} ${colored "\\(ultimate\\)"}|GPG: h7x4|"
+          #   "s|${colored "GPG: \\(N\\)"} ${colored ""} - ${colored ""} ${colored "\\(undefined\\)"}||"
+          # ];
+        in "log --decorate --format=tformat:'${fmt}'";
+        # in "!git log --color=always --format=format:'${fmt}' | sed -E ${sedExpressions} | $PAGER";
+      });
 
       extraConfig = {
         core = {
