@@ -53,6 +53,7 @@ in
         forcepush = "push --force-with-lease --force-if-includes";
         authors = "shortlog --summary --numbered --email";
         si = "switch-interactive";
+        ff = "fixup-fixup";
         subs = "submodule update --init --recursive";
         rebase-author = "rebase -i -x \"git commit --amend --reset-author -CHEAD\"";
         git = "!git";
@@ -269,6 +270,11 @@ in
         lib.fileContents
         (builtins.replaceStrings ["hours" "tcommit"] ["minutes" "tmcommit"])
       ];
+    })
+    (pkgs.writeShellApplication {
+      name = "git-fixup-fixup";
+      runtimeInputs = with pkgs; [ cfg.package ];
+      text = lib.fileContents ./scripts/git-fixup-fixup.sh;
     })
     (pkgs.writeShellApplication {
       name = "git-switch-interactive";
