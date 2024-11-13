@@ -54,6 +54,7 @@ in
         authors = "shortlog --summary --numbered --email";
         si = "switch-interactive";
         ff = "fixup-fixup";
+        pp = "post-pr";
         subs = "submodule update --init --recursive";
         rebase-author = "rebase -i -x \"git commit --amend --reset-author -CHEAD\"";
         git = "!git";
@@ -284,6 +285,21 @@ in
         "SC2001" # (style): See if you can use ${variable//search/replace} instead. (sed invocation)
       ];
     })
+    ((pkgs.writers.writePython3Bin "git-post-pr" {
+      libraries = with pkgs.python3Packages; [
+        tkinter
+      ];
+      flakeIgnore = [
+        "E501" # I like long lines grr
+      ];
+    } (lib.fileContents ./scripts/git-post-pr.py)).overrideAttrs (_: {
+      postFixup = ''
+        wrapProgram $out/bin/git-post-pr \
+          --prefix PATH : ${lib.makeBinPath [
+            pkgs.github-cli
+          ]}
+      '';
+    }))
 
     pkgs.git-absorb
   ];
