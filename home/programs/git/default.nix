@@ -54,6 +54,7 @@ in
         authors = "shortlog --summary --numbered --email";
         si = "switch-interactive";
         ff = "fixup-fixup";
+        rf = "rebase-fixups";
         pp = "post-pr";
         subs = "submodule update --init --recursive";
         rebase-author = "rebase -i -x \"git commit --amend --reset-author -CHEAD\"";
@@ -276,6 +277,11 @@ in
       name = "git-fixup-fixup";
       runtimeInputs = with pkgs; [ cfg.package ];
       text = lib.fileContents ./scripts/git-fixup-fixup.sh;
+    })
+    (pkgs.writeShellApplication {
+      name = "git-rebase-fixups";
+      runtimeInputs = with pkgs; [ cfg.package gnused ];
+      text = lib.fileContents ./scripts/git-rebase-fixups.sh;
     })
     (pkgs.writeShellApplication {
       name = "git-switch-interactive";
