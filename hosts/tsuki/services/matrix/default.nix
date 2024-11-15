@@ -25,9 +25,11 @@
 
     settings = {
       turn_uris = let
-        inherit (config.services.coturn) realm;
-        p = toString secrets.ports.matrix.default;
-      in ["turn:${realm}:${p}?transport=udp" "turn:${realm}:${p}?transport=tcp"];
+        inherit (config.services.coturn) realm listening-port;
+      in [
+        "turn:${realm}:${toString listening-port}?transport=udp"
+        "turn:${realm}:${toString listening-port}?transport=tcp"
+      ];
       turn_shared_secret = config.services.coturn.static-auth-secret;
       turn_user_lifetime = "1h";
 
@@ -67,7 +69,7 @@
           user = "matrix-synapse";
           database = "matrix-synapse";
           host = "/var/run/postgresql";
-          port = secrets.ports.postgres;
+          port = config.services.postgresql.settings.port;
         };
       };
 
@@ -95,16 +97,16 @@
 
   networking.firewall = {
     interfaces.enp2s0 = let
-      range = with config.services.coturn; [ {
-      from = secrets.ports.matrix.coturn.min;
-      to = secrets.ports.matrix.coturn.max;
-    } ];
+      range = [{
+        from = config.services.coturn.min-port;
+        to = config.services.coturn.max-port;
+      }];
     in
     {
       allowedUDPPortRanges = range;
-      allowedUDPPorts = [ secrets.ports.matrix.default ];
+      allowedUDPPorts = [ config.services.coturn.listening-port ];
       allowedTCPPortRanges = range;
-      allowedTCPPorts = [ secrets.ports.matrix.default ];
+      allowedTCPPorts = [ config.services.coturn.listening-port ];
     };
   };
 }

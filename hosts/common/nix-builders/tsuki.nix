@@ -1,4 +1,4 @@
-{ config, secrets, ... }:
+{ config, ... }:
 {
   # TODO: install public key on tsuki declaratively
   sops.secrets = {
@@ -7,7 +7,6 @@
   };
 
   nix.buildMachines = [{
-    # Login details configured in ssh module in nix-secrets
     hostName = "nix-builder-tsukir";
     system = "x86_64-linux";
     speedFactor = 2;
@@ -26,7 +25,8 @@
     extraConfig = ''
       Host nix-builder-tsukir
         HostName gingakei.loginto.me
-        Port ${toString secrets.ports.ssh.home-in}
+        Port 45497
+        IdentityFile ${config.sops.secrets."ssh/nix-builders/tsuki/key".path}
     '';
 
     # knownHosts.tsukir = {

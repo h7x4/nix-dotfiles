@@ -1,16 +1,22 @@
-{ secrets, ... }:
+{ config, secrets, ... }:
+let
+  cfg = config.services.coturn;
+in
 {
-  services.coturn = rec {
+  services.coturn = let
+    certName = config.services.nginx.virtualHosts.${cfg.realm}.useACMEHost;
+    certDir = config.security.acme.certs.${certName}.directory;
+  in rec {
     enable = true;
     no-cli = true;
     no-tcp-relay = true;
-    min-port = secrets.ports.matrix.coturn.min;
-    max-port = secrets.ports.matrix.coturn.max;
+    min-port = 46000;
+    max-port = 47000;
     use-auth-secret = true;
     static-auth-secret = secrets.keys.matrix.static-auth-secret;
     realm = "turn.nani.wtf";
-    cert = "${secrets.keys.certificates.server.crt}";
-    pkey = "${secrets.keys.certificates.server.key}";
+    cert = "${certDir}/cert.pem";
+    pkey = "${certDir}/key.pem";
     extraConfig = ''
       # for debugging
       verbose

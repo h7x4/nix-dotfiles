@@ -1,4 +1,4 @@
-{ pkgs, lib, config, secrets, inputs, ... }:
+{ config, pkgs, lib, inputs, ... }:
 {
   sops.secrets."cloudflare/api-key" = {};
 
@@ -37,19 +37,18 @@
     recommendedZstdSettings = true;
 
     upstreams = let
-      inherit (secrets) ips ports;
       srv = config.services;
       sa = config.local.socketActivation;
     in {
       "atuin".servers."unix:${sa.atuin.newSocketAddress}" = { };
-      "dynmap".servers."localhost:${s ports.minecraft.dynmap}" = { };
+      "dynmap".servers."localhost:8123" = { };
       "grafana".servers."unix:/run/grafana/grafana.sock" = { };
       "headscale".servers."localhost:${s srv.headscale.port}" = { };
       "hedgedoc".servers."unix:${srv.hedgedoc.settings.path}" = { };
-      "idrac".servers."${ips.idrac}" = { };
+      "idrac".servers."10.0.0.201" = { };
       "kanidm".servers."localhost:8300" = { };
-      "osuchan".servers."localhost:${s ports.osuchan}" = { };
-      "plex".servers."localhost:${s ports.plex}" = { };
+      "osuchan".servers."localhost:${s srv.osuchan.port}" = { };
+      "plex".servers."localhost:32400" = { };
       "vaultwarden".servers."unix:${sa.vaultwarden.newSocketAddress}" = { };
       "wstunnel".servers = let
         inherit (config.services.wstunnel.servers."ws-tsuki".listen) host port;
@@ -61,7 +60,7 @@
     virtualHosts = let
       inherit (lib.attrsets) nameValuePair listToAttrs recursiveUpdate;
       inherit (lib.lists) head drop;
-      inherit (secrets) domains keys;
+      domains = [ "nani.wtf" ];
 
       cloudflare-origin-pull-ca = builtins.fetchurl {
         url = "https://developers.cloudflare.com/ssl/static/authenticated_origin_pull_ca.pem";
@@ -70,7 +69,7 @@
 
       # nonCFHost =
       #   subdomains: extraSettings: let
-      #     settings = with keys.certificates; {
+      #     settings = {
       #       useACMEHost = "nani.wtf";
       #       forceSSL = true;
       #       kTLS = true;
@@ -84,7 +83,7 @@
 
       host =
         subdomains: extraSettings: let
-          settings = with keys.certificates; {
+          settings = {
             serverAliases = drop 1 (generateServerAliases domains subdomains);
             useACMEHost = "nani.wtf";
             forceSSL = true;
