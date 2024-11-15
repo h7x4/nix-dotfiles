@@ -94,19 +94,4 @@
   };
 
   services.redis.servers."".enable = true;
-
-  networking.firewall = {
-    interfaces.enp2s0 = let
-      range = [{
-        from = config.services.coturn.min-port;
-        to = config.services.coturn.max-port;
-      }];
-    in
-    {
-      allowedUDPPortRanges = range;
-      allowedUDPPorts = [ config.services.coturn.listening-port ];
-      allowedTCPPortRanges = range;
-      allowedTCPPorts = [ config.services.coturn.listening-port ];
-    };
-  };
 }

@@ -1,10 +1,11 @@
-{ config, secrets, ... }:
+{ config, lib, secrets, ... }:
 let
   cfg = config.services.coturn;
 in
 {
   services.coturn = let
-    certName = config.services.nginx.virtualHosts.${cfg.realm}.useACMEHost;
+    # certName = config.services.nginx.virtualHosts.${cfg.realm}.useACMEHost;
+    certName = "nani.wtf";
     certDir = config.security.acme.certs.${certName}.directory;
   in rec {
     enable = true;
@@ -45,5 +46,20 @@ in
       denied-peer-ip=fc00::-fdff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
       denied-peer-ip=fe80::-febf:ffff:ffff:ffff:ffff:ffff:ffff:ffff
     '';
+  };
+
+  networking.firewall = lib.mkIf cfg.enable {
+    interfaces.enp2s0 = let
+      range = [{
+        from = cfg.min-port;
+        to = cfg.max-port;
+      }];
+    in
+    {
+      allowedUDPPortRanges = range;
+      allowedUDPPorts = [ cfg.listening-port ];
+      allowedTCPPortRanges = range;
+      allowedTCPPorts = [ cfg.listening-port ];
+    };
   };
 }
