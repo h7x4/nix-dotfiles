@@ -102,9 +102,9 @@ buildBazelPackage {
     })
     (fetchurl rec {
       name = "jawiki";
-      url = "https://dumps.wikimedia.org/${name}/20240620/${name}-20240620-all-titles-in-ns0.gz";
+      url = "https://dumps.wikimedia.org/${name}/20241101/${name}-20241101-all-titles-in-ns0.gz";
       recursiveHash = true;
-      hash = "sha256-p1LP8mHYknUPEB9u9CLCP1/uUjCVfb/mdpnOPawGcqQ=";
+      hash = "sha256-gyg6aSsbT7wNvlIu5H5Qmi5O2LBIoZU13U+OgZCEmac=";
       downloadToTemp = true;
       postFetch = ''
         mkdir -p "$out"
