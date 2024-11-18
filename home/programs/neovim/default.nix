@@ -66,25 +66,59 @@
       }
       limelight-vim
       vim-tmux-navigator
-      vim-polyglot
+      # vim-polyglot
       lightline-vim
+      vim-better-whitespace
       {
-        plugin = rainbow;
+        plugin = nvim-treesitter.withAllGrammars;
         config = ''
-          let g:rainbow_active = 1
+        packadd! nvim-treesitter
+        lua << EOF
+          require'nvim-treesitter.configs'.setup {
+            highlight = {
+              enable = true,
+            },
+          }
+        EOF
+        '';
+      }
+      {
+        plugin = rainbow-delimiters-nvim;
+        config = ''
+        lua << EOF
+          local rainbow_delimiters = require 'rainbow-delimiters'
+          vim.g.rainbow_delimiters = {
+            ["highlight"] = {
+              'RainbowDelimiterRed',
+              'RainbowDelimiterYellow',
+              'RainbowDelimiterBlue',
+              'RainbowDelimiterGreen',
+              'RainbowDelimiterViolet',
+              'RainbowDelimiterCyan',
+            },
+          }
+        EOF
         '';
       }
       {
         plugin = vim-monokai;
         config = ''
           colorscheme monokai
-          autocmd ColorScheme * highlight Normal ctermbg=0
-          autocmd ColorScheme * highlight LineNr ctermbg=0
-          autocmd ColorScheme * highlight CursorLineNR ctermbg=0 ctermfg=208
-          autocmd ColorScheme * highlight SignColumn ctermbg=0
-          autocmd ColorScheme * highlight GitGutterAdd ctermbg=0
-          autocmd ColorScheme * highlight GitGutterChange ctermbg=0
-          autocmd ColorScheme * highlight GitGutterDelete ctermbg=0
+
+          autocmd ColorScheme monokai highlight Normal ctermbg=0
+          autocmd ColorScheme monokai highlight LineNr ctermbg=0
+          autocmd ColorScheme monokai highlight CursorLineNR ctermbg=0 ctermfg=208
+          autocmd ColorScheme monokai highlight SignColumn ctermbg=0
+          autocmd ColorScheme monokai highlight GitGutterAdd ctermbg=0
+          autocmd ColorScheme monokai highlight GitGutterChange ctermbg=0
+          autocmd ColorScheme monokai highlight GitGutterDelete ctermbg=0
+
+          autocmd ColorScheme monokai highlight RainbowDelimiterRed    { fg = g:terminal_color_9 }
+          autocmd ColorScheme monokai highlight RainbowDelimiterYellow { fg = g:terminal_color_11 }
+          autocmd ColorScheme monokai highlight RainbowDelimiterBlue   { fg = g:terminal_color_12 }
+          autocmd ColorScheme monokai highlight RainbowDelimiterGreen  { fg = g:terminal_color_10 }
+          autocmd ColorScheme monokai highlight RainbowDelimiterViolet { fg = g:terminal_color_13 }
+          autocmd ColorScheme monokai highlight RainbowDelimiterCyan   { fg = g:terminal_color_14 }
         '';
       }
     ];
