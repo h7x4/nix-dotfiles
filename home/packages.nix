@@ -91,8 +91,8 @@
       geogebra
       ghidra
       gimp
-      gnome.gnome-font-viewer
-      gnome.seahorse
+      gnome-font-viewer
+      seahorse
       google-chrome
       imhex
       inkscape

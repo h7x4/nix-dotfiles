@@ -43,9 +43,9 @@
         duration = 20;
       };
 
-      live_config_reload = true;
+      general.live_config_reload = true;
 
-      shell = {
+      terminal.shell = {
         program = "${pkgs.zsh}/bin/zsh";
         args = [ "--login" ];
       };

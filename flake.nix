@@ -1,10 +1,11 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-24.05";
-    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "nixpkgs/nixos-24.11";
+    # nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/master";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -87,7 +88,7 @@
         android_sdk.accept_license = true;
         segger-jlink.acceptLicense = true;
         permittedInsecurePackages = [
-          "segger-jlink-qt4-794l"
+          "segger-jlink-qt4-796s"
         ];
       };
 
@@ -97,31 +98,15 @@
           config.allowUnfree = true;
           config.segger-jlink.acceptLicense = true;
           config.permittedInsecurePackages = [
-            "segger-jlink-qt4-794s"
+            "segger-jlink-qt4-796s"
           ];
         };
       in [
         (self: super: {
           inherit (nonrecursive-unstable-pkgs)
-            atuin
-            wstunnel
-            nrf-udev
-            nrfutil
-            gpclient
-            gpauth
+              calibre
+              fcitx5-mozc
             ;
-        })
-
-        # https://github.com/NixOS/nixpkgs/pull/251706
-        (self: super: {
-          mozc = self.qt6Packages.callPackage ./package-overrides/mozc.nix { };
-          fcitx5-mozc = self.callPackage ./package-overrides/fcitx5-mozc.nix { };
-        })
-
-        (self: super: {
-          mpv-unwrapped = super.mpv-unwrapped.override {
-            ffmpeg = super.ffmpeg_6-full;
-          };
         })
       ];
     };

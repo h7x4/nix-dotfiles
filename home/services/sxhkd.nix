@@ -22,11 +22,11 @@ in
 
       # Volume
 
-      "super + {@F7,@F8}" = "${pkgs.alsaUtils}/bin/amixer set Master 2%{-,+}";
+      "super + {@F7,@F8}" = "${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%{-,+}";
 
-      "{XF86AudioLowerVolume,XF86AudioRaiseVolume}" = "${pkgs.alsaUtils}/bin/amixer set Master 2%{-,+}";
+      "{XF86AudioLowerVolume,XF86AudioRaiseVolume}" = "${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%{-,+}";
 
-      "XF86AudioMute" = "${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+      "XF86AudioMute" = "${pkgs.wireplumber}/bin/wpctl set-mute toggle";
 
       # Music
 
