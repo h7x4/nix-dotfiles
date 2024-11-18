@@ -25,7 +25,7 @@ in {
     ./programs/ssh
     ./programs/tealdeer
     ./programs/thunderbird.nix
-    ./programs/tmux.nix
+    ./programs/tmux
     ./programs/zsh
 
     ./services/nix-channel-update.nix

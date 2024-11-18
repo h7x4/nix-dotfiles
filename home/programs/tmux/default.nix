@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{ pkgs, lib, ... }:
 {
   programs.tmux = {
     enable = true;
@@ -19,7 +19,25 @@
       tmux-fzf
       urlview
     ];
-    extraConfig = ''
+    extraConfig = let
+      fileContentsWithoutShebang = script: lib.pipe script [
+        lib.fileContents
+        (lib.splitString "\n")
+        (lib.drop 3) # remove shebang
+        (lib.concatStringsSep "\n")
+      ];
+
+      fcitx5-status = (pkgs.writeShellApplication {
+        name = "tmux-fcitx5-status";
+        runtimeInputs = with pkgs; [ dbus ];
+        text = fileContentsWithoutShebang ./scripts/fcitx5-status.sh;
+      });
+      mpd-status = (pkgs.writeShellApplication {
+        name = "tmux-mpd-status";
+        runtimeInputs = with pkgs; [ mpc-cli gawk gnugrep ];
+        text = fileContentsWithoutShebang ./scripts/mpd-status.sh;
+      });
+    in ''
       # Don't rename windows automatically after rename with ','
       set-option -g allow-rename off
 
@@ -91,8 +109,8 @@
       ### DESIGN CHANGES ###
       ######################
 
-      set-option -g status-left '#{prefix_highlight} #[bg=blue]#[fg=black,bold] ###S #[bg=default]  #[fg=green]#(~/.scripts/tmux/fcitx)  #[fg=red]%H:%M   '
-      set-option -g status-right '#[fg=red]#(~/.scripts/tmux/mpd)'
+      set-option -g status-left '#{prefix_highlight} #[bg=blue]#[fg=black,bold] ###S #[bg=default]  #[fg=green]#(${lib.getExe fcitx5-status})  #[fg=red]%H:%M   '
+      set-option -g status-right '#[fg=red]#(${lib.getExe mpd-status})'
       set-window-option -g window-status-current-style fg=magenta
       set-option -g status-style 'bg=black fg=default'
       set-option -g default-shell '${pkgs.zsh}/bin/zsh'
