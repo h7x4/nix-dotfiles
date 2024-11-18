@@ -5,26 +5,25 @@
     enable = true;
     # openFirewall = true;
 
-    extraConfig = ''
-      workgroup = TSUKI
-      server string = smbnix
-      netbios name = smbnix
+    settings = {
+      global = {
+        "workgroup" = "TSUKI";
+        "server string" = "smbnix";
+        "netbios name" = "smbnix";
 
-      security = user
+        "security" = "user";
 
-      use sendfile = yes
-      min protocol = SMB2
-      smb encrypt = desired
+        "use sendfile" = "yes";
+        "min protocol" = "SMB2";
+        "smb encrypt" = "desired";
 
-      # note: localhost is the ipv6 localhost ::1
-      hosts allow = 100.107.69.8 100.100.65.88
-      hosts deny = 0.0.0.0/0
+        # note: localhost is the ipv6 localhost ::1
+        "hosts allow" = "100.107.69.8 100.100.65.88";
+        "hosts deny" = "0.0.0.0/0";
 
-      guest ok = no
-      map to guest = never
-    '';
-
-    shares = {
+        "guest ok" = "no";
+        "map to guest" = "never";
+      };
       cirno = {
         path = "/data/cirno";
         browseable = "yes";
@@ -66,15 +65,4 @@
 
   networking.firewall.interfaces."tailscale0".allowedTCPPorts = [ 139 445 ];
   networking.firewall.interfaces."tailscale0".allowedUDPPorts = [ 137 138 ];
-
-
-  systemd.slices.system-samba = {
-    description = "Samba slice";
-    after = [ "system.slice" ];
-    requires = [ "system.slice" ];
-  };
-
-  systemd.services.samba-smbd.serviceConfig.Slice = "system-samba.slice";
-  systemd.services.samba-nmbd.serviceConfig.Slice = "system-samba.slice";
-  systemd.services.samba-winbindd.serviceConfig.Slice = "system-samba.slice";
 }

@@ -48,32 +48,7 @@ in {
     requires = [ "postgresql.service" ];
   };
 
-  systemd.services.postgresql = {
-    serviceConfig = {
-      Restart = "always";
-      RestartSec = 3;
-      ReadWritePaths = [ cfg.dataDir ];
-      NoNewPrivileges = true;
-      PrivateDevices = true;
-      ProtectClock = true;
-      ProtectKernelLogs = true;
-      ProtectKernelModules = true;
-      # PrivateMounts = true;
-      RestrictSUIDSGID = true;
-      ProtectHostname = true;
-      LockPersonality = true;
-      ProtectKernelTunables = true;
-      ProtectSystem = "strict";
-      ProtectProc = "invisible";
-      ProtectHome = true;
-      # PrivateNetwork = true;
-      PrivateUsers = true;
-      PrivateTmp = true;
-      UMask = "0077";
-      # RestrictAddressFamilies = [ "AF_UNIX AF_INET AF_INET6" ];
-      SystemCallArchitectures = "native";
-    };
-  };
+  systemd.services.postgresql.serviceConfig.ReadWritePaths = [ cfg.dataDir ];
 
   environment.systemPackages = [ config.services.postgresql.package ];
 }

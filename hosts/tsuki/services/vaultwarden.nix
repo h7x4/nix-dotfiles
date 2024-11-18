@@ -21,39 +21,6 @@ in {
 
   systemd.services.vaultwarden = lib.mkIf cfg.enable {
     requires = [ "postgresql.service" ];
-
-    serviceConfig = {
-      # Extra hardening
-      CapabilityBoundingSet = "";
-      LockPersonality = true;
-      NoNewPrivileges = true;
-      # MemoryDenyWriteExecute = true;
-      PrivateMounts = true;
-      PrivateUsers = true;
-      ProcSubset = "pid";
-      ProtectClock = true;
-      ProtectControlGroups = true;
-      ProtectHostname = true;
-      ProtectKernelLogs = true;
-      ProtectKernelModules = true;
-      ProtectKernelTunables = true;
-      ProtectProc = "invisible";
-      RestrictAddressFamilies = [
-        "AF_INET"
-        "AF_INET6"
-        "AF_UNIX"
-      ];
-      RemoveIPC = true;
-      RestrictNamespaces = true;
-      RestrictRealtime = true;
-      RestrictSUIDSGID = true;
-      SystemCallArchitectures = "native";
-      SystemCallFilter = [
-        "@system-service"
-        "~@privileged"
-      ];
-      UMask = "0007";
-    };
   };
 
   services.postgresql = lib.mkIf cfg.enable {
