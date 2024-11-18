@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -76,6 +76,8 @@
     blueman.enable = true;
     fstrim.enable = true;
   };
+
+  nix.buildMachines = lib.mkForce [ ];
 
   hardware = {
     bluetooth.enable = true;
