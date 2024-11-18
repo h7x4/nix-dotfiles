@@ -23,6 +23,8 @@ in {
     ./services/xserver.nix
   ];
 
+  systemd.enableStrictShellChecks = true;
+
   sops.defaultSopsFile = ./../.. + "/secrets/${config.networking.hostName}.yaml";
 
   time.timeZone = "Europe/Oslo";
