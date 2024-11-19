@@ -5,7 +5,6 @@
     cloc
     cyme
     czkawka
-    delta
     diskonaut
     duf
     duff
@@ -21,7 +20,6 @@
     httpie
     imagemagick
     kepubify
-    # keybase
     keymapviz
     libwebp
     lnav
@@ -41,18 +39,15 @@
     # nixops
     nmap
     ouch
-    pandoc
     parallel
     progress
     pwntools
     python3
     rclone
-    ripgrep
     rsync
     # sc-im
     slack-term
     tea
-    tealdeer
     terminal-parrot
     termtosvg
     toilet
@@ -64,7 +59,6 @@
     waifu2x-converter-cpp
     wavemon
     wiki-tui
-    yt-dlp
     yubico-pam
     yubikey-agent
     yubikey-manager

@@ -22,10 +22,13 @@ in {
     ./programs/less.nix
     ./programs/neovim
     ./programs/nix-index
+    ./programs/pandoc.nix
+    ./programs/ripgrep.nix
     ./programs/ssh
     ./programs/tealdeer
     ./programs/thunderbird.nix
     ./programs/tmux
+    ./programs/yt-dlp.nix
     ./programs/zsh
 
     ./services/nix-channel-update.nix
@@ -54,6 +57,7 @@ in {
     ./services/copyq.nix
     ./services/dunst.nix
     ./services/fcitx5.nix
+    ./services/keybase.nix
     ./services/mpd.nix
     ./services/picom.nix
     ./services/polybar.nix
