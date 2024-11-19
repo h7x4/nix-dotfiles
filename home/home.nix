@@ -10,25 +10,34 @@ in {
 
     ./programs/aria2.nix
     ./programs/atuin.nix
+    ./programs/bash.nix
+    ./programs/bat.nix
     ./programs/beets.nix
+    ./programs/bottom.nix
     ./programs/comma.nix
     ./programs/direnv
+    ./programs/eza.nix
+    ./programs/fzf.nix
     ./programs/gdb.nix
-    ./programs/gh.nix
     ./programs/gh-dash.nix
+    ./programs/gh.nix
     ./programs/git
     ./programs/gpg
+    ./programs/home-manager.nix
     ./programs/jq.nix
     ./programs/less.nix
+    ./programs/man.nix
     ./programs/neovim
     ./programs/nix-index
     ./programs/pandoc.nix
     ./programs/ripgrep.nix
     ./programs/ssh
     ./programs/tealdeer
+    ./programs/texlive.nix
     ./programs/thunderbird.nix
     ./programs/tmux
     ./programs/yt-dlp.nix
+    ./programs/zoxide.nix
     ./programs/zsh
 
     ./services/nix-channel-update.nix
@@ -42,9 +51,12 @@ in {
 
     ./programs/alacritty.nix
     ./programs/emacs
+    ./programs/feh.nix
     ./programs/firefox.nix
+    ./programs/mpv.nix
     ./programs/ncmpcpp.nix
     ./programs/newsboat
+    ./programs/obs-studio.nix
     ./programs/qutebrowser.nix
     ./programs/rofi.nix
     ./programs/taskwarrior.nix
@@ -57,8 +69,10 @@ in {
     ./services/copyq.nix
     ./services/dunst.nix
     ./services/fcitx5.nix
+    ./services/gnome-keyring.nix
     ./services/keybase.nix
     ./services/mpd.nix
+    ./services/network-manager.nix
     ./services/picom.nix
     ./services/polybar.nix
     ./services/screen-locker.nix
@@ -136,51 +150,6 @@ in {
   news.display = "silent";
 
   fonts.fontconfig.enable = mkForce true;
-
-  programs = {
-    home-manager.enable = true;
-
-    bash = {
-      enable = true;
-      historyFile = "${config.xdg.dataHome}/bash_history";
-      historySize = 100000;
-      bashrcExtra = ''
-        source "${config.xdg.configHome}/mutable_env.sh"
-      '';
-    };
-
-    bat.enable = true;
-    bottom = {
-      enable = true;
-      settings.flags.enable_gpu = true;
-    };
-    eza.enable = true;
-    feh.enable = mkIf graphics true;
-    fzf = {
-      enable = true;
-      defaultCommand = "fd --type f";
-    };
-    man = {
-      enable = true;
-      generateCaches = true;
-    };
-    mpv.enable = mkIf graphics true;
-    obs-studio.enable = mkIf graphics true;
-    ssh = {
-      enable = true;
-      includes = [ "mutable_config" ];
-    };
-    texlive = {
-      enable = true;
-      # packageSet = pkgs.texlive.combined.scheme-medium;
-    };
-    zoxide.enable = true;
-  };
-
-  services = {
-    gnome-keyring.enable = mkIf graphics true;
-    network-manager-applet.enable = mkIf graphics true;
-  };
 
   manual = {
     html.enable = true;

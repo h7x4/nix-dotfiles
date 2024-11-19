@@ -10,5 +10,11 @@
     mode = "0444";
   };
 
-  programs.ssh.includes = [ config.sops.secrets."ssh/secret-config".path ];
+  programs.ssh = {
+    enable = true;
+    includes = [
+      config.sops.secrets."ssh/secret-config".path
+      "mutable_config"
+    ];
+  };
 }
