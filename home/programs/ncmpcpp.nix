@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{ config, pkgs, ... }:
 {
   programs.ncmpcpp = {
     enable = true;
@@ -332,11 +332,11 @@
       window_border_color = "green";
       active_window_border = "red";
 
-      visualizer_data_source = "/tmp/mpd.fifo";
+      visualizer_data_source = "/run/user/${toString config.home.uid}/mpd/visualizer.fifo";
       visualizer_output_name = "Visualizer feed";
       visualizer_in_stereo = "no";
-      visualizer_type = "spectrum"; # spectrum, ellipse, wave_filled, wave
-      visualizer_look = "+█"; # wave | spectrum, ellipse, wave_filled
+      # visualizer_type = "spectrum"; # spectrum, ellipse, wave_filled, wave
+      # visualizer_look = "+█"; # wave | spectrum, ellipse, wave_filled
     };
   };
 }
