@@ -66,7 +66,6 @@
       }
       limelight-vim
       vim-tmux-navigator
-      # vim-polyglot
       lightline-vim
       vim-better-whitespace
       {
