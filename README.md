@@ -1,5 +1,6 @@
 [![built with nix](https://builtwithnix.org/badge.svg)](https://builtwithnix.org)
 
+
 # Nix Dotfiles
 
 These are my dotfiles for several nix machines.
@@ -16,6 +17,7 @@ Here are some of the interesting files and dirs:
 | `/secrets` | Encrypted [sops-nix][sops-nix] secrets. |
 | `flake.nix` | The root of everyting. Defines the inputs and outputs of the project. Also applies misc overlays and adds config-wide modules. See [Nix Flakes][nix-flakes] for more information. |
 
+
 ## Hosts
 
 | Host | Machine type | Purpose |
@@ -24,6 +26,7 @@ Here are some of the interesting files and dirs:
 | `Kasei` | AMD Zen 2 CPU / AMD GPU - desktop computer | Semi-daily driver. This is my main computer at home. |
 | `Dosei` | Dell Optiplex | Work computer, mostly used for development and testing. |
 | `Europa` | Dell Optiplex | Other work computer, used as nix builder for `Dosei`. |
+
 
 ## home-manager configuration
 
@@ -35,6 +38,28 @@ Here are some of the interesting files and dirs:
 | `/home/programs` | Configuration for programs that have their own home-manager modules. |
 | `/home/services` | Configuration for services/daemons that are user-specific. |
 | `/home/shell.nix` | Shell-agnostic configuration. This includes aliases, envvars, functions, etc. |
+
+
+## Some useful long commands
+
+Build configuration without switching:
+
+```
+nix build .#nixosConfigurations.tsuki.config.system.build.toplevel -L
+```
+
+Check why configuration depends on package:
+
+```
+NIXPKGS_ALLOW_INSECURE=1 nix why-depends .#nixosConfigurations.tsuki.config.system.build.toplevel .#pkgs.suspiciousPackage
+```
+
+Re-encrypt sops secrets with new key:
+
+```
+sops updatekeys secrets/hosts/file.yml
+```
+
 
 [home-manager]: https://github.com/nix-community/home-manager
 [nixos-search]: https://search.nixos.org/options
