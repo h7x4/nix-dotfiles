@@ -1,4 +1,4 @@
-{ pkgs, lib, config, inputs, secrets, ... }:
+{ pkgs, lib, config, inputs, ... }:
 let
   cfg = config.services.minecraft-servers;
 
@@ -145,8 +145,9 @@ in
       in {
         "server-icon.png" = rawFile ./extraFiles/server-icon.png;
 
-        "plugins/dynmap/configuration.txt" = 
-          yamlConfig "dynmap" ./pluginConfigs/dynmap.nix { inherit secrets; };
+        # TODO: pull this through a sops template to render the secret before readding it here.
+        # "plugins/dynmap/configuration.txt" = 
+        #   yamlConfig "dynmap" ./pluginConfigs/dynmap.nix { inherit secrets; };
 
         "plugins/VeinMiner/config.yml" =
           yamlConfig "VeinMiner" ./pluginConfigs/veinMiner.nix { };
