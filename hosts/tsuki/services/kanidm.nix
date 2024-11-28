@@ -27,6 +27,7 @@ in {
       tls_chain = "${credsDir}/fullchain.pem";
       tls_key = "${credsDir}/key.pem";
       bindaddress = "127.0.0.1:8300";
+      # log_level = "debug";
       online_backup = {
         path = "/data/backup/kanidm";
         schedule = "00 22 * * *";
