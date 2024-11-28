@@ -1,5 +1,4 @@
-{ pkgs, lib, config, secrets, ... }: {
-
+{ pkgs, lib, config, ... }: {
   imports = [
     ./bridges/matrix-appservice-irc.nix
 
@@ -8,6 +7,12 @@
     ./postgres.nix
     ./coturn.nix
   ];
+
+  sops.secrets."matrix_synapse/registration_secret" = {
+    owner = "matrix-synapse";
+    group = "matrix-synapse";
+    mode = "0440";
+  };
 
   services.matrix-synapse-next = {
     enable = true;
@@ -58,7 +63,7 @@
       # with the registration shared secret
       enable_registration = false;
 
-      registration_shared_secret = secrets.keys.matrix.registration-shared-secret;
+      registration_shared_secret_path = config.sops.secrets."matrix_synapse/registration_secret".path;
       allow_public_rooms_over_federation = true;
 
       # password_config.enabled = lib.mkForce false;
