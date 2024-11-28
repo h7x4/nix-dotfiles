@@ -8,6 +8,7 @@ in
       Unit = {
         Description = "Prune unused allowed directories for direnv";
         Documentation = [ "man:direnv(1)" ];
+        ConditionPathExists = "${config.xdg.dataHome}/direnv/allow";
       };
 
       Service = {
