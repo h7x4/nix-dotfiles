@@ -1,4 +1,4 @@
-{ config, lib, secrets, modulesPath, ... }:
+{ config, lib, modulesPath, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -70,12 +70,6 @@
         description = "User responsible for owning all sorts of server media files";
         isSystemUser = true;
         group = "media";
-      };
-      nix-builder = {
-        description = "User for executing distributed builds via SSH";
-        isSystemUser = true;
-        group = "nix-builder";
-        openssh.authorizedKeys.keyFiles = [ secrets.keys.ssh.nixBuilders.tsuki.public ];
       };
     };
     groups = {
