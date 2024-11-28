@@ -46,6 +46,7 @@
       "headscale".servers."localhost:${s srv.headscale.port}" = { };
       "hedgedoc".servers."unix:${srv.hedgedoc.settings.path}" = { };
       "idrac".servers."10.0.0.201" = { };
+      "irc-matrix-bridge-media".servers."localhost:${s srv.matrix-appservice-irc.settings.ircService.mediaProxy.bindPort}" = { };
       "kanidm".servers."localhost:8300" = { };
       "osuchan".servers."localhost:${s srv.osuchan.port}" = { };
       "plex".servers."localhost:32400" = { };
@@ -150,7 +151,9 @@
         enableACME = lib.mkForce false;
         locations."/_synapse".proxyPass = "http://$synapse_backend";
       })
-      (host ["madmin"] { root = "${pkgs.synapse-admin}/"; })
+      (proxy ["irc-matrix"] "http://irc-matrix-bridge-media" {})
+      
+      # (host ["madmin"] { root = "${pkgs.synapse-admin}/"; })
       # (host ["cache"] { root = "/var/lib/nix-cache"; })
       # (proxy ["slack-bot"] "http://localhost:9898" {})
       (proxy ["atuin"] "http://atuin" {})

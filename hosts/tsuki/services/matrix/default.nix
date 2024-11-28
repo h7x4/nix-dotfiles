@@ -73,12 +73,6 @@
         };
       };
 
-      # TODO: Figure out a way to do this declaratively.
-      #       The files need to be owned by matrix-synapse
-      app_service_config_files = [
-        "/var/lib/matrix-synapse/irc-registration.yml"
-      ];
-
       # redis.enabled = true;
       max_upload_size = "100M";
       dynamic_thumbnails = true;
