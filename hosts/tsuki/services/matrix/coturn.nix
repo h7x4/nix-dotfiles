@@ -1,20 +1,22 @@
-{ config, lib, secrets, ... }:
+{ config, lib, ... }:
 let
   cfg = config.services.coturn;
 in
 {
+  sops.secrets."matrix_synapse/turn_shared_secret" = { };
+
   services.coturn = let
     # certName = config.services.nginx.virtualHosts.${cfg.realm}.useACMEHost;
     certName = "nani.wtf";
     certDir = config.security.acme.certs.${certName}.directory;
   in rec {
-    enable = true;
+    enable = false;
     no-cli = true;
     no-tcp-relay = true;
     min-port = 46000;
     max-port = 47000;
     use-auth-secret = true;
-    static-auth-secret = secrets.keys.matrix.static-auth-secret;
+    static-auth-secret-file = config.sops.secrets."matrix_synapse/turn_shared_secret".path;
     realm = "turn.nani.wtf";
     cert = "${certDir}/cert.pem";
     pkey = "${certDir}/key.pem";
