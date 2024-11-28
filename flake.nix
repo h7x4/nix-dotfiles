@@ -50,16 +50,6 @@
       url = "github:nix-community/nixos-vscode-server";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Nix expressions and keys (TODO: move keys to another solution like agenix)
-    # which should be kept from the main repo for privacy reasons.
-    #
-    # Includes stuff like usernames, emails, ports, other server users, ssh hosts, etc.
-    secrets = {
-      # TODO: Push this to a remote.
-      url = "git+file:///home/h7x4/git/nix-secrets";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = inputs@{
@@ -73,7 +63,6 @@
     maunium-stickerpicker,
     minecraft,
     osuchan,
-    secrets,
     sops-nix,
     vscode-server,
     # website
@@ -163,7 +152,6 @@
               inherit inputs;
               inherit unstable-pkgs;
               inherit (self) extendedLib;
-              secrets = secrets.outputs.settings;
             } // (extraConfig.specialArgs or { });
 
             modules = [
@@ -175,7 +163,6 @@
               ./modules/machineVars.nix
               ./modules/socketActivation.nix
 
-              secrets.outputs.nixos-config
               sops-nix.nixosModules.sops
 
               ({ config, ... }:
@@ -187,7 +174,6 @@
                     inherit unstable-pkgs;
                     inherit (self) extendedLib;
                     inherit (config) machineVars;
-                    secrets = secrets.outputs.settings;
                   };
 
                   sharedModules = [
