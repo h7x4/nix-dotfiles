@@ -78,7 +78,11 @@
     };
   };
 
-  sops.secrets."drives/cirno/credentials" = {};
+  sops.secrets."drives/cirno/password" = { };
+  sops.templates."drive-cirno.creds".content = ''
+    username=h7x4
+    password=${config.sops.placeholder."drives/cirno/password"}
+  '';
 
 
   virtualisation = {
