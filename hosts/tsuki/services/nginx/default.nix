@@ -144,11 +144,12 @@
       (host ["testmap"] {
         root = "/var/lib/mcmap";
         locations = {
-          "~* ^/maps/[^/]*/tiles/[^/]*.json$".extraConfig = ''
-            error_page 404 =200 /assets/emptyTile.json;
+          "@empty".return = "204";
+
+          "~* ^/maps/[^/]*/tiles/".extraConfig = ''
+            error_page 404 = @empty;
             gzip_static always;
           '';
-          "~* ^/maps/[^/]*/tiles/[^/]*.png$".tryFiles = "$uri =204";
         };
       })
       (host ["www"] {
