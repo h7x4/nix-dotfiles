@@ -1,14 +1,13 @@
 { pkgs, lib, ... }:
-let
-  adminUser = "root";
-  normalUser = "oysteikt";
-
-  # http://www.pvv.ntnu.no/pvv/Maskiner
+let # http://www.pvv.ntnu.no/pvv/Maskiner
   normalMachines = [
     {
-      names = [ "hildring" "pvv-login" "pvv" ];
+      names = [ "hildring" "pvv-login" ];
       proxyJump = lib.mkDefault null;
-      addressFamily = "inet";
+    }
+    {
+      names = [ "drolsum" "pvv-login2" "pvv" ];
+      proxyJump = lib.mkDefault null;
     }
     [ "bekkalokk" "pvv-web" "pvv-wiki" "pvv-webmail" ]
     [ "bicep" "pvv-databases" ]
@@ -17,7 +16,6 @@ let
     "buskerud"
     "dagali"
     "demiurgen"
-    "drolsum"
     "eirin"
     "georg"
     "ildkule"
@@ -38,59 +36,38 @@ let
     "ludvigsen"
     [ "principal" "pvv-backup" ]
     [ "skrott" "dibbler" ]
-    [ "sleipner" "pvv-salt" ]
+    {
+      names = [ "sleipner" "pvv-salt" ];
+      user = "oysteikt/admin";
+    }
   ];
 
-  # Either( String [String] AttrSet{String} ) -> AttrSet{String}
-  coerceToSSHMatchBlock =
-    machine:
-    if builtins.isString machine then { names = [machine]; }
-    else if builtins.isList machine then { names = machine; }
-    else machine;
+  overrideIfNotExists = b: a: a // (builtins.removeAttrs b (builtins.attrNames a));
 
-  # ListOf(String) -> AttrSet
-  machineWithNames = let
-    inherit (lib.lists) head;
-    inherit (lib.strings) split;
-  in
-    names: { hostname = "${head names}.pvv.ntnu.no"; };
+  coerce = user: machines: lib.pipe machines [
+    (m: if builtins.isString m then { names = [m]; } else m)
+    (m: if builtins.isList m then { names = m; } else m)
+    (overrideIfNotExists { inherit user; })
+  ];
 
-  # AttrSet -> AttrSet -> AttrSet
-  convertMachineWithDefaults = defaults: normalizedMachine: let
-    inherit (lib.attrsets) nameValuePair;
-    inherit (lib.strings) concatStringsSep;
-    inherit (normalizedMachine) names;
+  normalUser = "oysteikt";
 
-    name = concatStringsSep " " names;
-    value =
-      (machineWithNames names)
-      // defaults
-      // removeAttrs normalizedMachine ["names"];
-  in
-    nameValuePair name value;
+  matchConfig = let
+    machines = (map (coerce normalUser) normalMachines) ++ (map (coerce "root") rootMachines);
+    setVars = orig@{ names, ... }: {
+      name = builtins.concatStringsSep " " names;
+      value = overrideIfNotExists {
+        hostname = "${builtins.head names}.pvv.ntnu.no";
+        proxyJump = "pvv";
+        addressFamily = "inet";
+      } (builtins.removeAttrs orig ["names"]);
+    };
+  in builtins.listToAttrs (map setVars machines);
 
-  # AttrSet -> AttrSet
-  convertNormalMachine = convertMachineWithDefaults { user = normalUser; proxyJump = "pvv"; };
-  # AttrSet -> AttrSet
-  convertAdminMachine =
-    convertMachineWithDefaults { user = adminUser; proxyJump = "pvv"; };
-
-  # ListOf (Either(String ListOf(String) AttrsOf(String))) -> (AttrSet -> AttrSet) -> AttrSet
-  convertMachinesWith = convertMachineFunction: let
-    inherit (lib.attrsets) listToAttrs;
-    inherit (lib.trivial) pipe;
-    pipeline = [
-      (map coerceToSSHMatchBlock)
-      (map convertMachineFunction)
-      listToAttrs
-    ];
-  in
-    machines: pipe machines pipeline;
 in
   {
     programs.ssh.matchBlocks = lib.mergeAttrsList [
-      (convertMachinesWith convertNormalMachine normalMachines)
-      (convertMachinesWith convertAdminMachine rootMachines)
+      matchConfig
       {
         "pvv-git git.pvv.ntnu.no" = {
           hostname = "git.pvv.ntnu.no";
