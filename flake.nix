@@ -93,7 +93,6 @@
       in [
         (self: super: {
           inherit (nonrecursive-unstable-pkgs)
-              calibre
               fcitx5-mozc
             ;
         })
