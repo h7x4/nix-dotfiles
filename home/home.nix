@@ -64,7 +64,7 @@ in {
     # ./programs/xmobar
     ./programs/xmonad
     ./programs/zathura.nix
-    ./programs/zed
+    # ./programs/zed
 
     ./services/copyq.nix
     ./services/dunst.nix
