@@ -23,7 +23,7 @@ in {
     ./services/xserver.nix
   ];
 
-  systemd.enableStrictShellChecks = true;
+  # systemd.enableStrictShellChecks = true;
 
   sops.defaultSopsFile = ./../.. + "/secrets/${config.networking.hostName}.yaml";
 
