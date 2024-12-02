@@ -20,6 +20,7 @@ in {
     ./services/resolved.nix
     ./services/smartd.nix
     ./services/systemd-lock-handler.nix
+    ./services/uptimed.nix
     ./services/xserver.nix
   ];
 

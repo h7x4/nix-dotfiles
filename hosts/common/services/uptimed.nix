@@ -1,0 +1,4 @@
+{ ... }:
+{
+  services.uptimed.enable = true;
+}
