@@ -120,7 +120,6 @@
 
       tenacity
       # transcribe
-      wireshark
       xcalib
       xclip
       xdotool

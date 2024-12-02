@@ -11,6 +11,7 @@ in {
     ./programs/nix-ld.nix
     ./programs/ssh.nix
     ./programs/usbtop.nix
+    ./programs/wireshark.nix
 
     ./services/dbus.nix
     ./services/journald.nix
