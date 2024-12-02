@@ -4,10 +4,12 @@ let # http://www.pvv.ntnu.no/pvv/Maskiner
     {
       names = [ "hildring" "pvv-login" ];
       proxyJump = lib.mkDefault null;
+      addressFamily = "inet";
     }
     {
       names = [ "drolsum" "pvv-login2" "pvv" ];
       proxyJump = lib.mkDefault null;
+      addressFamily = "inet";
     }
     [ "bekkalokk" "pvv-web" "pvv-wiki" "pvv-webmail" ]
     [ "bicep" "pvv-databases" ]

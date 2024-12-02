@@ -9,7 +9,8 @@
       port = 10022;
     };
 
-    "hildring pvv-login pvv".proxyJump = "tsuki-ws";
+    "hildring pvv-login".proxyJump = "tsuki-ws";
+    "drolsum pvv-login2 pvv".proxyJump = "tsuki-ws";
   };
 
   sops.secrets."git/nordicsemi-maintenance-repos-config" = { };
