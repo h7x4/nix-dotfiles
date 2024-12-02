@@ -21,6 +21,7 @@ in {
     ./services/smartd.nix
     ./services/systemd-lock-handler.nix
     ./services/uptimed.nix
+    ./services/userborn.nix
     ./services/xserver.nix
   ];
 
