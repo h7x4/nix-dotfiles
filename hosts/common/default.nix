@@ -195,4 +195,35 @@ in {
     Defaults    lecture = always
     Defaults    lecture_file = ${sudoLecture}
   '';
+
+  # https://github.com/NixOS/nixpkgs/blob/nixos-24.05/nixos/modules/profiles/hardened.nix
+  boot.blacklistedKernelModules = [
+    # Obscure network protocols
+    "ax25"
+    "netrom"
+    "rose"
+
+    # Old or rare or insufficiently audited filesystems
+    "adfs"
+    "affs"
+    "bfs"
+    "befs"
+    "cramfs"
+    "efs"
+    # "erofs" // used by systemd
+    "exofs"
+    "freevxfs"
+    "f2fs"
+    "hfs"
+    "hpfs"
+    "jfs"
+    "minix"
+    "nilfs2"
+    "ntfs"
+    "omfs"
+    "qnx4"
+    "qnx6"
+    "sysv"
+    "ufs"
+  ];
 }
