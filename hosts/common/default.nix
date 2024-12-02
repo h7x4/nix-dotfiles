@@ -13,6 +13,7 @@ in {
     ./programs/usbtop.nix
 
     ./services/dbus.nix
+    ./services/journald.nix
     ./services/openssh.nix
     ./services/pcscd.nix
     ./services/pipewire.nix
