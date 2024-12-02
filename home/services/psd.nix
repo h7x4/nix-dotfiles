@@ -1,0 +1,4 @@
+{ ... }:
+{
+  services.psd.enable = true;
+}
