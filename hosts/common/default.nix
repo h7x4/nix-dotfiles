@@ -187,6 +187,8 @@ in {
 
   security.rtkit.enable = !config.machineVars.headless;
 
+  security.tpm2.enable = lib.mkDefault true;
+  security.tpm2.abrmd.enable = lib.mkDefault config.security.tpm2.enable;
   security.sudo.extraConfig = let
     sudoLecture = pkgs.writeText "sudo-lecture.txt" (extendedLib.termColors.front.red "Be careful or something, idk...\n");
   in ''
