@@ -4,6 +4,7 @@
 
   home.sessionVariables = let
     inherit (config.xdg) dataHome cacheHome configHome userDirs;
+    runtimeDir = "/run/user/${toString config.home.uid}";
   in {
     TEXMFHOME = "${dataHome}/texmf";
     TEXMFVAR = "${cacheHome}/texlive";
@@ -36,6 +37,9 @@
     ICEAUTHORITY = "${cacheHome}/ICEauthority";
     NIMBLE_DIR = "${dataHome}/nimble";
     NLTK_DATA = "${dataHome}/nltk_data";
+    NPM_CONFIG_CACHE="${cacheHome}/npm";
+    NPM_CONFIG_INIT_MODULE="${configHome}/npm/config/npm-init.js";
+    NPM_CONFIG_TMP="${runtimeDir}/npm";
     NRFUTIL_HOME = "${dataHome}/nrfutil";
     NUGET_PACKAGES = "${cacheHome}/nuget-packages";
     PARALLEL_HOME = "${configHome}/parallel";
