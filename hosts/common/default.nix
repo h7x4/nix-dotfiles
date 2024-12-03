@@ -136,8 +136,6 @@ in {
     };
 
     irqbalance.enable = true;
-
-    displayManager.defaultSession = "none+xmonad";
   };
 
   programs = {

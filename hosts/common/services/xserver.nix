@@ -1,19 +1,20 @@
-{ config, ... }:
+{ config, lib, ... }:
 {
-  services.xserver = {
-    enable = !config.machineVars.headless;
+  services.xserver = lib.mkIf (!config.machineVars.headless) {
+    enable = true;
 
     xkb = {
       layout = "us";
       options = "caps:escape";
     };
 
-    # desktopManager = {
-    #   xterm.enable = false;
-    #   xfce.enable = !config.machineVars.headless;
-    # };
+    desktopManager = {
+      xterm.enable = true;
+      xfce.enable = true;
+    };
 
-    displayManager.lightdm.enable = !config.machineVars.headless;
+    displayManager.lightdm.enable = true;
+    displayManager.defaultSession = "none+xmonad";
 
     windowManager.xmonad = {
       enable = true;
