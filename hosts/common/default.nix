@@ -109,6 +109,7 @@ in {
         "media"
         "minecraft"
         "networkmanager"
+        "rtkit"
         "scanner"
         "video"
         "wheel"
@@ -184,6 +185,7 @@ in {
       sqlite-web
     ]);
 
+  # Realtime scheduling for pipewire and mpd
   security.rtkit.enable = !config.machineVars.headless;
 
   security.tpm2.enable = lib.mkDefault true;
