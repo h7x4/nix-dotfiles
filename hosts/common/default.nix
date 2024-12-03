@@ -14,6 +14,7 @@ in {
     ./programs/wireshark.nix
 
     ./services/dbus.nix
+    ./services/irqbalance.nix
     ./services/journald.nix
     ./services/openssh.nix
     ./services/pcscd.nix
@@ -136,8 +137,6 @@ in {
       enable = !config.machineVars.headless;
       touchpad.disableWhileTyping = true;
     };
-
-    irqbalance.enable = true;
   };
 
   programs = {
