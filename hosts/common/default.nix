@@ -16,6 +16,7 @@ in {
     ./services/dbus.nix
     ./services/irqbalance.nix
     ./services/journald.nix
+    ./services/libinput.nix
     ./services/openssh.nix
     ./services/pcscd.nix
     ./services/pipewire.nix
@@ -132,11 +133,6 @@ in {
       android-udev-rules
       light
     ];
-
-    libinput = {
-      enable = !config.machineVars.headless;
-      touchpad.disableWhileTyping = true;
-    };
   };
 
   programs = {
