@@ -35,10 +35,24 @@
 
     fontconfig = {
       defaultFonts = {
-        serif = [ "Droid Sans Serif" "Ubuntu" ];
-        sansSerif = [ "Droid Sans" "Ubuntu" ];
-        monospace = [ "Fira Code" "Ubuntu" ];
-        emoji = [ "Noto Sans Emoji" ];
+        serif = [
+          "Droid Sans Serif"
+          "Noto Serif CJK JP"
+          "Ubuntu"
+        ];
+        sansSerif = [
+          "Droid Sans"
+          "Noto Sans Serif CJK JP"
+          "Ubuntu"
+        ];
+        monospace = [
+          "Fira Code"
+          "Noto Sans Mono CJK JP"
+          "Ubuntu"
+        ];
+        emoji = [
+          "Noto Sans Emoji"
+        ];
       };
     };
   };
