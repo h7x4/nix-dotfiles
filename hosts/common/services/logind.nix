@@ -1,0 +1,6 @@
+{ ... }:
+{
+  services.logind = {
+    powerKeyLongPress = "poweroff";
+  };
+}

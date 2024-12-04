@@ -17,6 +17,7 @@ in {
     ./services/irqbalance.nix
     ./services/journald.nix
     ./services/libinput.nix
+    ./services/logind.nix
     ./services/openssh.nix
     ./services/pcscd.nix
     ./services/pipewire.nix

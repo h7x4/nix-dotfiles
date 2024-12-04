@@ -9,6 +9,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
     dotfiles = {
       url = "git+https://git.pvv.ntnu.no/oysteikt/dotfiles?ref=master";
       flake = false;
@@ -57,6 +59,7 @@
     nixpkgs,
     nixpkgs-unstable,
     home-manager,
+    nixos-hardware,
 
     dotfiles,
     matrix-synapse-next,
@@ -199,7 +202,15 @@
         }];
       };
       kasei = nixSys "kasei" { };
-      xps16 = nixSys "xps16" { };
+      xps16 = nixSys "xps16" {
+        modules = [
+          nixos-hardware.nixosModules.common-hidpi
+          nixos-hardware.nixosModules.common-pc-laptop
+          nixos-hardware.nixosModules.common-pc-laptop-ssd
+          nixos-hardware.nixosModules.common-cpu-intel
+          nixos-hardware.nixosModules.common-gpu-intel
+        ];
+      };
       europa = nixSys "europa" { };
       tsuki = nixSys "tsuki" {
         modules = [

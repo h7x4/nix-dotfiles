@@ -65,7 +65,7 @@
   services = {
     xserver.upscaleDefaultCursor = true;
     xserver.dpi = 192;
-    tailscale.enable = true;
+    libinput.touchpad.accelSpeed = "0.5";
   };
 
   environment.systemPackages = [

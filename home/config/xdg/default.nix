@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 {
   imports = [
     ./mimetypes.nix
@@ -8,14 +8,14 @@
     enable = true;
     userDirs = {
       enable = true;
-      desktop = "${config.home.homeDirectory}/Desktop";
-      documents = "${config.home.homeDirectory}/documents";
-      download = "${config.home.homeDirectory}/Downloads";
-      music = "${config.home.homeDirectory}/music";
-      pictures = "${config.home.homeDirectory}/pictures";
-      publicShare = "${config.home.homeDirectory}/public";
-      templates = "${config.home.homeDirectory}/templates";
-      videos = "${config.home.homeDirectory}/videos";
+      desktop = lib.mkDefault "${config.home.homeDirectory}/Desktop";
+      documents = lib.mkDefault "${config.home.homeDirectory}/documents";
+      download = lib.mkDefault "${config.home.homeDirectory}/Downloads";
+      music = lib.mkDefault "${config.home.homeDirectory}/music";
+      pictures = lib.mkDefault "${config.home.homeDirectory}/pictures";
+      publicShare = lib.mkDefault "${config.home.homeDirectory}/public";
+      templates = lib.mkDefault "${config.home.homeDirectory}/templates";
+      videos = lib.mkDefault "${config.home.homeDirectory}/videos";
     };
   };
 }
