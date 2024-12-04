@@ -65,6 +65,12 @@
   services = {
     xserver.upscaleDefaultCursor = true;
     xserver.dpi = 192;
+    displayManager.sddm = {
+      enableHidpi = true;
+      settings = {
+        X11.ServerArguments = "-nolisten tcp -dpi 192";
+      };
+    };
     libinput.touchpad.accelSpeed = "0.5";
   };
 
