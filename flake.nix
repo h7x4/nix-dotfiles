@@ -199,6 +199,7 @@
         }];
       };
       kasei = nixSys "kasei" { };
+      xps16 = nixSys "xps16" { };
       europa = nixSys "europa" { };
       tsuki = nixSys "tsuki" {
         modules = [

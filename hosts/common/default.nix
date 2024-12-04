@@ -37,8 +37,8 @@ in {
   time.timeZone = "Europe/Oslo";
 
   console = {
-    font = "Lat2-Terminus16";
-    keyMap = "us";
+    font = lib.mkDefault "Lat2-Terminus16";
+    keyMap = lib.mkDefault "us";
   };
 
   networking = {
