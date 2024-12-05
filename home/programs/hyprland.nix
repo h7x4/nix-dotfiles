@@ -91,7 +91,9 @@ in
 
   wayland.windowManager.hyprland = {
     enable = true;
+
     systemd.enable = false;
+    systemd.enableXdgAutostart = false;
 
     settings = let
       scratchpads = [
@@ -320,5 +322,13 @@ in
         };
       };
     };
+  };
+
+  # UWSM
+  systemd.user.services = {
+    hypridle.Unit.After = lib.mkForce "graphical-session.target";
+    xplugd.Unit.After = lib.mkForce "graphical-session.target";
+    waybar.Unit.After = lib.mkForce "graphical-session.target";
+    # hyprpaper.Unit.After = lib.mkForce "graphical-session.target";
   };
 }
