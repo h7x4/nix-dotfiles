@@ -8,7 +8,10 @@
       wayland.enable = config.machineVars.wayland;
       package = pkgs.kdePackages.sddm;
       theme = "sddm-astronaut-theme";
-      # extraPackages = [ pkgs.sddm-astronaut ];
+      extraPackages = [
+        pkgs.kdePackages.qt5compat
+        # pkgs.sddm-astronaut
+      ];
     };
   };
 
