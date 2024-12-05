@@ -109,9 +109,7 @@
 
     inherit pkgs;
 
-    packages.${system} = {
-      inherit (pkgs) kanidm pcloud;
-    };
+    inputs = pkgs.lib.mapAttrs (_: src: src.outPath) inputs;
 
     devShells.${system}.default = pkgs.mkShell {
       packages = with pkgs; [ sops ];
