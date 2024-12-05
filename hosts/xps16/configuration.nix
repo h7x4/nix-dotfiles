@@ -5,10 +5,11 @@
 
     ./services/btrfs.nix
     ./services/docker.nix
+    ./services/keybase.nix
     ./services/libvirtd.nix
     ./services/logiops.nix
     ./services/tailscale.nix
-    ./services/keybase.nix
+    ./services/thermald.nix
 
     ./testconfig.nix
   ];

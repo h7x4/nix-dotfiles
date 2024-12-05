@@ -26,7 +26,6 @@ in {
     ./services/resolved.nix
     ./services/smartd.nix
     ./services/systemd-lock-handler.nix
-    ./services/thermald.nix
     ./services/uptimed.nix
     ./services/userborn.nix
     ./services/xserver.nix
