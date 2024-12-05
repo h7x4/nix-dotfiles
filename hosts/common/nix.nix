@@ -43,6 +43,11 @@
         type = "path";
         path = "/home/h7x4/git/nixpkgs-tools";
       };
+      shells.to = {
+        type = "git";
+        url = "https://git.pvv.ntnu.no/oysteikt/shells.git";
+        ref = "main";
+      };
     };
   };
 }
