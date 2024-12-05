@@ -5,7 +5,7 @@
     defaultSession = "none+xmonad";
     sddm = {
       enable = true;
-      # wayland.enable = true;
+      wayland.enable = config.machineVars.wayland;
       package = pkgs.kdePackages.sddm;
       theme = "sddm-astronaut-theme";
       # extraPackages = [ pkgs.sddm-astronaut ];
@@ -20,6 +20,7 @@
       };
     })
   ];
+
   services.xserver = lib.mkIf (!config.machineVars.headless) {
     enable = true;
 
@@ -32,9 +33,6 @@
       xterm.enable = true;
       xfce.enable = true;
     };
-
-    # displayManager.lightdm.enable = true;
-    # displayManager.defaultSession = "none+xmonad";
 
     windowManager.xmonad = {
       enable = true;

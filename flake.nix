@@ -93,7 +93,9 @@
             "segger-jlink-qt4-796s"
           ];
         };
-      in [ ];
+      in [
+        (import ./overlays/wayland-ime-integration.nix)
+      ];
     };
 
     pkgs = import nixpkgs pkgs-config;

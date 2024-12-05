@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ config, pkgs, lib, machineVars, ... }:
 {
   services.dunst = {
     enable = true;
@@ -13,9 +13,9 @@
         class = "Dunst";
         browser = "${pkgs.xdg-utils}/bin/xdg-open";
 
-        offset = let 
+        offset = lib.mkIf (!machineVars.wayland) (let
           status-bar-height = config.services.polybar.settings."bar/top".height;
-        in "15x${toString (status-bar-height + 10)}";
+        in "15x${toString (status-bar-height + 10)}");
 
         corner_radius = 0;
         font = "Droid Sans 9";
@@ -47,14 +47,14 @@
         background = config.colors.defaultColorSet.background;
         timeout = 4;
       };
-      
+
       urgency_normal = {
         frame_color = config.colors.defaultColorSet.green;
         foreground = config.colors.defaultColorSet.foreground;
         background = config.colors.defaultColorSet.background;
         timeout = 6;
       };
-      
+
       urgency_critical = {
         frame_color = config.colors.defaultColorSet.red;
         foreground = config.colors.defaultColorSet.red;

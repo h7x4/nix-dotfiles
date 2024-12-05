@@ -7,6 +7,8 @@ in {
   options.machineVars = {
     headless = mkEnableOption "Whether or not the machine should have graphical output.";
 
+    wayland = mkEnableOption "Whether or not the machine should use Wayland as the display server.";
+
     screens = mkOption {
       type = types.attrsOf (types.submodule ( { name, ...}: {
         options = {
@@ -113,6 +115,10 @@ t tools preinstalled.";
       {
         assertion = cfg.battery != null -> cfg.laptop;
         message = "A battery shouldn't exist on a non laptop machine";
+      }
+      {
+        assertion = cfg.wayland -> !cfg.headless;
+        message = "A machine can't be headless and use Wayland at the same time.";
       }
       # FIXME:
       # {

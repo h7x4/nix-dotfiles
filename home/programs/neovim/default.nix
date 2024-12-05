@@ -1,4 +1,4 @@
-{ pkgs, home, ... }:
+{ pkgs, lib, machineVars, ... }:
 {
   imports = [
     ./auto-clean-swapfiles.nix
@@ -21,6 +21,9 @@
       vim-surround
       vim-fugitive
       vim-css-color
+    ] ++ (lib.optionals machineVars.wayland [
+      vim-wayland-clipboard
+    ]) ++ [
       semshi
       {
         plugin = goyo-vim;

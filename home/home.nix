@@ -46,7 +46,7 @@ in {
     ./modules/colors.nix
     ./modules/shellAliases.nix
     ./modules/uidGid.nix
-  ] ++ optionals graphics [
+  ] ++ (optionals graphics [
     ./config/gtk.nix
 
     ./programs/alacritty.nix
@@ -61,8 +61,6 @@ in {
     ./programs/rofi.nix
     ./programs/taskwarrior.nix
     ./programs/vscode
-    # ./programs/xmobar
-    ./programs/xmonad
     ./programs/zathura.nix
     # ./programs/zed
 
@@ -73,14 +71,21 @@ in {
     ./services/keybase.nix
     ./services/mpd.nix
     ./services/network-manager.nix
+    ./services/psd.nix
+    ./services/tumblerd.nix
+  ]) ++ (optionals machineVars.wayland [
+    ./programs/hyprland.nix
+    ./programs/waybar.nix
+  ]) ++ (optionals (!machineVars.wayland) [
+    ./programs/xmonad
+    # ./programs/xmobar
+
     ./services/picom.nix
     ./services/polybar.nix
-    ./services/psd.nix
     ./services/screen-locker.nix
     # ./services/stalonetray.nix
     ./services/sxhkd.nix
-    ./services/tumblerd.nix
-  ];
+  ]);
 
   sops.defaultSopsFile = ../secrets/home.yaml;
   sops.age.sshKeyPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519_home_sops" ];

@@ -78,10 +78,7 @@
   };
 
   services = {
-    openssh = {
-      enable = true;
-      settings.X11Forwarding = true;
-    };
+    openssh.enable = true;
     xserver.videoDrivers = [ "amdgpu" ];
     tailscale.enable = true;
     avahi = {

@@ -53,6 +53,7 @@
     gaming = true;
     development = true;
     creative = true;
+    wayland = true;
   };
 
   networking = {
