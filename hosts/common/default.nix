@@ -141,7 +141,10 @@ in {
     git.enable = true;
     tmux.enable = true;
     zsh.enable = true;
-    hyprland.enable = config.machineVars.wayland;
+    hyprland = lib.mkIf config.machineVars.wayland {
+      enable = true;
+      withUWSM = true;
+    };
   };
 
   security.pam.services = lib.mkIf (config.machineVars.wayland) {

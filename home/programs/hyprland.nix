@@ -20,9 +20,9 @@ in
     # QT_QPA_PLATFORMTHEME = "qt6ct";
     QT_AUTO_SCREEN_SCALE_FACTOR = "1";
 
-    LIBVA_DRIVER_NAME = "nvidia";
-    GBM_BACKEND = "nvidia-drm";
-    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    # LIBVA_DRIVER_NAME = "nvidia";
+    # GBM_BACKEND = "nvidia-drm";
+    # __GLX_VENDOR_LIBRARY_NAME = "nvidia";
   };
 
   home.packages = with pkgs; [
@@ -91,13 +91,14 @@ in
 
   wayland.windowManager.hyprland = {
     enable = true;
+    systemd.enable = false;
 
     settings = let
       scratchpads = [
         (rec {
           title = "Floating terminal";
           class = "floatingTerminal";
-          command = "${pkgs.alacritty}/bin/alacritty --class ${class} -e ${pkgs.tmux}/bin/tmux new-session -A -s f";
+          command = "uwsm app -- ${pkgs.alacritty}/bin/alacritty --class ${class} -e ${pkgs.tmux}/bin/tmux new-session -A -s f";
           size = { h = 90; w = 95; };
           keys = [
             "$mod, RETURN"
@@ -107,7 +108,7 @@ in
         (rec {
           title = "Ncmpcpp";
           class = "floatingNcmpcpp";
-          command = "${pkgs.alacritty}/bin/alacritty --class ${class} -e ${pkgs.ncmpcpp}/bin/ncmpcpp";
+          command = "uwsm app -- ${pkgs.alacritty}/bin/alacritty --class ${class} -e ${pkgs.ncmpcpp}/bin/ncmpcpp";
           size = { h = 95; w = 95; };
           keys = [ "$mod, Q" ];
         })
@@ -121,17 +122,17 @@ in
       # https://github.com/xkbcommon/libxkbcommon/blob/master/include/xkbcommon/xkbcommon-keysyms.h
       bind = [
         "$mod SHIFT, Q, exit"
-        "$mod, R, exec, ${pkgs.rofi}/bin/rofi -show drun"
+        "$mod, R, exec, uwsm app -- ${pkgs.rofi}/bin/rofi -show drun"
         "$mod, T, togglefloating"
 
         # TODO: fix this for upcoming releases
         "$mod, F, fullscreen, 2"
-        "$mod, C, exec, ${cfg.finalPackage}/bin/hyprctl reload"
+        "$mod, C, exec, uwsm app -- ${cfg.finalPackage}/bin/hyprctl reload"
 
         "$mod, BACKSPACE, killactive"
 
-        "$mod SHIFT, RETURN, exec, ${pkgs.alacritty}/bin/alacritty --class termTerminal -e ${pkgs.tmux}/bin/tmux new-session -A -s term"
-        "$mod SHIFT, SPACE, exec, ${pkgs.alacritty}/bin/alacritty --class termTerminal -e ${pkgs.tmux}/bin/tmux new-session -A -s term"
+        "$mod SHIFT, RETURN, exec, uwsm app -- ${pkgs.alacritty}/bin/alacritty --class termTerminal -e ${pkgs.tmux}/bin/tmux new-session -A -s term"
+        "$mod SHIFT, SPACE, exec, uwsm app -- ${pkgs.alacritty}/bin/alacritty --class termTerminal -e ${pkgs.tmux}/bin/tmux new-session -A -s term"
 
         "$mod, j, layoutmsg,cyclenext"
         "$mod, k, layoutmsg,cycleprev"
@@ -158,18 +159,18 @@ in
         "$mod SHIFT, 8, movetoworkspacesilent, 8"
         "$mod SHIFT, 9, movetoworkspacesilent, 9"
 
-        "$mod, b, exec, ${pkgs.fcitx5}/bin/fcitx5-remote -s mozc"
-        "$mod, n, exec, ${pkgs.fcitx5}/bin/fcitx5-remote -s keyboard-no"
-        "$mod, m, exec, ${pkgs.fcitx5}/bin/fcitx5-remote -s keyboard-us"
+        "$mod, b, exec, uwsm app -- ${pkgs.fcitx5}/bin/fcitx5-remote -s mozc"
+        "$mod, n, exec, uwsm app -- ${pkgs.fcitx5}/bin/fcitx5-remote -s keyboard-no"
+        "$mod, m, exec, uwsm app -- ${pkgs.fcitx5}/bin/fcitx5-remote -s keyboard-us"
 
         # TODO: ensure exists in environment
-        "$mod, l, exec, ${pkgs.systemd}/bin/loginctl lock-session"
+        "$mod, l, exec, uwsm app -- ${pkgs.systemd}/bin/loginctl lock-session"
 
         # TODO: fix
         # "super + minus" = "${pkgs.xcalib}/bin/xcalib -invert -alter"
 
         # TODO: fix
-        ", Print, exec, ${lib.getExe pkgs.grimblast} copy area"
+        ", Print, exec, uwsm app -- ${lib.getExe pkgs.grimblast} copy area"
 
         # "SHIFT, Print, exec, ${lib.getExe pkgs.grimblast} copy area"
         # "shift + @Print" = "${pkgs.maim}/bin/maim --hidecursor --nokeyboard $SCREENSHOT_DIR/$(date +%s).png"
@@ -204,26 +205,26 @@ in
                 fi
               '';
             };
-          in "${key}, exec, ${lib.getExe invokeIfNotRunningAndToggleWorkspace}"
+          in "${key}, exec, uwsm app -- ${lib.getExe invokeIfNotRunningAndToggleWorkspace}"
           ) keys)
         ))
         lib.flatten
       ]);
 
       bindl = [
-        "$mod, p, exec, ${pkgs.mpc_cli}/bin/mpc toggle"
-        ",XF86AudioPlay, exec, ${pkgs.mpc_cli}/bin/mpc toggle"
-        ",XF86AudioPrev, exec, ${pkgs.mpc_cli}/bin/mpc prev"
-        ",XF86AudioNext, exec, ${pkgs.mpc_cli}/bin/mpc next"
+        "$mod, p, exec, uwsm app -- ${pkgs.mpc_cli}/bin/mpc toggle"
+        ",XF86AudioPlay, exec, uwsm app -- ${pkgs.mpc_cli}/bin/mpc toggle"
+        ",XF86AudioPrev, exec, uwsm app -- ${pkgs.mpc_cli}/bin/mpc prev"
+        ",XF86AudioNext, exec, uwsm app -- ${pkgs.mpc_cli}/bin/mpc next"
       ];
 
       bindle = [
-        ",XF86MonBrightnessUp, exec, ${lib.getExe pkgs.brightnessctl} s +5%"
-        ",XF86MonBrightnessDown, exec, ${lib.getExe pkgs.brightnessctl} s 5%-"
-        ",XF86AudioLowerVolume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
-        ",XF86AudioRaiseVolume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+"
-        "$mod ,F7, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
-        "$mod ,F8, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+"
+        ",XF86MonBrightnessUp, exec, uwsm app -- ${lib.getExe pkgs.brightnessctl} s +5%"
+        ",XF86MonBrightnessDown, exec, uwsm app -- ${lib.getExe pkgs.brightnessctl} s 5%-"
+        ",XF86AudioLowerVolume, exec, uwsm app -- ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
+        ",XF86AudioRaiseVolume, exec, uwsm app -- ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+"
+        "$mod ,F7, exec, uwsm app -- ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
+        "$mod ,F8, exec, uwsm app -- ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+"
       ];
 
       windowrulev2 = [
