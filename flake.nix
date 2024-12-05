@@ -93,13 +93,7 @@
             "segger-jlink-qt4-796s"
           ];
         };
-      in [
-        (self: super: {
-          inherit (nonrecursive-unstable-pkgs)
-              fcitx5-mozc
-            ;
-        })
-      ];
+      in [ ];
     };
 
     pkgs = import nixpkgs pkgs-config;
