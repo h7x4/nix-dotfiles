@@ -14,6 +14,7 @@ in {
     ./programs/wireshark.nix
 
     ./services/dbus.nix
+    ./services/fwupd.nix
     ./services/irqbalance.nix
     ./services/journald.nix
     ./services/libinput.nix
