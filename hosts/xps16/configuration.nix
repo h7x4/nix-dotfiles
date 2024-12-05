@@ -10,6 +10,7 @@
     ./services/logiops.nix
     ./services/tailscale.nix
     ./services/thermald.nix
+    ./services/tlp.nix
 
     ./testconfig.nix
   ];
