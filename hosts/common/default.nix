@@ -195,6 +195,8 @@ in {
     Defaults    lecture_file = ${sudoLecture}
   '';
 
+  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
+
   # https://github.com/NixOS/nixpkgs/blob/nixos-24.05/nixos/modules/profiles/hardened.nix
   boot.blacklistedKernelModules = [
     # Obscure network protocols

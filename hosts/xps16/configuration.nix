@@ -17,8 +17,6 @@
 
   system.stateVersion = "24.11";
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
