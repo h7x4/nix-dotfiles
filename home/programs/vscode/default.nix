@@ -27,7 +27,15 @@ in
   programs.vscode = {
     enable = true;
 
-    package = pkgs.vscode;
+    package = pkgs.vscode.overrideAttrs (prev: {
+      # NOTE: this messes up zsh's tab completion in the terminal whenever code is started
+      #       from within a shell
+      preFixup = prev.preFixup + ''
+        gappsWrapperArgs+=(
+          --unset TMUX_PANE
+        )
+      '';
+    });
 
     userSettings = let
       editor = mapPrefixToSet "editor" {
