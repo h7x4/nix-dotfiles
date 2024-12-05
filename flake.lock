@@ -158,11 +158,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1733277378,
-        "narHash": "sha256-jPhKF6d2UXBr2nkJIFuUjVXdo6kEwLuIMK3RyJeA60s=",
+        "lastModified": 1733363776,
+        "narHash": "sha256-3EZvm60PErALa91el3zRl+cJCuHmJfqiBzK+EEPnf84=",
         "owner": "infinidoge",
         "repo": "nix-minecraft",
-        "rev": "ea8246bb2a70d33b5d332667a57da75e95c89af9",
+        "rev": "46d4b9024ccd2b36012ba074b330fd955a22295b",
         "type": "github"
       },
       "original": {
@@ -204,11 +204,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1733341920,
-        "narHash": "sha256-VO+J0b7eo9eIEpfUsfmdVbNvumKvkZcpbu/j4qIhNWY=",
+        "lastModified": 1733390065,
+        "narHash": "sha256-iB3dHF25/3kwBLwOHJaMp2JPq3iBLkcnHxWfemykRsg=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "4bdc7d1d4503e0ab509cd8edb7b701802075fefd",
+        "rev": "59e0687dfe83e658efb399f903970abbf3a6730e",
         "type": "github"
       },
       "original": {
@@ -225,11 +225,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1684092181,
-        "narHash": "sha256-Oi6G8Jx2RkEMi3UndtAnZw61hfgKGEe7l/ILdB9ump4=",
+        "lastModified": 1672838459,
+        "narHash": "sha256-SIXzj9fbSvr/jfhhil+0cS7I6KONijdH80PFGxJi+CA=",
         "ref": "refs/heads/master",
-        "rev": "028ed8774d1cf4650fc15253146cf14451eb608c",
-        "revCount": 43,
+        "rev": "392fb541ce39f1f52908eee336d5ed409cd798ed",
+        "revCount": 42,
         "type": "git",
         "url": "file:///home/h7x4/git/osuchan-line-bot"
       },
