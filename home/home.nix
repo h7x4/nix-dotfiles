@@ -131,7 +131,7 @@ in {
   };
 
   xsession = {
-    enable = true;
+    enable = !machineVars.wayland;
     # TODO: declare using xdg config home
     scriptPath = ".config/X11/xsession";
     profilePath = ".config/X11/xprofile";
