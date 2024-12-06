@@ -18,4 +18,6 @@
   programs.git.includes = [
     { path = config.sops.secrets."git/nordicsemi-maintenance-repos-config".path; }
   ];
+
+  programs.waybar.settings.mainBar.output = [ "DP-1" ];
 }

@@ -34,6 +34,8 @@
     development = true;
     creative = true;
 
+    wayland = true;
+
     dataDrives = let
       main = "/data";
     in {
