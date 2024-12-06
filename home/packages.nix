@@ -120,6 +120,7 @@
 
       tenacity
       # transcribe
+      webcamoid
       xcalib
       xclip
       xdotool

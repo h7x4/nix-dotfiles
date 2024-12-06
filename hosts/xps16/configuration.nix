@@ -75,10 +75,6 @@
     libinput.touchpad.accelSpeed = "0.5";
   };
 
-  environment.systemPackages = [
-    pkgs.webcamoid
-  ];
-
   hardware = {
     bluetooth.enable = true;
     enableRedistributableFirmware = true;
