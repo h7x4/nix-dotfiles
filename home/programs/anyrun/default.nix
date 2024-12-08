@@ -11,6 +11,7 @@
       ];
       hidePluginInfo = true;
       closeOnClick = true;
+      showResultsImmediately = true;
     };
 
     extraCss = builtins.readFile (./. + "/style.css");
