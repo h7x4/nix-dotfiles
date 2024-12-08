@@ -123,7 +123,8 @@ in
 
       # https://github.com/xkbcommon/libxkbcommon/blob/master/include/xkbcommon/xkbcommon-keysyms.h
       bind = [
-        "$mod SHIFT, Q, exit"
+        "$mod SHIFT, Q, exec, ${pkgs.systemd}/bin/loginctl terminate-user \"\""
+        "$mod ALT SHIFT, Q, exit"
         "$mod, R, exec, uwsm app -- ${pkgs.rofi}/bin/rofi -show drun"
         "$mod, T, togglefloating"
 
