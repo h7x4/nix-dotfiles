@@ -132,5 +132,6 @@ in
     Service.Restart="on-failure";
     Service.ExecStart = lib.mkForce "${fcitx5Package}/bin/fcitx5";
     Service.ExecReload = "/bin/kill -HUP $MAINPID";
+    Install.Alias = "fcitx5.service";
   };
 }
