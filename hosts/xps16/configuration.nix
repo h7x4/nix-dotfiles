@@ -73,6 +73,7 @@
       };
     };
     libinput.touchpad.accelSpeed = "0.5";
+    blueman.enable = true;
   };
 
   hardware = {
