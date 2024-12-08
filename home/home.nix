@@ -76,6 +76,7 @@ in {
   ]) ++ (optionals machineVars.wayland [
     ./programs/hyprland.nix
     ./programs/waybar.nix
+    ./programs/anyrun
   ]) ++ (optionals (!machineVars.wayland) [
     ./programs/xmonad
     # ./programs/xmobar
