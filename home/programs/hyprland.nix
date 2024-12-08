@@ -128,8 +128,7 @@ in
         "$mod, R, exec, uwsm app -- ${lib.getExe config.programs.anyrun.package}"
         "$mod, T, togglefloating"
 
-        # TODO: fix this for upcoming releases
-        "$mod, F, fullscreen, 2"
+        "$mod, F, fullscreenstate, 1"
         "$mod, C, exec, ${cfg.finalPackage}/bin/hyprctl reload"
 
         "$mod, BACKSPACE, killactive"
