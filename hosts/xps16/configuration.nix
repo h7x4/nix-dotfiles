@@ -5,6 +5,7 @@
 
     ./services/btrfs.nix
     ./services/docker.nix
+    ./services/fprintd.nix
     ./services/keybase.nix
     ./services/libvirtd.nix
     ./services/logiops.nix
