@@ -129,7 +129,7 @@ in
 
         # TODO: fix this for upcoming releases
         "$mod, F, fullscreen, 2"
-        "$mod, C, exec, uwsm app -- ${cfg.finalPackage}/bin/hyprctl reload"
+        "$mod, C, exec, ${cfg.finalPackage}/bin/hyprctl reload"
 
         "$mod, BACKSPACE, killactive"
 
@@ -161,18 +161,18 @@ in
         "$mod SHIFT, 8, movetoworkspacesilent, 8"
         "$mod SHIFT, 9, movetoworkspacesilent, 9"
 
-        "$mod, b, exec, uwsm app -- ${pkgs.fcitx5}/bin/fcitx5-remote -s mozc"
-        "$mod, n, exec, uwsm app -- ${pkgs.fcitx5}/bin/fcitx5-remote -s keyboard-no"
-        "$mod, m, exec, uwsm app -- ${pkgs.fcitx5}/bin/fcitx5-remote -s keyboard-us"
+        "$mod, b, exec, ${pkgs.fcitx5}/bin/fcitx5-remote -s mozc"
+        "$mod, n, exec, ${pkgs.fcitx5}/bin/fcitx5-remote -s keyboard-no"
+        "$mod, m, exec, ${pkgs.fcitx5}/bin/fcitx5-remote -s keyboard-us"
 
         # TODO: ensure exists in environment
-        "$mod, l, exec, uwsm app -- ${pkgs.systemd}/bin/loginctl lock-session"
+        "$mod, l, exec, ${pkgs.systemd}/bin/loginctl lock-session"
 
         # TODO: fix
         # "super + minus" = "${pkgs.xcalib}/bin/xcalib -invert -alter"
 
         # TODO: fix
-        ", Print, exec, uwsm app -- ${lib.getExe pkgs.grimblast} copy area"
+        ", Print, exec, ${lib.getExe pkgs.grimblast} copy area"
 
         # "SHIFT, Print, exec, ${lib.getExe pkgs.grimblast} copy area"
         # "shift + @Print" = "${pkgs.maim}/bin/maim --hidecursor --nokeyboard $SCREENSHOT_DIR/$(date +%s).png"
@@ -207,26 +207,26 @@ in
                 fi
               '';
             };
-          in "${key}, exec, uwsm app -- ${lib.getExe invokeIfNotRunningAndToggleWorkspace}"
+          in "${key}, exec, ${lib.getExe invokeIfNotRunningAndToggleWorkspace}"
           ) keys)
         ))
         lib.flatten
       ]);
 
       bindl = [
-        "$mod, p, exec, uwsm app -- ${pkgs.mpc_cli}/bin/mpc toggle"
-        ",XF86AudioPlay, exec, uwsm app -- ${pkgs.mpc_cli}/bin/mpc toggle"
-        ",XF86AudioPrev, exec, uwsm app -- ${pkgs.mpc_cli}/bin/mpc prev"
-        ",XF86AudioNext, exec, uwsm app -- ${pkgs.mpc_cli}/bin/mpc next"
+        "$mod, p, exec, ${pkgs.mpc_cli}/bin/mpc toggle"
+        ",XF86AudioPlay, exec, ${pkgs.mpc_cli}/bin/mpc toggle"
+        ",XF86AudioPrev, exec, ${pkgs.mpc_cli}/bin/mpc prev"
+        ",XF86AudioNext, exec, ${pkgs.mpc_cli}/bin/mpc next"
       ];
 
       bindle = [
-        ",XF86MonBrightnessUp, exec, uwsm app -- ${lib.getExe pkgs.brightnessctl} s +5%"
-        ",XF86MonBrightnessDown, exec, uwsm app -- ${lib.getExe pkgs.brightnessctl} s 5%-"
-        ",XF86AudioLowerVolume, exec, uwsm app -- ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
-        ",XF86AudioRaiseVolume, exec, uwsm app -- ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+"
-        "$mod ,F7, exec, uwsm app -- ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
-        "$mod ,F8, exec, uwsm app -- ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+"
+        ",XF86MonBrightnessUp, exec, ${lib.getExe pkgs.brightnessctl} s +5%"
+        ",XF86MonBrightnessDown, exec, ${lib.getExe pkgs.brightnessctl} s 5%-"
+        ",XF86AudioLowerVolume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
+        ",XF86AudioRaiseVolume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+"
+        "$mod ,F7, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
+        "$mod ,F8, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+"
       ];
 
       windowrulev2 = [
