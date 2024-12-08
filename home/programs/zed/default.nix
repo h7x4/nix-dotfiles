@@ -1,25 +1,24 @@
-{ config, pkgs, unstable-pkgs, lib, ... }:
+{ pkgs, ... }:
 {
-  home.packages = with unstable-pkgs; [ zed-editor ];
+  programs.zed-editor = {
+    enable = true;
+    userSettings = {
+      autosave = "off";
+      buffer_font_family = "Fira Code";
+      load_direnv = "shell_hook";
+      format_on_save = "off";
 
-  xdg.configFile."zed/settings.json".source = let
-    format = pkgs.formats.json { };
-  in format.generate "zed-settings.json" {
-    autosave = "off";
-    buffer_font_family = "Fira Code";
-    load_direnv = "shell_hook";
-    format_on_save = "off";
+      telemetry = {
+        diagnostics = false;
+        metrics = false;
+      };
 
-    telemetry = {
-      diagnostics = false;
-      metrics = false;
-    };
+      vim_mode = true;
 
-    vim_mode = true;
-
-    theme = {
-      mod = "dark";
-      dark = "monokai Classic";
+      theme = {
+        mod = "dark";
+        dark = "monokai Classic";
+      };
     };
   };
 

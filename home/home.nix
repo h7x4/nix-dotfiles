@@ -62,7 +62,7 @@ in {
     ./programs/taskwarrior.nix
     ./programs/vscode
     ./programs/zathura.nix
-    # ./programs/zed
+    ./programs/zed
 
     ./services/copyq.nix
     ./services/dunst.nix
