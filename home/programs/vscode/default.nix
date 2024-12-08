@@ -167,6 +167,7 @@ in
       "telemetry.telemetryLevel" = "off";
       "terminal.integrated.fontSize" = 14;
       "vsintellicode.modify.editor.suggestSelection" = "automaticallyOverrodeDefaultValue";
+      "keyboard.dispatch" = "keyCode";
       "window.zoomLevel" = 1;
 
       "search.exclude" = {
