@@ -6,7 +6,7 @@ final: prev: let
   in pkg.overrideAttrs (prev': {
     postInstall = (prev'.postInstall or "") + ''
       wrapProgram "$out/bin/${binaryName}" \
-        --add-flags "--enable-wayland-ime"
+        --add-flags "--enable-wayland-ime --wayland-text-input-version=3"
     '';
   });
 
