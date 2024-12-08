@@ -125,7 +125,7 @@ in
       bind = [
         "$mod SHIFT, Q, exec, ${pkgs.systemd}/bin/loginctl terminate-user \"\""
         "$mod ALT SHIFT, Q, exit"
-        "$mod, R, exec, uwsm app -- ${pkgs.rofi}/bin/rofi -show drun"
+        "$mod, R, exec, uwsm app -- ${lib.getExe config.programs.anyrun.package}"
         "$mod, T, togglefloating"
 
         # TODO: fix this for upcoming releases
