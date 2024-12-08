@@ -99,6 +99,7 @@
       libnotify
       libreoffice
       light
+      mission-center
       mopidy
       mopidy-mpd
       mopidy-soundcloud
