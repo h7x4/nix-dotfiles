@@ -242,7 +242,7 @@ in
         "workspace 2,class:(google-chrome)"
 
         "workspace 3,class:(Emacs)"
-        "workspace 3,class:(Code)"
+        "workspace 3,class:(code)"
         "workspace 3,class:(code-url-handler)"
 
         "workspace 5,class:(discord)"
