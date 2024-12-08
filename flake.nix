@@ -52,6 +52,11 @@
       url = "github:nix-community/nixos-vscode-server";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    anyrun = {
+      url = "git+https://git.pvv.ntnu.no/oysteikt/anyrun?ref=plugins-application-preprocess-exec";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{
@@ -68,6 +73,7 @@
     osuchan,
     sops-nix,
     vscode-server,
+    anyrun,
     # website
   }: let
     system = "x86_64-linux";
@@ -174,6 +180,7 @@
 
                   sharedModules = [
                     inputs.sops-nix.homeManagerModules.sops
+                    inputs.anyrun.homeManagerModules.default
                   ];
 
                   users.h7x4.imports = [
