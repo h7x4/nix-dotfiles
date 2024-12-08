@@ -230,6 +230,10 @@ in
         "$mod ,F8, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+"
       ];
 
+      exec-once = [
+        "uwsm finalize"
+      ];
+
       windowrulev2 = [
         "float,class:(Rofi)"
 
