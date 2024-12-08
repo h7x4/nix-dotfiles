@@ -237,6 +237,14 @@ in
 
       windowrulev2 = [
         "float,class:(Rofi)"
+        "float,class:^(xdg-desktop-portal-gtk)$"
+        "float, title:^(.*Bitwarden Password Manager.*)$"
+
+        "dimaround, class:^(xdg-desktop-portal-gtk)$"
+
+        "workspace special silent, title:^(Firefox — Sharing Indicator)$"
+        "workspace special silent, title:^(Zen — Sharing Indicator)$"
+        "workspace special silent, title:^(.*is sharing (your screen|a window)\.)$"
 
         "workspace 2,class:(firefox)"
         "workspace 2,class:(google-chrome)"
