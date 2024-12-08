@@ -131,6 +131,12 @@ in {
     };
   };
 
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+  };
+
   xsession = {
     enable = !machineVars.wayland;
     # TODO: declare using xdg config home
