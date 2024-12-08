@@ -96,11 +96,12 @@ in
     systemd.enableXdgAutostart = false;
 
     settings = let
+      exe = lib.getExe;
       scratchpads = [
         (rec {
           title = "Floating terminal";
           class = "floatingTerminal";
-          command = "uwsm app -- ${pkgs.alacritty}/bin/alacritty --class ${class} -e ${pkgs.tmux}/bin/tmux new-session -A -s f";
+          command = "uwsm app -- ${exe pkgs.alacritty} --class ${class} -e ${exe pkgs.tmux} new-session -A -s f";
           size = { h = 90; w = 95; };
           keys = [
             "$mod, RETURN"
@@ -110,7 +111,7 @@ in
         (rec {
           title = "Ncmpcpp";
           class = "floatingNcmpcpp";
-          command = "uwsm app -- ${pkgs.alacritty}/bin/alacritty --class ${class} -e ${pkgs.ncmpcpp}/bin/ncmpcpp";
+          command = "uwsm app -- ${exe pkgs.alacritty} --class ${class} -e ${exe pkgs.ncmpcpp}";
           size = { h = 95; w = 95; };
           keys = [ "$mod, Q" ];
         })
@@ -125,16 +126,17 @@ in
       bind = [
         "$mod SHIFT, Q, exec, ${pkgs.systemd}/bin/loginctl terminate-user \"\""
         "$mod ALT SHIFT, Q, exit"
-        "$mod, R, exec, uwsm app -- ${lib.getExe config.programs.anyrun.package}"
+        "$mod, R, exec, uwsm app -- ${exe config.programs.anyrun.package}"
         "$mod, T, togglefloating"
 
         "$mod, F, fullscreenstate, 1"
+        "$mod SHIFT, F, fullscreenstate, 3"
         "$mod, C, exec, ${cfg.finalPackage}/bin/hyprctl reload"
 
         "$mod, BACKSPACE, killactive"
 
-        "$mod SHIFT, RETURN, exec, uwsm app -- ${pkgs.alacritty}/bin/alacritty --class termTerminal -e ${pkgs.tmux}/bin/tmux new-session -A -s term"
-        "$mod SHIFT, SPACE, exec, uwsm app -- ${pkgs.alacritty}/bin/alacritty --class termTerminal -e ${pkgs.tmux}/bin/tmux new-session -A -s term"
+        "$mod SHIFT, RETURN, exec, uwsm app -- ${exe pkgs.alacritty} --class termTerminal -e ${exe pkgs.tmux} new-session -A -s term"
+        "$mod SHIFT, SPACE, exec, uwsm app -- ${exe pkgs.alacritty} --class termTerminal -e ${exe pkgs.tmux} new-session -A -s term"
 
         "$mod, j, layoutmsg,cyclenext"
         "$mod, k, layoutmsg,cycleprev"
@@ -172,7 +174,7 @@ in
         # "super + minus" = "${pkgs.xcalib}/bin/xcalib -invert -alter"
 
         # TODO: fix
-        ", Print, exec, ${lib.getExe pkgs.grimblast} copy area"
+        ", Print, exec, ${exe pkgs.grimblast} copy area"
 
         # "SHIFT, Print, exec, ${lib.getExe pkgs.grimblast} copy area"
         # "shift + @Print" = "${pkgs.maim}/bin/maim --hidecursor --nokeyboard $SCREENSHOT_DIR/$(date +%s).png"
@@ -214,15 +216,15 @@ in
       ]);
 
       bindl = [
-        "$mod, p, exec, ${pkgs.mpc_cli}/bin/mpc toggle"
-        ",XF86AudioPlay, exec, ${pkgs.mpc_cli}/bin/mpc toggle"
-        ",XF86AudioPrev, exec, ${pkgs.mpc_cli}/bin/mpc prev"
-        ",XF86AudioNext, exec, ${pkgs.mpc_cli}/bin/mpc next"
+        "$mod, p, exec, ${exe pkgs.mpc_cli} toggle"
+        ",XF86AudioPlay, exec, ${exe pkgs.mpc_cli} toggle"
+        ",XF86AudioPrev, exec, ${exe pkgs.mpc_cli} prev"
+        ",XF86AudioNext, exec, ${exe pkgs.mpc_cli} next"
       ];
 
       bindle = [
-        ",XF86MonBrightnessUp, exec, ${lib.getExe pkgs.brightnessctl} s +5%"
-        ",XF86MonBrightnessDown, exec, ${lib.getExe pkgs.brightnessctl} s 5%-"
+        ",XF86MonBrightnessUp, exec, ${exe pkgs.brightnessctl} s +5%"
+        ",XF86MonBrightnessDown, exec, ${exe pkgs.brightnessctl} s 5%-"
         ",XF86AudioLowerVolume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
         ",XF86AudioRaiseVolume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+"
         "$mod ,F7, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
