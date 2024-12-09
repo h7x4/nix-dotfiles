@@ -28,6 +28,7 @@ let # http://www.pvv.ntnu.no/pvv/Maskiner
     "shark"
     "tallulah"
     "tom"
+    "ustetind"
     "venture"
   ];
 
