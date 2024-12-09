@@ -61,6 +61,7 @@ in {
       findx = p "fd";
 
       ag = "${pkgs.ripgrep}/bin/rg";
+      sxiv = "${pkgs.nsxiv}/bin/nsxiv";
 
       lls = "${pkgs.coreutils}/bin/ls --color=always";
       ls = p "eza";
