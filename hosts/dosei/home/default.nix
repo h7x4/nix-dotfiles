@@ -1,6 +1,10 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
   home.stateVersion = "24.05";
+
+  home.packages = with pkgs; [
+    groovy
+  ];
 
   programs.ssh.matchBlocks = {
     "tsuki-ws" = {
