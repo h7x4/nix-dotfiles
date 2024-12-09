@@ -2,11 +2,20 @@
 {
   programs.zed-editor = {
     enable = true;
+
     userSettings = {
-      autosave = "off";
-      buffer_font_family = "Fira Code";
       load_direnv = "shell_hook";
+      base_keymap = "VSCode";
+
+      autosave = "off";
       format_on_save = "off";
+      remove_trailing_whitespace_on_save = false;
+
+      tab_size = 2;
+
+      ui_font_family = "Noto Sans";
+      buffer_font_family = "Fira Code";
+      terminal.font_family = "Fira Code";
 
       telemetry = {
         diagnostics = false;
@@ -16,10 +25,51 @@
       vim_mode = true;
 
       theme = {
-        mod = "dark";
-        dark = "monokai Classic";
+        mode = "dark";
+        light = "monokai Classic";
+        dark = "monokai Darker Classic";
+      };
+
+      file_scan_exclusions = [
+        "**/.git"
+        "**/.svn"
+        "**/.hg"
+        "**/.jj"
+        "**/CVS"
+        "**/.DS_Store"
+        "**/Thumbs.db"
+        "**/.classpath"
+        "**/.settings"
+
+        "**/.direnv"
+      ];
+
+      git.inline_blame.enable = false;
+
+      indent_guides = {
+        enabled = true;
+        coloring = "indent_aware";
       };
     };
+
+    userKeymaps = [
+      {
+        context = "Workspace";
+        bindings = {
+          ctrl-j = "workspace::NewTerminal";
+        };
+      }
+    ];
+
+    extensions = [
+      "basher"
+      "dart"
+      "dockerfile"
+      "html"
+      "nix"
+      "sql"
+      "toml"
+    ];
   };
 
   xdg.configFile."zed/themes/monokai.json".source = let
