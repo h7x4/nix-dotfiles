@@ -271,6 +271,7 @@ in {
       p = "${pkgs.python3Packages.ipython}/bin/ipython";
       s = p "sxiv";
       v = p "mpv";
+      zed = p "zed-editor";
       zt = p "zathura";
     };
 
