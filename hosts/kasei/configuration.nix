@@ -95,9 +95,6 @@
 
   boot = {
     initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
-    # kernelPackages = pkgs.linuxKernel.packages.linux_zen.zfs;
-    kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
-    supportedFilesystems = [ "zfs" ];
 
     loader = {
       efi.canTouchEfiVariables = false;
