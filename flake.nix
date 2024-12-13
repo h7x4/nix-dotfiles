@@ -234,7 +234,15 @@
           nixos-hardware.nixosModules.common-gpu-intel
         ];
       };
-      kasei = nixSys "kasei" { };
+      kasei = nixSys "kasei" {
+        modules = [
+          nixos-hardware.nixosModules.common-pc
+          nixos-hardware.nixosModules.common-pc-ssd
+          nixos-hardware.nixosModules.common-cpu-amd
+          nixos-hardware.nixosModules.common-cpu-amd-pstate
+          nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
+        ];
+      };
       xps16 = nixSys "xps16" {
         modules = [
           nixos-hardware.nixosModules.common-hidpi
