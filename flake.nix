@@ -101,6 +101,31 @@
         };
       in [
         (import ./overlays/wayland-ime-integration.nix)
+
+        (final: prev: {
+          mpd = prev.mpd.overrideAttrs (prev': {
+            version = "v0.23.16-unstable";
+            src = final.fetchFromGitHub {
+              owner = "MusicPlayerDaemon";
+              repo = "MPD";
+              rev = "b6e187efd8520ca9e3541e630559246c893cc304";
+              hash = "sha256-EGpBiH/Sp7xgcSpj/zKgFqDfjdr2djveC+qV57imr3E=";
+            };
+
+            postPatch = prev'.postPatch + ''
+              substituteInPlace src/lib/yajl/Handle.hxx \
+                --replace-fail '<yajl_parse.h>' '<yajl/yajl_parse.h>'
+              substituteInPlace src/lib/yajl/Callbacks.hxx \
+                --replace-fail '<yajl_parse.h>' '<yajl/yajl_parse.h>'
+              substituteInPlace src/lib/yajl/Gen.hxx \
+                --replace-fail '<yajl_gen.h>' '<yajl/yajl_gen.h>'
+            '';
+
+            nativeBuildInputs = prev'.nativeBuildInputs ++ [
+              final.python3Packages.sphinx-rtd-theme
+            ];
+          });
+        })
       ];
     };
 
