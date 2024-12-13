@@ -79,7 +79,7 @@
 
   services = {
     openssh.enable = true;
-    xserver.videoDrivers = [ "amdgpu" ];
+    xserver.videoDrivers = [ "nvidia" ];
     tailscale.enable = true;
     avahi = {
       enable = true;
@@ -95,11 +95,8 @@
 
   boot = {
     initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
-    initrd.kernelModules = [ "amdgpu" ];
-
     # kernelPackages = pkgs.linuxKernel.packages.linux_zen.zfs;
     kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
-    kernelModules = [ "kvm-amd" ];
     supportedFilesystems = [ "zfs" ];
 
     loader = {
@@ -144,10 +141,12 @@
     enableRedistributableFirmware = true;
     keyboard.zsa.enable = true;
     sane.enable = true;
-    opengl = {
-      enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
+
+    nvidia = {
+      modesetting.enable = true;
+      open = false;
+      nvidiaSettings = true;
+      package = config.boot.kernelPackages.nvidiaPackages.beta;
     };
   };
 }
