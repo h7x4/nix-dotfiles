@@ -202,8 +202,6 @@ in
       "errorLens.errorBackground" = "rgba(240,0,0,0.1)";
       "errorLens.warningBackground" = "rgba(180,180,0,0.1)";
 
-      "keyboard-quickfix.showActionNotification" = false;
-
       "liveshare.presence" = true;
       "liveshare.showInStatusBar" = "whileCollaborating";
 
@@ -238,9 +236,15 @@ in
 
     keybindings = [
       {
-        key = "ctrl+[Period]";
-        command = "keyboard-quickfix.openQuickFix";
-        when = "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly";
+        key = "alt+k";
+        when = "codeActionMenuVisible";
+        command = "selectPrevCodeAction";
+      }
+
+      {
+        key = "alt+j";
+        when = "codeActionMenuVisible";
+        command = "selectNextCodeAction";
       }
 
       {
