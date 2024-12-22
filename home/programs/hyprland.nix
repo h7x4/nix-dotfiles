@@ -215,6 +215,13 @@ in
         lib.flatten
       ]);
 
+      bindm = [
+        "$mod, mouse:272, movewindow"
+        "$mod, Control_L, movewindow"
+        "$mod, mouse:273, resizewindow"
+        "$mod, ALT_L, resizewindow"
+      ];
+
       bindl = [
         "$mod, p, exec, ${exe pkgs.mpc_cli} toggle"
         ",XF86AudioPlay, exec, ${exe pkgs.mpc_cli} toggle"
