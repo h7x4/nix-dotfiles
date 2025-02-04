@@ -26,6 +26,8 @@
       "git"
       "git/pvv"
       "nix"
+      "work"
+      "ctf"
     ];
   };
 }
