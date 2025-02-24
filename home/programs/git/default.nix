@@ -47,17 +47,18 @@ in
 
       aliases = {
         aliases = "!git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1 = \\2/g'";
-        delete-merged = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d";
-        forcepush = "push --force-with-lease --force-if-includes";
         authors = "shortlog --summary --numbered --email";
-        si = "switch-interactive";
+        delete-merged = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d";
         ff = "fixup-fixup";
         fi = "fixup-interactive";
-        rf = "rebase-fixups";
-        pp = "post-pr";
-        subs = "submodule update --init --recursive";
-        rebase-author = "rebase -i -x \"git commit --amend --reset-author -CHEAD\"";
+        forcepush = "push --force-with-lease --force-if-includes";
         git = "!git";
+        pp = "post-pr";
+        rebase-author = "rebase -i -x \"git commit --amend --reset-author -CHEAD\"";
+        reset-to-upstream = "!git reset --hard \"origin/$(git rev-parse --abbrev-ref HEAD)\"";
+        rf = "rebase-fixups";
+        si = "switch-interactive";
+        subs = "submodule update --init --recursive";
       } // (let
         c = c: s: "%C(${c})${s}%C(reset)";
       in {
