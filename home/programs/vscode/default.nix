@@ -337,6 +337,7 @@ in
       ms-vscode.test-adapter-converter
       visualstudioexptteam.vscodeintellicode
       tamasfe.even-better-toml
+      maximedenes.vscoq
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
         name = "monokai-st3";
