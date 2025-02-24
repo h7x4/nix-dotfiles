@@ -109,7 +109,7 @@
       nsxiv
       nyxt
       obsidian
-      # pcloud
+      pcloud
       pdfarranger
       pwvucontrol
       # scrcpy

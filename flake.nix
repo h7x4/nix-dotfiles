@@ -105,6 +105,11 @@
       in [
         (import ./overlays/wayland-ime-integration.nix)
 
+        (import ./overlays/pcloud.nix {
+          inherit (nixpkgs) lib;
+          pkgs = nonrecursive-unstable-pkgs;
+        })
+
         (final: prev: {
           mpd = prev.mpd.overrideAttrs (prev': {
             version = "v0.23.16-unstable";
