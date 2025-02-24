@@ -16,6 +16,8 @@
     ./testconfig.nix
   ];
 
+  programs.adb.enable = true;
+
   sops.age.keyFile = "/var/lib/sops/age-key.txt";
 
   system.stateVersion = "24.11";
