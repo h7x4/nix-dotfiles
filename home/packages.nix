@@ -1,15 +1,20 @@
 { pkgs, config, machineVars, ... }:
 {
   home.packages = with pkgs; [
+    bandwhich
     binutils
     cloc
     cyme
     czkawka
+    difftastic
     diskonaut
     duf
     duff
+    fclones
     ffmpeg
     file
+    fselect
+    gitoxide
     glances
     gpauth
     gpclient
@@ -17,13 +22,17 @@
     gping
     graphviz
     hexyl
+    htmlq
     httpie
+    huniq
+    hyperfine
     imagemagick
     kepubify
     keymapviz
     libwebp
     lnav
     lolcat
+    lurk
     mdcat
     mediainfo
     meli
@@ -40,23 +49,29 @@
     nmap
     ouch
     parallel
+    pipr
     progress
     pwntools
     python3
     rclone
+    rip2
+    rnr
     rsync
     # sc-im
+    skim
     slack-term
     tea
     terminal-parrot
     termtosvg
     toilet
     tokei
+    trippy
     unpaper
     unzip
     usbutils
-    uutils-coreutils
+    uutils-coreutils-noprefix
     waifu2x-converter-cpp
+    watchexec
     wavemon
     wiki-tui
     yubico-pam
