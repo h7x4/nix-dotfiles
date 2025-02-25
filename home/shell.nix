@@ -288,6 +288,7 @@ in {
       };
 
       m = p "ncmpcpp";
+      g = p "gitoxide";
       p = "${pkgs.python3Packages.ipython}/bin/ipython";
       s = p "sxiv";
       v = p "mpv";
