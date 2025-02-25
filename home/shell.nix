@@ -290,7 +290,7 @@ in {
       m = p "ncmpcpp";
       g = p "gitoxide";
       p = "${pkgs.python3Packages.ipython}/bin/ipython";
-      s = p "sxiv";
+      s = p "nsxiv";
       v = p "mpv";
       zed = p "zed-editor";
       zt = p "zathura";
