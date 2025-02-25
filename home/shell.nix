@@ -38,36 +38,56 @@ in {
     "System Tool Replacements" = {
 
       # Convention: if replaced tool is useful in some situations, let it be available
-      #             as its own command with its first character doubled.
+      #             as its own command with an underscore appended
       #
-      #             Example:   cp -> ccp
+      #             Example:   cp -> cp_
 
+      cd_ = "builtin cd";
       cd = lib.mkIf config.programs.zoxide.enable "z";
 
-      ccp = "${pkgs.coreutils}/bin/cp";
-      cp  = "${p "rsync"} --progress --human-readable";
-      cpr = "${p "rsync"} --progress --human-readable --recursive";
+      cp_ = "${pkgs.coreutils}/bin/cp";
+      cp  = p "xcp";
 
-      ccat = "${pkgs.coreutils}/bin/cat";
+      df_ = "${pkgs.coreutils}/bin/df";
+      df = p "duf";
+
+      scp_ = "/run/current-system/sw/bin/scp";
+      scp = "${p "rsync"} --progress --human-readable --recursive";
+
+      cat_ = "${pkgs.coreutils}/bin/cat";
       cat  = p "bat";
 
-      htop = "${pkgs.bottom}/bin/btm";
-      hhtop = p "htop";
+      htop_ = p "htop";
+      htop = p "bottom";
 
+      dig_ = p "dig";
       dig = p "dogdns";
+
+      man_ = p "man";
+      man = "${pkgs.bat-extras.batman}/bin/batman";
+
+      strace_ = p "strace";
+      strace = p "intentrace";
+
+      lsusb_ = p "usbutils";
+      lsusb = p "cyme";
 
       # Flags are incompatible, so they are suffixed by -x
       psx = p "procs";
       findx = p "fd";
 
-      ag = "${pkgs.ripgrep}/bin/rg";
-      sxiv = "${pkgs.nsxiv}/bin/nsxiv";
+      grep_ = p "gnugrep";
+      grep = p "ripgrep";
 
-      lls = "${pkgs.coreutils}/bin/ls --color=always";
+      ag = p "ripgrep";
+      sxiv = p "nsxiv";
+
+      ls_ = "${pkgs.coreutils}/bin/ls --color=always";
       ls = p "eza";
       la = "${p "eza"} -lah --changed --time-style long-iso --git --group";
       lsa = "la";
 
+      killall_ = p "killall";
       killall = {
         type = ";";
         alias = [
