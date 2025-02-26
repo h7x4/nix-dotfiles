@@ -16,7 +16,7 @@
     ./testconfig.nix
   ];
 
-  system.stateVersion = "22.05";
+  system.stateVersion = "25.05";
 
   boot.binfmt.emulatedSystems = [
     "x86_64-windows"
