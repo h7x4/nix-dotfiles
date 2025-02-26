@@ -157,7 +157,7 @@
 
         username = "h7x4";
         homeDirectory = "/home/h7x4";
-        stateVersion = "22.05";
+        stateVersion = "25.05";
         configuration = {
           imports = [
             ./home/home.nix

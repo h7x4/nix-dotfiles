@@ -31,6 +31,7 @@ in
 
       signing = {
         key = "46B9228E814A2AAC";
+        # format = "openpgp";
         signByDefault = true;
       };
 
