@@ -31,6 +31,7 @@ in {
     ./programs/nix-index
     ./programs/pandoc.nix
     ./programs/ripgrep.nix
+    ./programs/skim.nix
     ./programs/ssh
     ./programs/tealdeer
     ./programs/texlive.nix
