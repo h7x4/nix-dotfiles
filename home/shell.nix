@@ -288,7 +288,7 @@ in {
       };
 
       m = p "ncmpcpp";
-      g = p "gitoxide";
+      g = "${pkgs.gitoxide}/bin/gix";
       p = "${pkgs.python3Packages.ipython}/bin/ipython";
       s = p "nsxiv";
       v = p "mpv";
