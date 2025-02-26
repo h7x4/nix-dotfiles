@@ -339,12 +339,12 @@ in
     })
     (pkgs.writeShellApplication {
       name = "git-fixup-interactive";
-      runtimeInputs = with pkgs; [ cfg.package gnused gnugrep fzf ];
+      runtimeInputs = with pkgs; [ cfg.package gnused gnugrep skim ];
       text = lib.fileContents ./scripts/git-fixup-interactive.sh;
     })
     (pkgs.writeShellApplication {
       name = "git-switch-interactive";
-      runtimeInputs = with pkgs; [ cfg.package fzf gnused coreutils ];
+      runtimeInputs = with pkgs; [ cfg.package skim gnused gnugrep uutils-coreutils-noprefix ];
       text = lib.fileContents ./scripts/git-switch-interactive.sh;
       excludeShellChecks = [
         "SC2001" # (style): See if you can use ${variable//search/replace} instead. (sed invocation)

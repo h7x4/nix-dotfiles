@@ -9,7 +9,7 @@ FORK_POINT=$(git merge-base --fork-point "$TARGET_BRANCH")
 
 COMMITS_SINCE_FORK_POINT=$(git log --format=format:'%s' "$FORK_POINT"..HEAD | grep -v -E '^fixup!')
 
-RESULT=$(fzf <<<"$COMMITS_SINCE_FORK_POINT")
+RESULT=$(sk <<<"$COMMITS_SINCE_FORK_POINT")
 
 if [ "$RESULT" == "" ]; then
   echo "Doing nothing..."
