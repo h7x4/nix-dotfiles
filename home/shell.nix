@@ -27,6 +27,10 @@ in {
     source "${config.sops.secrets."nordicsemi/envvars".path}"
   '';
 
+  programs.nushell.extraEnv = ''
+    source "${config.sops.secrets."nordicsemi/envvars".path}"
+  '';
+
   local.shell.aliases = {
 
     # ░█▀▄░█▀▀░█▀█░█░░░█▀█░█▀▀░█▀▀░█▄█░█▀▀░█▀█░▀█▀░█▀▀

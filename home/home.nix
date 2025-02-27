@@ -29,6 +29,7 @@ in {
     ./programs/man.nix
     ./programs/neovim
     ./programs/nix-index
+    ./programs/nushell.nix
     ./programs/pandoc.nix
     ./programs/ripgrep.nix
     ./programs/skim.nix

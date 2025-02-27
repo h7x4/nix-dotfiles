@@ -254,6 +254,10 @@ in {
         # TODO: fish does not support session variables?
         # localVariables = cfg.variables;
       };
+      nushell = {
+        shellAliases = flattenedAliases;
+        environmentVariables = cfg.variables;
+      };
     };
   };
 }
