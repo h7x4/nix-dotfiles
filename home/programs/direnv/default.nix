@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 {
   imports = [
     ./auto-prune.nix
@@ -8,5 +8,6 @@
     enable = true;
     enableZshIntegration = true;
     nix-direnv.enable = true;
+    enableNushellIntegration = config.programs.nushell.enable;
   };
 }

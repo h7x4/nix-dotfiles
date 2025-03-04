@@ -1,4 +1,7 @@
-{ ... }:
+{ config, ... }:
 {
-  programs.eza.enable = true;
+  programs.eza = {
+    enable = true;
+    enableNushellIntegration = config.programs.nushell.enable;
+  };
 }

@@ -8,6 +8,7 @@ in
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
+    enableNushellIntegration = config.programs.nushell.enable;
 
     settings = {
       db_path = "${config.xdg.dataHome}/atuin/history.db";

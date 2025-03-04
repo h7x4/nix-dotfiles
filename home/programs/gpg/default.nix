@@ -36,6 +36,7 @@
     enableExtraSocket = true;
     enableSshSupport = true;
     enableScDaemon = true;
+    enableNushellIntegration = config.programs.nushell.enable;
     grabKeyboardAndMouse = false;
   };
 }
