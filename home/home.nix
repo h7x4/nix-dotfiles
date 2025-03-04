@@ -72,6 +72,7 @@ in {
     ./services/gnome-keyring.nix
     ./services/keybase.nix
     ./services/mpd.nix
+    ./services/mpris-proxy.nix
     ./services/network-manager.nix
     ./services/psd.nix
     ./services/tumblerd.nix
