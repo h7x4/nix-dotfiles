@@ -13,6 +13,7 @@ in {
     ./programs/usbtop.nix
     ./programs/wireshark.nix
 
+    ./services/blueman.nix
     ./services/dbus.nix
     ./services/fwupd.nix
     ./services/irqbalance.nix
