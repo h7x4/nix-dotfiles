@@ -150,6 +150,17 @@
       packages = with pkgs; [ sops ];
     };
 
+    nixosModules = {
+      machineVars = ./modules/machineVars.nix;
+      socketActivation = ./modules/socketActivation.nix;
+    };
+
+    homeModules = {
+      uidGid = ./home/modules/uidGid.nix;
+      shellAliases = ./home/modules/shellAliases.nix;
+      colors = ./home/modules/colors.nix;
+    };
+
     homeConfigurations = {
       h7x4 = home-manager.lib.homeManagerConfiguration {
         inherit system;
