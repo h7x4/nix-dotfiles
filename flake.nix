@@ -1,8 +1,8 @@
 {
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-24.11";
-    # nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/master";
+    nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
+    nixpkgs-yet-unstabler.url = "github:NixOS/nixpkgs/master";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
@@ -63,6 +63,7 @@
     self,
     nixpkgs,
     nixpkgs-unstable,
+    nixpkgs-yet-unstabler,
     home-manager,
     nixos-hardware,
 
@@ -139,6 +140,7 @@
 
     pkgs = import nixpkgs pkgs-config;
     unstable-pkgs = import nixpkgs-unstable pkgs-config;
+    yet-unstabler-pkgs = import nixpkgs-yet-unstabler pkgs-config;
   in {
     extendedLib = import ./lib { stdlib = pkgs.lib; };
 
@@ -197,6 +199,7 @@
             specialArgs = {
               inherit inputs;
               inherit unstable-pkgs;
+              inherit yet-unstabler-pkgs;
               inherit (self) extendedLib;
             } // (extraConfig.specialArgs or { });
 
@@ -218,6 +221,7 @@
                   extraSpecialArgs = {
                     inherit inputs;
                     inherit unstable-pkgs;
+                    inherit yet-unstabler-pkgs;
                     inherit (self) extendedLib;
                     inherit (config) machineVars;
                   };
