@@ -220,9 +220,13 @@
     '';
   };
 
-  # NOTE: This is needed for nginx to be able
-  #       to connect to sockets in /run
-  systemd.services.nginx.serviceConfig.ProtectHome = false;
+  systemd.services.nginx.serviceConfig = {
+    LimitNOFILE = 65536;
+
+    # NOTE: This is needed for nginx to be able
+    #       to connect to sockets in /run
+    ProtectHome = false;
+  };
 
   networking.firewall.allowedTCPPorts = [
     80
