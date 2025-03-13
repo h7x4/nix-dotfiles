@@ -14,6 +14,8 @@
     package = unstable-pkgs.nixVersions.stable;
     distributedBuilds = config.networking.hostName != "tsuki";
 
+    daemonCPUSchedPolicy = "batch";
+
     settings = {
       allow-dirty = true;
       allowed-uris = [ "http://" "https://" ];
