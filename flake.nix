@@ -135,6 +135,9 @@
             ];
           });
         })
+
+        minecraft.overlays.default
+        osuchan.overlays.default
       ];
     };
 
