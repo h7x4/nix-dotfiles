@@ -24,6 +24,12 @@
       terminal.font_family = "Fira Code";
       termial.font_size = 16;
 
+      file_types = {
+        "Groovy" = [ "Jenkinsfile*" ];
+        "Dockerfile" = [ "Dockerfile*" ];
+        "JSONC" = [ "json5" ];
+      };
+
       tabs = {
         file_icons = true;
         show_close_button = "always";
