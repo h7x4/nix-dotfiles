@@ -17,7 +17,6 @@
     settings = {
       allow-dirty = true;
       allowed-uris = [ "http://" "https://" ];
-      auto-optimise-store = true;
       binary-caches = [ "https://cache.nixos.org/" ];
       builders-use-substitutes = true;
       experimental-features = [ "nix-command" "flakes" ];
@@ -29,6 +28,9 @@
     extraOptions = ''
       !include ${config.sops.secrets."nix/access-tokens".path}
     '';
+
+    optimise.automatic = true;
+    gc.automatic = true;
 
     registry = {
       home.to = {
