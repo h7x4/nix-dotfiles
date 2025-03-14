@@ -291,6 +291,7 @@ in {
         ];
       };
 
+      e = "$EDITOR";
       m = p "ncmpcpp";
       g = "${pkgs.gitoxide}/bin/gix";
       p = "${pkgs.python3Packages.ipython}/bin/ipython";
