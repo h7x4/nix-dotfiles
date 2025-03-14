@@ -19,7 +19,7 @@
   };
 
   nix = {
-    package = unstable-pkgs.nixVersions.stable;
+    package = unstable-pkgs.nixVersions.latest;
     distributedBuilds = config.networking.hostName != "tsuki";
 
     daemonCPUSchedPolicy = "batch";
