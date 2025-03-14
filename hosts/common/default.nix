@@ -21,6 +21,7 @@ in {
     ./services/libinput.nix
     ./services/locate.nix
     ./services/logind.nix
+    ./services/nixseparatedebuginfod.nix
     ./services/openssh.nix
     ./services/pcscd.nix
     ./services/pipewire.nix
