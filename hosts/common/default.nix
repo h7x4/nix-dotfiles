@@ -196,8 +196,16 @@ in {
   # Realtime scheduling for pipewire and mpd
   security.rtkit.enable = !config.machineVars.headless;
 
-  security.tpm2.enable = lib.mkDefault true;
-  security.tpm2.abrmd.enable = lib.mkDefault config.security.tpm2.enable;
+  security.tpm2 = {
+    enable = lib.mkDefault true;
+    abrmd.enable = lib.mkDefault config.security.tpm2.enable;
+    pkcs11.enable = lib.mkDefault config.security.tpm2.enable;
+    tctiEnvironment = {
+      enable = lib.mkDefault config.security.tpm2.enable;
+      interface = "tabrmd";
+    };
+  };
+
   security.sudo.extraConfig = let
     sudoLecture = pkgs.writeText "sudo-lecture.txt" (extendedLib.termColors.front.red "Be careful or something, idk...\n");
   in ''
