@@ -208,6 +208,7 @@ in {
   };
 
   security.lockKernelModules = true;
+  security.protectKernelImage = true;
 
   security.sudo.extraConfig = let
     sudoLecture = pkgs.writeText "sudo-lecture.txt" (extendedLib.termColors.front.red "Be careful or something, idk...\n");
