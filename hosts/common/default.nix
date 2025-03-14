@@ -209,6 +209,8 @@ in {
     kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
     loader.systemd-boot.memtest86.enable = true;
 
+    tmp.useTmpfs = lib.mkDefault true;
+
     kernel.sysctl."kernel.sysrq" = 1;
 
     # https://github.com/NixOS/nixpkgs/blob/nixos-24.05/nixos/modules/profiles/hardened.nix
