@@ -29,6 +29,7 @@ in {
     ./services/resolved.nix
     ./services/smartd.nix
     ./services/systemd-lock-handler.nix
+    ./services/udisks2.nix
     ./services/uptimed.nix
     ./services/userborn.nix
     ./services/xserver.nix
