@@ -44,4 +44,7 @@
       extraPackages = hPkgs: with hPkgs; [ dbus ];
     };
   };
+
+  services.graphical-desktop.enable = !config.machineVars.headless;
+  services.speechd.enable = false;
 }
