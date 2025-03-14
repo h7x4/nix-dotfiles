@@ -197,6 +197,7 @@ in {
   # Realtime scheduling for pipewire and mpd
   security.rtkit.enable = !config.machineVars.headless;
 
+  systemd.tpm2.enable = true;
   security.tpm2 = {
     enable = lib.mkDefault true;
     abrmd.enable = lib.mkDefault config.security.tpm2.enable;
@@ -216,6 +217,12 @@ in {
     Defaults    lecture = always
     Defaults    lecture_file = ${sudoLecture}
   '';
+
+  systemd = {
+    sysupdate.enable = true;
+    repart.enable = true;
+    userdbd.enable = true;
+  };
 
   boot = {
     kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
