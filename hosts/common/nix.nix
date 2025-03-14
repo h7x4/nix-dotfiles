@@ -31,7 +31,8 @@
       builders-use-substitutes = true;
       experimental-features = [ "nix-command" "flakes" ];
       log-lines = 50;
-      trusted-users = [ "h7x4" "nix-builder" ];
+      trusted-users = [ "h7x4" ];
+      allowed-users = [ "@users" ];
       use-xdg-base-directories = true;
     };
 
