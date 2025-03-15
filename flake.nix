@@ -11,11 +11,6 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    dotfiles = {
-      url = "git+https://git.pvv.ntnu.no/oysteikt/dotfiles?ref=master";
-      flake = false;
-    };
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -26,30 +21,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # TODO: fix website
-    # website = {
-    #   url = "git+https://git.pvv.ntnu.no/oysteikt/nani.wtf?ref=main";
-      # url = "path:/home/h7x4/git/nani.wtf";
-      # inputs.nixpkgs.follows = "nixpkgs";
-    # };
-
     maunium-stickerpicker = {
       url = "github:h7x4/maunium-stickerpicker-nix/0.1.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     minecraft = {
-      url = "github:infinidoge/nix-minecraft";
+      url = "github:infinidoge/nix-minecraft/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     matrix-synapse-next = {
-      url = "github:dali99/nixos-matrix-modules/v0.6.0";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    vscode-server = {
-      url = "github:nix-community/nixos-vscode-server";
+      url = "github:dali99/nixos-matrix-modules/0.7.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -67,15 +50,12 @@
     home-manager,
     nixos-hardware,
 
-    dotfiles,
     matrix-synapse-next,
     maunium-stickerpicker,
     minecraft,
     osuchan,
     sops-nix,
-    vscode-server,
     anyrun,
-    # website
   }: let
     system = "x86_64-linux";
 
@@ -290,7 +270,6 @@
         modules = [
           matrix-synapse-next.nixosModules.default
           osuchan.outputs.nixosModules.default
-          vscode-server.nixosModules.default
           maunium-stickerpicker.nixosModules.default
 
           (args: import minecraft.outputs.nixosModules.minecraft-servers (args // {
