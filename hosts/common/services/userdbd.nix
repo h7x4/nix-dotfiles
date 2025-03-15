@@ -1,0 +1,4 @@
+{ ... }:
+{
+  services.userdbd.enable = true;
+}

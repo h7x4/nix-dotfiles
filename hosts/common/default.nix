@@ -32,6 +32,7 @@ in {
     ./services/udisks2.nix
     ./services/uptimed.nix
     ./services/userborn.nix
+    ./services/userdbd.nix
     ./services/xserver.nix
   ];
 
@@ -221,7 +222,6 @@ in {
   systemd = {
     sysupdate.enable = true;
     repart.enable = true;
-    userdbd.enable = true;
   };
 
   boot = {
