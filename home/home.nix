@@ -60,7 +60,7 @@ in {
     ./programs/newsboat
     ./programs/obs-studio.nix
     ./programs/qutebrowser.nix
-    ./programs/rofi.nix
+    ./programs/rofi
     ./programs/taskwarrior.nix
     ./programs/vscode
     ./programs/zathura.nix
