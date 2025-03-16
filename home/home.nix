@@ -38,6 +38,7 @@ in {
     ./programs/texlive.nix
     ./programs/thunderbird.nix
     ./programs/tmux
+    ./programs/uv.nix
     ./programs/yt-dlp.nix
     ./programs/zoxide.nix
     ./programs/zsh
