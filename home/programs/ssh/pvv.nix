@@ -23,6 +23,7 @@ let # http://www.pvv.ntnu.no/pvv/Maskiner
     "ildkule"
     "isvegg"
     "knutsen"
+    "kommode"
     [ "microbel" "pvv-users" "pvv-mail" ]
     "orchid"
     "shark"
