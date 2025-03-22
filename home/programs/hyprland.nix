@@ -277,6 +277,15 @@ in
       monitor = [
         # TODO: host specific
         "eDP-1, 3840x2400@90.00Hz, 0x0, 2"
+
+        # PVV Demiurgen
+        "desc:Hewlett Packard HP ZR24w CNT01711G6, 1920x1200, 0x-1200, 1"
+        "desc:Hewlett Packard HP ZR24w CNT018103H, 1920x1200, 1920x-1200, 1"
+
+        # PVV Eirin
+        "desc:Hewlett Packard HP ZR24w CNT01710L4, 1920x1200, 0x-1200, 1"
+        "desc:Hewlett Packard HP ZR24w CNT0181039, 1920x1200, 1920x-1200, 1"
+
         ",preferred,auto,1"
       ];
 
