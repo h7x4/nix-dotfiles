@@ -26,6 +26,7 @@ in
   };
 
   home.packages = with pkgs; [
+    hyprpolkitagent
     wl-clipboard-rs
   ];
 
