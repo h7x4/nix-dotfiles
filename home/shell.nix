@@ -291,6 +291,10 @@ in {
         ];
       };
 
+      cdtmp = "cd \"$(mktemp -d)\"";
+
+      open = "${pkgs.xdg-utils}/bin/xdg-open";
+
       e = "$EDITOR";
       m = p "ncmpcpp";
       g = "${pkgs.gitoxide}/bin/gix";
@@ -327,6 +331,17 @@ in {
           "-o \"%(playlist_index)s-%(title)s.%(ext)s\""
         ];
       };
+
+      list-applications = {
+        type = ";";
+        alias = map (x: "${p "eza"} -lah ${x}") [
+          "/run/current-system/sw/share/applications"
+          "~/.local/share/applications"
+          "~/.local/state/nix/profiles/home-manager/home-path/share/applications"
+        ];
+      };
+
+      cdr = "$(git rev-parse --show-toplevel)";
 
       view-latex = "${pkgs.texlive.combined.scheme-full}/bin/latexmk -pdf -pvc main.tex";
 
@@ -380,6 +395,11 @@ in {
   #       "-V mainfont=\"Droid Sans\""
   #       "--pdf-engine=xelatex"
   #       "-o \"$2\""
+  #     ];
+
+  #     rwhich = functors.shellJoin.wrap [
+  #       "which \"$@\""
+  #       "xargs realpath --"
   #     ];
   #   };
   # };
