@@ -13,14 +13,15 @@
 
     plugins = with pkgs.vimPlugins; [
       direnv-vim
-      vim-commentary
-      vim-gitgutter
       fzf-vim
-      vim-which-key
+      vim-commentary
+      vim-css-color
+      vim-fugitive
+      vim-gitgutter
       vim-nix
       vim-surround
-      vim-fugitive
-      vim-css-color
+      vim-trailing-whitespace
+      vim-which-key
     ] ++ (lib.optionals machineVars.wayland [
       vim-wayland-clipboard
     ]) ++ [
