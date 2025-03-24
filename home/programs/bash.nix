@@ -7,5 +7,10 @@
     bashrcExtra = ''
       source "${config.xdg.configHome}/mutable_env.sh"
     '';
+    shellOptions = [
+      "histappend"
+      "checkwinsize"
+      "checkjobs"
+    ];
   };
 }
