@@ -104,6 +104,7 @@
       seahorse
       google-chrome
       imhex
+      imv
       inkscape
       insomnia
       iwgtk
