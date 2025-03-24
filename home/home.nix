@@ -22,7 +22,7 @@ in {
     ./programs/gh-dash.nix
     ./programs/gh.nix
     ./programs/git
-    ./programs/gpg
+    ./programs/gpg.nix
     ./programs/home-manager.nix
     ./programs/jq.nix
     ./programs/less.nix
@@ -49,6 +49,7 @@ in {
     ./modules/colors.nix
     ./modules/shellAliases.nix
     ./modules/uidGid.nix
+    ./modules/programs/gpg
   ] ++ (optionals graphics [
     ./config/gtk.nix
 

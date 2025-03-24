@@ -3,9 +3,10 @@ let
   cfg = config.programs.gpg;
 in
 {
+  # TODO: per-key timers
   # TODO: Create proper descriptions
   options = {
-    programs.gpg.fetch-keys = {
+    programs.gpg.key-fetchers.keyserver = {
       enable = lib.mkEnableOption "auto fetching of gpg keys by fingerprint";
       keys = lib.mkOption {
         description = "";
@@ -23,8 +24,7 @@ in
               description = "If marked as null, use config";
               default = null;
               example = "hkps://keys.openpgp.org";
-              type = with lib.types; nullOr str;
-              apply = v: if v == null then "@NULL@" else v;
+              type = with lib.types; coercedTo (nullOr str) (v: if v == null then "@NULL@" else v) str;
             };
 
             trust = lib.mkOption {
@@ -43,7 +43,7 @@ in
     # TODO: Fix the module so that this unit runs whenever something changes
     systemd.user.services.gpg-fetch-keys = let
       fetchKeysApplication = let
-        recvKeysByKeyserver = lib.pipe cfg.fetch-keys.keys [
+        recvKeysByKeyserver = lib.pipe cfg.key-fetchers.keyserver.keys [
           lib.attrValues
           (lib.foldl (acc: key: acc // {
             ${key.keyserver} = (acc.${key.keyserver} or []) ++ [ key.id ];
@@ -69,7 +69,7 @@ in
           }
         '';
 
-        trustKeys = lib.pipe cfg.fetch-keys.keys [
+        trustKeys = lib.pipe cfg.key-fetchers.keyserver.keys [
           lib.attrValues
           (lib.filter (key: key.trust != null))
           (map ({ id, trust, ... }: "importTrust '${id}' '${toString trust}'"))
@@ -84,7 +84,7 @@ in
           trustKeys
         ];
       };
-    in lib.mkIf cfg.fetch-keys.enable {
+    in lib.mkIf cfg.key-fetchers.keyserver.enable {
       Unit = {
         Description = "Fetch declaratively listed gpg keys";
         Documentation = [ "man:gpg(1)" ];

@@ -144,6 +144,7 @@
       uidGid = ./home/modules/uidGid.nix;
       shellAliases = ./home/modules/shellAliases.nix;
       colors = ./home/modules/colors.nix;
+      gpg = ./home/modules/programs/gpg;
     };
 
     homeConfigurations = {

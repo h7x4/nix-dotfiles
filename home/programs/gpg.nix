@@ -1,11 +1,5 @@
-{ pkgs, config, ... }:
+{ config, pkgs, ... }:
 {
-  imports = [
-    ./auto-refresh-keys.nix
-    ./auto-update-trust-db.nix
-    ./declarative-key-fetcher.nix
-  ];
-
   programs.gpg = {
     enable = true;
     homedir = "${config.xdg.configHome}/gnupg";
@@ -20,7 +14,7 @@
       ];
     };
 
-    fetch-keys = {
+    key-fetchers.keyserver = {
       enable = true;
       keys = {
         "495A898FC1A0276F51EA3155355E5D82B18F4E71" = { trust = 4; };
