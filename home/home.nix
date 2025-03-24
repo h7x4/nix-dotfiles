@@ -53,6 +53,7 @@ in {
     ./modules/programs/neovim/auto-clean-swapfiles.nix
     ./modules/programs/nix-index/auto-update-database.nix
     ./modules/programs/direnv/auto-prune.nix
+    ./modules/programs/newsboat
   ] ++ (optionals graphics [
     ./config/gtk.nix
 
