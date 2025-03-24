@@ -51,6 +51,7 @@ in {
     ./modules/uidGid.nix
     ./modules/programs/gpg
     ./modules/programs/neovim/auto-clean-swapfiles.nix
+    ./modules/programs/nix-index/auto-update-database.nix
   ] ++ (optionals graphics [
     ./config/gtk.nix
 

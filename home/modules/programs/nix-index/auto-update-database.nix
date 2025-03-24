@@ -1,12 +1,25 @@
 { config, pkgs, lib, ... }:
 let
-  cfg = config.programs.nix-index;
+  cfg = config.programs.nix-index.autoUpdateDatabase;
 in
 {
-  options.programs.nix-index.enableDatabaseFetcher = lib.mkEnableOption "timed unit that fetches an updated database of nixpkgs outputs";
+  options.programs.nix-index.autoUpdateDatabase = {
+    enable = lib.mkEnableOption "timed unit that fetches an updated database of nixpkgs outputs";
+
+    # TODO: let users specify forks and other sources
+    # url = "";
+
+    onCalendar = lib.mkOption {
+      type = lib.types.str;
+      default = "weekly";
+      example = "montly";
+      # TODO: link to systemd manpage for format.
+      description = "How often to update the database.";
+    };
+  };
 
   config = {
-    systemd.user.timers.fetch-nix-index-database = lib.mkIf cfg.enableDatabaseFetcher {
+    systemd.user.timers.fetch-nix-index-database = lib.mkIf cfg.enable {
       Unit = {
         Description = "Fetch nix-index database";
         Documentation = [ "https://github.com/nix-community/nix-index-database" ];
@@ -14,7 +27,7 @@ in
 
       Timer = {
         Unit = "fetch-nix-index-database.service";
-        OnCalendar = "weekly";
+        OnCalendar = cfg.onCalendar;
         Persistent = true;
       };
 
@@ -23,7 +36,7 @@ in
       };
     };
 
-    systemd.user.services.fetch-nix-index-database = lib.mkIf cfg.enableDatabaseFetcher {
+    systemd.user.services.fetch-nix-index-database = lib.mkIf cfg.enable {
       Unit = {
         Description = "Fetch nix-index database";
         Documentation = [ "https://github.com/nix-community/nix-index-database" ];
@@ -38,6 +51,8 @@ in
             gnused
             wget
           ];
+
+          # TODO: allow fetching with gh + github token
 
           # Source: https://github.com/nix-community/nix-index-database?tab=readme-ov-file#ad-hoc-download
           # Slightly modified to satisfy shellcheck
