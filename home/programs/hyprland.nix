@@ -244,10 +244,10 @@ in
       ];
 
       windowrulev2 = [
-        "float,class:(Rofi)"
-        "float,class:^(xdg-desktop-portal-gtk)$"
+        "float, class:^(Rofi)$"
+        "float, class:^(xdg-desktop-portal-gtk)$"
         "float, title:^(.*Bitwarden Password Manager.*)$"
-        "tile,class:^(Nsxiv)$"
+        "tile, class:^(Nsxiv)$"
 
         "dimaround, class:^(xdg-desktop-portal-gtk)$"
 
@@ -255,15 +255,16 @@ in
         "workspace special silent, title:^(Zen — Sharing Indicator)$"
         "workspace special silent, title:^(.*is sharing (your screen|a window)\.)$"
 
-        "workspace 2,class:(firefox)"
-        "workspace 2,class:(google-chrome)"
+        "workspace 2, class:^(firefox)$"
+        "workspace 2, class:^(google-chrome)$"
 
-        "workspace 3,class:(Emacs)"
-        "workspace 3,class:(code)"
-        "workspace 3,class:(code-url-handler)"
+        "workspace 3, class:^(Emacs)$"
+        "workspace 3, class:^(code)$"
+        "workspace 3, class:^(code-url-handler)$"
+        "workspace 3, class:^(dev.zed.Zed)$"
 
-        "workspace 5,class:(discord)"
-        "workspace 5,class:(Element)"
+        "workspace 5, class:^(discord)$"
+        "workspace 5, class:^(Element)$"
       ]
       ++
       (lib.pipe scratchpads [
