@@ -50,6 +50,7 @@ in {
     ./modules/shellAliases.nix
     ./modules/uidGid.nix
     ./modules/programs/gpg
+    ./modules/programs/neovim/auto-clean-swapfiles.nix
   ] ++ (optionals graphics [
     ./config/gtk.nix
 

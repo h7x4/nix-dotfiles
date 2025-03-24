@@ -1,11 +1,9 @@
 { pkgs, lib, machineVars, ... }:
 {
-  imports = [
-    ./auto-clean-swapfiles.nix
-  ];
-
   programs.neovim = {
     enable = true;
+
+    auto-clean-swapfiles.enable = true;
 
     viAlias = true;
     vimAlias = true;

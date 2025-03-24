@@ -145,6 +145,7 @@
       shellAliases = ./home/modules/shellAliases.nix;
       colors = ./home/modules/colors.nix;
       gpg = ./home/modules/programs/gpg;
+      neovim-auto-clean-swapfiles = ./home/modules/programs/neovim/auto-clean-swapfiles.nix;
     };
 
     homeConfigurations = {

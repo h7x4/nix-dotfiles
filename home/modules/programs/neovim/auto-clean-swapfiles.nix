@@ -1,9 +1,29 @@
 { config, pkgs, lib, ... }:
 let
   daysBeforeDeletion = 2;
+  cfg = config.programs.neovim.auto-clean-swapfiles;
 in
 {
-  config = {
+  options.programs.neovim.auto-clean-swapfiles = {
+    enable = lib.mkEnableOption "automatic cleanup of neovim swapfiles";
+
+    daysBeforeDeletion = lib.mkOption {
+      type = lib.types.ints.positive;
+      default = 2;
+      example = 7;
+      description = "How long many days old the swapfile should be before it gets cleaned up";
+    };
+
+    onCalendar = lib.mkOption {
+      type = lib.types.str;
+      default = "daily";
+      example = "weekly";
+      # TODO: link to systemd manpage for format.
+      description = "How often to run the cleanup.";
+    };
+  };
+
+  config = lib.mkIf cfg.enable {
     systemd.user.services.clean-neovim-swap-files = {
       Unit = {
         Description = "Clean old swap files for neovim";
@@ -19,7 +39,7 @@ in
           text = ''
             echo "Cleaning old swap files for neovim"
 
-            OLD_SWAPFILES=$(find "${config.xdg.stateHome}/nvim/swap" -type f -name '*.swp' -mtime +${toString daysBeforeDeletion})
+            OLD_SWAPFILES=$(find "${config.xdg.stateHome}/nvim/swap" -type f -name '*.swp' -mtime +${toString cfg.daysBeforeDeletion})
 
             if [ -z "$OLD_SWAPFILES" ]; then
               echo "No old swap files found"
@@ -44,7 +64,7 @@ in
 
       Timer = {
         Unit = "clean-neovim-swap-files.service";
-        OnCalendar = "daily";
+        OnCalendar = cfg.onCalendar;
         Persistent = true;
       };
 
