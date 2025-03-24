@@ -247,6 +247,7 @@ in
         "float,class:(Rofi)"
         "float,class:^(xdg-desktop-portal-gtk)$"
         "float, title:^(.*Bitwarden Password Manager.*)$"
+        "tile,class:^(Nsxiv)$"
 
         "dimaround, class:^(xdg-desktop-portal-gtk)$"
 
