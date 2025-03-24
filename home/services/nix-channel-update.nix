@@ -25,6 +25,8 @@
     Service = {
       Type = "oneshot";
       ExecStart = "${config.nix.package}/bin/nix-channel --update --verbose";
+      CPUSchedulingPolicy = "idle";
+      IOSchedulingClass = "idle";
     };
   };
 }
