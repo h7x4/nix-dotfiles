@@ -1,50 +1,161 @@
-{ pkgs, lib, extendedLib, inputs, config, ... }: let
-  inherit (lib) types mkEnableOption mkOption mdDoc;
+{ config, pkgs, lib, extendedLib, ... }: let
   cfg = config.local.shell;
 
-# NOTE:
-#       This module is an over-engineered solution to a non-problem.
-#       It is a fun experiment in using the Nix language to create a
-#       shell alias system that organizes aliases into a tree structure,
-#       with categories and subcategories and subsubcategories and so on.
-#
-#       It also has a lazy join function that will join a list of commands
-#       with a separator, but render it in a prettier way in a documentation
-#       file that you can print out and read.
-
-  isAlias = v: builtins.isAttrs v && v ? "alias" && v ? "type";
-in {
-  options.local.shell = {
-    aliases = let
-
-      coerceStrToAlias = str: {
-        type = " ";
-        alias = [ str ];
-      };
-
-      aliasType = (types.coercedTo types.str coerceStrToAlias (types.submodule {
-        options = {
-          type = mkOption {
-            type = types.enum [ "|" "&&" ";" " " ];
-            default = ";";
-            description = ''
-              If the alias is a list of commands, this is the kind of separator that will be used.
-            '';
+  shellAliasesFormat = let
+    formatLib = {
+      functors = let
+        inherit (extendedLib.termColors.front) blue;
+      in
+        {
+          "|" = {
+            apply = f: lib.concatStringsSep " | " f.alias;
+            stringify = f: lib.concatStringsSep (blue "\n| ") f.alias;
           };
-          alias = mkOption {
-            type = types.listOf types.str;
+          "&&" = {
+            apply = f: lib.concatStringsSep " && " f.alias;
+            stringify = f: lib.concatStringsSep (blue "\n&& ") f.alias;
+          };
+          ";" = {
+            apply = f: lib.concatStringsSep "; " f.alias;
+            stringify = f: lib.concatStringsSep (blue ";\n  ") f.alias;
+          };
+          " " = {
+            apply = f: lib.concatStringsSep " " f.alias;
+            stringify = f: lib.concatStringsSep " \\\n   " f.alias;
           };
         };
-      })) // {
-        # NOTE: this check is necessary, because nix will recurse on types.either,
-        #       and report that the option does not exist.
-        #       See https://discourse.nixos.org/t/problems-with-types-oneof-and-submodules/15197
-        check = v: builtins.isString v || isAlias v;
+
+      isAlias = v: builtins.isAttrs v && v ? "alias" && v ? "type";
+    };
+  in {
+    lib = formatLib;
+
+    type = let
+      rawAliasType = lib.types.submodule {
+        options = {
+          type = lib.mkOption {
+            description = "If the alias is a list of commands, this is the kind of separator that will be used.";
+            type = lib.types.enum (lib.attrNames formatLib.functors);
+            default = ";";
+            example = "&&";
+          };
+          alias = lib.mkOption {
+            description = "List of commands that will be concatenated together.";
+            type = with lib.types; listOf str;
+            example = [
+              "ls"
+              "grep nix"
+            ];
+          };
+        };
       };
 
-      recursingAliasTreeType = types.attrsOf (types.either aliasType recursingAliasTreeType);
-    in mkOption {
-      type = recursingAliasTreeType;
+      coercedAliasType = with lib.types; let
+        coerce = str: {
+          type = " ";
+          alias = [ str ];
+        };
+      in (coercedTo str coerce rawAliasType) // {
+        check = v: builtins.isString v || formatLib.isAlias v;
+      };
+
+      aliasTreeType = with lib.types; attrsOf (either coercedAliasType aliasTreeType);
+    in aliasTreeType;
+
+    # Alias Tree -> { :: Alias }
+    generateAttrs = let
+      inherit (lib) mapAttrs attrValues filterAttrs isAttrs
+                    isString concatStringsSep foldr;
+
+      applyFunctor = attrset: formatLib.functors.${attrset.type}.apply attrset;
+
+      # TODO: better naming
+      allAttrValuesAreStrings = attrset: let
+
+        # [ {String} ]
+        filteredAliases = [(filterAttrs (_: isString) attrset)];
+
+        # [ {String} ]
+        remainingFunctors = let
+          functorSet = filterAttrs (_: formatLib.isAlias) attrset;
+          appliedFunctorSet = mapAttrs (_: applyFunctor) functorSet;
+        in [ appliedFunctorSet ];
+
+        # [ {AttrSet} ]
+        remainingAliasSets = attrValues (filterAttrs (_: v: isAttrs v && !formatLib.isAlias v) attrset);
+
+        # [ {String} ]
+        recursedAliasSets = filteredAliases
+                          ++ (remainingFunctors)
+                          ++ (map allAttrValuesAreStrings remainingAliasSets);
+      in foldr (a: b: a // b) {} recursedAliasSets;
+
+    in
+      allAttrValuesAreStrings;
+
+    # TODO:
+    # generateAttrs = pipe [
+      # collect leave nodes
+      # map apply functor
+    # ]
+
+    # Alias Tree -> String
+    generateText = aliases: let
+      inherit (extendedLib.termColors.front) red green blue;
+
+      # String -> Alias -> String
+      stringifyAlias = aliasName: alias: let
+        # String -> String
+        removeNixLinks = text: let
+          maybeMatches = lib.match "(|.*[^)])(/nix/store/.*/bin/).*" text;
+          matches = lib.mapNullable (lib.remove "") maybeMatches;
+        in
+          if (maybeMatches == null)
+          then text
+          else lib.replaceStrings matches (lib.replicate (lib.length matches) "") text;
+
+        # Alias -> String
+        applyFunctor = attrset: let
+          applied = formatLib.functors.${attrset.type}.stringify attrset;
+          indent' = lib.strings.replicate (lib.stringLength "${aliasName} -> ") " ";
+        in
+          lib.replaceStrings ["\n"] [("\n" + indent')] applied;
+      in "${red aliasName} -> ${blue "\""}${removeNixLinks (applyFunctor alias)}${blue "\""}";
+
+      # String -> String
+      indent = x: lib.pipe x [
+        (x: "\n" + x)
+        (lib.replaceStrings ["\n"] [("\n" + (lib.strings.replicate 2 " "))])
+        (lib.removePrefix "\n")
+      ];
+
+      # String -> { :: Alias | Category } -> String
+      stringifyCategory = categoryName: category: lib.pipe category [
+        (category: let
+          aliases = lib.filterAttrs (_: formatLib.isAlias) category;
+        in {
+          inherit aliases;
+          subcategories = lib.removeAttrs category (lib.attrNames aliases);
+        })
+        ({ aliases, subcategories }: {
+          aliases = lib.mapAttrsToList stringifyAlias aliases;
+          subcategories = lib.mapAttrsToList stringifyCategory subcategories;
+        })
+        ({ aliases, subcategories }:
+          lib.concatStringsSep "\n" (lib.filter (x: lib.trim x != "") [
+            "[${green categoryName}]"
+            (indent (lib.concatStringsSep "\n" aliases) + "\n")
+            (indent (lib.concatStringsSep "\n" subcategories) + "\n")
+          ])
+        )
+      ];
+    in (stringifyCategory "Aliases" aliases);
+  };
+in {
+  options.local.shell = {
+    aliases = lib.mkOption {
+      # TODO: freeformType
+      type = shellAliasesFormat.type;
       description = "A tree of aliases";
       default = { };
       example = {
@@ -71,8 +182,8 @@ in {
       };
     };
 
-    variables = mkOption {
-      type = types.attrsOf types.str;
+    variables = lib.mkOption {
+      type = with lib.types; attrsOf str;
       description = "Environment variables";
       default = { };
     };
@@ -82,129 +193,19 @@ in {
 
     # };
 
-    enablePackageManagerLecture = mkEnableOption "distro reminder messages, aliased to common package manager commands";
-    enableAliasOverview = mkEnableOption "`aliases` command that prints out a list of all aliases" // {
+    enablePackageManagerLecture = lib.mkEnableOption "distro reminder messages, aliased to common package manager commands";
+
+    enableAliasOverview = lib.mkEnableOption "`aliases` command that prints out a list of all aliases" // {
       default = true;
       example = false;
     };
   };
 
-  config = let
-    sedColor =
-      color:
-      inputPattern:
-      outputPattern:
-      "-e \"s|${inputPattern}|${outputPattern.before or ""}$(tput setaf ${toString color})${outputPattern.middle}$(tput op)${outputPattern.after or ""}|g\"";
-
-    colorRed = sedColor 1;
-
-    colorSlashes = colorRed "/" {middle = "/";};
-
-    # Alias type functors
-    # These will help pretty print the commands
-    functors = let
-      inherit (lib.strings) concatStringsSep;
-      inherit (extendedLib.termColors.front) blue;
-    in
-      {
-        "|" = {
-          apply = f: concatStringsSep " | " f.alias;
-          stringify = f: concatStringsSep (blue "\n| ") f.alias;
-        };
-        "&&" = {
-          apply = f: concatStringsSep " && " f.alias;
-          stringify = f: concatStringsSep (blue "\n&& ") f.alias;
-        };
-        ";" = {
-          apply = f: concatStringsSep "; " f.alias;
-          stringify = f: concatStringsSep (blue ";\n  ") f.alias;
-        };
-        " " = {
-          apply = f: concatStringsSep " " f.alias;
-          stringify = f: concatStringsSep " \\\n   " f.alias;
-        };
-      };
-
-    aliasTextOverview = let
-      inherit (lib) stringLength length concatStringsSep replaceStrings
-                    attrValues mapAttrs isAttrs remove replicate mapNullable;
-
-      inherit (extendedLib.termColors.front) red green blue;
-
-      # String -> String -> String
-      wrap' = wrapper: str: wrapper + str + wrapper;
-
-      # [String] -> String -> String -> String
-      replaceStrings' = from: to: replaceStrings from (replicate (length from) to);
-
-      # String -> Int -> String
-      repeatString = string: times: concatStringsSep "" (replicate times string);
-
-      # int -> String -> AttrSet -> String
-      stringifyCategory = level: name: category: let
-        title = "${repeatString "  " level}[${green name}]";
-
-        commands = attrValues ((lib.flip mapAttrs) category (n: v: let
-            # String
-            indent = repeatString "  " level;
-
-            # String -> String
-            removeNixLinks = text: let
-              maybeMatches = builtins.match "(|.*[^)])(/nix/store/.*/bin/).*" text;
-              matches = mapNullable (remove "") maybeMatches;
-            in
-              if (maybeMatches == null)
-              then text
-              else replaceStrings' matches "" text;
-
-            applyFunctor = attrset: let
-              applied = functors.${attrset.type}.stringify attrset;
-              indent' = indent + (repeatString " " ((stringLength " -> \"") + (stringLength n))) + " ";
-            in
-              replaceStrings' ["\n"] ("\n" + indent') applied;
-
-            recurse = stringifyCategory (level + 1) n v;
-          in if isAlias v
-            then "${indent}  ${red n} -> ${wrap' (blue "\"") (removeNixLinks (applyFunctor v))}"
-            else recurse
-        ));
-      in concatStringsSep "\n" ([title] ++ commands) + "\n";
-    in (stringifyCategory 0 "Aliases" cfg.aliases) + "\n";
-
-    flattenedAliases = let
-      inherit (lib) mapAttrs attrValues filterAttrs isAttrs
-                    isString concatStringsSep foldr;
-
-      applyFunctor = attrset: functors.${attrset.type}.apply attrset;
-
-      # TODO: better naming
-      allAttrValuesAreStrings = attrset: let
-
-        # [ {String} ]
-        filteredAliases = [(filterAttrs (n: v: isString v) attrset)];
-
-        # [ {String} ]
-        remainingFunctors = let
-          functorSet = filterAttrs (_: v: isAlias v) attrset;
-          appliedFunctorSet = mapAttrs (n: v: applyFunctor v) functorSet;
-        in [ appliedFunctorSet ];
-
-        # [ {AttrSet} ]
-        remainingAliasSets = attrValues (filterAttrs (_: v: isAttrs v && !isAlias v) attrset);
-
-        # [ {String} ]
-        recursedAliasSets = filteredAliases
-                          ++ (remainingFunctors)
-                          ++ (map allAttrValuesAreStrings remainingAliasSets);
-      in foldr (a: b: a // b) {} recursedAliasSets;
-
-    in
-      allAttrValuesAreStrings cfg.aliases;
-
-  in {
+  config = {
     xdg.dataFile = {
-      aliases.text = aliasTextOverview;
-      packageManagerLecture = lib.mkIf cfg.enablePackageManagerLecture {
+      "aliases".text = shellAliasesFormat.generateText cfg.aliases;
+
+      "packageManagerLecture" = lib.mkIf cfg.enablePackageManagerLecture {
         target = "package-manager.lecture";
         text = let
           inherit (extendedLib.termColors.front) red blue;
@@ -242,20 +243,20 @@ in {
 
     programs = {
       zsh = {
-        shellAliases = flattenedAliases;
+        shellAliases = shellAliasesFormat.generateAttrs cfg.aliases;
         sessionVariables = cfg.variables;
       };
       bash = {
-        shellAliases = flattenedAliases;
+        shellAliases = shellAliasesFormat.generateAttrs cfg.aliases;
         sessionVariables = cfg.variables;
       };
       fish = {
-        shellAliases = flattenedAliases;
+        shellAliases = shellAliasesFormat.generateAttrs cfg.aliases;
         # TODO: fish does not support session variables?
         # localVariables = cfg.variables;
       };
       nushell = {
-        shellAliases = flattenedAliases;
+        shellAliases = shellAliasesFormat.generateAttrs cfg.aliases;
         environmentVariables = cfg.variables;
       };
     };
