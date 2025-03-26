@@ -52,6 +52,9 @@ in {
       cp_ = "${pkgs.coreutils}/bin/cp";
       cp  = p "xcp";
 
+      cloc_ = p "cloc";
+      cloc = p "tokei";
+
       df_ = "${pkgs.coreutils}/bin/df";
       df = p "duf";
 
