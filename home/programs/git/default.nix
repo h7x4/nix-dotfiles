@@ -14,10 +14,6 @@ let
   ];
 in
 {
-  imports = [
-    ./maintenance-timers.nix
-  ];
-
   # TODO: convert to template once nix-sops supports it in hm module
   sops.secrets."git/nordicsemi-config" = { };
 
@@ -34,6 +30,8 @@ in
         # format = "openpgp";
         signByDefault = true;
       };
+
+      maintenance.enable = true;
 
       lfs.enable = true;
 
