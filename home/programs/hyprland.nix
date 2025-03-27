@@ -360,6 +360,11 @@ in
     };
   };
 
+  services.hyprpaper = {
+    enable = true;
+    settings.ipc = true;
+  };
+
   # UWSM
   systemd.user.services = {
     hypridle.Unit.After = lib.mkForce "graphical-session.target";
