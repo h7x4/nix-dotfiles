@@ -252,6 +252,10 @@ in
         "float, title:^(Picture-in-Picture)$"
         "tile, class:^(Nsxiv)$"
 
+        "float, class: ^(Gimp-2.*)$, title:^(Open Image)$"
+        "size 70%, class: ^(Gimp-2.*)$, title:^(Open Image)$"
+        "center, class: ^(Gimp-2.*)$, title:^(Open Image)$"
+
         "dimaround, class:^(xdg-desktop-portal-gtk)$"
 
         "workspace special silent, title:^(Firefox — Sharing Indicator)$"
