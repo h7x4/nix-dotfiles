@@ -1,9 +1,9 @@
-{ pkgs, yet-unstabler-pkgs, ... }:
+{ pkgs, unstable-pkgs, ... }:
 {
   programs.zed-editor = {
     enable = true;
 
-    package = yet-unstabler-pkgs.zed-editor;
+    package = unstable-pkgs.zed-editor;
 
     userSettings = {
       load_direnv = "shell_hook";
