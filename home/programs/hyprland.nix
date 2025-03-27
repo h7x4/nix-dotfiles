@@ -185,8 +185,7 @@ in
         # "SHIFT, Print, exec, ${lib.getExe pkgs.grimblast} copy area"
         # "shift + @Print" = "${pkgs.maim}/bin/maim --hidecursor --nokeyboard $SCREENSHOT_DIR/$(date +%s).png"
 
-        # TODO: Add boomer as package
-        # "super + @Print" = "boomer"
+        "$mod, Print, exec, ${exe pkgs.woomer}"
       ]
       ++
       (lib.pipe scratchpads [
