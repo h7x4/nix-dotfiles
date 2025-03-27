@@ -173,13 +173,11 @@ in
         "$mod, n, exec, ${pkgs.fcitx5}/bin/fcitx5-remote -s keyboard-no"
         "$mod, m, exec, ${pkgs.fcitx5}/bin/fcitx5-remote -s keyboard-us"
 
-        # TODO: ensure exists in environment
         "$mod, l, exec, ${pkgs.systemd}/bin/loginctl lock-session"
 
         # TODO: fix
         # "super + minus" = "${pkgs.xcalib}/bin/xcalib -invert -alter"
 
-        # TODO: fix
         ", Print, exec, ${exe pkgs.grimblast} copy area"
 
         # "SHIFT, Print, exec, ${lib.getExe pkgs.grimblast} copy area"
