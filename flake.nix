@@ -125,9 +125,10 @@
     unstable-pkgs = import nixpkgs-unstable pkgs-config;
     yet-unstabler-pkgs = import nixpkgs-yet-unstabler pkgs-config;
   in {
-    extendedLib = import ./lib { stdlib = pkgs.lib; };
-
     inherit pkgs;
+    inherit (nixpkgs) lib;
+
+    extendedLib = import ./lib { stdlib = pkgs.lib; };
 
     inputs = pkgs.lib.mapAttrs (_: src: src.outPath) inputs;
 
