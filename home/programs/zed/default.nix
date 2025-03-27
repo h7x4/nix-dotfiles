@@ -109,6 +109,7 @@
     extensions = [
       "assembly-syntax"
       "basher"
+      "cmake"
       "dart"
       "dart"
       "dockerfile"
