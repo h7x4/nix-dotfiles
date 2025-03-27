@@ -22,7 +22,7 @@
       buffer_font_size = 16;
 
       terminal.font_family = "Fira Code";
-      termial.font_size = 16;
+      terminal.font_size = 15;
 
       file_types = {
         "Groovy" = [ "Jenkinsfile*" ];
