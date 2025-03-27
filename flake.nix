@@ -91,6 +91,10 @@
           pkgs = nonrecursive-unstable-pkgs;
         })
 
+        (_: _: {
+          linuxPackages_latest = nonrecursive-unstable-pkgs.linuxPackages_latest;
+        })
+
         (final: prev: {
           mpd = prev.mpd.overrideAttrs (prev': {
             version = "v0.23.16-unstable";
