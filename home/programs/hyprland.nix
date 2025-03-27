@@ -131,7 +131,7 @@ in
       # https://github.com/xkbcommon/libxkbcommon/blob/master/include/xkbcommon/xkbcommon-keysyms.h
       bind = [
         "$mod SHIFT, Q, exec, ${pkgs.systemd}/bin/loginctl terminate-user \"\""
-        "$mod ALT SHIFT, Q, exit"
+        "$mod ALT SHIFT, Q, exec, uwsm stop"
         "$mod, R, exec, uwsm app -- ${exe config.programs.anyrun.package}"
         "$mod, T, togglefloating"
 
