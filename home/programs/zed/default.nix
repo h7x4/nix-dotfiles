@@ -142,4 +142,10 @@
       hash = "sha256-mlEcgnLStYH1pV3p1iqNSvfVu4MpvpEOc+vxI+90MJs=";
     };
   in "${package}/themes/monokai.json";
+
+  programs.zsh.initExtra = ''
+    if [[ "$ZED_TERM" == "true" && -n "$TMUX_PANE" ]]; then
+      unset TMUX_PANE
+    fi
+  '';
 }
