@@ -128,6 +128,12 @@ in
     source = "${pkgs.fcitx5-material-color}/share/fcitx5/themes/Material-Color-orange";
   };
 
+  # TODO: set i18n.inputMethod.fcitx5.waylandFrontend on home-manager 25.05
+  home.sessionVariables = {
+    GTK_IM_MODULE = lib.mkForce "";
+    QT_IM_MODULE = lib.mkForce "";
+  };
+
   systemd.user.services.fcitx5-daemon = {
     Service.Restart="on-failure";
     Service.ExecStart = lib.mkForce "${fcitx5Package}/bin/fcitx5";
