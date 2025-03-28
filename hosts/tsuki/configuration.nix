@@ -1,4 +1,4 @@
-{ config, lib, modulesPath, ... }:
+{ config, pkgs, lib, modulesPath, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -85,7 +85,9 @@
   services.zfs.autoScrub.enable = true;
 
   boot = {
+    kernelPackages = pkgs.linuxPackages_6_13;
     zfs.requestEncryptionCredentials = false;
+    zfs.package = pkgs.zfs_2_3;
     loader = {
       grub = {
         enable = true;
