@@ -17,6 +17,7 @@ in {
   };
 
   services.kanidm = {
+    package = pkgs.kanidm_1_5;
     enableServer = true;
     # enablePAM = true;
     serverSettings = let
@@ -37,7 +38,7 @@ in {
   };
 
   environment = {
-    systemPackages = [ pkgs.kanidm ];
+    systemPackages = [ cfg.package ];
     etc."kanidm/config".text = ''
       uri="https://auth.nani.wtf"
     '';
