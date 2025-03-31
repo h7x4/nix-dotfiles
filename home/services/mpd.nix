@@ -9,6 +9,8 @@ in
     playlistDirectory = "${cfg.musicDirectory}/playlists/MPD";
     network.startWhenNeeded = true;
 
+    autoUpdateDatabase = true;
+
     extraConfig = ''
       pid_file "/run/user/${toString config.home.uid}/mpd/pid"
 
@@ -82,48 +84,6 @@ in
       # allow MPD to use real-time priority 40
       LimitRTPRIO = 40;
       LimitRTTIME = "infinity";
-
-      PrivateUsers = true;
-      ProtectSystem = true;
-      NoNewPrivileges = true;
-      ProtectKernelTunables = true;
-      ProtectControlGroups = true;
-      RestrictAddressFamilies = [
-        "AF_INET"
-        "AF_UNIX"
-      ];
-      RestrictNamespaces = true;
-    };
-  };
-
-  systemd.user.paths.mpd-update-library = {
-    Unit = {
-      Description = "Watchdog that updates the mpd library whenever the files are modified";
-      Documentation = [
-        "man:mpd(1)"
-        "man:mpd.conf(5)"
-      ];
-      WantedBy = [ "paths.target" ];
-    };
-    Path = {
-      PathChanged = cfg.musicDirectory;
-      Unit = "mpd-update-library.service";
-      TriggerLimitIntervalSec = "1s";
-      TriggerLimitBurst = "1";
-    };
-  };
-
-  systemd.user.services.mpd-update-library = {
-    Unit = {
-      Description = "Watchdog that updates the mpd library whenever the files are modified";
-      Documentation = [
-        "man:mpd(1)"
-        "man:mpd.conf(5)"
-      ];
-    };
-    Service = {
-      Type = "oneshot";
-      ExecStart = "${lib.getExe pkgs.mpc-cli} update --wait";
 
       PrivateUsers = true;
       ProtectSystem = true;

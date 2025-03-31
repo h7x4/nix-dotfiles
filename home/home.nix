@@ -54,6 +54,7 @@ in {
     ./modules/programs/nix-index/auto-update-database.nix
     ./modules/programs/direnv/auto-prune.nix
     ./modules/programs/newsboat
+    ./modules/services/mpd.nix
   ] ++ (optionals graphics [
     ./config/gtk.nix
 
