@@ -15,6 +15,7 @@
 
     "hildring pvv-login".proxyJump = "tsuki-ws";
     "drolsum pvv-login2 pvv".proxyJump = "tsuki-ws";
+    "microbel pvv-users pvv-mail".proxyJump = "tsuki-ws";
   };
 
   sops.secrets."git/nordicsemi-maintenance-repos-config" = { };

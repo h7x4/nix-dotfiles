@@ -24,7 +24,11 @@ let # http://www.pvv.ntnu.no/pvv/Maskiner
     "isvegg"
     "knutsen"
     "kommode"
-    [ "microbel" "pvv-users" "pvv-mail" ]
+    {
+      names = [ "microbel" "pvv-users" "pvv-mail" ];
+      proxyJump = lib.mkDefault null;
+      addressFamily = "inet";
+    }
     "orchid"
     "shark"
     "tallulah"
@@ -62,7 +66,7 @@ let # http://www.pvv.ntnu.no/pvv/Maskiner
       name = builtins.concatStringsSep " " names;
       value = overrideIfNotExists {
         hostname = "${builtins.head names}.pvv.ntnu.no";
-        proxyJump = "pvv";
+        proxyJump = "microbel";
         addressFamily = "inet";
       } (builtins.removeAttrs orig ["names"]);
     };
@@ -78,7 +82,7 @@ in
           user = "gitea";
           addressFamily = "inet";
           port = 2222;
-          proxyJump = "pvv";
+          proxyJump = "microbel";
         };
       }
     ];
