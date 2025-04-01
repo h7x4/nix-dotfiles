@@ -272,4 +272,10 @@ in {
       };
     };
   };
+
+  virtualisation.docker.autoPrune = {
+    enable = lib.mkDefault true;
+    flags = [ "--system" "--all" ];
+    dates = "daily";
+  };
 }
