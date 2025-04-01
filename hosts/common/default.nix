@@ -273,6 +273,7 @@ in {
     };
   };
 
+  virtualisation.docker.enableOnBoot = lib.mkDefault false;
   virtualisation.docker.autoPrune = {
     enable = lib.mkDefault true;
     flags = [ "--system" "--all" ];
