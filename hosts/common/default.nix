@@ -209,7 +209,7 @@ in {
     };
   };
 
-  security.lockKernelModules = true;
+  # security.lockKernelModules = true;
   security.protectKernelImage = true;
 
   security.sudo.extraConfig = let
