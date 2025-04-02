@@ -2,10 +2,11 @@ keys:
   - &gpg_h7x4 F7D37890228A907440E1FD4846B9228E814A2AAC
   - &host_tsuki age1c92j4w0gqh32hwssl5m2mfrggssxax9pge8qxwytv9lmrnfttcvqdrgsst
   - &host_kasei age1eu2a6m3adakfzelfa9pqpl74a5dz0wkyr0v7gegm5ajnx7aqmqcqsp2ftc
-  - &host_dosei age179y7apa80p9unvyjtsphpzyhve90ex986vlxkx43xt9n6m7en3csqnug7c
+  - &host_dosei age1s6s4w7cdfgajm30z9gy8va8pvs2lrzk5gnsg0hmn5z2sl8z36seqej406r
   - &host_europa age14mer45e52r2q4uz8n3fmv69tvk8gvwany4m4ndudud8ajv3jm4nqdj9m6a
   - &host_xps16 age1np3fg9ue2tp4l47x7waapvjxh5zcaye2j54laapy7uklamve2c4qv3gytm
   - &home age10f4a5acpar8vwz3v298r3nv7gggfpmyh4wxpkc2hwq9paq0scf8qee8lau
+  - &home_dosei age17acs5lw7npma4sughxq3wj3cs5gjkenqdzscyvaks0er33n8gupsce7jlp
 
 creation_rules:
   - path_regex: secrets/common.yaml
@@ -19,6 +20,7 @@ creation_rules:
         - *host_europa
         - *host_xps16
         - *home
+        - *home_dosei
 
   - path_regex: secrets/home.yaml
     key_groups:
@@ -26,6 +28,7 @@ creation_rules:
         - *gpg_h7x4
         age:
         - *home
+        - *home_dosei
 
   - path_regex: secrets/xps16.yaml
     key_groups:
