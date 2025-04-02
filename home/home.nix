@@ -193,4 +193,13 @@ in {
     platformTheme.name = "adwaita";
     style.name = "adwaita-dark";
   };
+
+  systemd.user.tmpfiles.rules = [
+    "d ${config.home.homeDirectory}/work - ${config.home.username} - - -"
+    "d ${config.home.homeDirectory}/git - ${config.home.username} - - -"
+    "d ${config.home.homeDirectory}/SD - ${config.home.username} - - -"
+    "d ${config.home.homeDirectory}/pictures/wallpapers - ${config.home.username} - - -"
+
+    "L ${config.xdg.dataHome}/wallpapers - ${config.home.username} - - ${config.home.homeDirectory}/pictures/wallpapers"
+  ];
 }
