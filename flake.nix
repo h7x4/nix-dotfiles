@@ -74,26 +74,10 @@
         ];
       };
 
-      overlays = let
-        nonrecursive-unstable-pkgs = import nixpkgs-unstable {
-          inherit system;
-          config.allowUnfree = true;
-          config.segger-jlink.acceptLicense = true;
-          config.permittedInsecurePackages = [
-            "segger-jlink-qt4-796s"
-          ];
-        };
-      in [
-        (import ./overlays/wayland-ime-integration.nix)
-
-        (import ./overlays/pcloud.nix {
-          inherit (nixpkgs) lib;
-          pkgs = nonrecursive-unstable-pkgs;
-        })
-
-        (_: _: {
-          linuxPackages_latest = nonrecursive-unstable-pkgs.linuxPackages_latest;
-        })
+      overlays = [
+        self.overlays.pcloud
+        self.overlays.unstableLinuxPackages
+        self.overlays.waylandImeIntegration
 
         minecraft.overlays.default
         osuchan.overlays.default
@@ -113,6 +97,28 @@
 
     devShells.${system}.default = pkgs.mkShell {
       packages = with pkgs; [ sops ];
+    };
+
+    overlays = let
+      nonrecursive-unstable-pkgs = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+        config.segger-jlink.acceptLicense = true;
+        config.permittedInsecurePackages = [
+          "segger-jlink-qt4-796s"
+        ];
+      };
+    in {
+      pcloud = import ./overlays/pcloud.nix {
+        inherit (nixpkgs) lib;
+        pkgs = nonrecursive-unstable-pkgs;
+      };
+
+      unstableLinuxPackages = _: _: {
+        linuxPackages_latest = nonrecursive-unstable-pkgs.linuxPackages_latest;
+      };
+
+      waylandImeIntegration = import ./overlays/wayland-ime-integration.nix;
     };
 
     nixosModules = {
