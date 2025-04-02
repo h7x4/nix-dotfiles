@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   "Amazon.com".metaData.hidden = true;
   "Bing".metaData.hidden = true;
@@ -55,6 +55,26 @@
     }];
     icon = "${pkgs.super-tiny-icons}/share/icons/SuperTinyIcons/svg/github.svg";
     definedAliases = [ "gh" ];
+  };
+
+  "GitHub Nix Configs" = {
+    urls = [{
+      template = "https://github.com/search";
+      params = [
+        { name = "type"; value = "code"; }
+        {
+          name = "q";
+          value = lib.concatStringsSep " " [
+            "lang:nix"
+            "-is:fork"
+            "-repo:nixos/nixpkgs"
+            "{searchTerms}"
+          ];
+        }
+      ];
+    }];
+    icon = "${pkgs.super-tiny-icons}/share/icons/SuperTinyIcons/svg/github.svg";
+    definedAliases = [ "ghn" ];
   };
 
   "HomeManager Options" = {

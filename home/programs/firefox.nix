@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
   programs.firefox = {
     enable = true;
@@ -7,9 +7,10 @@
         toolbar = true;
         bookmarks = import ./browser/bookmarks.nix;
       }];
+
       search = {
         default = "Google";
-        engines = import ./browser/engines.nix { inherit pkgs; };
+        engines = import ./browser/engines.nix { inherit pkgs lib; };
         force = true;
       };
 
