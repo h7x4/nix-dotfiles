@@ -60,6 +60,52 @@ Re-encrypt sops secrets with new key:
 sops updatekeys secrets/hosts/file.yml
 ```
 
+## Setting up a new machine
+
+### 1. Move gpg keys to
+
+```console
+# Export on some machine
+gpg --export-secret-keys --armor nani.wtf > ~/SD/gpg_keys.pem
+
+# Import
+gpg --import ~/SD/gpg_keys.pem
+```
+
+### 2. Generating host keys, and converting to age keys for nix-sops host secrets
+
+```console
+# Create host keys
+ssh-keygen -A
+
+# Convert public key to age format
+nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'
+
+# Register this key in `.sops.yaml`
+$EDITOR .sops.yaml
+
+# Update keys
+sops updatekeys secrets/common.yaml
+sops updatekeys secrets/$(hostname).yaml # if present
+```
+
+### 3. Creating new ssh key for nix-sops home secrets
+
+```console
+# Create new key
+ssh-keygen -t ed25519 -b 4096 -C "sops-nix home key" -f ~/.ssh/id_ed25519_home_sops -N ''
+
+# Convert public key to age format
+nix-shell -p ssh-to-age --run 'cat ~/.ssh/id_ed25519_home_sops.pub | ssh-to-age'
+
+# Register this key in `.sops.yaml`
+$EDITOR .sops.yaml
+
+# Update keys
+sops updatekeys secrets/common.yaml
+sops updatekeys secrets/home.yaml
+```
+
 
 [home-manager]: https://github.com/nix-community/home-manager
 [nixos-search]: https://search.nixos.org/options
