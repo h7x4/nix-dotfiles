@@ -223,7 +223,7 @@
       dosei = nixSys "dosei" {
         modules = [
           {
-            home-manager.users.h7x4.home.uid = 1001;
+            home-manager.users.h7x4.home.uid = 1000;
           }
 
           nixos-hardware.nixosModules.common-pc

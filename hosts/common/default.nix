@@ -107,6 +107,7 @@ in {
     users.h7x4 = {
       isNormalUser = true;
       shell = pkgs.zsh;
+      uid = 1000;
 
       extraGroups = [
         "audio"
