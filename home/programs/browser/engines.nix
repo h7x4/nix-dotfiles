@@ -79,7 +79,7 @@
 
   "HomeManager Options" = {
     urls = [{
-      template = "https://mipmip.github.io/home-manager-option-search/?{searchTerms}";
+      template = "https://mipmip.github.io/home-manager-option-search/?query={searchTerms}";
     }];
     icon = "${pkgs.super-tiny-icons}/share/icons/SuperTinyIcons/svg/nixos.svg";
     definedAliases = [ "hms" ];
