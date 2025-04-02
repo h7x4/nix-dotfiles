@@ -69,9 +69,19 @@
 
   # security.pam.services.login.unixAuth = true;
 
+  systemd.network = {
+    enable = true;
+    networks."40-enp6s0" = {
+      gateway = [ "192.168.50.1" ];
+      address = [ "192.168.50.200/24" ];
+      networkConfig.IPv6AcceptRA = "no";
+      DHCP = "yes";
+    };
+  };
+
   networking = {
     hostName = "kasei";
-    networkmanager.enable = true;
+    useNetworkd = true;
     interfaces.enp6s0.useDHCP = true;
     firewall.enable = false;
     hostId = "f0660cef";
