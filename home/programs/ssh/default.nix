@@ -18,7 +18,7 @@ in
     enable = true;
     includes = [
       config.sops.secrets."ssh/secret-config".path
-      "mutable_config"
+      "${config.home.homeDirectory}/.ssh/mutable_config"
     ];
 
     controlMaster = "auto";
@@ -26,16 +26,8 @@ in
     controlPath = "${controlMastersDir}/%r@%h:%p";
   };
 
-  systemd.user.services."ssh-create-controlmasters-dir" = {
-    Install.WantedBy = [ "default.target" ];
-    Unit = {
-      Description = "Create directory to store SSH control master sockets";
-      ConditionPathExists = "!${controlMastersDir}";
-    };
-    Service = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.coreutils}/bin/mkdir ${controlMastersDir}";
-      Restart = "on-abort";
-    };
-  };
+  systemd.user.tmpfiles.rules = [
+    "d ${controlMastersDir} 0700 ${config.home.username} - - -"
+    "f ${config.home.homeDirectory}/.ssh/mutable_config 0600 ${config.home.username} - - -"
+  ];
 }
