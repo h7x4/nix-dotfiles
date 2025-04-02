@@ -63,10 +63,19 @@
     hibernate.enable = false;
     hybrid-sleep.enable = false;
   };
+  
+  systemd.network = {
+    enable = true;
+    networks."40-enp0s31f6" = {
+      name = "enp0s31f6";
+      DHCP = true;
+      domains = [ "nordicsemi.no" ];
+    };
+  };
 
   networking = {
     hostName = "dosei";
-    networkmanager.enable = true;
+    useNetworkd = true;
     # TODO: reenable
     firewall.enable = false;
     # hostId = "";
