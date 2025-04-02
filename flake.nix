@@ -99,6 +99,21 @@
       packages = with pkgs; [ sops ];
     };
 
+    packages.${system} = {
+      bcachefsInstallerIso = let
+        nixosSystem = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal-new-kernel-no-zfs.nix"
+            ({ lib, pkgs, ... }: {
+              boot.supportedFilesystems = [ "bcachefs" ];
+              boot.kernelPackages = lib.mkOverride 0 pkgs.linuxPackages_latest;
+            })
+          ];
+        };
+      in nixosSystem.config.system.build.isoImage;
+    };
+
     overlays = let
       nonrecursive-unstable-pkgs = import nixpkgs-unstable {
         inherit system;
