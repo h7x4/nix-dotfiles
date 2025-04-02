@@ -97,11 +97,11 @@
       darktable
       discord
       element-desktop
+      foliate
       geogebra
       ghidra
       gimp
       gnome-font-viewer
-      seahorse
       google-chrome
       imhex
       imv
@@ -129,6 +129,7 @@
       pdfarranger
       pwvucontrol
       # scrcpy
+      seahorse
       shellcheck
       slack
       # sublime3
