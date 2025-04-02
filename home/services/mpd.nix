@@ -1,6 +1,7 @@
 { config, pkgs, lib, ... }:
 let
   cfg = config.services.mpd;
+  runtimeDir = "/run/user/${toString config.home.uid}/mpd";
 in
 {
   services.mpd = {
@@ -12,7 +13,7 @@ in
     autoUpdateDatabase = true;
 
     extraConfig = ''
-      pid_file "/run/user/${toString config.home.uid}/mpd/pid"
+      pid_file "${runtimeDir}/pid"
 
       zeroconf_enabled "no"
 
@@ -30,7 +31,7 @@ in
       audio_output {
         type "fifo"
         name "Visualizer feed"
-        path "/run/user/${toString config.home.uid}/mpd/visualizer.fifo"
+        path "${runtimeDir}/visualizer.fifo"
         format "44100:16:2"
       }
 
@@ -95,7 +96,12 @@ in
         "AF_UNIX"
       ];
       RestrictNamespaces = true;
+      RuntimeDirectory = "mpd";
     };
   };
+
+  systemd.user.tmpfiles.rules = [
+    "d ${cfg.dataDir} - ${config.home.username} - - -"
+  ];
 }
 
