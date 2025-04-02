@@ -38,6 +38,8 @@
         "toolkit.coverage.opt-out" = true;
         "toolkit.coverage.endpoint.base" = "";
 
+        "layout.css.prefers-color-scheme.content-override" = "dark";
+
         "font.cjk_pref_fallback_order" = lib.concatStringsSep "," [
           "ja"
           "zh-cn"
