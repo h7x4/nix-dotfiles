@@ -75,6 +75,10 @@
     networks."40-enp6s0" = {
       gateway = [ "192.168.50.1" ];
       address = [ "192.168.50.200/24" ];
+      dns = [
+        "1.1.1.1"
+        "8.8.8.8"
+      ];
       networkConfig.IPv6AcceptRA = "no";
       DHCP = "yes";
     };
