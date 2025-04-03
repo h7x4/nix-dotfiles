@@ -151,6 +151,7 @@
       direnv-auto-prune = ./home/modules/programs/direnv/auto-prune.nix;
       newsboat = ./home/modules/programs/newsboat;
       mpd-auto-updater = ./home/modules/services/mpd.nix;
+      cargo = ./home/modules/programs/cargo;
     };
 
     homeConfigurations = {

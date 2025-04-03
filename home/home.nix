@@ -14,6 +14,7 @@ in {
     ./programs/bat.nix
     ./programs/beets.nix
     ./programs/bottom.nix
+    ./programs/cargo.nix
     ./programs/comma.nix
     ./programs/direnv
     ./programs/eza.nix
@@ -49,6 +50,7 @@ in {
     ./modules/colors.nix
     ./modules/shellAliases.nix
     ./modules/uidGid.nix
+    ./modules/programs/cargo
     ./modules/programs/gpg
     ./modules/programs/neovim/auto-clean-swapfiles.nix
     ./modules/programs/nix-index/auto-update-database.nix
