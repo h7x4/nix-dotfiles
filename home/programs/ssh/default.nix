@@ -26,8 +26,14 @@ in
     controlPath = "${controlMastersDir}/%r@%h:%p";
   };
 
-  systemd.user.tmpfiles.rules = [
-    "d ${controlMastersDir} 0700 ${config.home.username} - - -"
-    "f ${config.home.homeDirectory}/.ssh/mutable_config 0600 ${config.home.username} - - -"
-  ];
+  systemd.user.tmpfiles.settings."10-ssh" = {
+    ${controlMastersDir}.d = {
+      user = config.home.username;
+      mode = "0700";
+    };
+    "${config.home.homeDirectory}/.ssh/mutable_config".f = {
+      user = config.home.username;
+      mode = "0600";
+    };
+  };
 }
