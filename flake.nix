@@ -142,17 +142,17 @@
     };
 
     homeModules = {
-      uidGid = ./home/modules/uidGid.nix;
-      shellAliases = ./home/modules/shellAliases.nix;
-      colors = ./home/modules/colors.nix;
-      gpg = ./home/modules/programs/gpg;
-      neovim-auto-clean-swapfiles = ./home/modules/programs/neovim/auto-clean-swapfiles.nix;
-      nix-index-auto-update-database = ./home/modules/programs/nix-index/auto-update-database.nix;
-      direnv-auto-prune = ./home/modules/programs/direnv/auto-prune.nix;
-      newsboat = ./home/modules/programs/newsboat;
-      mpd-auto-updater = ./home/modules/services/mpd.nix;
       cargo = ./home/modules/programs/cargo;
+      colors = ./home/modules/colors.nix;
+      direnv-auto-prune = ./home/modules/programs/direnv/auto-prune.nix;
+      gpg = ./home/modules/programs/gpg;
+      mpd-auto-updater = ./home/modules/services/mpd.nix;
+      neovim-auto-clean-swapfiles = ./home/modules/programs/neovim/auto-clean-swapfiles.nix;
+      newsboat = ./home/modules/programs/newsboat;
+      nix-index-auto-update-database = ./home/modules/programs/nix-index/auto-update-database.nix;
+      shellAliases = ./home/modules/shellAliases.nix;
       systemd-tmpfiles = ./home/modules/systemd-tmpfiles.nix;
+      uidGid = ./home/modules/uidGid.nix;
     };
 
     homeConfigurations = {
@@ -167,7 +167,7 @@
           imports = [
             ./home/home.nix
             ./modules/machineVars.nix
-          ];
+          ] ++ (builtins.attrValues self.homeModules);
 
           machineVars = {
             headless = false;
@@ -221,7 +221,7 @@
                   sharedModules = [
                     inputs.sops-nix.homeManagerModules.sops
                     inputs.anyrun.homeManagerModules.default
-                  ];
+                  ] ++ (builtins.attrValues self.homeModules);
 
                   users.h7x4.imports = [
                     ./home/home.nix

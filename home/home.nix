@@ -46,18 +46,6 @@ in {
 
     ./services/nix-channel-update.nix
     ./services/pueue.nix
-
-    ./modules/colors.nix
-    ./modules/shellAliases.nix
-    ./modules/uidGid.nix
-    ./modules/systemd-tmpfiles.nix
-    ./modules/programs/cargo
-    ./modules/programs/gpg
-    ./modules/programs/neovim/auto-clean-swapfiles.nix
-    ./modules/programs/nix-index/auto-update-database.nix
-    ./modules/programs/direnv/auto-prune.nix
-    ./modules/programs/newsboat
-    ./modules/services/mpd.nix
   ] ++ (optionals graphics [
     ./config/gtk.nix
 
