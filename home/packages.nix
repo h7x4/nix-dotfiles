@@ -161,9 +161,6 @@
     ] ++ lib.optionals (machineVars.gaming) [
       desmume
       osu-lazer
-      (prismlauncher.override {
-        jdk17 = jdk21;
-      })
       retroarchFull
       steam
       steam-tui

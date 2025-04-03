@@ -57,6 +57,7 @@ in {
     ./programs/ncmpcpp.nix
     ./programs/newsboat
     ./programs/obs-studio.nix
+    ./programs/prism-launcher.nix
     ./programs/qutebrowser.nix
     ./programs/rofi
     ./programs/taskwarrior.nix

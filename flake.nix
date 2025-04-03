@@ -150,6 +150,7 @@
       neovim-auto-clean-swapfiles = ./home/modules/programs/neovim/auto-clean-swapfiles.nix;
       newsboat = ./home/modules/programs/newsboat;
       nix-index-auto-update-database = ./home/modules/programs/nix-index/auto-update-database.nix;
+      prism-launcher = ./home/modules/programs/prism-launcher;
       shellAliases = ./home/modules/shellAliases.nix;
       systemd-tmpfiles = ./home/modules/systemd-tmpfiles.nix;
       uidGid = ./home/modules/uidGid.nix;
