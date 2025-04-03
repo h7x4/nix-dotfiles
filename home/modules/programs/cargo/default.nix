@@ -2,7 +2,7 @@
 let
   cfg = config.programs.cargo;
   format = pkgs.formats.toml { };
-  cargoHome = lib.traceVal (config.home.sessionVariables.CARGO_HOME or "${config.home.homeDirectory}/.cargo");
+  cargoHome = config.home.sessionVariables.CARGO_HOME or "${config.home.homeDirectory}/.cargo";
   relativeCargoHome = lib.strings.removePrefix config.home.homeDirectory cargoHome;
 in
 {
