@@ -11,6 +11,7 @@
     ./services/tailscale.nix
     ./services/keybase.nix
 
+    ./bindmounts.nix
     ./nspawn-containers/arch.nix
 
     ./testconfig.nix
