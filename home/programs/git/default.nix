@@ -292,7 +292,7 @@ in
           "nrfconnect"
           "oysteintveit-nordicsemi"
         ];
-      in lib.genAttrs organizations (org: map (uri-prefix: "${uri-prefix}${org}") github-uri-prefixes);
+      in lib.genAttrs organizations (org: map (uri-prefix: "${uri-prefix}${org}") (github-uri-prefixes ++ [ "github-nordicsemi:" ]));
     in {
       extraConfig = lib.mergeAttrs
         {
