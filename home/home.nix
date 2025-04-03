@@ -50,6 +50,7 @@ in {
     ./modules/colors.nix
     ./modules/shellAliases.nix
     ./modules/uidGid.nix
+    ./modules/systemd-tmpfiles.nix
     ./modules/programs/cargo
     ./modules/programs/gpg
     ./modules/programs/neovim/auto-clean-swapfiles.nix

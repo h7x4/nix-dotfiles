@@ -152,6 +152,7 @@
       newsboat = ./home/modules/programs/newsboat;
       mpd-auto-updater = ./home/modules/services/mpd.nix;
       cargo = ./home/modules/programs/cargo;
+      systemd-tmpfiles = ./home/modules/systemd-tmpfiles.nix;
     };
 
     homeConfigurations = {
