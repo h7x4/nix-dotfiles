@@ -20,7 +20,7 @@
     (mkBindmount "documents" "/data/pCloud/documents" "/home/h7x4/documents")
     (mkBindmount "downloads" "/data/Downloads" "/home/h7x4/downloads")
     (mkBindmount "git" "/data/git" "/home/h7x4/git")
-    (mkBindmount "music" "/data/pCloud" "/home/h7x4/music")
+    (mkBindmount "music" "/data/pCloud/music" "/home/h7x4/music")
     (mkBindmount "nixpkgs" "/data/nixpkgs" "/home/h7x4/nixpkgs")
     (mkBindmount "pictures" "/data/pCloud/pictures" "/home/h7x4/pictures")
     (mkBindmount "pvv" "/data/pvv" "/home/h7x4/pvv")
