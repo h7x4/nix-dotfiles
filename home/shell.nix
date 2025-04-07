@@ -106,6 +106,9 @@ in {
           "pkill -x"
         ];
       };
+
+      watch_ = "${pkgs.procps}/bin/watch";
+      watch = p "viddy";
     };
 
     # ░█▀▀░█▀█░█░░░█▀█░█▀▄░▀█▀░▀▀█░█▀▀░█▀▄
