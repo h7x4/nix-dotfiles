@@ -109,7 +109,6 @@
     extensions = [
       "assembly-syntax"
       "basher"
-      "cmake"
       "dart"
       "dart"
       "dockerfile"
@@ -119,7 +118,7 @@
       "groovy"
       "html"
       "ini"
-      "justfile"
+      "just"
       "latex"
       "live-server"
       "log"
