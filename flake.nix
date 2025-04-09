@@ -78,6 +78,7 @@
         self.overlays.pcloud
         self.overlays.unstableLinuxPackages
         self.overlays.waylandImeIntegration
+        self.overlays.gitoxide
 
         minecraft.overlays.default
         osuchan.overlays.default
@@ -127,6 +128,10 @@
       pcloud = import ./overlays/pcloud.nix {
         inherit (nixpkgs) lib;
         pkgs = nonrecursive-unstable-pkgs;
+      };
+
+      gitoxide = _: _: {
+        gitoxide = nonrecursive-unstable-pkgs.gitoxide;
       };
 
       unstableLinuxPackages = _: _: {
