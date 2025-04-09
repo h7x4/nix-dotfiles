@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 let
   runtimeDir = "/run/user/${toString config.home.uid}";
-  controlMastersDir = "${runtimeDir}/ssh-controlmasters";
+  controlMastersDir = "${runtimeDir}/ssh";
 in
 {
   imports = [
@@ -23,7 +23,7 @@ in
 
     controlMaster = "auto";
     controlPersist = "10m";
-    controlPath = "${controlMastersDir}/%r@%h:%p";
+    controlPath = "${controlMastersDir}/%n%C";
   };
 
   systemd.user.tmpfiles.settings."10-ssh" = {
