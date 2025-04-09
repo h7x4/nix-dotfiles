@@ -89,6 +89,18 @@
         enabled = true;
         coloring = "indent_aware";
       };
+
+      languages = {
+        Nix = {
+          tab_size = 2;
+          format_on_save = "off";
+        };
+      };
+
+      lsp = {
+        rust-analyzer.binary.path_lookup = true;
+        nix.binary.path_lookup = true;
+      };
     };
 
     userKeymaps = [
