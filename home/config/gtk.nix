@@ -2,17 +2,18 @@
 {
   gtk = pkgs.lib.mkIf (!machineVars.headless) {
     enable = true;
-    font = {
-      name = "Droid Sans";
-    };
+    font.name = "Droid Sans";
+
     iconTheme = {
-      package = pkgs.papirus-icon-theme;
       name = "Papirus";
+      package = pkgs.papirus-icon-theme;
     };
+
     theme = {
-      package = pkgs.vimix-gtk-themes;
-      name = "VimixDark";
+      name = "Adwaita-dark";
+      package = pkgs.gnome.gnome-themes-extra;
     };
+
     gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
 
     gtk3.bookmarks = map (s: "file://${config.home.homeDirectory}/${s}") [
