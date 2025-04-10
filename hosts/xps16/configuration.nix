@@ -79,9 +79,6 @@
     blueman.enable = true;
   };
 
-  # ipu6 does not compile on latest yet
-  boot.kernelPackages = pkgs.linuxPackages_6_11;
-
   hardware = {
     bluetooth.enable = true;
     enableRedistributableFirmware = true;
