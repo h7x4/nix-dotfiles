@@ -193,7 +193,7 @@
       (proxy ["log"] "http://grafana" enableWebsockets)
       (proxy ["map"] "http://dynmap" {})
       (proxy ["osu"] "http://osuchan" {})
-      (proxy ["plex"] "http://plex" {})
+      (proxy ["plex"] "http://plex" enableWebsockets)
       # (proxy ["vpn"] "http://headscale" {
       #   locations."/" = {
       #     proxyWebsockets = true;
