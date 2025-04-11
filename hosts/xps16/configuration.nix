@@ -39,6 +39,8 @@
     "nixos-test"
   ];
 
+  environment.enableDebugInfo = true;
+
   i18n.extraLocaleSettings = {
     LC_ALL = "en_US.UTF-8";
   };
