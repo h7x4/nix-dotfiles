@@ -34,6 +34,7 @@ in {
     ./programs/pandoc.nix
     ./programs/ripgrep.nix
     ./programs/skim.nix
+    ./programs/sqlite.nix
     ./programs/ssh
     ./programs/tealdeer
     ./programs/texlive.nix
