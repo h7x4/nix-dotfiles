@@ -13,6 +13,8 @@
     ./services/thermald.nix
     ./services/tlp.nix
 
+    ./machines
+
     ./testconfig.nix
   ];
 
