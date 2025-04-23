@@ -90,6 +90,8 @@
         coloring = "indent_aware";
       };
 
+      features.edit_prediction_provider = "copilot";
+
       languages = {
         Nix = {
           tab_size = 2;
