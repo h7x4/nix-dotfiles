@@ -2,6 +2,8 @@
 {
   nix.settings.use-xdg-base-directories = true;
 
+  home.preferXdgDirectories = true;
+
   home.sessionVariables = let
     inherit (config.xdg) dataHome cacheHome configHome userDirs;
     runtimeDir = "/run/user/${toString config.home.uid}";
@@ -10,13 +12,19 @@
     TEXMFVAR = "${cacheHome}/texlive";
     TEXMFCONFIG = "${configHome}/texlive";
 
+    EM_CONFIG = "${configHome}/emscripten/config";
+    EM_CACHE = "${cacheHome}/emscripten/cache";
+    EM_PORTS = "${dataHome}/emscripten/cache";
+
     PSQL_HISTORY = "${dataHome}/psql_history";
     MYSQL_HISTFILE = "${dataHome}/mysql_history";
     NODE_REPL_HISTORY = "${dataHome}/node_repl_history";
     GDB_HISTFILE = "${dataHome}/gdb_history";
     HISTFILE = "${dataHome}/bash_history";
+    CALCHISTFILE = "${dataHome}/calc_history";
 
     GHCUP_USE_XDG_DIRS = "true";
+    MIX_XDG = "true";
 
     __GL_SHADER_DISK_CACHE_PATH = "${cacheHome}/nv";
     _JAVA_OPTIONS = "-Djava.util.prefs.userRoot=${configHome}/java";
@@ -26,10 +34,14 @@
     BZR_PLUGIN_PATH = "${dataHome}/bazaar";
     BZR_HOME = "${cacheHome}/bazaar";
     CUDA_CACHE_PATH = "${cacheHome}/nv";
+    DISCORD_USER_DATA_DIR = "${dataHome}/discord";
     DOCKER_CONFIG = "${configHome}/docker";
     DOTNET_CLI_HOME = "${dataHome}/dotnet";
     DOT_SAGE = "${configHome}/sagemath";
     ELM_HOME = "${configHome}/";
+    FFMPEG_DATADIR = "${configHome}/ffmpeg";
+    GOCACHE = "${cacheHome}/go/build";
+    GOMODCACHE = "${cacheHome}/go/mod";
     GOPATH = "${dataHome}/go";
     GRIPHOME = "${configHome}/grip";
     GRADLE_USER_HOME = "${dataHome}/gradle";
@@ -43,7 +55,10 @@
     NRFUTIL_HOME = "${dataHome}/nrfutil";
     NUGET_PACKAGES = "${cacheHome}/nuget-packages";
     PARALLEL_HOME = "${configHome}/parallel";
+    PGPASSFILE = "${configHome}/pg/pgpass";
+    PSQLRC = "${configHome}/pg/psqlrc";
     PYENV_ROOT = "${dataHome}/pyenv";
+    RUFF_CACHE_DIR = "${cacheHome}/ruff";
     RUSTUP_HOME = "${dataHome}/rustup";
     RYE_HOME = "${dataHome}/rye";
     STACK_ROOT = "${dataHome}/stack";
