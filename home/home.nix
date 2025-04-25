@@ -7,6 +7,7 @@ in {
     ./packages.nix
 
     ./config/xdg
+    ./config/ensure-homedir-structure.nix
 
     ./programs/aria2.nix
     ./programs/atuin.nix
@@ -178,25 +179,4 @@ in {
     platformTheme.name = "adwaita";
     style.name = "adwaita-dark";
   };
-
-  systemd.user.tmpfiles.rules = [
-    "d ${config.home.homeDirectory}/SD - ${config.home.username} - - -"
-    "d ${config.home.homeDirectory}/ctf - ${config.home.username} - - -"
-    "d ${config.home.homeDirectory}/git - ${config.home.username} - - -"
-    "d ${config.home.homeDirectory}/pvv - ${config.home.username} - - -"
-    "d ${config.home.homeDirectory}/work - ${config.home.username} - - -"
-
-    "d ${config.home.homeDirectory}/pictures/icons - ${config.home.username} - - -"
-    "d ${config.home.homeDirectory}/pictures/photos - ${config.home.username} - - -"
-    "d ${config.home.homeDirectory}/pictures/screenshots - ${config.home.username} - - -"
-    "d ${config.home.homeDirectory}/pictures/stickers - ${config.home.username} - - -"
-    "d ${config.home.homeDirectory}/pictures/wallpapers - ${config.home.username} - - -"
-
-    "d ${config.home.homeDirectory}/documents/books - ${config.home.username} - - -"
-    "d ${config.home.homeDirectory}/documents/scans - ${config.home.username} - - -"
-
-    "L ${config.home.homeDirectory}/Downloads - ${config.home.username} - - ${config.home.homeDirectory}/downloads"
-    "L ${config.xdg.dataHome}/wallpapers - ${config.home.username} - - ${config.home.homeDirectory}/pictures/wallpapers"
-    "L ${config.home.sessionVariables.TEXMFHOME} - ${config.home.username} - - ${config.home.homeDirectory}/git/texmf"
-  ];
 }
