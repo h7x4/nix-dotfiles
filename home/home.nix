@@ -131,6 +131,8 @@ in {
       package = pkgs.capitaine-cursors;
       name = "capitaine-cursors";
       size = 16;
+      # TODO: enable in 25.05
+      # dotIcons = false;
     };
 
     keyboard.options = [ "caps:escape" ];
