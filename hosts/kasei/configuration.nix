@@ -84,6 +84,9 @@
       networkConfig.IPv6AcceptRA = "no";
       DHCP = "yes";
     };
+    wait-online.ignoredInterfaces = [
+      "tailscale0"
+    ];
   };
 
   networking = {
