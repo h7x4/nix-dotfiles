@@ -32,6 +32,7 @@ in {
     ./programs/nix-index
     ./programs/nushell.nix
     ./programs/pandoc.nix
+    ./programs/python.nix
     ./programs/ripgrep.nix
     ./programs/skim.nix
     ./programs/sqlite.nix
@@ -138,7 +139,6 @@ in {
     keyboard.options = [ "caps:escape" ];
 
     sessionVariables = {
-      PYTHONSTARTUP = "${config.xdg.configHome}/python/pyrc";
       _JAVA_AWT_WM_NONREPARENTING = "1";
     };
   };
@@ -159,16 +159,6 @@ in {
   xdg.configFile = {
     "ghc/ghci.conf".text = ''
       :set prompt "${extendedLib.termColors.front.magenta "[GHCi]λ"} "
-    '';
-
-    "python/pyrc".text = ''
-      #!/usr/bin/env python3
-      import sys
-
-      # You also need \x01 and \x02 to separate escape sequence, due to:
-      # https://stackoverflow.com/a/9468954/1147688
-      sys.ps1='\x01\x1b${extendedLib.termColors.front.blue "[Python]> "}\x02>>>\x01\x1b[0m\x02 '  # bright yellow
-      sys.ps2='\x01\x1b[1;49;31m\x02...\x01\x1b[0m\x02 '  # bright red
     '';
   };
 

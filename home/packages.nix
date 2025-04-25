@@ -52,7 +52,6 @@
     pipr
     progress
     pwntools
-    python3
     rclone
     rip2
     rnr
