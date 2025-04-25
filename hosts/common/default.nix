@@ -53,6 +53,10 @@ in {
       "1.1.1.1"
       "8.8.8.8"
     ];
+    hosts = {
+      "127.0.0.1" = [ config.networking.fqdnOrHostName ];
+      "::1" = [ config.networking.fqdnOrHostName ];
+    };
   };
 
   i18n.defaultLocale = "en_US.UTF-8";
