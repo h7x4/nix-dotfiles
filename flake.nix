@@ -37,7 +37,7 @@
     };
 
     anyrun = {
-      url = "git+https://git.pvv.ntnu.no/oysteikt/anyrun?ref=plugins-application-preprocess-exec";
+      url = "github:anyrun-org/anyrun/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
