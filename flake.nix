@@ -96,7 +96,7 @@
 
     inputs = pkgs.lib.mapAttrs (_: src: src.outPath) inputs;
 
-    devShells.${system}.default = pkgs.mkShell {
+    devShells.${system}.default = pkgs.mkShellNoCC {
       packages = with pkgs; [ sops ];
     };
 
