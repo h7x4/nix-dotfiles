@@ -11,11 +11,9 @@
     TEXMFCONFIG = "${configHome}/texlive";
 
     PSQL_HISTORY = "${dataHome}/psql_history";
-    SQLITE_HISTORY= "${dataHome}/sqlite_history";
     MYSQL_HISTFILE = "${dataHome}/mysql_history";
     NODE_REPL_HISTORY = "${dataHome}/node_repl_history";
     GDB_HISTFILE = "${dataHome}/gdb_history";
-    PYTHON_HISTORY = "${dataHome}/python_history";
     HISTFILE = "${dataHome}/bash_history";
 
     GHCUP_USE_XDG_DIRS = "true";
@@ -27,7 +25,6 @@
     BZRPATH = "${configHome}/bazaar";
     BZR_PLUGIN_PATH = "${dataHome}/bazaar";
     BZR_HOME = "${cacheHome}/bazaar";
-    CARGO_HOME = "${dataHome}/cargo";
     CUDA_CACHE_PATH = "${cacheHome}/nv";
     DOCKER_CONFIG = "${configHome}/docker";
     DOTNET_CLI_HOME = "${dataHome}/dotnet";

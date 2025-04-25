@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 {
   xdg.configFile."sqlite3/sqliterc".text = ''
     .bail on
@@ -12,4 +12,6 @@
   home.packages = [
     pkgs.sqlite-interactive
   ];
+
+  home.sessionVariables.SQLITE_HISTORY= "${config.xdg.dataHome}/sqlite_history";
 }

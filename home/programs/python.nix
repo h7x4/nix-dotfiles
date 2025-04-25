@@ -17,5 +17,8 @@
     sys.ps2='\x01\x1b[1;49;31m\x02...\x01\x1b[0m\x02 '  # bright red
   '';
 
-  home.sessionVariables.PYTHONSTARTUP = "${config.xdg.configHome}/python/pyrc";
+  home.sessionVariables = {
+    PYTHONSTARTUP = "${config.xdg.configHome}/python/pyrc";
+    PYTHON_HISTORY = "${config.xdg.dataHome}/python_history";
+  };
 }
