@@ -127,7 +127,7 @@ in {
     };
   };
 
-  dconf.settings = {
+  dconf.settings = mkIf graphics {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
     };
