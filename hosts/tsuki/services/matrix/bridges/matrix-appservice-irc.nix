@@ -63,7 +63,7 @@ in {
       database = {
         engine = "postgres";
         # TODO: use unix socket
-        connectionString = "postgres://matrix-appservice-irc:@localhost:${toString config.services.postgresql.port}/matrix-appservice-irc?sslmode=disable";
+        connectionString = "postgres://matrix-appservice-irc:@localhost:${toString config.services.postgresql.settings.port}/matrix-appservice-irc?sslmode=disable";
       };
 
       ircService = {
