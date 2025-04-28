@@ -116,7 +116,12 @@ in
 
       extraConfig = {
         core = {
-          whitespace = "space-before-tab,-indent-with-non-tab,trailing-space";
+          whitespace = lib.concatStringsSep "," [
+            "space-before-tab"
+            "-indent-with-non-tab"
+            "trailing-space"
+            "blank-at-eof"
+          ];
           untrackedCache = true;
           editor = "nvim";
         };
@@ -181,6 +186,7 @@ in
         diff = {
           mnemonicPrefix = true;
           renames = true;
+          compactionHeuristic = true;
           tool = "nvimdiff";
           submodule = "log";
         };
@@ -222,6 +228,21 @@ in
         github.user = "h7x4";
 
         "url \"${lib.head github-uri-prefixes}\"".insteadOf = lib.tail github-uri-prefixes;
+
+        "url \"git@gist.github.com:\"".insteadOf = [
+          "git://gist.github.com/"
+          "https://gist.github.com/"
+        ];
+
+        "url \"aur@aur.archlinux.org:\"".insteadOf = [
+          "aur:"
+          "https://aur.archlinux.org/"
+        ];
+
+        gc = {
+          reflogExpire = "90 days";
+          reflogExpireUnreachable = "90 days";
+        };
 
         web.browser = "google-chrome-stable";
 
