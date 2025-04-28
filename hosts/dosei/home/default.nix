@@ -18,11 +18,5 @@
     "microbel pvv-users pvv-mail".proxyJump = "tsuki-ws";
   };
 
-  sops.secrets."git/nordicsemi-maintenance-repos-config" = { };
-
-  programs.git.includes = [
-    { path = config.sops.secrets."git/nordicsemi-maintenance-repos-config".path; }
-  ];
-
   programs.waybar.settings.mainBar.output = [ "DP-1" ];
 }
