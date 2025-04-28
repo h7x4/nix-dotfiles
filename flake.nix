@@ -222,6 +222,7 @@
                     inherit yet-unstabler-pkgs;
                     inherit (self) extendedLib;
                     inherit (config) machineVars;
+                    machineName = name;
                   };
 
                   sharedModules = [

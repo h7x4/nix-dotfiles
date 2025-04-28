@@ -1,4 +1,4 @@
-{ pkgs, config, machineVars, ... }:
+{ pkgs, config, machineVars, machineName, ... }:
 {
   home.packages = with pkgs; [
     bandwhich
@@ -124,7 +124,6 @@
       nsxiv
       nyxt
       obsidian
-      pcloud
       pdfarranger
       pwvucontrol
       # scrcpy
@@ -165,6 +164,9 @@
       steam-tui
       stepmania
       taisei
+    ] ++ lib.optionals (machineName != "dosei") [
+      # Source blocked by external firewall on dosei
+      pcloud
     ]
   );
 }
