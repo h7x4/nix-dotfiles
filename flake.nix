@@ -274,14 +274,6 @@
           nixos-hardware.nixosModules.common-gpu-intel
         ];
       };
-      europa = nixSys "europa" {
-        modules = [
-          nixos-hardware.nixosModules.common-pc
-          nixos-hardware.nixosModules.common-pc-ssd
-          nixos-hardware.nixosModules.common-cpu-intel
-          nixos-hardware.nixosModules.common-gpu-intel
-        ];
-      };
       tsuki = nixSys "tsuki" {
         modules = [
           matrix-synapse-next.nixosModules.default
