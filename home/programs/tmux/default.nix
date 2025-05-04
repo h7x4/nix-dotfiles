@@ -7,6 +7,9 @@
     escapeTime = 0;
     keyMode = "vi";
     prefix = "C-a";
+    mouse = true;
+    terminal = "screen-256color";
+
     plugins = with pkgs.tmuxPlugins; [
       copycat
       fingers
@@ -19,6 +22,7 @@
       tmux-fzf
       urlview
     ];
+
     extraConfig = let
       fileContentsWithoutShebang = script: lib.pipe script [
         lib.fileContents
@@ -41,20 +45,14 @@
       # Don't rename windows automatically after rename with ','
       set-option -g allow-rename off
 
-      set -g mouse on
       set -q -g status-utf8 on
       setw -q -g utf8 on
-      set-option -g default-terminal screen-256color
-      set -g base-index 1 # windows starts at 1
       setw -g monitor-activity on
       set -g visual-activity on
 
       # Length of tmux status line
       set -g status-left-length 30
       set -g status-right-length 150
-
-      set -g base-index 1
-      set -g pane-base-index 0
 
       ######################
       ######## KEYS ########
