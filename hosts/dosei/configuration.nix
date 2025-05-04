@@ -14,7 +14,7 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  
+
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.binfmt.emulatedSystems = [
@@ -63,7 +63,7 @@
     hibernate.enable = false;
     hybrid-sleep.enable = false;
   };
-  
+
   systemd.network = {
     enable = true;
     networks."40-enp0s31f6" = {

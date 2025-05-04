@@ -9,7 +9,7 @@
     set print demangle on
     set print sevenbit-strings off
     set print asm-demangle on
-    set print elements 0 
+    set print elements 0
 
     # Assembly
     set disassembly-flavor intel
