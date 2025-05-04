@@ -1,6 +1,8 @@
 { config, lib, pkgs, inputs, specialArgs, ... }:
 {
   imports = [
+    ./programs/steam.nix
+
     ./services/avahi.nix
     ./services/btrfs.nix
     ./services/docker.nix
