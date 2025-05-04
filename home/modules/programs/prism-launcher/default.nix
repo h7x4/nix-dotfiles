@@ -43,7 +43,10 @@ in
       Install.WantedBy = [ "paths.target" ];
       Unit.Description = "Watchdog that moves screenshots from all prismlauncher minecraft instances into a common dir";
       Path = {
-        PathExistsGlob = [ "${cfg.stateDir}/instances/*/.minecraft/screenshots/*.png" ];
+        PathExistsGlob = [
+          "${cfg.stateDir}/instances/*/.minecraft/screenshots/*.png"
+          "${cfg.stateDir}/instances/*/minecraft/screenshots/*.png"
+        ];
         Unit = "prismlauncher-move-minecraft-screenshots.service";
         TriggerLimitIntervalSec = "1s";
         TriggerLimitBurst = "1";
@@ -67,13 +70,17 @@ in
               INSTANCE_NAME="''${INSTANCE_NAME%'/'}"
               SCREENSHOT_TARGET_DIR="${cfg.screenshotMover.screenshotDir}/$INSTANCE_NAME"
               mkdir -p "''${SCREENSHOT_TARGET_DIR}"
-              if [ -d "${instancesDir}/$INSTANCE_NAME"/.minecraft/screenshots ]; then
-              for screenshot in "${instancesDir}/$INSTANCE_NAME"/.minecraft/screenshots/*.png; do
-                echo "Moving '$screenshot' -> '$SCREENSHOT_TARGET_DIR'"
-                cp --preserve=all "$screenshot" "$SCREENSHOT_TARGET_DIR"
-                rm "$screenshot"
+              for variant in minecraft .minecraft; do
+                SCREENSHOT_SOURCE_DIR="${instancesDir}/$INSTANCE_NAME/$variant"/screenshots
+                if [ -d "$SCREENSHOT_SOURCE_DIR" ]; then
+                  echo "Scanning for screenshots in $SCREENSHOT_SOURCE_DIR"
+                  for screenshot in "$SCREENSHOT_SOURCE_DIR"/*.png; do
+                    echo "Moving '$screenshot' -> '$SCREENSHOT_TARGET_DIR'"
+                    cp --preserve=all "$screenshot" "$SCREENSHOT_TARGET_DIR"
+                    rm "$screenshot"
+                  done
+                fi
               done
-              fi
             done
           '';
         });
