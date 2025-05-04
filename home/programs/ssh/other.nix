@@ -31,5 +31,15 @@
       hostname = "wiki.wackattack.eu";
       port = 1337;
     };
+    "garp" = {
+      user = "h7x4";
+      hostname = "garp.pbsds.net";
+      proxyJump = "pvv";
+    };
+    "bolle" = {
+      user = "h7x4";
+      hostname = "bolle.pbsds.net";
+      proxyJump = "pvv";
+    };
   };
 }
