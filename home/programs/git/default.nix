@@ -348,7 +348,7 @@ in
             echo "[maintenance]"
             for repoLocation in ${repoDirs}; do
               for repo in "$repoLocation"/*/.git; do
-                echo "repo = $(realpath "''${repo%"/.git"}")"
+                echo "repo = $("${pkgs.coreutils}/bin/realpath" "''${repo%"/.git"}")"
               done
             done
           } > "$1"
