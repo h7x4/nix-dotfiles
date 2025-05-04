@@ -11,7 +11,7 @@
 
       autosave = "off";
       format_on_save = "off";
-      remove_trailing_whitespace_on_save = false;
+      remove_trailing_whitespace_on_save = true;
 
       tab_size = 2;
 
