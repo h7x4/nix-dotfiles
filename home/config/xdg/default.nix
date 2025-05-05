@@ -10,7 +10,7 @@
       enable = true;
       desktop = lib.mkDefault "${config.home.homeDirectory}/Desktop";
       documents = lib.mkDefault "${config.home.homeDirectory}/documents";
-      download = lib.mkDefault "${config.home.homeDirectory}/Downloads";
+      download = lib.mkDefault "${config.home.homeDirectory}/downloads";
       music = lib.mkDefault "${config.home.homeDirectory}/music";
       pictures = lib.mkDefault "${config.home.homeDirectory}/pictures";
       publicShare = lib.mkDefault "${config.home.homeDirectory}/public";
