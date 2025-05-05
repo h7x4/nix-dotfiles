@@ -1,27 +1,40 @@
 { config, ... }:
-let
-  home = config.home.homeDirectory;
-  user = config.home.username;
-in {
-  systemd.user.tmpfiles.rules = [
-    "d ${home}/SD - ${user} - - -"
-    "d ${home}/ctf - ${user} - - -"
-    "d ${home}/git - ${user} - - -"
-    "d ${home}/pvv - ${user} - - -"
-    "d ${home}/work - ${user} - - -"
+{
+  systemd.user.tmpfiles.settings."05-homedir" = let
+    home = config.home.homeDirectory;
+    user = config.home.username;
 
-    "d ${home}/pictures/icons - ${user} - - -"
-    "d ${home}/pictures/photos - ${user} - - -"
-    "d ${home}/pictures/screenshots - ${user} - - -"
-    "d ${home}/pictures/stickers - ${user} - - -"
-    "d ${home}/pictures/wallpapers - ${user} - - -"
+    defaultDirConf = {
+      d = {
+        inherit user;
+      };
+    };
 
-    "d ${home}/documents/books - ${user} - - -"
-    "d ${home}/documents/scans - ${user} - - -"
+    symlink = target: {
+      L = {
+        inherit user;
+        argument = target;
+      };
+    };
+  in {
+    "${home}/SD" = defaultDirConf;
+    "${home}/ctf" = defaultDirConf;
+    "${home}/git" = defaultDirConf;
+    "${home}/pvv" = defaultDirConf;
+    "${home}/work" = defaultDirConf;
 
-    "L ${home}/Downloads - ${user} - - ${home}/downloads"
+    "${home}/pictures/icons" = defaultDirConf;
+    "${home}/pictures/photos" = defaultDirConf;
+    "${home}/pictures/screenshots" = defaultDirConf;
+    "${home}/pictures/stickers" = defaultDirConf;
+    "${home}/pictures/wallpapers" = defaultDirConf;
 
-    "L ${config.xdg.dataHome}/wallpapers - ${user} - - ${home}/pictures/wallpapers"
-    "L ${config.home.sessionVariables.TEXMFHOME} - ${user} - - ${home}/git/texmf"
-  ];
+    "${home}/documents/books" = defaultDirConf;
+    "${home}/documents/scans" = defaultDirConf;
+
+    "${home}/Downloads" = symlink "${home}/downloads";
+
+    "${config.xdg.dataHome}/wallpapers" = symlink "${home}/pictures/wallpapers";
+    "${config.home.sessionVariables.TEXMFHOME}" = symlink "${home}/git/texmf";
+  };
 }
