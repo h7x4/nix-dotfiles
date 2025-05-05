@@ -31,9 +31,10 @@ in {
     source "${config.sops.secrets."nordicsemi/envvars".path}"
   '';
 
-  systemd.user.tmpfiles.rules = [
-    "f ${config.xdg.configHome}/mutable_env.sh 0700 ${config.home.username} - - -"
-  ];
+  systemd.user.tmpfiles.settings."10-shell"."${config.xdg.configHome}/mutable_env.sh".f = {
+    user = config.home.username;
+    mode = "0700";
+  };
 
   local.shell.aliases = {
 
