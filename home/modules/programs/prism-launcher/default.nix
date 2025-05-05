@@ -3,6 +3,10 @@ let
   cfg = config.programs.prism-launcher;
 in
 {
+  imports = [
+    ../../systemd-tmpfiles.nix
+  ];
+
   options.programs.prism-launcher = {
     enable = lib.mkEnableOption "PrismLauncher, an open source minecraft launcher";
 
@@ -96,8 +100,10 @@ in
       };
     };
 
-    systemd.user.tmpfiles.rules = lib.mkIf cfg.screenshotMover.enable [
-      "'d' '${cfg.screenshotMover.screenshotDir}' - ${config.home.username} - - -"
-    ];
+    systemd.user.tmpfiles.settings."10-prismlauncher" = lib.mkIf cfg.screenshotMover.enable {
+      ${cfg.screenshotMover.screenshotDir}.d = {
+        user = config.home.username;
+      };
+    };
   };
 }
