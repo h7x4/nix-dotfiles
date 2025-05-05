@@ -27,9 +27,9 @@ in {
     source "${config.sops.secrets."nordicsemi/envvars".path}"
   '';
 
-  programs.nushell.extraEnv = ''
-    source "${config.sops.secrets."nordicsemi/envvars".path}"
-  '';
+  # programs.nushell.extraEnv = ''
+  #   source "${config.sops.secrets."nordicsemi/envvars".path}"
+  # '';
 
   systemd.user.tmpfiles.settings."10-shell"."${config.xdg.configHome}/mutable_env.sh".f = {
     user = config.home.username;
