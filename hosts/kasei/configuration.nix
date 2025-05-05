@@ -109,14 +109,9 @@
     initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
 
     loader = {
-      efi.canTouchEfiVariables = false;
-      grub = {
-        enable = true;
-        efiSupport = true;
-        fsIdentifier = "label";
-        device = "nodev";
-        efiInstallAsRemovable = true;
-      };
+      efi.canTouchEfiVariables = true;
+      systemd-boot.enable = true;
+      systemd-boot.consoleMode = "1";
     };
   };
 
