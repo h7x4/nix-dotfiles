@@ -24,8 +24,11 @@
 
   system.stateVersion = "24.11";
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    efi.canTouchEfiVariables = true;
+    systemd-boot.enable = true;
+    systemd-boot.consoleMode = "1";
+  };
 
   boot.binfmt.emulatedSystems = [
     "x86_64-windows"
@@ -52,8 +55,6 @@
     font = "${pkgs.terminus_font}/share/consolefonts/ter-132n.psf.gz";
     packages = with pkgs; [ terminus_font ];
   };
-
-  boot.loader.systemd-boot.consoleMode = "1";
 
   machineVars = {
     headless = false;
