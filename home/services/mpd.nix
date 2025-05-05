@@ -100,8 +100,8 @@ in
     };
   };
 
-  systemd.user.tmpfiles.rules = [
-    "d ${cfg.dataDir} - ${config.home.username} - - -"
-  ];
+  systemd.user.tmpfiles.settings."10-mpd".${cfg.dataDir}."d" = {
+    user = config.home.username;
+  };
 }
 
