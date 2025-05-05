@@ -7,6 +7,7 @@
     defaultDirConf = {
       d = {
         inherit user;
+        mode = "0700";
       };
     };
 
@@ -14,6 +15,7 @@
       L = {
         inherit user;
         argument = target;
+        mode = "0600";
       };
     };
   in {
@@ -21,6 +23,7 @@
     "${home}/ctf" = defaultDirConf;
     "${home}/git" = defaultDirConf;
     "${home}/pvv" = defaultDirConf;
+    "${home}/tmp" = defaultDirConf;
     "${home}/work" = defaultDirConf;
 
     "${home}/pictures/icons" = defaultDirConf;
@@ -30,7 +33,10 @@
     "${home}/pictures/wallpapers" = defaultDirConf;
 
     "${home}/documents/books" = defaultDirConf;
+    "${home}/documents/manuals" = defaultDirConf;
+    "${home}/documents/music-sheets" = defaultDirConf;
     "${home}/documents/scans" = defaultDirConf;
+    "${home}/documents/schematics" = defaultDirConf;
 
     "${home}/Downloads" = symlink "${home}/downloads";
 
