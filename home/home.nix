@@ -8,6 +8,7 @@ in {
 
     ./config/xdg
     ./config/ensure-homedir-structure.nix
+    ./config/downloads-sorter.nix
 
     ./programs/aria2.nix
     ./programs/atuin.nix
