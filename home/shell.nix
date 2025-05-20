@@ -370,26 +370,35 @@ in {
     # Code generated commands
 
     "Generated" = {
-      "cds" = let
-        inherit (lib.strings) concatStringsSep;
-        inherit (extendedLib.strings) repeatString;
-
-        inherit (lib.lists) range flatten replicate;
-        inherit (lib.attrsets) nameValuePair listToAttrs;
-
-        nthCds = n: [
-          ("cd" + (repeatString "." (n + 1)))
-          ("cd." + toString n)
-          (repeatString "." (n + 1))
-          ("." + toString n)
-          (".." + toString n)
-        ];
-        realCommand = n: "cd " + (concatStringsSep "/" (replicate n ".."));
-
-        nthCdsAsNameValuePairs = n: map (cmd: nameValuePair cmd (realCommand n)) (nthCds n);
-        allCdNameValuePairs = flatten (map nthCdsAsNameValuePairs (range 1 9));
-      in
-        listToAttrs allCdNameValuePairs;
+      "cds" = lib.pipe (lib.range 1 9) [
+        (map
+          (n: {
+            realCommand = "cd " + (builtins.concatStringsSep "/" (lib.replicate n ".."));
+            aliases = [
+              ("cd" + (lib.strings.replicate (n + 1) "."))
+              ("cd." + toString n)
+              (lib.strings.replicate (n + 1) ".")
+              ("." + toString n)
+              (".." + toString n)
+            ];
+          })
+        )
+        (map
+          ({ realCommand, aliases }: map (alias: {
+            name = alias;
+            value = {
+              alias = [ realCommand ];
+              shells = [
+                "bash"
+                "zsh"
+                "fish"
+              ];
+            };
+          }) aliases)
+        )
+        builtins.concatLists
+        builtins.listToAttrs
+      ];
     };
   };
 
