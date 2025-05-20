@@ -25,7 +25,7 @@
           };
         };
 
-      isAlias = v: builtins.isAttrs v && v ? "alias" && v ? "type";
+      isAlias = v: builtins.isAttrs v && v ? alias;
     };
   in {
     lib = formatLib;
@@ -47,6 +47,29 @@
               "grep nix"
             ];
           };
+          shells = lib.mkOption {
+            description = "List of shells for which the alias is valid.";
+            type = with lib.types; listOf (enum [
+              "bash"
+              "zsh"
+              "fish"
+              "nushell"
+            ]);
+            default = [
+              "bash"
+              "zsh"
+              "fish"
+              "nushell"
+            ];
+            example = [
+              "bash"
+              "zsh"
+            ];
+          };
+          # TODO:
+          # subshell = lib.mkEnableOption "" // {
+          #   description = "Whether to run the aliased command in a subshell";
+          # };
         };
       };
 
@@ -59,45 +82,34 @@
         check = v: builtins.isString v || formatLib.isAlias v;
       };
 
-      aliasTreeType = with lib.types; attrsOf (either coercedAliasType aliasTreeType);
+      aliasTreeType = with lib.types; attrsOf (either coercedAliasType aliasTreeType) // {
+        description = "Alias tree";
+      };
     in aliasTreeType;
 
-    # Alias Tree -> { :: Alias }
-    generateAttrs = let
-      inherit (lib) mapAttrs attrValues filterAttrs isAttrs
-                    isString concatStringsSep foldr;
-
-      applyFunctor = attrset: formatLib.functors.${attrset.type}.apply attrset;
-
-      # TODO: better naming
-      allAttrValuesAreStrings = attrset: let
-
-        # [ {String} ]
-        filteredAliases = [(filterAttrs (_: isString) attrset)];
-
-        # [ {String} ]
-        remainingFunctors = let
-          functorSet = filterAttrs (_: formatLib.isAlias) attrset;
-          appliedFunctorSet = mapAttrs (_: applyFunctor) functorSet;
-        in [ appliedFunctorSet ];
-
-        # [ {AttrSet} ]
-        remainingAliasSets = attrValues (filterAttrs (_: v: isAttrs v && !formatLib.isAlias v) attrset);
-
-        # [ {String} ]
-        recursedAliasSets = filteredAliases
-                          ++ (remainingFunctors)
-                          ++ (map allAttrValuesAreStrings remainingAliasSets);
-      in foldr (a: b: a // b) {} recursedAliasSets;
-
-    in
-      allAttrValuesAreStrings;
-
-    # TODO:
-    # generateAttrs = pipe [
-      # collect leave nodes
-      # map apply functor
-    # ]
+    # Alias Tree -> String -> { :: Alias }
+    generateAttrs = shell: let
+      generateAttrs' = attrset: lib.pipe attrset [
+        (attrset: {
+          right = lib.filterAttrs (_: v: formatLib.isAlias v) attrset;
+          wrong = lib.filterAttrs (_: v: !(formatLib.isAlias v)) attrset;
+        })
+        ({ right, wrong }:
+          # Leaf nodes
+          (lib.pipe right [
+            (lib.filterAttrs (_: v: lib.elem shell v.shells))
+            (builtins.mapAttrs (_: v: formatLib.functors.${v.type}.apply v))
+          ])
+          //
+          # Subsets
+          (lib.pipe wrong [
+            builtins.attrValues
+            (map generateAttrs')
+            (lib.foldr (a: b: a // b) { })
+          ])
+        )
+      ];
+    in generateAttrs';
 
     # Alias Tree -> String
     generateText = aliases: let
@@ -243,20 +255,20 @@ in {
 
     programs = {
       zsh = {
-        shellAliases = shellAliasesFormat.generateAttrs cfg.aliases;
+        shellAliases = shellAliasesFormat.generateAttrs "zsh" cfg.aliases;
         sessionVariables = cfg.variables;
       };
       bash = {
-        shellAliases = shellAliasesFormat.generateAttrs cfg.aliases;
+        shellAliases = shellAliasesFormat.generateAttrs "bash" cfg.aliases;
         sessionVariables = cfg.variables;
       };
       fish = {
-        shellAliases = shellAliasesFormat.generateAttrs cfg.aliases;
+        shellAliases = shellAliasesFormat.generateAttrs "fish" cfg.aliases;
         # TODO: fish does not support session variables?
         # localVariables = cfg.variables;
       };
       nushell = {
-        shellAliases = shellAliasesFormat.generateAttrs cfg.aliases;
+        shellAliases = shellAliasesFormat.generateAttrs "nushell" cfg.aliases;
         environmentVariables = cfg.variables;
       };
     };
