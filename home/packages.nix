@@ -7,7 +7,7 @@
     cyme
     czkawka
     difftastic
-    diskonaut
+    # diskonaut
     duf
     duff
     fclones
@@ -90,7 +90,7 @@
       ahoviewer
       alsa-utils
       anki
-      ark
+      kdePackages.ark
       calibre
       cool-retro-term
       darktable
@@ -110,7 +110,7 @@
       kid3
       koreader
       krita
-      ktouch
+      # kdePackages.ktouch
       libnotify
       libreoffice
       light
@@ -158,8 +158,8 @@
       touchegg
     ] ++ lib.optionals (machineVars.gaming) [
       desmume
-      osu-lazer
-      retroarchFull
+      # osu-lazer
+      # retroarchFull
       steam
       steam-tui
       stepmania

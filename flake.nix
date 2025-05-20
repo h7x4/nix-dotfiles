@@ -1,11 +1,11 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-24.11";
+    nixpkgs.url = "nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
     nixpkgs-yet-unstabler.url = "github:NixOS/nixpkgs/master";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -35,11 +35,6 @@
       url = "github:dali99/nixos-matrix-modules/0.7.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    anyrun = {
-      url = "github:anyrun-org/anyrun/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = inputs@{
@@ -55,7 +50,7 @@
     minecraft,
     osuchan,
     sops-nix,
-    anyrun,
+    # anyrun,
   }: let
     system = "x86_64-linux";
 
@@ -67,10 +62,7 @@
         android_sdk.accept_license = true;
         segger-jlink.acceptLicense = true;
         permittedInsecurePackages = [
-          "segger-jlink-qt4-796s"
-          "dotnet-core-combined"
-          "dotnet-sdk-6.0.428"
-          "dotnet-sdk-wrapped-6.0.428"
+          "segger-jlink-qt4-810"
         ];
       };
 
@@ -228,7 +220,6 @@
 
                   sharedModules = [
                     inputs.sops-nix.homeManagerModules.sops
-                    inputs.anyrun.homeManagerModules.default
                   ] ++ (builtins.attrValues self.homeModules);
 
                   users.h7x4.imports = [

@@ -160,7 +160,7 @@
     };
   in "${package}/themes/monokai.json";
 
-  programs.zsh.initExtra = ''
+  programs.zsh.initContent = ''
     if [[ "$ZED_TERM" == "true" && -n "$TMUX_PANE" ]]; then
       unset TMUX_PANE
     fi

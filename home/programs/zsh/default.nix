@@ -24,10 +24,6 @@ in
     defaultKeymap = "viins";
     enableCompletion = true;
 
-    initExtraBeforeCompInit = ''
-      fpath+=(${pkgs.zsh-completions}/share/zsh/site-functions)
-    '';
-
     completionInit = "";
 
     history = {
@@ -73,19 +69,24 @@ in
       }
     ];
 
-    initExtra = ''
-      source ${./p10k.zsh}
+    initContent = lib.mkMerge [
+      (lib.mkOrder 550 ''
+        fpath+=(${pkgs.zsh-completions}/share/zsh/site-functions)
+      '')
+      ''
+        source ${./p10k.zsh}
 
-      enable-fzf-tab
+        enable-fzf-tab
 
-      zstyle ':fzf-tab:complete:cd:*' fzf-preview '${lib.getExe pkgs.eza} -1 --color=always $realpath'
+        zstyle ':fzf-tab:complete:cd:*' fzf-preview '${lib.getExe pkgs.eza} -1 --color=always $realpath'
 
-      # Use tmux buffer if we are inside tmux
-      if ! { [ "$TERM" = "screen" ] && [ -n "$TMUX" ]; } then
-        zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
-      fi
+        # Use tmux buffer if we are inside tmux
+        if ! { [ "$TERM" = "screen" ] && [ -n "$TMUX" ]; } then
+          zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+        fi
 
-      source "${config.xdg.configHome}/mutable_env.sh"
-    '';
+        source "${config.xdg.configHome}/mutable_env.sh"
+      ''
+    ];
   };
 }

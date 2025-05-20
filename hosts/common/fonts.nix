@@ -16,6 +16,8 @@
       ipafont
       liberation_ttf
       migmix
+      nerd-fonts._0xproto
+      nerd-fonts.droid-sans-mono
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
@@ -30,7 +32,6 @@
       ubuntu_font_family
       victor-mono
       yasashisa-gothic
-      (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
     ];
 
     fontconfig = {

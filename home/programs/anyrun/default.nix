@@ -7,7 +7,7 @@
       y.fraction = 0.3;
       width.fraction = 0.25;
       plugins = [
-        inputs.anyrun.packages.${pkgs.system}.applications
+        "${pkgs.anyrun}/lib/libapplications.so"
       ];
       hidePluginInfo = true;
       closeOnClick = true;

@@ -3,13 +3,16 @@
   programs.firefox = {
     enable = true;
     profiles.h7x4 = {
-      bookmarks = [{
-        toolbar = true;
-        bookmarks = import ./browser/bookmarks.nix;
-      }];
+      bookmarks = {
+        force = true;
+        settings = [{
+          toolbar = true;
+          bookmarks = import ./browser/bookmarks.nix;
+        }];
+      };
 
       search = {
-        default = "Google";
+        default = "google";
         engines = import ./browser/engines.nix { inherit pkgs lib; };
         force = true;
       };

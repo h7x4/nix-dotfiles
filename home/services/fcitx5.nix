@@ -6,12 +6,16 @@ let
 in
 {
   i18n.inputMethod = {
-    enabled = "fcitx5";
-    fcitx5.addons = with pkgs; [
-      fcitx5-mozc
-      fcitx5-gtk
-      # fcitx5-chinese-addons
-    ];
+    enable = true;
+    type = "fcitx5";
+    fcitx5 = {
+      waylandFrontend = true;
+      addons = with pkgs; [
+        fcitx5-mozc
+        fcitx5-gtk
+        # fcitx5-chinese-addons
+      ];
+    };
   };
 
   xdg.configFile = let
@@ -126,12 +130,6 @@ in
   xdg.dataFile."fcitx5/themes/Material-Color" = {
     recursive = true;
     source = "${pkgs.fcitx5-material-color}/share/fcitx5/themes/Material-Color-orange";
-  };
-
-  # TODO: set i18n.inputMethod.fcitx5.waylandFrontend on home-manager 25.05
-  home.sessionVariables = {
-    GTK_IM_MODULE = lib.mkForce "";
-    QT_IM_MODULE = lib.mkForce "";
   };
 
   systemd.user.services.fcitx5-daemon = {

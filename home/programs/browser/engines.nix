@@ -1,10 +1,10 @@
 { pkgs, lib, ... }:
 {
-  "Amazon.com".metaData.hidden = true;
-  "Bing".metaData.hidden = true;
-  "Wikipedia (en)".metaData.hidden = true;
-  "Google".metaData.alias = "gg";
-  "DuckDuckGo".metaData.alias = "dd";
+  "amazondotcom-us".metaData.hidden = true;
+  "bing".metaData.hidden = true;
+  "wikipedia".metaData.hidden = true;
+  "google".metaData.alias = "gg";
+  "ddg".metaData.alias = "dd";
 
   "Arch Package Repository" = {
     urls = [{
@@ -166,7 +166,7 @@
     definedAliases = [ "ut" ];
   };
 
-  "YouTube" = {
+  "youtube" = {
     urls = [{
       template = "https://www.youtube.com/results";
       params = [{ name = "search_query"; value = "{searchTerms}"; }];

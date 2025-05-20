@@ -21,5 +21,5 @@
     set prompt \001\033[1;36m\002(gdb) \001\033[0m\002
   '';
 
-  local.shell.aliases."System Tool Replacements".gdb = "${pkgs.pwndbg}/bin/pwndbg";
+  # local.shell.aliases."System Tool Replacements".gdb = "${pkgs.pwndbg}/bin/pwndbg";
 }
