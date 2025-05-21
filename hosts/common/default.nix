@@ -15,6 +15,7 @@ in {
 
     ./services/blueman.nix
     ./services/dbus.nix
+    ./services/display-manager.nix
     ./services/fwupd.nix
     ./services/irqbalance.nix
     ./services/journald.nix
