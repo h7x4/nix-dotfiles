@@ -16,6 +16,7 @@ in {
     ./services/blueman.nix
     ./services/dbus.nix
     ./services/display-manager.nix
+    ./services/docker.nix
     ./services/fwupd.nix
     ./services/irqbalance.nix
     ./services/journald.nix
@@ -277,12 +278,5 @@ in {
         Enable = "Source,Sink,Media,Socket";
       };
     };
-  };
-
-  virtualisation.docker.enableOnBoot = lib.mkDefault false;
-  virtualisation.docker.autoPrune = {
-    enable = lib.mkDefault true;
-    flags = [ "--system" "--all" ];
-    dates = "daily";
   };
 }
