@@ -1,5 +1,6 @@
 [![built with nix](https://builtwithnix.org/badge.svg)](https://builtwithnix.org)
 
+![works on my machine](https://img.shields.io/badge/status-works_on_my_machine-blue)
 
 # Nix Dotfiles
 
