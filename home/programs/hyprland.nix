@@ -26,7 +26,6 @@ in
   };
 
   home.packages = with pkgs; [
-    hyprpolkitagent
     wl-clipboard-rs
   ];
 
@@ -384,6 +383,8 @@ in
     enable = true;
     settings.ipc = true;
   };
+
+  services.hyprpolkitagent.enable = true;
 
   # UWSM
   systemd.user.services = {
