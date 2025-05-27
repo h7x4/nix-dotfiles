@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ config, pkgs, lib, ... }:
 let
   cfg = config.programs.zsh;
 in
@@ -16,8 +16,12 @@ in
     })}
   '';
 
-  programs.zsh = {
+  systemd.user.tmpfiles.settings."10-zsh"."${config.xdg.cacheHome}/zsh".d = {
+    mode = "0770";
+    user = config.home.username;
+  };
 
+  programs.zsh = {
     enable = true;
     dotDir = ".config/zsh";
     # enableSyntaxHighlighting = true;
