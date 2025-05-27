@@ -32,6 +32,7 @@ in
 
       Service = {
         Type = "oneshot";
+        Slice = "background.slice";
         CPUSchedulingPolicy = "idle";
         IOSchedulingClass = "idle";
         ExecStart = "${lib.getExe cfg.package} --refresh-keys";

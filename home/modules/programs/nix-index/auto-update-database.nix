@@ -44,6 +44,7 @@ in
 
       Service = {
         Type = "oneshot";
+        Slice = "background.slice";
         ExecStart = lib.getExe (pkgs.writeShellApplication {
           name = "fetch-nix-index-database";
           runtimeInputs = with pkgs; [

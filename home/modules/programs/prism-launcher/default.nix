@@ -61,6 +61,7 @@ in
       Unit.Description = "Watchdog that moves screenshots from all prismlauncher minecraft instances into a common dir";
       Service = {
         Type = "oneshot";
+        Slice = "background.slice";
         ExecStart = lib.getExe (pkgs.writeShellApplication {
           name = "prismlauncher-move-minecraft-screenshots.sh";
           runtimeInputs = with pkgs; [ coreutils findutils ];

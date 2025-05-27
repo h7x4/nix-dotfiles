@@ -115,6 +115,7 @@ in
         Unit.Description = "Downloads directory watchdog, sorts the downloads directory";
         Service = {
           Type = "oneshot";
+          Slice = "background.slice";
           SyslogIdentifier = mapping.unitName;
           ExecStart = let
             script = pkgs.writeShellApplication {

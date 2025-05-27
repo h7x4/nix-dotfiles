@@ -26,6 +26,7 @@ in
 
       Service = {
         Type = "oneshot";
+        Slice = "background.slice";
         CPUSchedulingPolicy = "idle";
         IOSchedulingClass = "idle";
         ExecStart = "${lib.getExe pkgs.flock} %t/newsboat.lock ${lib.getExe package} --execute=reload";
