@@ -388,10 +388,32 @@ in
 
   # UWSM
   systemd.user.services = {
-    hypridle.Unit.After = lib.mkForce "graphical-session.target";
+    hypridle = {
+      Unit.After = lib.mkForce "graphical-session.target";
+      Service.Slice = "session.slice";
+    };
+
+    hyprpaper = {
+      Unit.After = lib.mkForce "graphical-session.target";
+      Service.Slice = "session.slice";
+    };
+
+    hyprpolkitagent = {
+      Unit.After = lib.mkForce "graphical-session.target";
+      Service.Slice = "session.slice";
+    };
+
+    # gnome-keyring.Service.Slice = "session.slice";
+
+    # dconf.Service.Slice = "session.slice";
+
     waybar.Unit.After = lib.mkForce "graphical-session.target";
+
     network-manager-applet.Unit.After = lib.mkForce "graphical-session.target";
-    fcitx5-daemon.Unit.After = lib.mkForce "graphical-session.target";
-    # hyprpaper.Unit.After = lib.mkForce "graphical-session.target";
+
+    fcitx5-daemon = {
+      Unit.After = lib.mkForce "graphical-session.target";
+      Service.Slice = "session.slice";
+    };
   };
 }
