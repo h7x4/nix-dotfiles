@@ -6,6 +6,7 @@ in {
     ./fonts.nix
     ./nix.nix
 
+    ./programs/dconf.nix
     ./programs/gnupg.nix
     ./programs/neovim.nix
     ./programs/nix-ld.nix

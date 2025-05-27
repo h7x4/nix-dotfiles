@@ -5,7 +5,6 @@
     implementation = "broker";
     packages = with pkgs; [
       gcr
-      dconf
     ];
   };
 }
