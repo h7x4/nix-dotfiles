@@ -30,7 +30,10 @@
         desktop_actions: false,
         max_entries: 10,
         preprocess_exec_script: Some("${lib.getExe preprocess_script}"),
-        terminal: Some("${lib.getExe pkgs.alacritty}"),
+        terminal: Some(Terminal(
+          command: "${lib.getExe pkgs.alacritty}",
+          args: "-e {}",
+        )),
       )
     '';
   };
