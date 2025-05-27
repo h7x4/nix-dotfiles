@@ -8,12 +8,36 @@ in
     mappings = {
       "archives" = [
         "*.rar"
-        "*.tar.*"
-        "*.tgz"
         "*.zip"
-        "*.gz"
-        "*.xz"
+        "*.7z"
+        "*.tar"
+
+        "*.tar.bz2"
+        "*.tar.gz"
+        "*.tar.lz4"
+        "*.tar.lzma"
+        "*.tar.sz"
+        "*.tar.sz"
+        "*.tar.xz"
+        "*.tar.zst"
+
+        "*.tbz"
+        "*.tbz2"
+        "*.tgz"
+        "*.tlz4"
+        "*.tlzma"
+        "*.tsz"
+        "*.txz"
+        "*.tzst"
+
         "*.bz2"
+        "*.gz"
+        "*.lz4"
+        "*.lzma"
+        "*.sz"
+        "*.sz"
+        "*.xz"
+        "*.zst"
       ];
 
       "pictures" = {
