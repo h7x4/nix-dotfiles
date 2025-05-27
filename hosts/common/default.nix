@@ -19,6 +19,7 @@ in {
     ./services/display-manager.nix
     ./services/docker.nix
     ./services/fwupd.nix
+    ./services/gnome-keyring.nix
     ./services/irqbalance.nix
     ./services/journald.nix
     ./services/libinput.nix
@@ -140,8 +141,6 @@ in {
   };
 
   services = {
-    gnome.gnome-keyring.enable = !config.machineVars.headless;
-
     udev.packages = with pkgs; [
       yubikey-personalization
       android-udev-rules
