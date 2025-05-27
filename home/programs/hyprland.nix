@@ -30,6 +30,22 @@ in
     wl-clipboard-rs
   ];
 
+  xdg.portal = {
+    xdgOpenUsePortal = true;
+    configPackages = with pkgs; [ gnome-session ];
+    extraPortals = with pkgs; [
+      gnome-keyring
+      xdg-desktop-portal-gtk
+    ];
+    config.hyprland = {
+      default = "hyprland;gtk;";
+      "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+      "org.freedesktop.impl.portal.OpenURI" = [ "gtk" ];
+      "org.freedesktop.impl.portal.Notification" = [ "gtk" ];
+      "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
+    };
+  };
+
   programs.hyprlock = {
     enable = true;
     settings = {
