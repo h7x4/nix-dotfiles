@@ -82,7 +82,7 @@ in {
     ./services/psd.nix
     ./services/tumblerd.nix
   ]) ++ (optionals machineVars.wayland [
-    ./programs/hyprland.nix
+    ./programs/hyprland
     ./programs/waybar.nix
     ./programs/anyrun
   ]) ++ (optionals (!machineVars.wayland) [
