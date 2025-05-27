@@ -5,6 +5,13 @@
 
     package = unstable-pkgs.zed-editor;
 
+    extraPackages = with pkgs; [
+      gopls
+      groovy
+      nixd
+      pyright
+    ];
+
     userSettings = {
       load_direnv = "shell_hook";
       base_keymap = "VSCode";
@@ -97,11 +104,27 @@
           tab_size = 2;
           format_on_save = "off";
         };
+        Python = {
+          language_servers = [ "pyright" "ruff" ];
+          format_on_save = "off";
+          formatter = [
+            {
+              code_actions = {
+                "source.organizeImports.ruff" = true;
+                "source.fixAll.ruff" = true;
+              };
+            }
+            {
+              language_server.name = "ruff";
+            }
+          ];
+        };
       };
 
       lsp = {
         rust-analyzer.binary.path_lookup = true;
         nix.binary.path_lookup = true;
+        nixd = { };
       };
     };
 
