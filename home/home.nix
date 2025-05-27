@@ -45,6 +45,7 @@ in {
     ./programs/thunderbird.nix
     ./programs/tmux
     ./programs/uv.nix
+    ./programs/yazi.nix
     ./programs/yt-dlp.nix
     ./programs/zoxide.nix
     ./programs/zsh
