@@ -1,4 +1,4 @@
-{ pkgs, config, machineVars, machineName, ... }:
+{ pkgs, yet-unstabler-pkgs, config, machineVars, machineName, ... }:
 {
   home.packages = with pkgs; [
     bandwhich
@@ -94,7 +94,7 @@
       calibre
       cool-retro-term
       darktable
-      discord
+      yet-unstabler-pkgs.discord
       element-desktop
       foliate
       geogebra
