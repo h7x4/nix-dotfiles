@@ -1,7 +1,9 @@
-{ ... }:
-{
+{ config, lib, ... }:
+let
+  cfg = config.programs.cargo;
+in
+lib.mkIf cfg.enable {
   programs.cargo = {
-    enable = true;
     settings = {
       cargo-new.vcs = "git";
     };

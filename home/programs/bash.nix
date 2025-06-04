@@ -1,7 +1,9 @@
-{ config, ... }:
+{ config, lib, ... }:
+let
+  cfg = config.programs.bash;
+in
 {
   programs.bash = {
-    enable = true;
     historyFile = "${config.xdg.dataHome}/bash_history";
     historySize = 100000;
     bashrcExtra = ''

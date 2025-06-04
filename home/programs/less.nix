@@ -1,7 +1,6 @@
 { config, ... }:
 {
   programs.less = {
-    enable = true;
     keys = ''
       #env
       LESS = -i -R

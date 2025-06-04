@@ -1,7 +1,6 @@
 { pkgs, lib, ... }:
 {
   programs.tmux = {
-    enable = true;
     baseIndex = 1;
     clock24 = true;
     escapeTime = 0;

@@ -13,13 +13,12 @@ let
     "github.com:"
   ];
 in
-{
+lib.mkIf cfg.enable {
   # TODO: convert to template once nix-sops supports it in hm module
   sops.secrets."git/nordicsemi-config" = { };
 
   programs.git = lib.mkMerge [
     {
-      enable = true;
       package = pkgs.gitFull;
 
       userName = "h7x4";

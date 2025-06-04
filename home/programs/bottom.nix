@@ -1,7 +1,9 @@
-{ ... }:
+{ config, lib, ... }:
+let
+  cfg = config.programs.bottom;
+in
 {
   programs.bottom = {
-    enable = true;
     settings = {
       flags.enable_gpu = true;
 

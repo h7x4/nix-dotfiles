@@ -1,17 +1,24 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
+let
+  cfg = config.programs.sqlite;
+in
 {
-  xdg.configFile."sqlite3/sqliterc".text = ''
-    .bail on
-    .changes on
-    .headers on
-    .mode box
-    .nullvalue '<NULL>'
-    .timer on
-  '';
+  options.programs.sqlite.enable = lib.mkEnableOption "sqlite";
 
-  home.packages = [
-    pkgs.sqlite-interactive
-  ];
+  config = lib.mkIf cfg.enable {
+    xdg.configFile."sqlite3/sqliterc".text = ''
+      .bail on
+      .changes on
+      .headers on
+      .mode box
+      .nullvalue '<NULL>'
+      .timer on
+    '';
 
-  home.sessionVariables.SQLITE_HISTORY= "${config.xdg.dataHome}/sqlite_history";
+    home.packages = [
+      pkgs.sqlite-interactive
+    ];
+
+    home.sessionVariables.SQLITE_HISTORY= "${config.xdg.dataHome}/sqlite_history";
+  };
 }

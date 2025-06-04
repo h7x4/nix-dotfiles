@@ -1,7 +1,9 @@
-{ ... }:
+{ config, lib, ... }:
+let
+  cfg = config.programs.fzf;
+in
 {
   programs.fzf = {
-    enable = true;
     defaultCommand = "fd --type f";
   };
 }

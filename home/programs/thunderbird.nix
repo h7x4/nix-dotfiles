@@ -2,17 +2,15 @@
 let
   cfg = config.programs.thunderbird;
 in
-{
+lib.mkIf cfg.enable {
   programs.thunderbird = {
-    enable = !machineVars.headless;
     profiles.h7x4 = {
       isDefault = true;
       withExternalGnupg = true;
     };
   };
 
-
-  home.packages = lib.mkIf cfg.enable (with pkgs; [
+  home.packages = with pkgs; [
     birdtray
-  ]);
+  ];
 }

@@ -4,5 +4,5 @@
     ./auto-update-tldr-db.nix
   ];
 
-  programs.tealdeer.enable = true;
+  programs.tealdeer = { };
 }

@@ -1,4 +1,4 @@
 { ... }:
 {
-  programs.pandoc.enable = true;
+  programs.pandoc = { };
 }

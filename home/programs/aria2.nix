@@ -1,4 +1,4 @@
 { ... }:
 {
-  programs.aria2.enable = true;
+  programs.aria2 = { };
 }

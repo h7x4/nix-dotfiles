@@ -1,8 +1,9 @@
-{ pkgs, lib, machineVars, ... }:
-{
+{ config, pkgs, lib, machineVars, ... }:
+let
+  cfg = config.programs.neovim;
+in
+lib.mkIf cfg.enable {
   programs.neovim = {
-    enable = true;
-
     auto-clean-swapfiles.enable = true;
 
     viAlias = true;

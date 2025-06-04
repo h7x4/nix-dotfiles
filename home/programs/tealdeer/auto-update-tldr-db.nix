@@ -1,5 +1,8 @@
-{ pkgs, lib, ... }:
-{
+{ config, pkgs, lib, ... }:
+let
+  cfg = config.programs.tealdeer;
+in
+lib.mkIf cfg.enable {
   systemd.user.services.update-tldr-db = {
     Unit = {
       Description = "Update tealdeer database";

@@ -1,4 +1,4 @@
 { ... }:
 {
-  programs.jq.enable = true;
+  programs.jq = { };
 }

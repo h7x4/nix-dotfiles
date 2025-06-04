@@ -1,7 +1,6 @@
 { pkgs, ... }:
 {
   programs.gh = {
-    enable = true;
     settings = {
       gitProtocol = "ssh";
       pager = "${pkgs.bat}/bin/bat";

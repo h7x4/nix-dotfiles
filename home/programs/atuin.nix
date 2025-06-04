@@ -1,11 +1,10 @@
-{ config, ... }:
+{ config, lib, ... }:
 let
   cfg = config.programs.atuin;
   xdg_runtime_dir = "/run/user/${toString config.home.uid}";
 in
-{
+lib.mkIf cfg.enable {
   programs.atuin = {
-    enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
     enableNushellIntegration = config.programs.nushell.enable;

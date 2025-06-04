@@ -1,8 +1,8 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.programs.zsh;
 in
-{
+lib.mkIf cfg.enable {
   home.file."${cfg.dotDir}/.zshrc".onChange = ''
     ${lib.getExe (pkgs.writeTextFile {
       name = "zsh-compinit-oneshot.zsh";
@@ -22,7 +22,6 @@ in
   };
 
   programs.zsh = {
-    enable = true;
     dotDir = ".config/zsh";
     # enableSyntaxHighlighting = true;
     defaultKeymap = "viins";

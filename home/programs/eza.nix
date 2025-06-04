@@ -1,7 +1,9 @@
-{ config, ... }:
+{ config, lib, ... }:
+let
+  cfg = config.programs.eza;
+in
 {
   programs.eza = {
-    enable = true;
     icons = "auto";
     enableNushellIntegration = config.programs.nushell.enable;
   };

@@ -1,7 +1,9 @@
-{ config, pkgs, ... }:
-{
+{ config, lib, pkgs, ... }:
+let
+  cfg = config.programs.gpg;
+in
+lib.mkIf cfg.enable {
   programs.gpg = {
-    enable = true;
     homedir = "${config.xdg.configHome}/gnupg";
 
     auto-refresh-keys.enable = true;
