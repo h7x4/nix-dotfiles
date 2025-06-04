@@ -11,8 +11,6 @@ in {
   imports = [ ./sources.nix ];
 
   programs.newsboat = {
-    enable = true;
-
     fetch-articles.enable = true;
     vacuum.enable = true;
 

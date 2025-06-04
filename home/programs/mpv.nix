@@ -1,8 +1,6 @@
 { config, lib, machineVars, ... }:
 {
   programs.mpv = {
-    enable = !machineVars.headless;
-
     config = {
       screenshot-directory = "${config.xdg.userDirs.pictures}/mpv-screenshots";
 

@@ -1,7 +1,6 @@
 { lib, pkgs, ... }:
 {
   programs.firefox = {
-    enable = true;
     profiles.h7x4 = {
       bookmarks = {
         force = true;

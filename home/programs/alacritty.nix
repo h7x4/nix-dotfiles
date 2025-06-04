@@ -1,7 +1,6 @@
 { pkgs, lib, config, ... }:
 {
   programs.alacritty = {
-    enable = true;
     settings = {
       window = {
         padding = { x = 15; y = 15; };

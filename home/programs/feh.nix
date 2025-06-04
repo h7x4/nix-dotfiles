@@ -1,4 +1,4 @@
-{ machineVars, ... }:
+{ ... }:
 {
-  programs.feh.enable = !machineVars.headless;
+  programs.feh = { };
 }

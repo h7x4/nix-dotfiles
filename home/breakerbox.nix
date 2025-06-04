@@ -7,6 +7,7 @@ in
   imports = [
     ./programs/nix.nix
 
+    ./programs/alacritty.nix
     ./programs/aria2.nix
     ./programs/atuin.nix
     ./programs/bash.nix
@@ -16,7 +17,10 @@ in
     ./programs/cargo.nix
     # ./programs/comma.nix
     ./programs/direnv
+    ./programs/emacs
     ./programs/eza.nix
+    ./programs/feh.nix
+    ./programs/firefox.nix
     ./programs/fzf.nix
     ./programs/gdb.nix
     ./programs/gh-dash.nix
@@ -27,15 +31,23 @@ in
     ./programs/jq.nix
     ./programs/less.nix
     ./programs/man.nix
+    ./programs/mpv.nix
+    ./programs/ncmpcpp.nix
     ./programs/neovim
+    ./programs/newsboat
     ./programs/nix-index
     ./programs/nushell.nix
+    ./programs/obs-studio.nix
     ./programs/pandoc.nix
+    ./programs/prism-launcher.nix
     ./programs/python.nix
+    ./programs/qutebrowser.nix
     ./programs/ripgrep.nix
+    ./programs/rofi
     ./programs/skim.nix
     ./programs/sqlite.nix
     ./programs/ssh
+    ./programs/taskwarrior.nix
     ./programs/tealdeer
     ./programs/texlive.nix
     ./programs/thunderbird.nix
@@ -51,18 +63,6 @@ in
   ] ++ (optionals graphics [
     ./config/gtk.nix
 
-    ./programs/alacritty.nix
-    ./programs/emacs
-    ./programs/feh.nix
-    ./programs/firefox.nix
-    ./programs/mpv.nix
-    ./programs/ncmpcpp.nix
-    ./programs/newsboat
-    ./programs/obs-studio.nix
-    ./programs/prism-launcher.nix
-    ./programs/qutebrowser.nix
-    ./programs/rofi
-    ./programs/taskwarrior.nix
     ./programs/vscode
     ./programs/zathura.nix
     ./programs/zed
@@ -132,5 +132,17 @@ in
 
   services.pueue.enable = true;
 
+  programs.alacritty.enable = graphics;
+  programs.emacs.enable = graphics;
+  programs.feh.enable = graphics;
+  programs.firefox.enable = graphics;
+  programs.mpv.enable = graphics;
+  programs.ncmpcpp.enable = graphics;
+  programs.newsboat.enable = graphics;
+  programs.obs-studio.enable = graphics;
+  programs.prism-launcher.enable = graphics;
+  programs.qutebrowser.enable = graphics;
+  programs.rofi.enable = graphics;
+  programs.taskwarrior.enable = graphics;
   programs.thunderbird.enable = graphics;
 }

@@ -1,4 +1,4 @@
-{ machineVars, ... }:
+{ ... }:
 {
-  programs.obs-studio.enable = !machineVars.headless;
+  programs.obs-studio = { };
 }

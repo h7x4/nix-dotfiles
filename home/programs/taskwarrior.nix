@@ -1,7 +1,9 @@
-{ pkgs, ... }:
-{
+{ config, lib, pkgs, ... }:
+let
+  cfg = config.programs.taskwarrior;
+in
+lib.mkIf cfg.enable {
   programs.taskwarrior = {
-    enable = true;
     package = pkgs.taskwarrior3;
     config = rec {
       report.minimal.filter = "(status:pending or status:waiting)";

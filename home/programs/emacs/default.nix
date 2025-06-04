@@ -1,4 +1,6 @@
-{ pkgs, ... }: let
+{ config, lib, pkgs, ... }:
+let
+  cfg = config.programs.emacs;
 
   configEl = pkgs.stdenv.mkDerivation {
     name = "config.el";
@@ -14,11 +16,11 @@
     '';
   };
 
-in {
+in
+lib.mkIf cfg.enable {
   xdg.configFile."emacs/init.el".source = configEl.outPath;
 
   programs.emacs = {
-    enable = true;
     extraPackages = epkgs: with epkgs; [
     #   # package
       use-package
