@@ -108,6 +108,7 @@ in
   programs.gh.enable = true;
   programs.git.enable = true;
   programs.gpg.enable = true;
+  programs.helix.enable = true;
   programs.home-manager.enable = true;
   programs.jq.enable = true;
   programs.less.enable = true;
