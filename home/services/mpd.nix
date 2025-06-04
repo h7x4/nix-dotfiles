@@ -1,11 +1,10 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.services.mpd;
   runtimeDir = "/run/user/${toString config.home.uid}/mpd";
 in
-{
+lib.mkIf cfg.enable {
   services.mpd = {
-    enable = true;
     musicDirectory = config.xdg.userDirs.music;
     playlistDirectory = "${cfg.musicDirectory}/playlists/MPD";
     network.startWhenNeeded = true;

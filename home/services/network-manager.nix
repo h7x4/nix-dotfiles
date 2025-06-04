@@ -1,4 +1,4 @@
-{ machineVars, ... }:
+{  ... }:
 {
-  services.network-manager-applet.enable = !machineVars.headless;
+  services.network-manager-applet = { };
 }

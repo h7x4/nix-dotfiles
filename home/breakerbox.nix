@@ -58,8 +58,16 @@ in
     ./programs/zoxide.nix
     ./programs/zsh
 
+    ./services/copyq.nix
+    ./services/dunst.nix
+    ./services/gnome-keyring.nix
+    ./services/mpd.nix
+    ./services/mpris-proxy.nix
+    ./services/network-manager.nix
     ./services/nix-channel-update.nix
+    ./services/psd.nix
     ./services/pueue.nix
+    ./services/tumblerd.nix
   ] ++ (optionals graphics [
     ./config/gtk.nix
 
@@ -67,16 +75,8 @@ in
     ./programs/zathura.nix
     ./programs/zed
 
-    ./services/copyq.nix
-    ./services/dunst.nix
     ./services/fcitx5.nix
-    ./services/gnome-keyring.nix
     ./services/keybase.nix
-    ./services/mpd.nix
-    ./services/mpris-proxy.nix
-    ./services/network-manager.nix
-    ./services/psd.nix
-    ./services/tumblerd.nix
   ]) ++ (optionals machineVars.wayland [
     ./programs/hyprland
     ./programs/waybar.nix
@@ -146,4 +146,13 @@ in
   programs.rofi.enable = graphics;
   programs.taskwarrior.enable = graphics;
   programs.thunderbird.enable = graphics;
+
+  services.copyq.enable = graphics;
+  services.dunst.enable = graphics;
+  services.gnome-keyring.enable = graphics;
+  services.mpd.enable = graphics;
+  services.mpris-proxy.enable = graphics;
+  services.network-manager-applet.enable = graphics;
+  services.psd.enable = graphics;
+  services.tumblerd.enable = graphics;
 }
