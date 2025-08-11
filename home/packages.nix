@@ -99,7 +99,7 @@
       foliate
       geogebra
       ghidra
-      gimp
+      gimp3-with-plugins
       gnome-font-viewer
       google-chrome
       imhex
