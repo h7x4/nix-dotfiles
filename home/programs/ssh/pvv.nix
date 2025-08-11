@@ -24,6 +24,11 @@ let # http://www.pvv.ntnu.no/pvv/Maskiner
     "isvegg"
     "knutsen"
     "kommode"
+    "lupine-1"
+    "lupine-2"
+    "lupine-3"
+    "lupine-4"
+    "lupine-5"
     {
       names = [ "microbel" "pvv-users" "pvv-mail" ];
       proxyJump = lib.mkDefault null;
@@ -35,6 +40,7 @@ let # http://www.pvv.ntnu.no/pvv/Maskiner
     "tom"
     "ustetind"
     "venture"
+    "wenche"
   ];
 
   rootMachines = [
