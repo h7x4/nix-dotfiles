@@ -1,4 +1,4 @@
-{ pkgs, unstable-pkgs, ... }:
+{ lib, pkgs, unstable-pkgs, ... }:
 {
   programs.zed-editor = {
     enable = true;
@@ -95,6 +95,11 @@
       indent_guides = {
         enabled = true;
         coloring = "indent_aware";
+      };
+
+      node = {
+          path = lib.getExe pkgs.nodejs;
+          npm_path = lib.getExe' pkgs.nodejs "npm";
       };
 
       features.edit_prediction_provider = "copilot";
