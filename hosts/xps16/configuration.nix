@@ -97,7 +97,7 @@
       enable32Bit = true;
     };
     ipu6 = {
-      enable = true;
+      enable = false;
       platform = "ipu6epmtl";
     };
   };
