@@ -76,6 +76,7 @@
   services = {
     xserver.upscaleDefaultCursor = true;
     xserver.dpi = 192;
+    xserver.videoDrivers = [ "displaylink" "modesetting" ];
     displayManager.sddm = {
       enableHidpi = true;
       settings = {
