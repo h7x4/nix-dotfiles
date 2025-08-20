@@ -120,6 +120,7 @@
       mopidy-soundcloud
       mopidy-youtube
       mpc_cli
+      mumble
       naps2
       nsxiv
       nyxt
