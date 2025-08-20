@@ -11,6 +11,11 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
+    nixgl = {
+      url = "github:nix-community/nixGL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -44,6 +49,7 @@
     nixpkgs-yet-unstabler,
     home-manager,
     nixos-hardware,
+    nixgl,
 
     matrix-synapse-next,
     maunium-stickerpicker,
@@ -74,6 +80,7 @@
 
         minecraft.overlays.default
         osuchan.overlays.default
+        nixgl.overlays.default
       ];
     };
 
@@ -176,6 +183,60 @@
             laptop = false;
           };
         };
+      };
+
+      pvv = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+
+        extraSpecialArgs = {
+          inherit inputs;
+          inherit unstable-pkgs;
+          inherit yet-unstabler-pkgs;
+          inherit (self) extendedLib;
+          machineName = "pvv-machine";
+          machineVars = {
+            headless = true;
+            # fixDisplayCommand = "echo 'not available'";
+            gaming = false;
+            development = true;
+            laptop = false;
+            battery = null;
+            wlanInterface = null;
+            wayland = false;
+          };
+        };
+
+        modules = [
+          ./home/home.nix
+          ./modules/machineVars.nix
+          inputs.sops-nix.homeManagerModules.sops
+          ({ config, pkgs, lib, ... }: {
+            home = {
+              username = lib.mkForce "oysteikt";
+              homeDirectory = lib.mkForce "/home/pvv/d/oysteikt";
+              stateVersion = "25.05";
+              packages = [
+                # pkgs.nixgl.auto.nixGLDefault
+
+                # NOTE: nix on pvv machines is severely outdated
+                #       putting it in the path of home-manager
+                #       will ensure we use the new one by default
+                config.nix.package
+              ];
+            };
+
+            nix.package = pkgs.nix;
+            nix.settings.use-xdg-base-directories = lib.mkForce false;
+
+            local.shell.aliases."Nix Stuff" = {
+              nxr = lib.mkForce "home-manager switch --flake ${config.home.homeDirectory}/nix#pvv --impure";
+              nxrl = lib.mkForce "home-manager switch --flake ${config.home.homeDirectory}/nix#pvv --impure";
+            };
+
+            xsession.enable = true;
+            xsession.windowManager.command = lib.mkForce "${pkgs.nixgl.auto.nixGLDefault}/bin/nixGL ${config.home.homeDirectory}/.xmonad/xmonad-x86_64-linux";
+          })
+        ] ++ (builtins.attrValues self.homeModules);
       };
     };
 
