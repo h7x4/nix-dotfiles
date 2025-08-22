@@ -30,6 +30,7 @@ in
     ./programs/git
     ./programs/gpg.nix
     ./programs/home-manager.nix
+    ./programs/hyprland
     ./programs/jq.nix
     ./programs/less.nix
     ./programs/man.nix
@@ -56,6 +57,7 @@ in
     ./programs/tmux
     ./programs/uv.nix
     ./programs/vscode
+    ./programs/waybar.nix
     ./programs/yazi.nix
     ./programs/yt-dlp.nix
     ./programs/zathura.nix
@@ -79,9 +81,6 @@ in
 
     ./services/fcitx5.nix
     ./services/keybase.nix
-  ]) ++ (optionals machineVars.wayland [
-    ./programs/hyprland
-    ./programs/waybar.nix
   ]) ++ (optionals (!machineVars.wayland) [
     ./programs/xmonad
     # ./programs/xmobar
@@ -161,6 +160,7 @@ in
   services.psd.enable = graphics;
   services.tumblerd.enable = graphics;
 
-
   programs.anyrun.enable = machineVars.wayland;
+  programs.waybar.enable = machineVars.wayland;
+  wayland.windowManager.hyprland.enable = machineVars.wayland;
 }

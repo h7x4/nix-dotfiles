@@ -1,11 +1,10 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 let
   cfg = config.programs.waybar;
   cfgs = cfg.settings.mainBar;
 in
 {
   programs.waybar = {
-    enable = true;
     systemd.enable = true;
 
     settings = {
@@ -237,7 +236,7 @@ in
     #'';
   };
 
-  systemd.user.services.waybar = {
+  systemd.user.services.waybar = lib.mkIf (cfg.enable && cfg.systemd.enable){
     Service.Environment = [
       "DISPLAY=:0"
     ];
