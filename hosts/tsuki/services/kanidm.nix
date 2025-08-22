@@ -17,7 +17,7 @@ in {
   };
 
   services.kanidm = {
-    package = pkgs.kanidm_1_5;
+    # package = pkgs.kanidm;
     enableServer = true;
     # enablePAM = true;
     serverSettings = let
