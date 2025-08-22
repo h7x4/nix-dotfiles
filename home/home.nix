@@ -57,12 +57,6 @@ in {
     profilePath = ".config/X11/xprofile";
   };
 
-  xdg.configFile = {
-    "ghc/ghci.conf".text = ''
-      :set prompt "${extendedLib.termColors.front.magenta "[GHCi]λ"} "
-    '';
-  };
-
   news.display = "silent";
 
   fonts.fontconfig.enable = mkForce true;

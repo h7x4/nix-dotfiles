@@ -26,6 +26,7 @@ in
     ./programs/gdb.nix
     ./programs/gh-dash.nix
     ./programs/gh.nix
+    ./programs/ghci.nix
     ./programs/git
     ./programs/gpg.nix
     ./programs/home-manager.nix
@@ -106,6 +107,7 @@ in
   programs.gdb.enable = true;
   programs.gh-dash.enable = true;
   programs.gh.enable = true;
+  programs.ghci.enable = true;
   programs.git.enable = true;
   programs.gpg.enable = true;
   programs.helix.enable = true;
