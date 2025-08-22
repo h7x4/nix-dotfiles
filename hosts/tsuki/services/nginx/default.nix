@@ -27,6 +27,8 @@
     enable = true;
     enableReload = true;
 
+    package = pkgs.nginxQuic;
+
     statusPage = true;
 
     recommendedBrotliSettings = true;
@@ -143,6 +145,7 @@
       # (host ["www"] { root = "${inputs.website.packages.${pkgs.system}.default}/"; })
       (host ["testmap"] {
         root = "/var/lib/mcmap";
+        quic = true;
         locations = {
           "@empty".return = "204";
 
