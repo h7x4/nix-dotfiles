@@ -3,23 +3,14 @@
   sops = {
     secrets = {
       "nix/access-tokens/github" = { sopsFile = ./../../secrets/common.yaml; };
-
       "nix/access-tokens/pvv-git" = { sopsFile = ./../../secrets/common.yaml; };
-
-      "nix/access-tokens/github-nordicsemi" = { sopsFile = ./../../secrets/common.yaml; };
-      "nix/access-tokens/bitbucket-nordicsemi" = { sopsFile = ./../../secrets/common.yaml; };
     };
     templates."nix-access-tokens.conf".content = let
       inherit (config.sops) placeholder;
 
       tokens = {
         "github.com" = placeholder."nix/access-tokens/github";
-
         "git.pvv.ntnu.no" = placeholder."nix/access-tokens/pvv-git";
-
-        "bitbucket.nordicsemi.no" = placeholder."nix/access-tokens/bitbucket-nordicsemi";
-        "github.com/NordicPlayground" = placeholder."nix/access-tokens/github-nordicsemi";
-        "github.com/NordicSemiconductor" = placeholder."nix/access-tokens/github-nordicsemi";
       };
     in "access-tokens = ${lib.pipe tokens [
       lib.attrsToList

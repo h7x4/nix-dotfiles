@@ -14,9 +14,6 @@ let
   ];
 in
 lib.mkIf cfg.enable {
-  # TODO: convert to template once nix-sops supports it in hm module
-  sops.secrets."git/nordicsemi-config" = { };
-
   programs.git = lib.mkMerge [
     {
       package = pkgs.gitFull;
@@ -293,42 +290,6 @@ lib.mkIf cfg.enable {
           };
         };
       }) (lib.flatten (lib.attrValues prefixes-per-org));
-    })
-
-    (let
-      bitbucket-uri-prefixes = [
-        # Preferred
-        "bitbucket-nordicsemi:"
-
-        # Alternative
-        "ssh://git@bitbucket.nordicsemi.no:7999"
-        "https://projecttools.nordicsemi.no/bitbucket/scm"
-      ];
-
-      prefixes-per-org = let
-        organizations = [
-          "NordicSemiconductor"
-          "NordicPlayground"
-          "nrfconnect"
-          "oysteintveit-nordicsemi"
-        ];
-      in lib.genAttrs organizations (org: map (uri-prefix: "${uri-prefix}${org}") (github-uri-prefixes ++ [ "github-nordicsemi:" ]));
-    in {
-      extraConfig = lib.mergeAttrs
-        {
-          "url \"${lib.head bitbucket-uri-prefixes}\"".insteadOf = lib.tail bitbucket-uri-prefixes;
-        }
-        (lib.mapAttrs' (org: uri-prefixes: {
-          name = "url \"github-nordicsemi:${org}\"";
-          value.insteadOf = uri-prefixes;
-        }) prefixes-per-org)
-        ;
-
-      includes = map (x: {
-        contentSuffix = "nordicsemi.gitconfig";
-        condition = "hasconfig:remote.*.url:${x}/**";
-        path = config.sops.secrets."git/nordicsemi-config".path;
-      }) (bitbucket-uri-prefixes ++ (lib.flatten (lib.attrValues prefixes-per-org)));
     })
   ];
 
