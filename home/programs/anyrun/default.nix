@@ -1,8 +1,6 @@
-{ pkgs, lib, inputs, ... }:
+{ pkgs, lib, ... }:
 {
   programs.anyrun = {
-    enable = true;
-
     config = {
       y.fraction = 0.3;
       width.fraction = 0.25;
@@ -14,7 +12,7 @@
       showResultsImmediately = true;
     };
 
-    extraCss = builtins.readFile (./. + "/style.css");
+    extraCss = builtins.readFile ./style.css;
 
     extraConfigFiles."applications.ron".text = let
       preprocess_script = pkgs.writeShellApplication {

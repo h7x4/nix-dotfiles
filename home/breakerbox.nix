@@ -8,6 +8,7 @@ in
     ./programs/nix.nix
 
     ./programs/alacritty.nix
+    ./programs/anyrun
     ./programs/aria2.nix
     ./programs/atuin.nix
     ./programs/bash.nix
@@ -80,7 +81,6 @@ in
   ]) ++ (optionals machineVars.wayland [
     ./programs/hyprland
     ./programs/waybar.nix
-    ./programs/anyrun
   ]) ++ (optionals (!machineVars.wayland) [
     ./programs/xmonad
     # ./programs/xmobar
@@ -157,4 +157,7 @@ in
   services.network-manager-applet.enable = graphics;
   services.psd.enable = graphics;
   services.tumblerd.enable = graphics;
+
+
+  programs.anyrun.enable = machineVars.wayland;
 }
