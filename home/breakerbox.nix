@@ -5,6 +5,8 @@ let
 in
 {
   imports = [
+    ./config/gtk.nix
+
     ./programs/nix.nix
 
     ./programs/alacritty.nix
@@ -76,9 +78,6 @@ in
     ./services/pueue.nix
     ./services/tumblerd.nix
   ] ++ (optionals graphics [
-    ./config/gtk.nix
-
-
     ./services/fcitx5.nix
     ./services/keybase.nix
   ]) ++ (optionals (!machineVars.wayland) [
@@ -132,6 +131,8 @@ in
   programs.zsh.enable = true;
 
   services.pueue.enable = true;
+
+  gtk.enable = graphics;
 
   programs.alacritty.enable = graphics;
   programs.emacs.enable = graphics;

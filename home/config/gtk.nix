@@ -1,7 +1,6 @@
-{ pkgs, config, machineVars, ... }:
+{ pkgs, config, ... }:
 {
-  gtk = pkgs.lib.mkIf (!machineVars.headless) {
-    enable = true;
+  gtk = {
     font.name = "Droid Sans";
 
     iconTheme = {
