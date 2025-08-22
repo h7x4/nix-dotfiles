@@ -124,7 +124,6 @@ in
   programs.sqlite.enable = true;
   programs.ssh.enable = true;
   programs.tealdeer.enable = true;
-  programs.texlive.enable = true;
   programs.tmux.enable = true;
   programs.uv.enable = true;
   programs.yazi.enable = true;
@@ -146,6 +145,7 @@ in
   programs.qutebrowser.enable = graphics;
   programs.rofi.enable = graphics;
   programs.taskwarrior.enable = graphics;
+  programs.texlive.enable = graphics;
   programs.thunderbird.enable = graphics;
   programs.vscode.enable = graphics;
   programs.zathura.enable = graphics;
