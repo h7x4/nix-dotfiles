@@ -25,7 +25,6 @@ Here are some of the interesting files and dirs:
 |------|--------------|---------|
 | `Tsuki` | Dell Poweredge r710 server | Data storage / Build server / Selfhosted services. This server hosts a wide variety of services, including websites, matrix server, git repos, CI/CD and more. **This is probably the most interesting machine to pick config from** |
 | `Kasei` | AMD Zen 2 CPU / AMD GPU - desktop computer | Semi-daily driver. This is my main computer at home. |
-| `Dosei` | Dell Optiplex | Work computer, mostly used for development and testing. |
 
 
 ## home-manager configuration
