@@ -55,6 +55,7 @@ in
     ./programs/uv.nix
     ./programs/yazi.nix
     ./programs/yt-dlp.nix
+    ./programs/zed
     ./programs/zoxide.nix
     ./programs/zsh
 
@@ -73,7 +74,6 @@ in
 
     ./programs/vscode
     ./programs/zathura.nix
-    ./programs/zed
 
     ./services/fcitx5.nix
     ./services/keybase.nix
@@ -146,6 +146,7 @@ in
   programs.rofi.enable = graphics;
   programs.taskwarrior.enable = graphics;
   programs.thunderbird.enable = graphics;
+  programs.zed.enable = graphics;
 
   services.copyq.enable = graphics;
   services.dunst.enable = graphics;

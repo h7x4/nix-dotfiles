@@ -1,4 +1,7 @@
-{ lib, pkgs, unstable-pkgs, ... }:
+{ config, lib, pkgs, unstable-pkgs, ... }:
+let
+  cfg = config.programs.zed-editor;
+in
 {
   programs.zed-editor = {
     enable = true;
@@ -178,6 +181,7 @@
       "typst"
     ];
   };
+} // (lib.mkIf cfg.enable {
 
   xdg.configFile."zed/themes/monokai.json".source = let
     package = pkgs.fetchFromGitHub {
@@ -193,4 +197,4 @@
       unset TMUX_PANE
     fi
   '';
-}
+})
