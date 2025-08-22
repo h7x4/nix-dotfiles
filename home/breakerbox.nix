@@ -57,6 +57,7 @@ in
     ./programs/vscode
     ./programs/yazi.nix
     ./programs/yt-dlp.nix
+    ./programs/zathura.nix
     ./programs/zed
     ./programs/zoxide.nix
     ./programs/zsh
@@ -74,7 +75,6 @@ in
   ] ++ (optionals graphics [
     ./config/gtk.nix
 
-    ./programs/zathura.nix
 
     ./services/fcitx5.nix
     ./services/keybase.nix
@@ -147,6 +147,7 @@ in
   programs.taskwarrior.enable = graphics;
   programs.thunderbird.enable = graphics;
   programs.vscode.enable = graphics;
+  programs.zathura.enable = graphics;
   programs.zed-editor.enable = graphics;
 
   services.copyq.enable = graphics;
