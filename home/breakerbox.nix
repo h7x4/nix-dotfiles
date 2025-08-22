@@ -53,6 +53,7 @@ in
     ./programs/thunderbird.nix
     ./programs/tmux
     ./programs/uv.nix
+    ./programs/vscode
     ./programs/yazi.nix
     ./programs/yt-dlp.nix
     ./programs/zed
@@ -72,7 +73,6 @@ in
   ] ++ (optionals graphics [
     ./config/gtk.nix
 
-    ./programs/vscode
     ./programs/zathura.nix
 
     ./services/fcitx5.nix
@@ -146,7 +146,8 @@ in
   programs.rofi.enable = graphics;
   programs.taskwarrior.enable = graphics;
   programs.thunderbird.enable = graphics;
-  programs.zed.enable = graphics;
+  programs.vscode.enable = graphics;
+  programs.zed-editor.enable = graphics;
 
   services.copyq.enable = graphics;
   services.dunst.enable = graphics;

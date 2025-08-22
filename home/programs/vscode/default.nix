@@ -1,32 +1,28 @@
 { pkgs, lib, config, ... }:
 let
   cfg = config.programs.vscode;
-
-  mapPrefixToSet = prefix: set:
-    with lib; attrsets.mapAttrs' (k: v: attrsets.nameValuePair ("${prefix}.${k}") v) set;
-
-  configDir = {
-    "vscode" = "Code";
-    "vscode-insiders" = "Code - Insiders";
-    "vscodium" = "VSCodium";
-  }.${cfg.package.pname};
-  userDir = "${config.xdg.configHome}/${configDir}/User";
-  configFilePath = "${userDir}/settings.json";
 in
 {
   imports = [
     ./auto-update-extensions.nix
-    # ./extensions
   ];
 
-  home.file.${configFilePath} = {
-    target = "${configFilePath}.ro";
-    onChange = ''install -m660 $(realpath "${configFilePath}.ro") "${configFilePath}"'';
+  home.file = let
+    configDir = {
+      "vscode" = "Code";
+      "vscode-insiders" = "Code - Insiders";
+      "vscodium" = "VSCodium";
+    }.${cfg.package.pname};
+    userDir = "${config.xdg.configHome}/${configDir}/User";
+    configFilePath = "${userDir}/settings.json";
+  in lib.mkIf cfg.enable {
+    ${configFilePath} = {
+      target = "${configFilePath}.ro";
+      onChange = ''install -m660 $(realpath "${configFilePath}.ro") "${configFilePath}"'';
+    };
   };
 
   programs.vscode = {
-    enable = true;
-
     package = pkgs.vscode.overrideAttrs (prev: {
       # NOTE: this messes up zsh's tab completion in the terminal whenever code is started
       #       from within a shell
@@ -39,6 +35,9 @@ in
 
     profiles.default = {
       userSettings = let
+        mapPrefixToSet = prefix: set:
+          lib.mapAttrs' (k: v: lib.nameValuePair "${prefix}.${k}" v) set;
+
         editor = mapPrefixToSet "editor" {
           fontFamily = "Fira Code";
           fontLigatures = true;

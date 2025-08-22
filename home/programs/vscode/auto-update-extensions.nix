@@ -2,7 +2,7 @@
 let
   cfg = config.programs.vscode;
 in
-{
+lib.mkIf cfg.enable {
   # TODO: add `dirname` to $PATH upstream
   systemd.user.services.update-vscode-extensions = {
     Unit = {
