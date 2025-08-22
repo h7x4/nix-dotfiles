@@ -85,7 +85,7 @@
   services.zfs.autoScrub.enable = true;
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_6_13;
+    kernelPackages = pkgs.linuxPackages_6_15;
     zfs.requestEncryptionCredentials = false;
     zfs.package = pkgs.zfs_2_3;
     loader = {
