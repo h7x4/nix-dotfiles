@@ -69,6 +69,7 @@ in
 
     ./services/copyq.nix
     ./services/dunst.nix
+    ./services/fcitx5.nix
     ./services/gnome-keyring.nix
     ./services/mpd.nix
     ./services/mpris-proxy.nix
@@ -78,7 +79,6 @@ in
     ./services/pueue.nix
     ./services/tumblerd.nix
   ] ++ (optionals graphics [
-    ./services/fcitx5.nix
     ./services/keybase.nix
   ]) ++ (optionals (!machineVars.wayland) [
     ./programs/xmonad
@@ -160,6 +160,11 @@ in
   services.network-manager-applet.enable = graphics;
   services.psd.enable = graphics;
   services.tumblerd.enable = graphics;
+
+  i18n.inputMethod = mkIf graphics {
+    enable = true;
+    type = "fcitx5";
+  };
 
   programs.anyrun.enable = machineVars.wayland;
   programs.waybar.enable = machineVars.wayland;
