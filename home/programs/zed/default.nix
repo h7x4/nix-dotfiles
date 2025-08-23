@@ -4,8 +4,6 @@ let
 in
 {
   programs.zed-editor = {
-    enable = true;
-
     package = unstable-pkgs.zed-editor;
 
     extraPackages = with pkgs; [
