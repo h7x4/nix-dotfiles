@@ -78,9 +78,7 @@ in
     ./services/psd.nix
     ./services/pueue.nix
     ./services/tumblerd.nix
-  ] ++ (optionals graphics [
-    ./services/keybase.nix
-  ]) ++ (optionals (!machineVars.wayland) [
+  ] ++ (optionals (!machineVars.wayland) [
     ./programs/xmonad
     # ./programs/xmobar
 
@@ -155,6 +153,8 @@ in
   services.copyq.enable = graphics;
   services.dunst.enable = graphics;
   services.gnome-keyring.enable = graphics;
+  services.kbfs.enable = graphics;
+  services.keybase.enable = graphics;
   services.mpd.enable = graphics;
   services.mpris-proxy.enable = graphics;
   services.network-manager-applet.enable = graphics;
