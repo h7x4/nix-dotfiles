@@ -179,7 +179,6 @@ in
       "typst"
     ];
   };
-} // (lib.mkIf cfg.enable {
 
   xdg.configFile."zed/themes/monokai.json".source = let
     package = pkgs.fetchFromGitHub {
@@ -188,11 +187,11 @@ in
       rev = "061a86ff4845b11ac2f183c2e26c77b15cfae7d0";
       hash = "sha256-mlEcgnLStYH1pV3p1iqNSvfVu4MpvpEOc+vxI+90MJs=";
     };
-  in "${package}/themes/monokai.json";
+  in lib.mkIf cfg.enable "${package}/themes/monokai.json";
 
-  programs.zsh.initContent = ''
+  programs.zsh.initContent = lib.mkIf cfg.enable ''
     if [[ "$ZED_TERM" == "true" && -n "$TMUX_PANE" ]]; then
       unset TMUX_PANE
     fi
   '';
-})
+}
