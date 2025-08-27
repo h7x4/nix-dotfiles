@@ -178,16 +178,18 @@ in
       "toml"
       "typst"
     ];
-  };
 
-  xdg.configFile."zed/themes/monokai.json".source = let
-    package = pkgs.fetchFromGitHub {
-      owner = "billgo";
-      repo = "monokai";
-      rev = "061a86ff4845b11ac2f183c2e26c77b15cfae7d0";
-      hash = "sha256-mlEcgnLStYH1pV3p1iqNSvfVu4MpvpEOc+vxI+90MJs=";
-    };
-  in lib.mkIf cfg.enable "${package}/themes/monokai.json";
+    themes.monokai = let
+      package = pkgs.fetchFromGitHub {
+        owner = "billgo";
+        repo = "monokai";
+        rev = "061a86ff4845b11ac2f183c2e26c77b15cfae7d0";
+        hash = "sha256-mlEcgnLStYH1pV3p1iqNSvfVu4MpvpEOc+vxI+90MJs=";
+      };
+
+    # TODO: fix upstream
+    in (builtins.readFile "${package}/themes/monokai.json");
+  };
 
   programs.zsh.initContent = lib.mkIf cfg.enable ''
     if [[ "$ZED_TERM" == "true" && -n "$TMUX_PANE" ]]; then
