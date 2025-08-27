@@ -11,11 +11,6 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    nixgl = {
-      url = "github:nix-community/nixGL";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -49,7 +44,6 @@
     nixpkgs-yet-unstabler,
     home-manager,
     nixos-hardware,
-    nixgl,
 
     matrix-synapse-next,
     maunium-stickerpicker,
@@ -80,7 +74,6 @@
 
         minecraft.overlays.default
         osuchan.overlays.default
-        nixgl.overlays.default
       ];
     };
 
@@ -216,8 +209,6 @@
               homeDirectory = lib.mkForce "/home/pvv/d/oysteikt";
               stateVersion = "25.05";
               packages = [
-                # pkgs.nixgl.auto.nixGLDefault
-
                 # NOTE: nix on pvv machines is severely outdated
                 #       putting it in the path of home-manager
                 #       will ensure we use the new one by default
@@ -229,12 +220,9 @@
             nix.settings.use-xdg-base-directories = lib.mkForce false;
 
             local.shell.aliases."Nix Stuff" = {
-              nxr = lib.mkForce "home-manager switch --flake ${config.home.homeDirectory}/nix#pvv --impure";
-              nxrl = lib.mkForce "home-manager switch --flake ${config.home.homeDirectory}/nix#pvv --impure";
+              nxr = lib.mkForce "echo \"Local rebuilds are not available on this machine\"";
+              nxrl = lib.mkForce "echo \"Local rebuilds are not available on this machine\"";
             };
-
-            xsession.enable = true;
-            xsession.windowManager.command = lib.mkForce "${pkgs.nixgl.auto.nixGLDefault}/bin/nixGL ${config.home.homeDirectory}/.xmonad/xmonad-x86_64-linux";
           })
         ] ++ (builtins.attrValues self.homeModules);
       };
