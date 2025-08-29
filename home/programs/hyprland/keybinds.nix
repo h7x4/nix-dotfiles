@@ -61,7 +61,7 @@ in
 
         ", Print, exec, ${exe pkgs.grimblast} copy area"
 
-        # "SHIFT, Print, exec, ${lib.getExe pkgs.grimblast} copy area"
+        "SHIFT, Print, exec, ${lib.getExe pkgs.grimblast} save"
         # "shift + @Print" = "${pkgs.maim}/bin/maim --hidecursor --nokeyboard $SCREENSHOT_DIR/$(date +%s).png"
 
         "$mod, Print, exec, ${exe pkgs.woomer}"
