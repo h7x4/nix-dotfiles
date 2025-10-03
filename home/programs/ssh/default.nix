@@ -9,6 +9,7 @@ in
     ./home.nix
     ./other.nix
     ./pvv.nix
+    ./kyoto-u.nix
   ];
   config = lib.mkIf cfg.enable {
 
