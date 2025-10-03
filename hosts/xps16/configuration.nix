@@ -46,6 +46,8 @@
     "nixos-test"
   ];
 
+  time.timeZone = "Japan";
+
   environment.enableDebugInfo = true;
 
   i18n.extraLocaleSettings = {

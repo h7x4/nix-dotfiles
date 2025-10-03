@@ -44,7 +44,7 @@ in {
 
   sops.defaultSopsFile = ./../.. + "/secrets/${config.networking.hostName}.yaml";
 
-  time.timeZone = "Europe/Oslo";
+  time.timeZone = lib.mkDefault "Europe/Oslo";
 
   console = {
     font = lib.mkDefault "Lat2-Terminus16";
