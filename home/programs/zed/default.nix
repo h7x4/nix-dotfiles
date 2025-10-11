@@ -20,6 +20,7 @@ in
       autosave = "off";
       format_on_save = "off";
       remove_trailing_whitespace_on_save = true;
+      show_whitespaces = "trailing";
 
       tab_size = 2;
 
@@ -57,7 +58,7 @@ in
         use_rendered = false;
       };
 
-      relative_linue_numbers = true;
+      relative_line_numbers = true;
 
       vim_mode = true;
       vim = {
@@ -86,12 +87,11 @@ in
         "**/.direnv"
       ];
 
-      git_status = true;
       git.inline_blame.enabled = false;
 
       collaboration_panel.button = false;
 
-      preview_tabs.enable = false;
+      preview_tabs.enabled = false;
 
       indent_guides = {
         enabled = true;
