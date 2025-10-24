@@ -78,9 +78,7 @@
           type = " ";
           alias = [ str ];
         };
-      in (coercedTo str coerce rawAliasType) // {
-        check = v: builtins.isString v || formatLib.isAlias v;
-      };
+      in addCheck (coercedTo str coerce rawAliasType) (v: builtins.isString v || formatLib.isAlias v);
 
       aliasTreeType = with lib.types; attrsOf (either coercedAliasType aliasTreeType) // {
         description = "Alias tree";
