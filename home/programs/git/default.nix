@@ -43,7 +43,7 @@ lib.mkIf cfg.enable {
       aliases = {
         aliases = "!git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1 = \\2/g'";
         authors = "shortlog --summary --numbered --email";
-        delete-merged = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d";
+        delete-merged = "!git branch --merged | grep -v -e '\\*' -e 'master' -e 'main' | xargs -n 1 git branch -d";
         ff = "fixup-fixup";
         fi = "fixup-interactive";
         forcepush = "push --force-with-lease --force-if-includes";
