@@ -1,6 +1,6 @@
 keys:
   - &gpg_h7x4 F7D37890228A907440E1FD4846B9228E814A2AAC
-  - &host_tsuki age1c92j4w0gqh32hwssl5m2mfrggssxax9pge8qxwytv9lmrnfttcvqdrgsst
+  - &host_tsuki age1ue7uv559wf6tfjsutn9dsh07vpk53sgrfkdzqy4ltg6dnxcxeg7srx800u
   - &host_kasei age1eu2a6m3adakfzelfa9pqpl74a5dz0wkyr0v7gegm5ajnx7aqmqcqsp2ftc
   - &host_dosei age1s6s4w7cdfgajm30z9gy8va8pvs2lrzk5gnsg0hmn5z2sl8z36seqej406r
   - &host_xps16 age1np3fg9ue2tp4l47x7waapvjxh5zcaye2j54laapy7uklamve2c4qv3gytm

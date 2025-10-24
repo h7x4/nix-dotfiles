@@ -54,21 +54,23 @@
       sa = config.local.socketActivation;
     in {
       "atuin".servers."unix:${sa.atuin.newSocketAddress}" = { };
-      "dynmap".servers."localhost:8123" = { };
-      "grafana".servers."unix:/run/grafana/grafana.sock" = { };
-      "headscale".servers."localhost:${s srv.headscale.port}" = { };
+      # "dynmap".servers."localhost:8123" = { };
+      # "grafana".servers."unix:/run/grafana/grafana.sock" = { };
+      # "headscale".servers."localhost:${s srv.headscale.port}" = { };
       "hedgedoc".servers."unix:${srv.hedgedoc.settings.path}" = { };
-      "idrac".servers."10.0.0.201" = { };
+      # "idrac".servers."10.0.0.201" = { };
       "irc-matrix-bridge-media".servers."localhost:${s srv.matrix-appservice-irc.settings.ircService.mediaProxy.bindPort}" = { };
       "kanidm".servers."localhost:8300" = { };
       "osuchan".servers."localhost:${s srv.osuchan.port}" = { };
-      "plex".servers."localhost:32400" = { };
-      "vaultwarden".servers."unix:${sa.vaultwarden.newSocketAddress}" = { };
-      "wstunnel".servers = let
-        inherit (config.services.wstunnel.servers."ws-tsuki".listen) host port;
-      in {
-        "${host}:${s port}" = { };
-      };
+      # "plex".servers."localhost:32400" = { };
+      # "vaultwarden".servers."unix:${sa.vaultwarden.newSocketAddress}" = { };
+      # "vaultwarden".servers."unix:${sa.vaultwarden.newSocketAddress}" = { };
+      "vaultwarden".servers."${srv.vaultwarden.config.ROCKET_ADDRESS}:${toString srv.vaultwarden.config.ROCKET_PORT}" = { };
+      # "wstunnel".servers = let
+      #   inherit (config.services.wstunnel.servers."ws-tsuki".listen) host port;
+      # in {
+      #   "${host}:${s port}" = { };
+      # };
     };
 
     virtualHosts = let
@@ -167,7 +169,7 @@
         locations."/_synapse".proxyPass = "http://$synapse_backend";
       })
       (proxy ["irc-matrix"] "http://irc-matrix-bridge-media" {})
-      
+
       # (host ["madmin"] { root = "${pkgs.synapse-admin}/"; })
       # (host ["cache"] { root = "/var/lib/nix-cache"; })
       # (proxy ["slack-bot"] "http://localhost:9898" {})
@@ -192,11 +194,11 @@
           return 301 $scheme://git.pvv.ntnu.no$request_uri;
         '';
       })
-      (proxy ["idrac"] "https://idrac" {})
-      (proxy ["log"] "http://grafana" enableWebsockets)
-      (proxy ["map"] "http://dynmap" {})
+      # (proxy ["idrac"] "https://idrac" {})
+      # (proxy ["log"] "http://grafana" enableWebsockets)
+      # (proxy ["map"] "http://dynmap" {})
       (proxy ["osu"] "http://osuchan" {})
-      (proxy ["plex"] "http://plex" enableWebsockets)
+      # (proxy ["plex"] "http://plex" enableWebsockets)
       # (proxy ["vpn"] "http://headscale" {
       #   locations."/" = {
       #     proxyWebsockets = true;
@@ -208,7 +210,7 @@
       #   };
       # })
 
-      (proxy ["ws"] "http://wstunnel" enableWebsockets)
+      # (proxy ["ws"] "http://wstunnel" enableWebsockets)
 
       (host ["h7x4-stickers"] {})
       (host ["pingu-stickers"] {})

@@ -21,6 +21,7 @@ in {
 
   systemd.services.vaultwarden = lib.mkIf cfg.enable {
     requires = [ "postgresql.service" ];
+    serviceConfig.StateDirectory = "vaultwarden";
   };
 
   services.postgresql = lib.mkIf cfg.enable {
@@ -32,10 +33,10 @@ in {
     }];
   };
 
-  local.socketActivation.vaultwarden = {
-    enable = cfg.enable;
-    originalSocketAddress = "${cfg.config.ROCKET_ADDRESS}:${toString cfg.config.ROCKET_PORT}";
-    newSocketAddress = "/run/vaultwarden.sock";
-    privateNamespace = false;
-  };
+  # local.socketActivation.vaultwarden = {
+  #   enable = cfg.enable;
+  #   originalSocketAddress = "${cfg.config.ROCKET_ADDRESS}:${toString cfg.config.ROCKET_PORT}";
+  #   newSocketAddress = "/run/vaultwarden.sock";
+  #   privateNamespace = false;
+  # };
 }

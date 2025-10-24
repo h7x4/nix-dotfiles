@@ -1,11 +1,18 @@
 {
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-25.05";
+    # nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
     nixpkgs-yet-unstabler.url = "github:NixOS/nixpkgs/master";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
+      # url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    disko = {
+      url = "github:nix-community/disko/v1.12.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -43,6 +50,7 @@
     nixpkgs-unstable,
     nixpkgs-yet-unstabler,
     home-manager,
+    disko,
     nixos-hardware,
 
     matrix-synapse-next,
@@ -317,6 +325,11 @@
       };
       tsuki = nixSys "tsuki" {
         modules = [
+          nixos-hardware.nixosModules.common-cpu-amd
+          nixos-hardware.nixosModules.common-pc-ssd
+
+          disko.nixosModules.default
+
           matrix-synapse-next.nixosModules.default
           osuchan.outputs.nixosModules.default
           maunium-stickerpicker.nixosModules.default
