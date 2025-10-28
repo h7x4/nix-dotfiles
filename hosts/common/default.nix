@@ -61,6 +61,8 @@ in {
       "127.0.0.1" = [ config.networking.fqdnOrHostName ];
       "::1" = [ config.networking.fqdnOrHostName ];
     };
+
+    nftables.enable = true;
   };
 
   i18n.defaultLocale = "en_US.UTF-8";
