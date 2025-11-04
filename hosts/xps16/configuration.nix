@@ -3,6 +3,8 @@
   imports = [
     ./hardware-configuration.nix
 
+    ./apparmor.nix
+
     ./services/btrfs.nix
     ./services/docker.nix
     ./services/fprintd.nix
