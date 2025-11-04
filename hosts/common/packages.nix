@@ -2,6 +2,13 @@
 {
   environment.systemPackages = with pkgs; ([
     wget
+
+    # Extra manpages
+    man-pages
+    linux-doc
+    linux-manual
+    clang-manpages
+    gcc.man
   ] ++ (lib.optionals (!config.machineVars.headless) [
     haskellPackages.xmobar
   ]));
