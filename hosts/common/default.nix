@@ -31,6 +31,7 @@ in {
     ./services/openssh.nix
     ./services/pcscd.nix
     ./services/pipewire.nix
+    ./services/polkit.nix
     ./services/printing.nix
     ./services/resolved.nix
     ./services/smartd.nix
