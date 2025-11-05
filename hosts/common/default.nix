@@ -34,6 +34,7 @@ in {
     ./services/polkit.nix
     ./services/printing.nix
     ./services/resolved.nix
+    ./services/rtkit.nix
     ./services/smartd.nix
     ./services/systemd-lock-handler.nix
     ./services/udisks2.nix
