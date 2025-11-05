@@ -41,6 +41,7 @@ in {
     ./services/uptimed.nix
     ./services/userborn.nix
     ./services/userdbd.nix
+    ./services/wpa_supplicant.nix
     ./services/xserver.nix
   ];
 
