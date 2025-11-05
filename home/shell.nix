@@ -380,26 +380,70 @@ in {
     };
   };
 
-  # TODO: flatten functions
-  # local.shell.functions = {
-  #   all = {
-  #     md-to-pdf = functors.shellJoin.wrap [
-  #       "pandoc \"$1\""
-  #       "-f gfm"
-  #       "-V linkcolor:blue"
-  #       "-V geometry:a4paper"
-  #       "-V geometry:margin=2cm"
-  #       "-V mainfont=\"Droid Sans\""
-  #       "--pdf-engine=xelatex"
-  #       "-o \"$2\""
-  #     ];
+  # TODO: create arbitrarily nested function tree, like aliases
+  home.packages = [
+    (pkgs.writeShellApplication {
+      name = "md-to-pdf";
+      runtimeInputs = [ pkgs.pandoc ];
+      text = ''
+        if [[ "$#" != 1 && "$#" != 2 ]]; then
+          (>&2 echo "Usage: md-to-pdf <IN-PATH> [<OUT-PATH>]")
+          exit 2
+        fi
 
-  #     rwhich = functors.shellJoin.wrap [
-  #       "which \"$@\""
-  #       "xargs realpath --"
-  #     ];
-  #   };
-  # };
+        IN_PATH="$1"
+
+        if [[ "$#" != 1 ]]; then
+          OUT_PATH="''${1%.md}.pdf"
+        else
+          OUT_PATH="$1"
+        fi
+
+        ARGS=(
+          "$IN_PATH"
+          -f gfm
+          -V linkcolor:blue
+          -V geometry:a4paper
+          -V geometry:margin=2cm
+          -V mainfont="Droid Sans"
+          --pdf-engine=xelatex
+          -o "$OUT_PATH"
+        )
+
+        pandoc "''${ARGS[@]}"
+      '';
+    })
+    # md-to-pdf = functors.shellJoin.wrap [
+    #   "pandoc \"$1\""
+    #   "-f gfm"
+    #   "-V linkcolor:blue"
+    #   "-V geometry:a4paper"
+    #   "-V geometry:margin=2cm"
+    #   "-V mainfont=\"Droid Sans\""
+    #   "--pdf-engine=xelatex"
+    #   "-o \"$2\""
+    # ];
+
+    (pkgs.writeShellApplication {
+      name = "rwhich";
+      runtimeInputs = [
+        pkgs.coreutils
+        pkgs.findutils
+      ];
+      text = ''
+        if [[ "$#" != 1 ]]; then
+          (>&2 echo "Usage: rwhich <PATH>")
+          exit 2
+        fi
+
+        which "$1" | xargs realpath
+      '';
+    })
+    # rwhich = functors.shellJoin.wrap [
+    #   "which \"$@\""
+    #   "xargs realpath --"
+    # ];
+  ];
 
   # local.shell.variables = {
     # POWERLEVEL9K_LEFT_PROMPT_ELEMENTS = ["dir" "vcs"];
