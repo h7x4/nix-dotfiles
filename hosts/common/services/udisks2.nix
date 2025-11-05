@@ -3,7 +3,7 @@ let
   cfg = config.services.udisks2;
 in
 {
-  services.udisks2.enable = true;
+  services.udisks2.enable = !config.machineVars.headless;
 
   systemd.services.udisks2 = lib.mkIf cfg.enable {
     after = lib.optionals cfg.mountOnMedia [ "systemd-tmpfiles-setup.service" ];
