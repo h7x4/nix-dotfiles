@@ -443,6 +443,20 @@ in {
     #   "which \"$@\""
     #   "xargs realpath --"
     # ];
+
+    # move $1 into $1.bak, copy $1.bak into $1.
+    (pkgs.writeShellApplication {
+      name = "bak";
+      runtimeInputs = [ pkgs.coreutils ];
+      text = ''
+        if [[ "$#" != 1 ]]; then
+          (>&2 echo "Usage: bak <PATH>")
+          exit 2
+        fi
+
+        mv "$1" "$1.bak" && cp "$1.bak" "$1"
+      '';
+    })
   ];
 
   # local.shell.variables = {
