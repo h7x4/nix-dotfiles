@@ -75,10 +75,10 @@ in
       ];
 
       bindl = [
-        "$mod, p, exec, ${exe pkgs.mpc_cli} toggle"
-        ",XF86AudioPlay, exec, ${exe pkgs.mpc_cli} toggle"
-        ",XF86AudioPrev, exec, ${exe pkgs.mpc_cli} prev"
-        ",XF86AudioNext, exec, ${exe pkgs.mpc_cli} next"
+        "$mod, p, exec, ${exe pkgs.mpc} toggle"
+        ",XF86AudioPlay, exec, ${exe pkgs.mpc} toggle"
+        ",XF86AudioPrev, exec, ${exe pkgs.mpc} prev"
+        ",XF86AudioNext, exec, ${exe pkgs.mpc} next"
       ];
 
       bindle = [

@@ -9,7 +9,9 @@ in
 
     ./programs/nix.nix
 
+    ./programs/ahoviewer.nix
     ./programs/alacritty.nix
+    ./programs/anki.nix
     ./programs/anyrun
     ./programs/aria2.nix
     ./programs/atuin.nix
@@ -19,9 +21,12 @@ in
     ./programs/bottom.nix
     ./programs/cargo.nix
     # ./programs/comma.nix
+    ./programs/delta.nix
     ./programs/direnv
+    ./programs/element-desktop.nix
     ./programs/emacs
     ./programs/eza.nix
+    ./programs/fastfetch.nix
     ./programs/feh.nix
     ./programs/firefox.nix
     ./programs/fzf.nix
@@ -36,17 +41,22 @@ in
     ./programs/jq.nix
     ./programs/less.nix
     ./programs/man.nix
+    ./programs/meli.nix
     ./programs/mpv.nix
     ./programs/ncmpcpp.nix
+    ./programs/neomutt.nix
     ./programs/neovim
     ./programs/newsboat
     ./programs/nix-index
     ./programs/nushell.nix
+    ./programs/nyxt.nix
     ./programs/obs-studio.nix
+    ./programs/obsidian.nix
     ./programs/pandoc.nix
     ./programs/prism-launcher.nix
     ./programs/python.nix
     ./programs/qutebrowser.nix
+    ./programs/rclone.nix
     ./programs/ripgrep.nix
     ./programs/rofi
     ./programs/skim.nix
@@ -99,6 +109,7 @@ in
   # programs.comma.enable = true;
   programs.direnv.enable = true;
   programs.eza.enable = true;
+  programs.fastfetch.enable = true;
   programs.fzf.enable = true;
   programs.gdb.enable = true;
   programs.gh-dash.enable = true;
@@ -111,11 +122,14 @@ in
   programs.jq.enable = true;
   programs.less.enable = true;
   programs.man.enable = true;
+  programs.meli.enable = true;
+  programs.neomutt.enable = true;
   programs.neovim.enable = true;
   programs.nix-index.enable = true;
   programs.nushell.enable = true;
   programs.pandoc.enable = true;
   programs.python.enable = true;
+  programs.rclone.enable = true;
   programs.ripgrep.enable = true;
   programs.skim.enable = true;
   programs.sqlite.enable = true;
@@ -132,14 +146,19 @@ in
 
   gtk.enable = graphics;
 
+  programs.ahoviewer.enable = graphics;
   programs.alacritty.enable = graphics;
+  programs.anki.enable = graphics;
+  programs.element-desktop.enable = graphics;
   programs.emacs.enable = graphics;
   programs.feh.enable = graphics;
   programs.firefox.enable = graphics;
   programs.mpv.enable = graphics;
   programs.ncmpcpp.enable = graphics;
   programs.newsboat.enable = graphics;
+  programs.nyxt.enable = graphics;
   programs.obs-studio.enable = graphics;
+  programs.obsidian.enable = graphics;
   programs.prism-launcher.enable = graphics;
   programs.qutebrowser.enable = graphics;
   programs.rofi.enable = graphics;

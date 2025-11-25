@@ -3,18 +3,18 @@ let
   cfg = config.programs.zsh;
 in
 lib.mkIf cfg.enable {
-  home.file."${cfg.dotDir}/.zshrc".onChange = ''
-    ${lib.getExe (pkgs.writeTextFile {
-      name = "zsh-compinit-oneshot.zsh";
-      executable = true;
-      destination = "/bin/zsh-compinit-oneshot.zsh";
-      text = ''
-        #!${lib.getExe cfg.package}
+  #home.file."${cfg.dotDir}/.zshrc".onChange = ''
+  #  ${lib.getExe (pkgs.writeTextFile {
+  #    name = "zsh-compinit-oneshot.zsh";
+  #    executable = true;
+  #    destination = "/bin/zsh-compinit-oneshot.zsh";
+  #    text = ''
+  #      #!${lib.getExe cfg.package}
 
-        autoload -Uz compinit && compinit -C -d "${config.xdg.cacheHome}/zsh/zcompdump-$ZSH_VERSION"
-      '';
-    })}
-  '';
+  #      autoload -Uz compinit && compinit -C -d "${config.xdg.cacheHome}/zsh/zcompdump-$ZSH_VERSION"
+  #    '';
+  #  })}
+  #'';
 
   systemd.user.tmpfiles.settings."10-zsh"."${config.xdg.cacheHome}/zsh".d = {
     mode = "0770";
@@ -22,7 +22,7 @@ lib.mkIf cfg.enable {
   };
 
   programs.zsh = {
-    dotDir = ".config/zsh";
+    dotDir = "${config.xdg.configHome}/zsh";
     # enableSyntaxHighlighting = true;
     defaultKeymap = "viins";
     enableCompletion = true;

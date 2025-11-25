@@ -35,11 +35,9 @@
     lurk
     mdcat
     mediainfo
-    meli
     mkvtoolnix
     mmv
     mtr
-    neofetch
     nix-diff
     nix-output-monitor
     nix-tree
@@ -52,12 +50,10 @@
     pipr
     progress
     pwntools
-    rclone
     rip2
     rnr
     rsync
     # sc-im
-    skim
     slack-term
     tea
     terminal-parrot
@@ -87,15 +83,12 @@
     xorg.xprop
   ] ++ (
     lib.optionals (!machineVars.headless) [
-      ahoviewer
       alsa-utils
-      anki
       kdePackages.ark
       calibre
       cool-retro-term
       darktable
       yet-unstabler-pkgs.discord
-      element-desktop
       foliate
       geogebra
       ghidra
@@ -115,16 +108,14 @@
       libreoffice
       light
       mission-center
-      mopidy
-      mopidy-mpd
-      mopidy-soundcloud
-      mopidy-youtube
-      mpc_cli
+      # mopidy
+      # mopidy-mpd
+      # mopidy-soundcloud
+      # mopidy-youtube
+      mpc
       mumble
       naps2
       nsxiv
-      nyxt
-      obsidian
       pdfarranger
       pwvucontrol
       # scrcpy
@@ -164,7 +155,7 @@
       steam
       steam-tui
       stepmania
-      taisei
+      # taisei
     ] ++ lib.optionals (machineName != "dosei") [
       # Source blocked by external firewall on dosei
       pcloud

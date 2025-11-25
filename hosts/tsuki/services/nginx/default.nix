@@ -36,7 +36,6 @@
     recommendedOptimisation = true;
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
-    recommendedZstdSettings = true;
 
     appendConfig = ''
       pcre_jit on;
@@ -144,7 +143,7 @@
           '';
         };
       }
-      # (host ["www"] { root = "${inputs.website.packages.${pkgs.system}.default}/"; })
+      # (host ["www"] { root = "${inputs.website.packages.${pkgs.stdenv.hostPlatform.system}.default}/"; })
       (host ["testmap"] {
         root = "/var/lib/mcmap";
         quic = true;

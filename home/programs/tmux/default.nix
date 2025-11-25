@@ -37,7 +37,7 @@
       });
       mpd-status = (pkgs.writeShellApplication {
         name = "tmux-mpd-status";
-        runtimeInputs = with pkgs; [ mpc-cli gawk gnugrep ];
+        runtimeInputs = with pkgs; [ mpc gawk gnugrep ];
         text = fileContentsWithoutShebang ./scripts/mpd-status.sh;
       });
     in ''

@@ -37,7 +37,7 @@ in
       Service = {
         Type = "oneshot";
         Slice = "background.slice";
-        ExecStart = "${lib.getExe pkgs.mpc-cli} update --wait";
+        ExecStart = "${lib.getExe pkgs.mpc} update --wait";
 
         PrivateUsers = true;
         ProtectSystem = true;

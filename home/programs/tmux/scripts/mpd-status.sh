@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i sh -p mpc-cli gawk gnugrep
+#!nix-shell -i sh -p mpc gawk gnugrep
 
 while true; do
   MPC_OUTPUT=$(mpc --format '[[%artist% - ]%title%]|[%file%]')

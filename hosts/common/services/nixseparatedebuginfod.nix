@@ -1,6 +1,3 @@
-{ config, ... }: {
-  services.nixseparatedebuginfod = {
-    enable = true;
-    nixPackage = config.nix.package;
-  };
+{ ... }: {
+  services.nixseparatedebuginfod2.enable = true;
 }

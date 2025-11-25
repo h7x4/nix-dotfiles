@@ -1,6 +1,6 @@
 { ... }:
 {
   services.logind = {
-    powerKeyLongPress = "poweroff";
+    settings.Login.HandlePowerKeyLongPress = "poweroff";
   };
 }

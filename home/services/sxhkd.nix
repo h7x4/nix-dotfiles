@@ -30,11 +30,11 @@ in
 
       # Music
 
-      "super + p" = "${pkgs.mpc_cli}/bin/mpc toggle";
+      "super + p" = "${lib.getExe pkgs.mpc} toggle";
 
-      "XF86AudioPlay" = "${pkgs.mpc_cli}/bin/mpc toggle";
-      "XF86AudioPrev" = "${pkgs.mpc_cli}/bin/mpc prev";
-      "XF86AudioNext" = "${pkgs.mpc_cli}/bin/mpc next";
+      "XF86AudioPlay" = "${lib.getExe pkgs.mpc} toggle";
+      "XF86AudioPrev" = "${lib.getExe pkgs.mpc} prev";
+      "XF86AudioNext" = "${lib.getExe pkgs.mpc} next";
 
       # Monitor
 

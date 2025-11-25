@@ -23,9 +23,11 @@ in
         "${config.home.homeDirectory}/.ssh/mutable_config"
       ];
 
-      controlMaster = "auto";
-      controlPersist = "10m";
-      controlPath = "${controlMastersDir}/%n%C";
+      matchBlocks."*" = {
+        controlMaster = "auto";
+        controlPersist = "10m";
+        controlPath = "${controlMastersDir}/%n%C";
+      };
     };
 
     systemd.user.tmpfiles.settings."10-ssh" = {

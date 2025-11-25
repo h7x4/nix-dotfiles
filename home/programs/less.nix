@@ -1,7 +1,7 @@
 { config, ... }:
 {
   programs.less = {
-    keys = ''
+    config = ''
       #env
       LESS = -i -R
       LESSHISTSIZE=20000

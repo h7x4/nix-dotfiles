@@ -144,7 +144,6 @@ in {
   services = {
     udev.packages = with pkgs; [
       yubikey-personalization
-      android-udev-rules
       light
     ];
   };

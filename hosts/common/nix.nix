@@ -37,7 +37,8 @@
       allowed-uris = [ "http://" "https://" ];
       binary-caches = [ "https://cache.nixos.org/" ];
       builders-use-substitutes = true;
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [ "nix-command" "flakes" "auto-allocate-uids" ];
+      auto-allocate-uids = true;
       log-lines = 50;
       trusted-users = [ "h7x4" ];
       allowed-users = [ "@users" ];

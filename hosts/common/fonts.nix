@@ -21,7 +21,7 @@
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       ocr-a
       open-sans
       powerline-fonts
@@ -29,7 +29,7 @@
       source-sans
       symbola
       texlivePackages.asana-math
-      ubuntu_font_family
+      ubuntu-classic
       victor-mono
       yasashisa-gothic
     ];

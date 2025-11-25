@@ -281,7 +281,7 @@ in {
         type = ";";
         alias = [
           ''echo "${extendedLib.termColors.front.red "Concatenating all pdfs in current directory to 'out.pdf'"}"''
-          "${pkgs.poppler_utils}/bin/pdfunite *.pdf out.pdf"
+          "${pkgs.poppler-utils}/bin/pdfunite *.pdf out.pdf"
         ];
       };
 
