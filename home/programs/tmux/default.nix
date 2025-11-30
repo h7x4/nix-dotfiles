@@ -1,4 +1,7 @@
-{ pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
+let
+  cfg = config.programs.tmux;
+in
 {
   programs.tmux = {
     baseIndex = 1;
@@ -41,6 +44,10 @@
         text = fileContentsWithoutShebang ./scripts/mpd-status.sh;
       });
     in ''
+      # https://github.com/nix-community/home-manager/issues/7771
+      bind -N "Send the prefix key through to the application" \
+          ${cfg.prefix} send-prefix
+
       # Don't rename windows automatically after rename with ','
       set-option -g allow-rename off
 
