@@ -21,6 +21,7 @@
   };
 
   nix = {
+    enable = true;
     settings.use-xdg-base-directories = true;
     extraOptions = ''
       !include ${config.sops.templates."nix-access-tokens.conf".path}
