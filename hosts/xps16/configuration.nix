@@ -26,8 +26,6 @@
 
   system.stateVersion = "24.11";
 
-  boot.kernelPackages = pkgs.linuxPackages_6_12;
-
   boot.loader = {
     efi.canTouchEfiVariables = true;
     systemd-boot.enable = true;
@@ -101,7 +99,7 @@
       enable32Bit = true;
     };
     ipu6 = {
-      enable = false;
+      enable = true;
       platform = "ipu6epmtl";
     };
   };
