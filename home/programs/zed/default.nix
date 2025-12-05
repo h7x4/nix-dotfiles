@@ -14,6 +14,8 @@ in
     ];
 
     userSettings = {
+      auto_update = false;
+
       load_direnv = "shell_hook";
       base_keymap = "VSCode";
 
@@ -33,6 +35,10 @@ in
       terminal.font_family = "Fira Code";
       terminal.font_size = 15;
 
+      vertical_scroll_margin = 4;
+      scroll_beyond_last_line = "vertical_scroll_margin";
+      sticky_scroll.enabled = true;
+
       file_types = {
         "Groovy" = [ "Jenkinsfile*" ];
         "Dockerfile" = [ "Dockerfile*" ];
@@ -40,8 +46,9 @@ in
       };
 
       tabs = {
+        git_status = true;
         file_icons = true;
-        show_close_button = "always";
+        show_close_button = "hover";
         show_diagnostics = "errors";
       };
 
@@ -53,23 +60,21 @@ in
       diagnostics = {
         include_warnings = true;
         inline.enabled = true;
-        update_with_cursor = false;
-        primary_only = false;
-        use_rendered = false;
       };
 
-      relative_line_numbers = true;
+      search = {
+        case_sensitive = true;
+        regex = true;
+      };
+
+      relative_line_numbers = "enabled";
 
       vim_mode = true;
       vim = {
         toggle_relative_line_numbers = true;
       };
 
-      theme = {
-        mode = "dark";
-        light = "monokai Classic";
-        dark = "monokai Darker Classic";
-      };
+      theme = "Monokai-og";
 
       icon_theme = "Material Icon Theme";
 
@@ -90,6 +95,8 @@ in
       git.inline_blame.enabled = false;
 
       collaboration_panel.button = false;
+      project_panel.entry_spacing = "standard";
+      title_bar.show_branch_icon = true;
 
       preview_tabs.enabled = false;
 
@@ -97,6 +104,8 @@ in
         enabled = true;
         coloring = "indent_aware";
       };
+
+      colorize_brackets = true;
 
       node = {
           path = lib.getExe pkgs.nodejs;
@@ -114,12 +123,12 @@ in
           language_servers = [ "pyright" "ruff" ];
           format_on_save = "off";
           formatter = [
-            {
-              code_actions = {
-                "source.organizeImports.ruff" = true;
-                "source.fixAll.ruff" = true;
-              };
-            }
+            # {
+            #   code_actions = {
+            #     "source.organizeImports.ruff" = true;
+            #     "source.fixAll.ruff" = true;
+            #   };
+            # }
             {
               language_server.name = "ruff";
             }
@@ -128,8 +137,8 @@ in
       };
 
       lsp = {
-        rust-analyzer.binary.path_lookup = true;
-        nix.binary.path_lookup = true;
+        rust-analyzer = { };
+        nix = { };
         nixd = { };
       };
     };
@@ -152,6 +161,7 @@ in
     extensions = [
       "assembly-syntax"
       "basher"
+      "comment"
       "dart"
       "dart"
       "dockerfile"
@@ -168,6 +178,7 @@ in
       "make"
       "material-icon-theme"
       "mermaid"
+      "monokai-og"
       "neocmake"
       "nix"
       "ocaml"
@@ -178,17 +189,6 @@ in
       "toml"
       "typst"
     ];
-
-    themes.monokai = let
-      package = pkgs.fetchFromGitHub {
-        owner = "billgo";
-        repo = "monokai";
-        rev = "061a86ff4845b11ac2f183c2e26c77b15cfae7d0";
-        hash = "sha256-mlEcgnLStYH1pV3p1iqNSvfVu4MpvpEOc+vxI+90MJs=";
-      };
-
-    # TODO: fix upstream
-    in (builtins.readFile "${package}/themes/monokai.json");
   };
 
   programs.zsh.initContent = lib.mkIf cfg.enable ''
