@@ -4,7 +4,7 @@ in {
   systemd.services.kanidm = let
     certName = config.services.nginx.virtualHosts.${cfg.serverSettings.domain}.useACMEHost;
   in {
-    requires = [ "acme-finished-${certName}.target" ];
+    requires = [ "acme-order-renew-${certName}.service" ];
     serviceConfig.LoadCredential = let
       certDir = config.security.acme.certs.${certName}.directory;
     in [

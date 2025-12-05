@@ -27,7 +27,7 @@
     enable = true;
     enableReload = true;
 
-    package = pkgs.nginxQuic;
+    # package = pkgs.nginx;
 
     statusPage = true;
 

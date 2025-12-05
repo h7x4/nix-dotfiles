@@ -39,7 +39,7 @@
     };
 
     matrix-synapse-next = {
-      url = "github:dali99/nixos-matrix-modules/v0.7.1";
+      url = "github:dali99/nixos-matrix-modules/v0.8.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
