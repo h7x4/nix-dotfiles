@@ -118,6 +118,7 @@ in
         Nix = {
           tab_size = 2;
           format_on_save = "off";
+          language_servers = [ "nixd" "!nil" ];
         };
         Python = {
           language_servers = [ "pyright" "ruff" ];
