@@ -352,6 +352,11 @@ lib.mkIf cfg.enable {
         "SC2001" # (style): See if you can use ${variable//search/replace} instead. (sed invocation)
       ];
     })
+    (pkgs.writeShellApplication {
+      name = "git-author-lines";
+      runtimeInputs = with pkgs; [ cfg.package gnused gnugrep gawk uutils-coreutils-noprefix ];
+      text = lib.fileContents ./scripts/git-author-lines.sh;
+    })
     ((pkgs.writers.writePython3Bin "git-post-pr" {
       libraries = with pkgs.python3Packages; [
         tkinter
