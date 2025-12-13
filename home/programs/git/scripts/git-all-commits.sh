@@ -1,0 +1,15 @@
+GIT_ROOT="$(git rev-parse --show-toplevel)"
+
+find "$GIT_ROOT/.git/objects" -type f | \
+while read -r file; do
+    if echo "$file" | grep -Eq '\.idx$'; then
+        git show-index < "$file" | awk '{print $2}'
+    elif echo "$file" | grep -Eq '[0-9a-f]{38}$'; then
+        echo "$(basename "$(dirname "$file")")$(basename "$file")"
+    fi
+done | \
+while read -r hash; do
+    if [ "$(git cat-file -t "$hash")" = commit ]; then
+        echo "$hash"
+    fi
+done

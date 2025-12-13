@@ -357,6 +357,11 @@ lib.mkIf cfg.enable {
       runtimeInputs = with pkgs; [ cfg.package gnused gnugrep gawk uutils-coreutils-noprefix ];
       text = lib.fileContents ./scripts/git-author-lines.sh;
     })
+    (pkgs.writeShellApplication {
+      name = "git-all-commits";
+      runtimeInputs = with pkgs; [ cfg.package gnugrep gawk findutils uutils-coreutils-noprefix ];
+      text = lib.fileContents ./scripts/git-all-commits.sh;
+    })
     ((pkgs.writers.writePython3Bin "git-post-pr" {
       libraries = with pkgs.python3Packages; [
         tkinter
