@@ -16,7 +16,7 @@ Here are some of the interesting files and dirs:
 | `/modules` | Custom nixos modules that I use in my own configuration. If you see options that does not appear in [NixOS Search][nixos-search], they might be defined here. |
 | `/package-overrides` | Updated or pinned versions of packages that have not been upstreamed to nixpkgs (yet). |
 | `/secrets` | Encrypted [sops-nix][sops-nix] secrets. |
-| `flake.nix` | The root of everyting. Defines the inputs and outputs of the project. Also applies misc overlays and adds config-wide modules. See [Nix Flakes][nix-flakes] for more information. |
+| `flake.nix` | The root of everything. Defines the inputs and outputs of the project. Also applies misc overlays and adds config-wide modules. See [Nix Flakes][nix-flakes] for more information. |
 
 
 ## Hosts
