@@ -121,7 +121,11 @@ in
           language_servers = [ "nixd" "!nil" ];
         };
         Python = {
-          language_servers = [ "pyright" "ruff" ];
+          language_servers = [
+            "ty"
+            "ruff"
+            "!basedpyright"
+          ];
           format_on_save = "off";
           formatter = [
             # {
