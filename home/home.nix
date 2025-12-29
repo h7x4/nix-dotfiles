@@ -53,8 +53,8 @@ in {
   xsession = {
     enable = !machineVars.wayland;
     # TODO: declare using xdg config home
-    scriptPath = ".config/X11/xsession";
-    profilePath = ".config/X11/xprofile";
+    scriptPath = "${config.xdg.configHome}/X11/xsession";
+    profilePath = "${config.xdg.configHome}/X11/xprofile";
   };
 
   news.display = "silent";
