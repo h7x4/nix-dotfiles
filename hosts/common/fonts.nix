@@ -1,7 +1,8 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 {
   fonts = {
-    fontDir.enable = true;
+    fontconfig.enable = !config.machineVars.headless;
+    fontDir.enable = !config.machineVars.headless;
 
     enableDefaultPackages = true;
     packages = with pkgs; [
