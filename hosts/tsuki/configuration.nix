@@ -80,6 +80,7 @@
   #   password=${config.sops.placeholder."drives/cirno/password"}
   # '';
 
+  sops.secrets."boot/ntfy_key" = { };
 
   virtualisation = {
     docker.enable = true;
@@ -93,6 +94,11 @@
   services.zfs.autoScrub.enable = true;
 
   boot.initrd = {
+    secrets = {
+      # NOTE: this means that sops already needs to have installed this key at
+      #       its path before rebuilding once again.
+      "/secrets/boot/ntfy_key" = config.sops.secrets."boot/ntfy_key".path;
+    };
     network = {
       enable = true;
       udhcpc.enable = true;
@@ -107,6 +113,12 @@
       };
       postCommands = ''
         export NIX_SSL_CERT_FILE='${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt'
+        export NTFY_KEY="$('${lib.getExe' pkgs.coreutils "cat"}' '/secrets/boot/ntfy_key')"
+
+        '${lib.getExe pkgs.curl}' \
+         -H "Title: tsuki reached ZFS unlocking stage" \
+         -d "Please log in and fix :)" \
+         "https://ntfy.sh/$NTFY_KEY"
 
         echo 'zfs load-key -a; killall zfs; exit' >> /root/.profile
       '';
