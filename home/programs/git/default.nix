@@ -362,6 +362,19 @@ lib.mkIf cfg.enable {
       runtimeInputs = with pkgs; [ cfg.package gnugrep gawk findutils uutils-coreutils-noprefix ];
       text = lib.fileContents ./scripts/git-all-commits.sh;
     })
+    (pkgs.writeShellApplication {
+      name = "git-diffc";
+      runtimeInputs = with pkgs; [ cfg.package gawk ];
+      text = let
+        printfLiteral = lib.concatStrings [
+          "\\033[36m%s\\033[0m\\n"
+          "\\033[32m%s\\033[0m\\n"
+          "\\033[31m%s\\033[0m\\n"
+        ];
+      in ''
+        git --no-pager diff --shortstat "$@" | awk -F',' '{ printf "${printfLiteral}", $1, $2 ? $2 : "", $3 ? $3 : ""; }'
+      '';
+    })
     ((pkgs.writers.writePython3Bin "git-post-pr" {
       libraries = with pkgs.python3Packages; [
         tkinter
