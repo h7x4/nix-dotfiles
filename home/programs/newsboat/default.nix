@@ -2,17 +2,14 @@
 let
   cfg = config.programs.newsboat;
 
-  # package = cfg.package;
-  package = pkgs.newsboat;
-
   defaultBrowser = "google-chrome-stable %u";
   videoViewer = "mpv %u";
 in {
   imports = [ ./sources.nix ];
 
   programs.newsboat = {
-    fetch-articles.enable = true;
-    vacuum.enable = true;
+    autoFetchArticles.enable = true;
+    autoVacuum.enable = true;
 
     autoReload = true;
     maxItems = 50;
@@ -72,11 +69,4 @@ in {
       ''
     ];
   };
-
-  # systemd.user.slices.app-newsboat = {
-  #   Unit = {
-  #     Description = "Newsboat automation";
-  #     Documentation = [ "man:newsboat(1)" ];
-  #   };
-  # };
 }

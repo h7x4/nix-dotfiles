@@ -154,7 +154,6 @@
       gpg = ./home/modules/programs/gpg;
       mpd-auto-updater = ./home/modules/services/mpd.nix;
       neovim-auto-clean-swapfiles = ./home/modules/programs/neovim/auto-clean-swapfiles.nix;
-      newsboat = ./home/modules/programs/newsboat;
       nix-index-auto-update-database = ./home/modules/programs/nix-index/auto-update-database.nix;
       prism-launcher = ./home/modules/programs/prism-launcher;
       shellAliases = ./home/modules/shellAliases.nix;
