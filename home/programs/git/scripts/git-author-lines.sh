@@ -11,8 +11,10 @@ fi
 
 git ls-tree -r "${REF}" \
 | while read -r _filemode _objtype _githash filepath; do
-  git blame --line-porcelain "${filepath}"
-done \
+    if git grep -Il . -- "$filepath" >/dev/null; then
+      git --no-pager blame --line-porcelain "${filepath}"
+    fi
+  done \
 | grep --binary-files=without-match '^author ' \
 | sed -e 's/author //' \
 | awk '{ a[$0]+=1 } END{ for (i in a) { print a[i],i } }' \
