@@ -38,19 +38,23 @@
       turn_shared_secret = config.services.coturn.static-auth-secret;
       turn_user_lifetime = "1h";
 
-      trusted_key_servers = let
-        emptykey = server_name: {
-          inherit server_name;
-          verify_keys = {};
-        };
-      in [
+      trusted_key_servers = [
         {
           server_name = "matrix.org";
-          verify_keys."ed25519:auto" = "Noi6WqcDj0QmPxCNQqgezwTlBKrfqehY1u2FyWP9uYw";
+          verify_keys."ed25519:a_RXGa" = "l8Hft5qXKn1vfHrg3p4+W8gELQVo8N13JkluMfmn2sQ";
         }
-        (emptykey "pvv.ntnu.no")
-        (emptykey "feal.no")
-        (emptykey "dodsorf.as")
+        {
+          server_name = "pvv.ntnu.no";
+          verify_keys."ed25519:a_iMup" = "Fk1TzI2PM8ckKMs0ezLSt3YPwPFwLvyV4NzIcabKUEI";
+        }
+        {
+          server_name = "feal.no";
+          verify_keys."ed25519:a_EDCk" = "zJ+SwXYtENAg26iRHQeNC7hUh4vOFscon2OpUuYIck0";
+        }
+        {
+          server_name = "dodsorf.as";
+          verify_keys."ed25519:a_fxFt" = "DJWwWzOEnxE8+keT+JNCKz7spMXb05r4SrF2y3rcONI";
+        }
       ];
 
       server_name = "nani.wtf";
