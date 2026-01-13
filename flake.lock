@@ -83,18 +83,18 @@
         ]
       },
       "locked": {
-        "lastModified": 1764844095,
-        "narHash": "sha256-Drf1orxsmFDzO+UbPo85gHjXW7QzAM+6oTPvI7vOSik=",
-        "owner": "dali99",
-        "repo": "nixos-matrix-modules",
-        "rev": "25b9f31ef1dbc3987b4c716de716239f2b283701",
-        "type": "github"
+        "lastModified": 1768328741,
+        "narHash": "sha256-eWdGefiJpDO4eaOk3GE/pojt3LA7SagNOPr+U2i2x6c=",
+        "ref": "main",
+        "rev": "31baa00922528db1e2490d8d429f217d13e27928",
+        "revCount": 82,
+        "type": "git",
+        "url": "https://git.pvv.ntnu.no/oysteikt/nixos-matrix-modules"
       },
       "original": {
-        "owner": "dali99",
-        "ref": "v0.8.0",
-        "repo": "nixos-matrix-modules",
-        "type": "github"
+        "ref": "main",
+        "type": "git",
+        "url": "https://git.pvv.ntnu.no/oysteikt/nixos-matrix-modules"
       }
     },
     "maunium-stickerpicker": {
