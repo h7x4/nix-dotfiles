@@ -4,6 +4,7 @@
     ./hardware-configuration.nix
 
     ./apparmor.nix
+    ./ipu6.nix
 
     ./services/btrfs.nix
     ./services/docker.nix
@@ -97,10 +98,6 @@
     graphics = {
       enable = true;
       enable32Bit = true;
-    };
-    ipu6 = {
-      enable = true;
-      platform = "ipu6epmtl";
     };
   };
 }
