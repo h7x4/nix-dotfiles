@@ -57,6 +57,12 @@
     LC_ALL = "en_US.UTF-8";
   };
 
+  # NOTE: this doesn't work as intended, the intention is to have the
+  #       laptop set the volume to 0 when the lid is closed, :shrug:
+  powerManagement.powerDownCommands = ''
+    ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_SINK@ 0
+  '';
+
   console = {
     earlySetup = true;
     font = "${pkgs.terminus_font}/share/consolefonts/ter-132n.psf.gz";
