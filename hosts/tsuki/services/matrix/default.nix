@@ -59,6 +59,7 @@
 
       server_name = "nani.wtf";
       public_baseurl = "https://matrix.nani.wtf";
+      web_client_location = "https://chat.pvv.ntnu.no";
 
       enable_metrics = true;
 
