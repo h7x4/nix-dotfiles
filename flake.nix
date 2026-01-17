@@ -144,6 +144,7 @@
     nixosModules = {
       machineVars = ./modules/machineVars.nix;
       socketActivation = ./modules/socketActivation.nix;
+      duperemove = ./modules/duperemove.nix;
     };
 
     homeModules = {
