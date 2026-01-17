@@ -350,6 +350,7 @@ lib.mkIf cfg.enable {
       text = lib.fileContents ./scripts/git-switch-interactive.sh;
       excludeShellChecks = [
         "SC2001" # (style): See if you can use ${variable//search/replace} instead. (sed invocation)
+        "SC2155"
       ];
     })
     (pkgs.writeShellApplication {
