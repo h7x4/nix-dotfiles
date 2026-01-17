@@ -95,6 +95,14 @@
     definedAliases = [ "hg" ];
   };
 
+  "Kagi" = {
+    urls = [{
+      template = "https://kagi.com/search";
+      params = [{ name = "q"; value = "{searchTerms}"; }];
+    }];
+    definedAliases = "k";
+  };
+
   "Melpa" = {
     urls = [{
       template = "https://melpa.org/";

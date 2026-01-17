@@ -11,7 +11,7 @@
       };
 
       search = {
-        default = "google";
+        default = "Kagi";
         engines = import ./browser/engines.nix { inherit pkgs lib; };
         force = true;
       };
