@@ -139,6 +139,14 @@ in
             }
           ];
         };
+        PHP = {
+          language_servers = [ "intelephense" "!phpactor" ];
+          format_on_save = "off";
+          formatter.external = {
+            command = "vendor/bin/php-cs-fixer-stdin";
+            arguments = [ "-" ];
+          };
+        };
       };
 
       lsp = {
