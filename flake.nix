@@ -292,18 +292,6 @@
             "specialArgs"
           ]));
     in {
-      dosei = nixSys "dosei" {
-        modules = [
-          {
-            home-manager.users.h7x4.home.uid = 1000;
-          }
-
-          nixos-hardware.nixosModules.common-pc
-          nixos-hardware.nixosModules.common-pc-ssd
-          nixos-hardware.nixosModules.common-cpu-intel
-          nixos-hardware.nixosModules.common-gpu-intel
-        ];
-      };
       kasei = nixSys "kasei" {
         modules = [
           nixos-hardware.nixosModules.common-pc
