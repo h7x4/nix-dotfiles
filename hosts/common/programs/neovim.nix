@@ -20,8 +20,10 @@
 
       customRC = ''
         set number relativenumber
+
         set undofile
-        set undodir=~/.cache/vim/undodir
+        set undodir = vim.fn.expand("~/.cache/vim/undodir")
+        set backupdir = vim.fn.expand("~/.cache/vim/backup")
 
         packadd! vim-monokai
         colorscheme monokai
