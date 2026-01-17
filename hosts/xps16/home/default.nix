@@ -15,6 +15,9 @@
       # PVV
       "desc:ASUSTek COMPUTER INC MG248 K2LMQS048969, 1920x1080@60.00Hz, -1920x0, 1"
       "desc:Ancor Communications Inc MG248 G7LMQS010063, 1920x1080@60.00Hz, -${toString (1920 * 2)}x0, 1"
+
+      # Home office
+      "desc:LG Electronics LG SMART UHD 0x000BC43F, 3840x2160@60.00Hz, 1920x0, 1.5"
     ];
   };
 }
