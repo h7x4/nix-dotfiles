@@ -17,6 +17,16 @@
         size = 12.0;
       };
 
+      keyboard.bindings = [
+        # NOTE: Allows for  Ctrl+A Super+Z to work as Ctrl+A Alt+Z in tmux,
+        #       very nice for a keyboard with Alt and Super switched.
+        {
+          key = "z";
+          mods = "Super";
+          chars = "\\u001bz";
+        }
+      ];
+
       colors =
         let
           inherit (lib.attrsets) getAttrs filterAttrs;
