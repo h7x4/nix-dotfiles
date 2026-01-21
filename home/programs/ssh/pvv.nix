@@ -11,8 +11,10 @@ let # http://www.pvv.ntnu.no/pvv/Maskiner
       proxyJump = lib.mkDefault null;
       addressFamily = "inet";
     }
+    "bakke"
     [ "bekkalokk" "pvv-web" "pvv-wiki" "pvv-webmail" ]
     [ "bicep" "pvv-databases" ]
+    "bikkje"
     "bob"
     [ "brzeczyszczykiewicz" "brez" "bokhylle" ]
     "buskerud"
@@ -20,6 +22,7 @@ let # http://www.pvv.ntnu.no/pvv/Maskiner
     "demiurgen"
     "eirin"
     "georg"
+    "gluttony"
     "ildkule"
     "isvegg"
     "knutsen"
@@ -36,7 +39,9 @@ let # http://www.pvv.ntnu.no/pvv/Maskiner
     }
     "orchid"
     "shark"
+    "skrott"
     "tallulah"
+    "temmie"
     "tom"
     "ustetind"
     "venture"
