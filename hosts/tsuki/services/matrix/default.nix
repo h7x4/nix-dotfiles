@@ -6,6 +6,8 @@
 
     ./postgres.nix
     ./coturn.nix
+    ./livekit.nix
+    ./well-known.nix
   ];
 
   sops.secrets."matrix_synapse/registration_secret" = {
@@ -13,6 +15,10 @@
     group = "matrix-synapse";
     mode = "0440";
   };
+
+  services.matrix-well-known.server."m.server" = "matrix.nani.wtf:443";
+
+  services.matrix-well-known.client."m.homeserver".base_url = "https://matrix.nani.wtf";
 
   services.matrix-synapse-next = {
     enable = true;
