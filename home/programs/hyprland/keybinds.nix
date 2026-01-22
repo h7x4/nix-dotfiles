@@ -22,8 +22,8 @@ in
 
         "$mod, BACKSPACE, killactive"
 
-        "$mod SHIFT, RETURN, exec, uwsm app -- ${exe pkgs.alacritty} --class termTerminal -e ${exe pkgs.tmux} new-session -A -s term"
-        "$mod SHIFT, SPACE, exec, uwsm app -- ${exe pkgs.alacritty} --class termTerminal -e ${exe pkgs.tmux} new-session -A -s term"
+        "$mod SHIFT, RETURN, exec, ${exe pkgs.app2unit} -t service -C -s app-graphical.slice -- ${exe pkgs.alacritty} --class termTerminal -e ${exe pkgs.tmux} new-session -A -s term"
+        "$mod SHIFT, SPACE, exec, ${exe pkgs.app2unit} -t service -C -s app-graphical.slice -- ${exe pkgs.alacritty} --class termTerminal -e ${exe pkgs.tmux} new-session -A -s term"
 
         "$mod, j, layoutmsg,cyclenext"
         "$mod, k, layoutmsg,cycleprev"
