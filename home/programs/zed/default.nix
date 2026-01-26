@@ -67,6 +67,9 @@ in
         regex = true;
       };
 
+      # Trust all worktrees by default
+      session.trust_all_worktrees = true;
+
       relative_line_numbers = "enabled";
 
       vim_mode = true;
