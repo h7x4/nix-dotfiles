@@ -4,17 +4,13 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    systemd.user.slices."app-graphical-scratchpads" = {
-      Unit.Description = "Scratchpads managed by the window manager.";
-    };
-
     wayland.windowManager.hyprland.settings = let
       exe = lib.getExe;
       scratchpads = [
         (rec {
           title = "Floating terminal";
           class = "floatingTerminal";
-          command = "${exe pkgs.app2unit} -t scope -C -s app-graphical-scratchpads.slice -u 'app-floating-term.scope' -- ${exe pkgs.alacritty} --class ${class} -e ${exe pkgs.tmux} new-session -A -s f";
+          command = "uwsm app -- ${exe pkgs.alacritty} --class ${class} -e ${exe pkgs.tmux} new-session -A -s f";
           size = { h = 90; w = 95; };
           keys = [
             "$mod, RETURN"
@@ -24,7 +20,7 @@ in
         (rec {
           title = "Ncmpcpp";
           class = "floatingNcmpcpp";
-          command = "${exe pkgs.app2unit} -t scope -C -s app-graphical-scratchpads.slice -u 'app-floating-ncmpcpp.scope' -- ${exe pkgs.alacritty} --class ${class} -e ${exe pkgs.ncmpcpp}";
+          command = "uwsm app -- ${exe pkgs.alacritty} --class ${class} -e ${exe pkgs.ncmpcpp}";
           size = { h = 95; w = 95; };
           keys = [ "$mod, Q" ];
         })
