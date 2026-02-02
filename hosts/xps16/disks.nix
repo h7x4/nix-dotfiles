@@ -142,11 +142,11 @@
                       };
                     }
                     (makeSnapshottable "/home/h7x4" [ "compress=zstd" "noatime" "nodev" ])
-                    (makeSnapshottable "/home/h7x4/git" [ "compress=zstd" "noatime" "nodev" ])
+                    (makeAtSnapshottable "/home/h7x4/git" [ "compress=zstd" "noatime" "nodev" ])
                     (makeAtSnapshottable "/home/h7x4/ctf" [ "compress=zstd" "noatime" "nodev" ])
                     (makeAtSnapshottable "/home/h7x4/downloads" [ "compress=zstd" "noatime" "nosuid" "nodev" ])
                     (makeAtSnapshottable "/home/h7x4/pictures" [ "compress=zstd" "noatime" "noexec" "nosuid" "nodev" ])
-                    (makeSnapshottable "/home/h7x4/music" [ "compress=zstd" "noatime" "noexec" "nosuid" "nodev" ])
+                    (makeAtSnapshottable "/home/h7x4/music" [ "compress=zstd" "noatime" "noexec" "nosuid" "nodev" ])
                     (makeSnapshottable "/var/log" [ "compress=zstd" "noatime" "noexec" "nosuid" "nodev" ])
                     (makeSnapshottable "/var/lib" [ "compress=zstd" "noatime" "nosuid" "nodev" ])
                     (makeAtSnapshottable "/var/lib/docker" [ "compress=zstd" "noatime" ])
