@@ -22,7 +22,7 @@ in
       "workspace special silent, title:^(.*is sharing (your screen|a window)\.)$"
 
       "workspace 2, class:^(firefox)$"
-      "workspace 2, class:^(google-chrome)$"
+      "workspace 2, class:^(chromium)$"
 
       "workspace 3, class:^(Emacs)$"
       "workspace 3, class:^(code)$"

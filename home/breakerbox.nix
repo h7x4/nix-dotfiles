@@ -149,6 +149,7 @@ in
   programs.ahoviewer.enable = graphics;
   programs.alacritty.enable = graphics;
   programs.anki.enable = graphics;
+  programs.chromium.enable = graphics;
   programs.element-desktop.enable = graphics;
   programs.emacs.enable = graphics;
   programs.feh.enable = graphics;
@@ -158,7 +159,7 @@ in
   programs.newsboat.enable = graphics;
   programs.nyxt.enable = graphics;
   programs.obs-studio.enable = graphics;
-  programs.obsidian.enable = graphics;
+  programs.obsidian.enable = false;
   programs.prism-launcher.enable = graphics;
   programs.qutebrowser.enable = graphics;
   programs.rofi.enable = graphics;

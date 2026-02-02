@@ -49,7 +49,7 @@ type TerminalCommand = String
 
 myTerminal      = "alacritty"
 -- myBrowser       = "qutebrowser"
-myBrowser       = "google-chrome-stable"
+myBrowser       = "firefox"
 myFileBrowser   = "thunar"
 
 emacsCommand :: TerminalCommand
@@ -258,7 +258,7 @@ myManageHook = composeAll
     , className =? "copyq"          --> doFloat
 
     , className =? "firefox"        --> doShift wsWeb
-    , className =? "google-chrome"  --> doShift wsWeb
+    , className =? "chromium"  --> doShift wsWeb
 
     , className =? "Emacs"          --> doShift wsDev
     , className =? "Code"           --> doShift wsDev

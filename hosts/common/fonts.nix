@@ -8,7 +8,6 @@
     packages = with pkgs; [
       ark-pixel-font
       cm_unicode
-      corefonts
       dejavu_fonts
       fira-code
       fira-code-symbols
@@ -28,7 +27,6 @@
       powerline-fonts
       source-han-sans
       source-sans
-      symbola
       texlivePackages.asana-math
       ubuntu-classic
       victor-mono

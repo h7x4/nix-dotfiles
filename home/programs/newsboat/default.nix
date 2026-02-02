@@ -2,7 +2,7 @@
 let
   cfg = config.programs.newsboat;
 
-  defaultBrowser = "google-chrome-stable %u";
+  defaultBrowser = "firefox %u";
   videoViewer = "mpv %u";
 in {
   imports = [ ./sources.nix ];

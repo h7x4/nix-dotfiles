@@ -23,7 +23,7 @@ in
   };
 
   programs.vscode = {
-    package = pkgs.vscode.overrideAttrs (prev: {
+    package = pkgs.vscodium.overrideAttrs (prev: {
       # NOTE: this messes up zsh's tab completion in the terminal whenever code is started
       #       from within a shell
       preFixup = prev.preFixup + ''
@@ -318,10 +318,10 @@ in
         justusadam.language-haskell
         justusadam.language-haskell
         mechatroner.rainbow-csv
-        mhutchie.git-graph
+        # mhutchie.git-graph
         ms-python.python
-        ms-python.vscode-pylance
-        ms-vscode-remote.remote-ssh
+        # ms-python.vscode-pylance
+        # ms-vscode-remote.remote-ssh
         naumovs.color-highlight
         oderwat.indent-rainbow
         pkief.material-icon-theme

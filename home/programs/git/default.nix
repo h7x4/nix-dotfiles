@@ -233,7 +233,7 @@ lib.mkIf cfg.enable {
           reflogExpireUnreachable = "90 days";
         };
 
-        web.browser = "google-chrome-stable";
+        web.browser = "firefox";
 
         "filter \"lfs\"" = {
           required = true;

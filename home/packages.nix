@@ -54,7 +54,7 @@
     rnr
     rsync
     # sc-im
-    slack-term
+    # slack-term
     tea
     terminal-parrot
     termtosvg
@@ -94,7 +94,6 @@
       ghidra
       gimp3-with-plugins
       gnome-font-viewer
-      google-chrome
       imhex
       imv
       inkscape
@@ -122,7 +121,7 @@
       # scrcpy
       seahorse
       shellcheck
-      slack
+      # slack
       # sublime3
       # swiPrologWithGui
       tagainijisho
@@ -153,11 +152,10 @@
       desmume
       # osu-lazer
       # retroarchFull
-      steam
-      steam-tui
+      # steam
+      # steam-tui
       stepmania
       # taisei
     ]
   );
 }
-

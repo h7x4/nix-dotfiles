@@ -66,7 +66,14 @@
       inherit system;
 
       config = {
-        allowUnfree = true;
+        allowUnfreePredicate = pkg: nixpkgs.lib.elem (nixpkgs.lib.getName pkg) [
+          "discord"
+          "geogebra"
+          "ipu6-camera-bins"
+          "ipu6-camera-bins-unstable"
+          "ivsc-firmware"
+          "ivsc-firmware-unstable"
+        ];
         android_sdk.accept_license = true;
         segger-jlink.acceptLicense = true;
         permittedInsecurePackages = [
