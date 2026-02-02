@@ -46,6 +46,7 @@ let # http://www.pvv.ntnu.no/pvv/Maskiner
     "ustetind"
     "venture"
     "wenche"
+    "wegonke"
   ];
 
   rootMachines = [
