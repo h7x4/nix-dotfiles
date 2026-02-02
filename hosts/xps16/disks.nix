@@ -109,7 +109,7 @@
                       };
                       "${name}/snapshots" = {
                         mountpoint = "${subvolPath}/.snapshots";
-                        mountOptions = mountOptions ++ [ "ro" ];
+                        mountOptions = mountOptions ++ [ "ro" "x-systemd.automount" "x-systemd.idle-timeout=5min" ];
                       };
                     };
 
@@ -125,7 +125,7 @@
                       };
                       "@${name}/snapshots" = {
                         mountpoint = "${subvolPath}/.snapshots";
-                        mountOptions = mountOptions ++ [ "ro" ];
+                        mountOptions = mountOptions ++ [ "ro" "x-systemd.automount" "x-systemd.idle-timeout=5min" ];
                       };
                     };
                   in lib.foldl (x: y: x // y) { } [
