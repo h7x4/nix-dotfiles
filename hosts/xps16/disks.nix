@@ -109,7 +109,7 @@
                       };
                       "${name}/snapshots" = {
                         mountpoint = "${subvolPath}/.snapshots";
-                        inherit mountOptions;
+                        mountOptions = mountOptions ++ [ "ro" ];
                       };
                     };
 
@@ -125,7 +125,7 @@
                       };
                       "@${name}/snapshots" = {
                         mountpoint = "${subvolPath}/.snapshots";
-                        inherit mountOptions;
+                        mountOptions = mountOptions ++ [ "ro" ];
                       };
                     };
                   in lib.foldl (x: y: x // y) { } [
