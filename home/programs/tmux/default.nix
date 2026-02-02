@@ -11,6 +11,7 @@ in
     prefix = "C-a";
     mouse = true;
     terminal = "screen-256color";
+    historyLimit = 20000;
 
     plugins = with pkgs.tmuxPlugins; [
       copycat
