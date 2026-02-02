@@ -12,7 +12,7 @@
     };
 
     disko = {
-      url = "github:nix-community/disko/v1.12.0";
+      url = "github:nix-community/disko/v1.13.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -309,6 +309,8 @@
           nixos-hardware.nixosModules.common-pc-laptop-ssd
           nixos-hardware.nixosModules.common-cpu-intel
           nixos-hardware.nixosModules.common-gpu-intel
+
+          disko.nixosModules.default
         ];
       };
       tsuki = nixSys "tsuki" {

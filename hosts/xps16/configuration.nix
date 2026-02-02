@@ -5,6 +5,7 @@
 
     ./apparmor.nix
     ./ipu6.nix
+    ./disks.nix
 
     ./services/btrfs.nix
     ./services/docker.nix
