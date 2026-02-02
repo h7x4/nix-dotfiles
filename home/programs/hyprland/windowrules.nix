@@ -33,6 +33,7 @@ in
       "workspace 5, class:^(Element)$"
 
       "float, class:^(xdg-desktop-portal-termfilechooser)$"
+      "float, class:^(anyrun)$"
       "size 70% 80%, class:^(xdg-desktop-portal-termfilechooser)$"
       "move 15% 10%, class:^(xdg-desktop-portal-termfilechooser)$"
     ];
