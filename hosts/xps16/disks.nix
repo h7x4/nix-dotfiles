@@ -2,7 +2,7 @@
 {
   disko.devices = {
     disk = {
-      sda = {
+      nvme0n1 = {
         name = "KXG80ZN84T09 NVMe KIOXIA 4096GB";
         type = "disk";
         device = "/dev/nvme0n1";
