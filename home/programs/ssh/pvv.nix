@@ -17,7 +17,6 @@ let # http://www.pvv.ntnu.no/pvv/Maskiner
     "bikkje"
     "bob"
     [ "brzeczyszczykiewicz" "brez" "bokhylle" ]
-    "buskerud"
     "dagali"
     "demiurgen"
     "eirin"
@@ -60,6 +59,10 @@ let # http://www.pvv.ntnu.no/pvv/Maskiner
       names = [ "sleipner" "pvv-salt" ];
       user = "oysteikt/admin";
     }
+    "buskerud"
+    [ "blossom" "powerpuff1" "powerpuff" ]
+    [ "bubbles" "powerpuff2" ]
+    [ "buttercup" "powerpuff3" ]
   ];
 
   overrideIfNotExists = b: a: a // (builtins.removeAttrs b (builtins.attrNames a));
