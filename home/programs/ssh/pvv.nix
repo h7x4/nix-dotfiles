@@ -60,6 +60,7 @@ let # http://www.pvv.ntnu.no/pvv/Maskiner
       user = "oysteikt/admin";
     }
     "buskerud"
+    "smask"
     [ "blossom" "powerpuff1" "powerpuff" ]
     [ "bubbles" "powerpuff2" ]
     [ "buttercup" "powerpuff3" ]
