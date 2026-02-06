@@ -3,15 +3,25 @@ let
   cfg = config.programs.neomutt;
 in lib.mkIf cfg.enable {
   programs.neomutt = {
-    # vimKeys = true;
-    # set mailcap_path = ~/.config/neomutt/mailcap
-    # set header_cache = "~/.cache/mutt"
-    # set message_cachedir = "~/.cache/mutt"
-    # set tmpdir = /run/user/${uid}/mutt
+    vimKeys = true;
+    sidebar.enable = true;
 
-    # extraConfig = ''
-    #   # vim: filetype=muttrc
-    # '';
+    settings = {
+      debug_file = "${config.xdg.dataHome}/neomutt/debug0";
+      history_file = "${config.xdg.dataHome}/neomutt/history";
+      mailcap_path = "${config.xdg.configHome}/neomutt/mailcap";
+      # header_cache = "${config.xdg.cacheHome}/neomutt/headers";
+      # message_cache_dir = "${config.xdg.cacheHome}/neomutt/messages";
+      news_cache_dir = "${config.xdg.cacheHome}/neomutt/news";
+      tmp_dir = "/run/user/${toString config.home.uid}/neomutt";
+      alias_file = "${config.xdg.dataHome}/neomutt/aliases";
+    };
+
+    extraConfig = ''
+      source "${config.xdg.dataHome}/neomutt/aliases"
+
+      # vim: filetype=neomuttrc
+    '';
   };
 
   xdg.configFile."neomutt/mailcap".text = ''
