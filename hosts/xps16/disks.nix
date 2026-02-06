@@ -109,7 +109,7 @@
                       };
                       "${name}/snapshots" = {
                         mountpoint = "${subvolPath}/.snapshots";
-                        mountOptions = mountOptions ++ [ "ro" "x-systemd.automount" "x-systemd.idle-timeout=5min" ];
+                        mountOptions = mountOptions ++ [ "x-systemd.automount" "x-systemd.idle-timeout=5min" ];
                       };
                     };
 
