@@ -3,9 +3,10 @@
   graphics = !machineVars.headless;
 in {
   imports = [
-    ./shell.nix
-    ./packages.nix
     ./breakerbox.nix
+    ./email.nix
+    ./packages.nix
+    ./shell.nix
 
     ./config/xdg
     ./config/ensure-homedir-structure.nix
