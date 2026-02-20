@@ -121,6 +121,7 @@
       # scrcpy
       seahorse
       shellcheck
+      signal-desktop
       # slack
       # sublime3
       # swiPrologWithGui
