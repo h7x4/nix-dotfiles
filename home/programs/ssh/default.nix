@@ -23,9 +23,19 @@ in
         "${config.home.homeDirectory}/.ssh/mutable_config"
       ];
 
+      enableDefaultConfig = false;
+
       matchBlocks."*" = {
+        forwardAgent = false;
+        addKeysToAgent = "no";
+        compression = false;
+        serverAliveInterval = 0;
+        serverAliveCountMax = 3;
+        hashKnownHosts = false;
+        userKnownHostsFile = "~/.ssh/known_hosts";
+        # controlPersist = "10m";
+        controlPersist = "no";
         controlMaster = "auto";
-        controlPersist = "10m";
         controlPath = "${controlMastersDir}/%n%C";
       };
     };
