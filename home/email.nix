@@ -44,6 +44,7 @@ in
 
         neomutt.enable = true;
         thunderbird.enable = true;
+        meli.enable = true;
       };
 
       "pvv" = let
@@ -79,6 +80,7 @@ in
 
         neomutt.enable = true;
         thunderbird.enable = true;
+        meli.enable = true;
       };
 
       "kyoto-u" = let
@@ -113,6 +115,7 @@ in
 
         neomutt.enable = true;
         thunderbird.enable = true;
+        meli.enable = true;
       };
     };
   };
