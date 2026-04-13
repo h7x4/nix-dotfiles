@@ -117,6 +117,7 @@
       nsxiv
       pcloud
       pdfarranger
+      penpot-desktop
       pwvucontrol
       # scrcpy
       seahorse
