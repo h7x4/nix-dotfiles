@@ -41,6 +41,6 @@
     "${home}/Downloads" = symlink "${home}/downloads";
 
     "${config.xdg.dataHome}/wallpapers" = symlink "${home}/pictures/wallpapers";
-    "${config.home.sessionVariables.TEXMFHOME}" = symlink "${home}/git/texmf";
+    "${config.systemd.user.sessionVariables.TEXMFHOME}" = symlink "${home}/git/texmf";
   };
 }

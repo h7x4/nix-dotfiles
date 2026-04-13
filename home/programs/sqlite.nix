@@ -19,6 +19,6 @@ in
       pkgs.sqlite-interactive
     ];
 
-    home.sessionVariables.SQLITE_HISTORY= "${config.xdg.dataHome}/sqlite_history";
+    systemd.user.sessionVariables.SQLITE_HISTORY= "${config.xdg.dataHome}/sqlite_history";
   };
 }

@@ -38,11 +38,11 @@ in {
     };
 
     keyboard.options = [ "caps:escape" ];
+  };
 
-    sessionVariables = {
-      DO_NOT_TRACK = "1";
-      _JAVA_AWT_WM_NONREPARENTING = "1";
-    };
+  systemd.user.sessionVariables = {
+    DO_NOT_TRACK = "1";
+    _JAVA_AWT_WM_NONREPARENTING = "1";
   };
 
   dconf.settings = mkIf graphics {

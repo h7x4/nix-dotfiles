@@ -24,7 +24,7 @@ in
     };
   };
 
-  home.sessionVariables.XDG_SCREENSHOTS_DIR = "${cfg.pictures}/screenshots";
+  systemd.user.sessionVariables.XDG_SCREENSHOTS_DIR = "${cfg.pictures}/screenshots";
 
   systemd.user.tmpfiles.settings."05-xdg-userdirs" = let
     dirCfg = {
@@ -42,6 +42,6 @@ in
     "${cfg.publicShare}" = dirCfg;
     "${cfg.templates}" = dirCfg;
     "${cfg.videos}" = dirCfg;
-    "${config.home.sessionVariables.XDG_SCREENSHOTS_DIR}" = dirCfg;
+    "${config.systemd.user.sessionVariables.XDG_SCREENSHOTS_DIR}" = dirCfg;
   };
 }

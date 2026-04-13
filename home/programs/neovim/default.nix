@@ -154,6 +154,4 @@ lib.mkIf cfg.enable {
       vim.keymap.set('n', ';', paste_buf)
     '';
   };
-
-  home.sessionVariables = { EDITOR = "nvim"; };
 }

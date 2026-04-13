@@ -9,5 +9,5 @@ lib.mkIf cfg.enable {
     };
   };
 
-  home.sessionVariables.CARGO_NET_GIT_FETCH_WITH_CLI = "true";
+  systemd.user.sessionVariables.CARGO_NET_GIT_FETCH_WITH_CLI = "true";
 }

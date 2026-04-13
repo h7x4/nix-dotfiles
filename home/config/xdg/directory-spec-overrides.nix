@@ -4,7 +4,7 @@
 
   home.preferXdgDirectories = true;
 
-  home.sessionVariables = let
+  systemd.user.sessionVariables = let
     inherit (config.xdg) dataHome cacheHome configHome userDirs;
     runtimeDir = "/run/user/${toString config.home.uid}";
   in {
