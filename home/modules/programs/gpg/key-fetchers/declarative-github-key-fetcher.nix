@@ -14,6 +14,8 @@ in
         defaultText = lib.literalExpression "config.programs.gh.enable";
       };
 
+      # TODO: default time interval
+
       keys = lib.mkOption {
         description = "";
         default = { };
@@ -38,6 +40,8 @@ in
               example = 4;
               type = with lib.types; nullOr (ints.between 1 5);
             };
+
+            # TODO: time interval override
           };
         }));
       };
@@ -47,7 +51,6 @@ in
   config = lib.mkIf cfg.key-fetchers.github.enable {
     systemd.user.services."gpg-fetch-github-key@" = {
       description = "Fetch GPG keys for GitHub user %i";
-      wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Type = "oneshot";
         CPUSchedulingPolicy = "idle";
@@ -88,6 +91,12 @@ in
       };
     };
 
-    # systemd.user.timers =
+    systemd.user.timers."gpg-fetch-github-keys@" = {
+      description = "Fetch GPG keys for GitHub user %i";
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+
+      };
+    };
   };
 }

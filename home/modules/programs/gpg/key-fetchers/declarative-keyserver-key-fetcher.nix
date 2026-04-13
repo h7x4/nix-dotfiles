@@ -8,6 +8,9 @@ in
   options = {
     programs.gpg.key-fetchers.keyserver = {
       enable = lib.mkEnableOption "auto fetching of gpg keys by fingerprint";
+
+      # TODO: default time interval
+
       keys = lib.mkOption {
         description = "";
         default = { };
@@ -33,6 +36,8 @@ in
               example = 4;
               type = with lib.types; nullOr (ints.between 1 5);
             };
+
+             # TODO: time interval override
           };
         }));
       };
