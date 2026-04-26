@@ -143,7 +143,7 @@
                     }
 
                     (makeSnapshottable "/home/h7x4" [ "compress=zstd" "noatime" "nodev" ])
-                    (makeAtSnapshottable "/home/h7x4/archive" [ "compress-force=zstd15" "noatime" "nodev" ])
+                    (makeAtSnapshottable "/home/h7x4/archive" [ "compress-force=zstd:15" "noatime" "nodev" ])
                     (makeAtSnapshottable "/home/h7x4/ctf" [ "compress=zstd" "noatime" "nodev" ])
                     (makeAtSnapshottable "/home/h7x4/downloads" [ "compress=zstd" "noatime" "nosuid" "nodev" ])
                     (makeAtSnapshottable "/home/h7x4/git" [ "compress=zstd" "noatime" "nodev" ])
