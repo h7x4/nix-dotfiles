@@ -7,87 +7,189 @@ in
     wayland.windowManager.hyprland.settings = let
       exe = lib.getExe;
     in {
-      "$mod" = "SUPER";
+      mod._var = "SUPER";
 
       # https://github.com/xkbcommon/libxkbcommon/blob/master/include/xkbcommon/xkbcommon-keysyms.h
-      bind = [
-        "$mod SHIFT, Q, exec, uwsm stop"
-        "$mod ALT SHIFT, Q, exec, ${pkgs.systemd}/bin/loginctl terminate-user \"${config.home.username}\""
-        "$mod, R, exec, uwsm app -- ${exe config.programs.anyrun.package}"
-        "$mod, T, togglefloating"
+      bind = let
+        lua = lib.generators.mkLuaInline;
+        mod = key: args: {
+          _args = [
+            (lua "mod .. \" + ${key}\"")
+          ] ++ args;
+        };
+      in [
+        (mod "SHIFT + Q" [
+          (lua "hl.dsp.exec_cmd(\"uwsm stop\")")
+        ])
+        (mod "ALT + SHIFT + Q" [
+          (lua "hl.dsp.exec_cmd(\"${pkgs.systemd}/bin/loginctl terminate-user '${config.home.username}'\")")
+        ])
+        (mod "R" [
+          (lua "hl.dsp.exec_cmd(\"uwsm app -- ${exe config.programs.anyrun.package}\")")
+        ])
+        (mod "T" [
+          (lua "hl.dsp.window.float({ action = \"toggle\" })")
+        ])
 
-        "$mod, F, fullscreenstate, 1"
-        "$mod SHIFT, F, fullscreenstate, 3"
-        "$mod, C, exec, ${cfg.finalPackage}/bin/hyprctl reload"
+        (mod "F" [
+          (lua "hl.dsp.window.fullscreen({ action = \"toggle\", mode = \"maximized\" })")
+        ])
+        (mod "SHIFT + F" [
+          (lua "hl.dsp.window.fullscreen({ action = \"toggle\", mode = \"fullscreen\" })")
+        ])
 
-        "$mod, BACKSPACE, killactive"
+        (mod "C" [
+          (lua "hl.dsp.exec_cmd(\"${cfg.finalPackage}/bin/hyprctl reload\")")
+        ])
 
-        "$mod SHIFT, RETURN, exec, ${exe pkgs.app2unit} -t service -C -s app-graphical.slice -- ${exe pkgs.alacritty} --class termTerminal -e ${exe pkgs.tmux} new-session -A -s term"
-        "$mod SHIFT, SPACE, exec, ${exe pkgs.app2unit} -t service -C -s app-graphical.slice -- ${exe pkgs.alacritty} --class termTerminal -e ${exe pkgs.tmux} new-session -A -s term"
+        (mod "BACKSPACE" [
+          (lua "hl.dsp.window.close()")
+        ])
 
-        "$mod, j, layoutmsg,cyclenext"
-        "$mod, k, layoutmsg,cycleprev"
-        "$mod SHIFT, j, layoutmsg, swapnext"
-        "$mod SHIFT, k, layoutmsg, swapprev"
+        (mod "SHIFT + BACKSPACE" [
+          (lua "hl.dsp.window.kill()")
+        ])
 
-        "$mod, 1, focusworkspaceoncurrentmonitor, 1"
-        "$mod, 2, focusworkspaceoncurrentmonitor, 2"
-        "$mod, 3, focusworkspaceoncurrentmonitor, 3"
-        "$mod, 4, focusworkspaceoncurrentmonitor, 4"
-        "$mod, 5, focusworkspaceoncurrentmonitor, 5"
-        "$mod, 6, focusworkspaceoncurrentmonitor, 6"
-        "$mod, 7, focusworkspaceoncurrentmonitor, 7"
-        "$mod, 8, focusworkspaceoncurrentmonitor, 8"
-        "$mod, 9, focusworkspaceoncurrentmonitor, 9"
+        (mod "SHIFT + RETURN" [
+          (lua "hl.dsp.exec_cmd(\"${exe pkgs.app2unit} -t service -C -s app-graphical.slice -- ${exe pkgs.alacritty} --class termTerminal -e ${exe pkgs.tmux} new-session -A -s term\")")
+        ])
+        (mod "SHIFT + SPACE" [
+          (lua "hl.dsp.exec_cmd(\"${exe pkgs.app2unit} -t service -C -s app-graphical.slice -- ${exe pkgs.alacritty} --class termTerminal -e ${exe pkgs.tmux} new-session -A -s term\")")
+        ])
 
-        "$mod SHIFT, 1, movetoworkspacesilent, 1"
-        "$mod SHIFT, 2, movetoworkspacesilent, 2"
-        "$mod SHIFT, 3, movetoworkspacesilent, 3"
-        "$mod SHIFT, 4, movetoworkspacesilent, 4"
-        "$mod SHIFT, 5, movetoworkspacesilent, 5"
-        "$mod SHIFT, 6, movetoworkspacesilent, 6"
-        "$mod SHIFT, 7, movetoworkspacesilent, 7"
-        "$mod SHIFT, 8, movetoworkspacesilent, 8"
-        "$mod SHIFT, 9, movetoworkspacesilent, 9"
+        (mod "j" [(lua "hl.dsp.layout(\"cyclenext\")")])
+        (mod "k" [(lua "hl.dsp.layout(\"cycleprev\")")])
+        (mod "SHIFT + j" [(lua "hl.dsp.layout(\"swapnext\")")])
+        (mod "SHIFT + k" [(lua "hl.dsp.layout(\"swapprev\")")])
 
-        "$mod, b, exec, ${pkgs.fcitx5}/bin/fcitx5-remote -s mozc"
-        "$mod, n, exec, ${pkgs.fcitx5}/bin/fcitx5-remote -s keyboard-no"
-        "$mod, m, exec, ${pkgs.fcitx5}/bin/fcitx5-remote -s keyboard-us"
+        (mod "1" [(lua "hl.dsp.focus({ workspace = 1, on_current_monitor = true })")])
+        (mod "2" [(lua "hl.dsp.focus({ workspace = 2, on_current_monitor = true })")])
+        (mod "3" [(lua "hl.dsp.focus({ workspace = 3, on_current_monitor = true })")])
+        (mod "4" [(lua "hl.dsp.focus({ workspace = 4, on_current_monitor = true })")])
+        (mod "5" [(lua "hl.dsp.focus({ workspace = 5, on_current_monitor = true })")])
+        (mod "6" [(lua "hl.dsp.focus({ workspace = 6, on_current_monitor = true })")])
+        (mod "7" [(lua "hl.dsp.focus({ workspace = 7, on_current_monitor = true })")])
+        (mod "8" [(lua "hl.dsp.focus({ workspace = 8, on_current_monitor = true })")])
+        (mod "9" [(lua "hl.dsp.focus({ workspace = 9, on_current_monitor = true })")])
 
-        "$mod, l, exec, ${pkgs.systemd}/bin/loginctl lock-session"
+        (mod "SHIFT + 1" [(lua "hl.dsp.window.move({ workspace = 1 })")])
+        (mod "SHIFT + 2" [(lua "hl.dsp.window.move({ workspace = 2 })")])
+        (mod "SHIFT + 3" [(lua "hl.dsp.window.move({ workspace = 3 })")])
+        (mod "SHIFT + 4" [(lua "hl.dsp.window.move({ workspace = 4 })")])
+        (mod "SHIFT + 5" [(lua "hl.dsp.window.move({ workspace = 5 })")])
+        (mod "SHIFT + 6" [(lua "hl.dsp.window.move({ workspace = 6 })")])
+        (mod "SHIFT + 7" [(lua "hl.dsp.window.move({ workspace = 7 })")])
+        (mod "SHIFT + 8" [(lua "hl.dsp.window.move({ workspace = 8 })")])
+        (mod "SHIFT + 9" [(lua "hl.dsp.window.move({ workspace = 9 })")])
+
+        (mod "b" [(lua "hl.dsp.exec_cmd(\"${pkgs.fcitx5}/bin/fcitx5-remote -s mozc\")")])
+        (mod "n" [(lua "hl.dsp.exec_cmd(\"${pkgs.fcitx5}/bin/fcitx5-remote -s keyboard-no\")")])
+        (mod "m" [(lua "hl.dsp.exec_cmd(\"${pkgs.fcitx5}/bin/fcitx5-remote -s keyboard-us\")")])
+
+        (mod "l" [(lua "hl.dsp.exec_cmd(\"${pkgs.systemd}/bin/loginctl lock-session\")")])
 
         # TODO: fix
         # "super + minus" = "${pkgs.xcalib}/bin/xcalib -invert -alter"
 
-        ", Print, exec, ${exe pkgs.grimblast} copy area"
+        {
+          _args = [
+            (lua "\"PRINT\"")
+            (lua "hl.dsp.exec_cmd(\"${exe pkgs.grimblast} copy area\")")
+          ];
+        }
+        {
+          _args = [
+            (lua "\"SHIFT + PRINT\"")
+            (lua "hl.dsp.exec_cmd(\"${lib.getExe pkgs.grimblast} save\")")
+          ];
+        }
 
-        "SHIFT, Print, exec, ${lib.getExe pkgs.grimblast} save"
+        # "SHIFT, Print, exec, ${lib.getExe pkgs.grimblast} save"
         # "shift + @Print" = "${pkgs.maim}/bin/maim --hidecursor --nokeyboard $SCREENSHOT_DIR/$(date +%s).png"
 
-        "$mod, Print, exec, ${exe pkgs.woomer}"
-      ];
+        # "$mod, Print, exec, ${exe pkgs.woomer}"
 
-      bindm = [
-        "$mod, mouse:272, movewindow"
-        "$mod, Control_L, movewindow"
-        "$mod, mouse:273, resizewindow"
-        "$mod, ALT_L, resizewindow"
-      ];
+        (mod "mouse:272" [
+          (lua "hl.dsp.window.drag()")
+          (lua "{ mouse = true }")
+        ])
 
-      bindl = [
-        "$mod, p, exec, ${exe pkgs.mpc} toggle"
-        ",XF86AudioPlay, exec, ${exe pkgs.mpc} toggle"
-        ",XF86AudioPrev, exec, ${exe pkgs.mpc} prev"
-        ",XF86AudioNext, exec, ${exe pkgs.mpc} next"
-      ];
+        (mod "Control_L" [
+          (lua "hl.dsp.window.drag()")
+          (lua "{ mouse = true }")
+        ])
 
-      bindle = [
-        ",XF86MonBrightnessUp, exec, ${exe pkgs.brightnessctl} s +5%"
-        ",XF86MonBrightnessDown, exec, ${exe pkgs.brightnessctl} s 5%-"
-        ",XF86AudioLowerVolume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
-        ",XF86AudioRaiseVolume, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+"
-        "$mod ,F7, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
-        "$mod ,F8, exec, ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+"
+        (mod "mouse:273" [
+          (lua "hl.dsp.window.resize()")
+          (lua "{ mouse = true }")
+        ])
+
+        (mod "ALT_L" [
+          (lua "hl.dsp.window.resize()")
+          (lua "{ mouse = true }")
+        ])
+
+        (mod "p" [
+          (lua "hl.dsp.exec_cmd(\"${exe pkgs.mpc} toggle\")")
+          (lua "{ locked = true }")
+        ])
+        {
+          _args = [
+            (lua "\"XF86AudioPlay\"")
+            (lua "hl.dsp.exec_cmd(\"${exe pkgs.mpc} toggle\")")
+            (lua "{ locked = true }")
+          ];
+        }
+        {
+          _args = [
+            (lua "\"XF86AudioPrev\"")
+            (lua "hl.dsp.exec_cmd(\"${exe pkgs.mpc} prev\")")
+            (lua "{ locked = true }")
+          ];
+        }
+        {
+          _args = [
+            (lua "\"XF86AudioNext\"")
+            (lua "hl.dsp.exec_cmd(\"${exe pkgs.mpc} next\")")
+            (lua "{ locked = true }")
+          ];
+        }
+        {
+          _args = [
+            (lua "\"XF86MonBrightnessUp\"")
+            (lua "hl.dsp.exec_cmd(\"${exe pkgs.brightnessctl} s +5%\")")
+            (lua "{ locked = true, repeating = true }")
+          ];
+        }
+        {
+          _args = [
+            (lua "\"XF86MonBrightnessDown\"")
+            (lua "hl.dsp.exec_cmd(\"${exe pkgs.brightnessctl} s 5%-\")")
+            (lua "{ locked = true, repeating = true }")
+          ];
+        }
+        {
+          _args = [
+            (lua "\"XF86AudioLowerVolume\"")
+            (lua "hl.dsp.exec_cmd(\"${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-\")")
+            (lua "{ locked = true, repeating = true }")
+          ];
+        }
+        {
+          _args = [
+            (lua "\"XF86AudioRaiseVolume\"")
+            (lua "hl.dsp.exec_cmd(\"${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+\")")
+            (lua "{ locked = true, repeating = true }")
+          ];
+        }
+        (mod "F7" [
+          (lua "hl.dsp.exec_cmd(\"${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-\")")
+          (lua "{ locked = true, repeating = true }")
+        ])
+        (mod "F8" [
+          (lua "hl.dsp.exec_cmd(\"${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+\")")
+          (lua "{ locked = true, repeating = true }")
+        ])
       ];
     };
   };

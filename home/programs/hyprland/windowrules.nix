@@ -4,38 +4,111 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    wayland.windowManager.hyprland.settings.windowrulev2 = [
-      "float, class:^(Rofi)$"
-      "float, class:^(xdg-desktop-portal-gtk)$"
-      "float, title:^(.*Bitwarden Password Manager.*)$"
-      "float, title:^(Picture-in-Picture)$"
-      "tile, class:^(Nsxiv)$"
+    wayland.windowManager.hyprland.settings.window_rule = [
+      {
+        match.class = "^(Rofi)$";
+        float = true;
+      }
+      {
+        match.class = "^(xdg-desktop-portal-gtk)$";
+        float = true;
+      }
+      {
+        match.title = "^(.*Bitwarden Password Manager.*)$";
+        float = true;
+      }
+      {
+        match.title = "^(Picture-in-Picture)$";
+        float = true;
+      }
+      {
+        match.class = "^(Nsxiv)$";
+        tile = true;
+      }
 
-      "float, class: ^(Gimp-2.*)$, title:^(Open Image)$"
-      "size 70%, class: ^(Gimp-2.*)$, title:^(Open Image)$"
-      "center, class: ^(Gimp-2.*)$, title:^(Open Image)$"
+      {
+        match.class = "^(Gimp-2.*)$";
+        match.title = "^(Open Image)$";
 
-      "dimaround, class:^(xdg-desktop-portal-gtk)$"
+        float = true;
+        size = [
+          "70%"
+          "70%"
+        ];
+        center = true;
+      }
+      # {
+      #   match.class = "^(xdg-desktop-portal-gtk)$";
+      #   dimaround = true;
+      # }
 
-      "workspace special silent, title:^(Firefox — Sharing Indicator)$"
-      "workspace special silent, title:^(Zen — Sharing Indicator)$"
-      "workspace special silent, title:^(.*is sharing (your screen|a window)\.)$"
+      {
+        match.title = "^(Firefox — Sharing Indicator)$";
+        workspace = "special:silent";
+      }
+      {
+        match.title = "^(Zen — Sharing Indicator)$";
+        workspace = "special:silent";
+      }
+      {
+        match.title = "^(.*is sharing (your screen|a window)\\.)$";
+        workspace = "special:silent";
+      }
 
-      "workspace 2, class:^(firefox)$"
-      "workspace 2, class:^(chromium)$"
+      {
+      }
 
-      "workspace 3, class:^(Emacs)$"
-      "workspace 3, class:^(code)$"
-      "workspace 3, class:^(code-url-handler)$"
-      "workspace 3, class:^(dev.zed.Zed)$"
+      {
+        match.class = "^(firefox)$";
+        workspace = 2;
+      }
+      {
+        match.class = "^(chromium)$";
+        workspace = 2;
+      }
 
-      "workspace 5, class:^(discord)$"
-      "workspace 5, class:^(Element)$"
+      {
+        match.class = "^(Emacs)$";
+        workspace = 3;
+      }
+      {
+        match.class = "^(code)$";
+        workspace = 3;
+      }
+      {
+        match.class = "^(code-url-handler)$";
+        workspace = 3;
+      }
+      {
+        match.class = "^(dev.zed.Zed)$";
+        workspace = 3;
+      }
 
-      "float, class:^(xdg-desktop-portal-termfilechooser)$"
-      "float, class:^(anyrun)$"
-      "size 70% 80%, class:^(xdg-desktop-portal-termfilechooser)$"
-      "move 15% 10%, class:^(xdg-desktop-portal-termfilechooser)$"
+      {
+        match.class = "^(discord)$";
+        workspace = 5;
+      }
+      {
+        match.class = "^(Element)$";
+        workspace = 5;
+      }
+
+      {
+        match.class = "^(anyrun)$";
+        float = true;
+      }
+      {
+        match.class = "^(xdg-desktop-portal-termfilechooser)$";
+        float = true;
+        size = [
+          "70%"
+          "80%"
+        ];
+        move = [
+          "15%"
+          "10%"
+        ];
+      }
     ];
   };
 }
