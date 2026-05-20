@@ -7,7 +7,7 @@
     defaults = {
       email = "h7x4@nani.wtf";
       dnsProvider = "cloudflare";
-      credentialsFile = config.sops.secrets."cloudflare/api-key".path;
+      credentialFiles.CLOUDFLARE_DNS_API_TOKEN_FILE = config.sops.secrets."cloudflare/api-key".path;
       dnsPropagationCheck = true;
     };
     certs."nani.wtf" = {

@@ -1,6 +1,7 @@
 { ... }:
 {
   programs.yazi = {
+    shellWrapperName = "y";
     keymap = {
       manager.prepend_keymap = [
         {

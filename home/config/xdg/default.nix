@@ -13,11 +13,14 @@ in
     enable = true;
     userDirs = {
       enable = true;
+      setSessionVariables = true;
+
       desktop = lib.mkDefault "${config.home.homeDirectory}/Desktop";
       documents = lib.mkDefault "${config.home.homeDirectory}/documents";
       download = lib.mkDefault "${config.home.homeDirectory}/downloads";
       music = lib.mkDefault "${config.home.homeDirectory}/music";
       pictures = lib.mkDefault "${config.home.homeDirectory}/pictures";
+      projects = lib.mkDefault "${config.home.homeDirectory}/git";
       publicShare = lib.mkDefault "${config.home.homeDirectory}/public";
       templates = lib.mkDefault "${config.home.homeDirectory}/templates";
       videos = lib.mkDefault "${config.home.homeDirectory}/videos";

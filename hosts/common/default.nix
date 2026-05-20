@@ -41,7 +41,6 @@ in {
     ./services/uptimed.nix
     ./services/userborn.nix
     ./services/userdbd.nix
-    ./services/wpa_supplicant.nix
     ./services/xserver.nix
   ];
 
@@ -144,7 +143,6 @@ in {
   services = {
     udev.packages = with pkgs; [
       yubikey-personalization
-      light
     ];
   };
 
@@ -186,7 +184,7 @@ in {
     man.enable = true;
     nixos.enable = true;
 
-    man.generateCaches = true;
+    man.cache.enable = true;
   };
 
   # security.lockKernelModules = true;

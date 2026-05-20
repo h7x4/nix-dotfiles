@@ -1,6 +1,7 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
   programs.firefox = {
+    configPath = "${config.xdg.configHome}/mozilla/firefox";
     profiles.h7x4 = {
       bookmarks = {
         force = true;

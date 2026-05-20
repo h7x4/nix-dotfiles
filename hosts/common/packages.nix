@@ -32,23 +32,21 @@
       ghcid
       # haskellPackages.Cabal_3_6_3_0
       maven
-      nixfmt-rfc-style
+      nixfmt
       nixpkgs-fmt
       # nixpkgs-hammering
-      nodePackages.node2nix
-      nodePackages.npm
-      nodePackages.sass
-      nodePackages.typescript
-      nodePackages.yarn
       nodejs
       plantuml
       python3
       rustc
       rustc
       rustup
+      sass
       sqlcheck
       sqlint
       sqlite
       sqlite-web
+      typescript
+      yarn
     ]);
 }

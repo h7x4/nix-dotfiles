@@ -73,6 +73,9 @@
           "ipu6-camera-bins-unstable"
           "ivsc-firmware"
           "ivsc-firmware-unstable"
+          "semshi"
+          "vim-polyglot"
+          "vim-trailing-whitespace"
         ];
         android_sdk.accept_license = true;
         segger-jlink.acceptLicense = true;
@@ -155,7 +158,6 @@
     };
 
     homeModules = {
-      cargo = ./home/modules/programs/cargo;
       colors = ./home/modules/colors.nix;
       direnv-auto-prune = ./home/modules/programs/direnv/auto-prune.nix;
       downloads-sorter = ./home/modules/services/downloads-sorter.nix;
@@ -166,7 +168,6 @@
       prism-launcher = ./home/modules/programs/prism-launcher;
       shellAliases = ./home/modules/shellAliases.nix;
       systemd-tmpfiles = ./home/modules/systemd-tmpfiles.nix;
-      uidGid = ./home/modules/uidGid.nix;
     };
 
     homeConfigurations = {

@@ -10,6 +10,9 @@ lib.mkIf cfg.enable {
     vimAlias = true;
     vimdiffAlias = true;
 
+    withPython3 = true;
+    withRuby = false;
+
     plugins = with pkgs.vimPlugins; [
       direnv-vim
       fzf-vim
@@ -27,6 +30,7 @@ lib.mkIf cfg.enable {
       semshi
       {
         plugin = goyo-vim;
+        type = "viml";
 
         # TODO: The mapleader definition should be in extraConfig, but setting
         #       the mapleader before defining keymaps messes things up.
@@ -73,21 +77,19 @@ lib.mkIf cfg.enable {
       vim-better-whitespace
       {
         plugin = nvim-treesitter.withAllGrammars;
+        type = "lua";
         config = ''
-        packadd! nvim-treesitter
-        lua << EOF
-          require'nvim-treesitter.configs'.setup {
+          require('nvim-treesitter').setup {
             highlight = {
               enable = true,
             },
           }
-        EOF
         '';
       }
       {
         plugin = rainbow-delimiters-nvim;
+        type = "lua";
         config = ''
-        lua << EOF
           local rainbow_delimiters = require 'rainbow-delimiters'
           vim.g.rainbow_delimiters = {
             ["highlight"] = {
@@ -99,11 +101,11 @@ lib.mkIf cfg.enable {
               'RainbowDelimiterCyan',
             },
           }
-        EOF
         '';
       }
       {
         plugin = vim-monokai;
+        type = "viml";
         config = ''
           colorscheme monokai
 
@@ -140,7 +142,7 @@ lib.mkIf cfg.enable {
       vnoremap <A-k> :m '<-2<CR>gv=gv
     '';
 
-    extraLuaConfig = ''
+    initLua = ''
       local function paste_buf()
         local content = os.getenv("NVIM_CLIPBOARD")
 

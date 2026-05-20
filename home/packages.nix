@@ -80,11 +80,12 @@
     zlib
     icu
     openssl
-    xorg.xprop
+    xprop
   ] ++ (
     lib.optionals (!machineVars.headless) [
       alsa-utils
       kdePackages.ark
+      brightnessctl
       calibre
       cool-retro-term
       darktable
@@ -105,7 +106,6 @@
       # kdePackages.ktouch
       libnotify
       libreoffice
-      light
       mission-center
       # mopidy
       # mopidy-mpd
@@ -134,9 +134,9 @@
       xcalib
       xclip
       xdotool
-      xorg.xmodmap
-      (xfce.thunar.override {
-        thunarPlugins = with xfce; [
+      xmodmap
+      (thunar.override {
+        thunarPlugins = [
           thunar-volman
           # thunar-dropbox-plugin
           thunar-archive-plugin

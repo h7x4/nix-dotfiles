@@ -5,7 +5,7 @@ let
 in
 {
   options.services.tumblerd.enable = lib.mkEnableOption "tumblerd";
-  options.services.tumblerd.package = lib.mkPackageOption pkgs [ "xfce" "tumbler" ]  { };
+  options.services.tumblerd.package = lib.mkPackageOption pkgs "tumbler" { };
 
   config = lib.mkIf cfg.enable {
     systemd.user.services.tumblerd = {

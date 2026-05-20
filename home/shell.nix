@@ -55,9 +55,6 @@ in {
       htop_ = p "htop";
       htop = p "bottom";
 
-      dig_ = p "dig";
-      dig = p "dogdns";
-
       man_ = p "man";
       man = "${pkgs.bat-extras.batman}/bin/batman";
 

@@ -5,8 +5,8 @@
       libappindicator
       libindicator
       libnotify
-      xorg.libXScrnSaver
-      xorg.libXtst
+      libXScrnSaver
+      libXtst
     ]);
 
     preFixup = ''

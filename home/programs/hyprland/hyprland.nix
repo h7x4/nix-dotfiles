@@ -2,6 +2,7 @@
   wayland.windowManager.hyprland = {
     systemd.enable = false;
     systemd.enableXdgAutostart = false;
+    configType = "lua";
 
     settings = {
       exec-once = [

@@ -86,9 +86,7 @@
     docker.enable = true;
   };
 
-  services.resolved.extraConfig = ''
-    MulticastDNS=no
-  '';
+  services.resolved.settings.Resolve.MulticastDNS = false;
 
   services.zfs.trim.enable = true;
   services.zfs.autoScrub.enable = true;
