@@ -5,7 +5,7 @@
   systemd.services."btrfs-scrub-${utils.escapeSystemdPath "/"}".serviceConfig = {
     PrivateNetwork = true;
     RestrictFileSystems = [
-      "sysfs" # Needed to set scrub speed in /sys/fs/btrfs
+      "@basic-api" # Needed by both systemd and btrfs (the latter for setting scrub speed in /sys/fs/btrfs)
       "btrfs"
     ];
   };
