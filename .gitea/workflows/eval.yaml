@@ -1,0 +1,26 @@
+name: "Evaluate machine configurations"
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+jobs:
+  eval:
+    runs-on: debian-latest
+    strategy:
+      matrix:
+        machine: [
+          "kasei",
+          "tsuki",
+          "xps16",
+        ]
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Install sudo
+      run: apt-get update && apt-get -y install sudo
+
+    - name: Install nix
+      uses: https://github.com/cachix/install-nix-action@v31
+
+    - name: Nix eval package
+      run: nix eval .#nixosConfigurations.${{ matrix.machine }}.config.system.build.toplevel -L
