@@ -16,7 +16,6 @@
     ./services/matrix
     # ./services/minecraft
     ./services/nginx
-    ./services/osuchan.nix
     # ./services/plex.nix
     ./services/postgres.nix
     # ./services/samba.nix

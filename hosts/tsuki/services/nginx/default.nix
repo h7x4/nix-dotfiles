@@ -60,7 +60,6 @@
       # "idrac".servers."10.0.0.201" = { };
       "irc-matrix-bridge-media".servers."localhost:${s srv.matrix-appservice-irc.settings.ircService.mediaProxy.bindPort}" = { };
       "kanidm".servers."localhost:8300" = { };
-      "osuchan".servers."localhost:${s srv.osuchan.port}" = { };
       # "plex".servers."localhost:32400" = { };
       # "vaultwarden".servers."unix:${sa.vaultwarden.newSocketAddress}" = { };
       # "vaultwarden".servers."unix:${sa.vaultwarden.newSocketAddress}" = { };
@@ -196,7 +195,6 @@
       # (proxy ["idrac"] "https://idrac" {})
       # (proxy ["log"] "http://grafana" enableWebsockets)
       # (proxy ["map"] "http://dynmap" {})
-      (proxy ["osu"] "http://osuchan" {})
       # (proxy ["plex"] "http://plex" enableWebsockets)
       # (proxy ["vpn"] "http://headscale" {
       #   locations."/" = {

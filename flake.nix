@@ -23,11 +23,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    osuchan = {
-      url = "git+file:///home/h7x4/git/osuchan-line-bot";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     maunium-stickerpicker = {
       url = "github:h7x4/maunium-stickerpicker-nix/0.1.0";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -56,7 +51,6 @@
     matrix-synapse-next,
     maunium-stickerpicker,
     minecraft,
-    osuchan,
     sops-nix,
     # anyrun,
   }: let
@@ -91,7 +85,6 @@
         self.overlays.gitoxide
 
         minecraft.overlays.default
-        osuchan.overlays.default
       ];
     };
 
@@ -329,7 +322,6 @@
           disko.nixosModules.default
 
           matrix-synapse-next.nixosModules.default
-          osuchan.outputs.nixosModules.default
           maunium-stickerpicker.nixosModules.default
 
           (args: import minecraft.outputs.nixosModules.minecraft-servers (args // {

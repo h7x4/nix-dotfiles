@@ -205,37 +205,17 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1780243769,
-        "narHash": "sha256-x5UQuRsH3MqI0U9afaXSNqzTPSeZlRLvFAav2Ux1pNw=",
+        "lastModified": 1780453794,
+        "narHash": "sha256-bXMRa9VTsHSPXL4Cw8R6JJLQeY3Y/IP4+YJCYVmQ7FY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "331800de5053fcebacf6813adb5db9c9dca22a0c",
+        "rev": "6b316287bae2ee04c9b93c8c858d930fd07d7338",
         "type": "github"
       },
       "original": {
         "id": "nixpkgs",
-        "ref": "nixos-unstable",
+        "ref": "nixos-26.05",
         "type": "indirect"
-      }
-    },
-    "osuchan": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1684092181,
-        "narHash": "sha256-Oi6G8Jx2RkEMi3UndtAnZw61hfgKGEe7l/ILdB9ump4=",
-        "ref": "refs/heads/master",
-        "rev": "028ed8774d1cf4650fc15253146cf14451eb608c",
-        "revCount": 43,
-        "type": "git",
-        "url": "file:///home/h7x4/git/osuchan-line-bot"
-      },
-      "original": {
-        "type": "git",
-        "url": "file:///home/h7x4/git/osuchan-line-bot"
       }
     },
     "root": {
@@ -249,7 +229,6 @@
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixpkgs-yet-unstabler": "nixpkgs-yet-unstabler",
-        "osuchan": "osuchan",
         "sops-nix": "sops-nix"
       }
     },
