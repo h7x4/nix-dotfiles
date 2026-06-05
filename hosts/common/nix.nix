@@ -1,8 +1,9 @@
 { config, lib, unstable-pkgs, ... }:
 {
   imports = [
-    ./nix-builders/bob.nix
     ./nix-builders/isvegg.nix
+    ./nix-builders/wenche.nix
+    ./nix-builders/gluttony.nix
     ./nix-builders/tsuki.nix
   ];
 
