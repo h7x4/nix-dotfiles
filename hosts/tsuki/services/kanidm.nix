@@ -19,10 +19,10 @@ in {
   services.kanidm = {
     package = pkgs.kanidm_1_10;
     # enablePAM = true;
+    server.enable = true;
     server.settings = let
       credsDir = "/run/credentials/kanidm.service";
     in {
-      enable = true;
       origin = "https://${cfg.server.settings.domain}";
       domain = "auth.nani.wtf";
       tls_chain = "${credsDir}/fullchain.pem";
