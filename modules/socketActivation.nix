@@ -164,7 +164,7 @@ in
 
         serviceConfig = {
           ExecStart = let
-            args = lib.cli.toGNUCommandLineShell { } {
+            args = lib.cli.toCommandLineShellGNU { } {
               exit-idle-time = if value.exitIdleTime != null then value.exitIdleTime else "infinity";
               connections-max = value.connectionsMax;
             };

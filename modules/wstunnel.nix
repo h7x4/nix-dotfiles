@@ -305,7 +305,7 @@ let
         script = with serverCfg; ''
           ${lib.getExe package} \
             server \
-            ${lib.cli.toGNUCommandLineShell { } (
+            ${lib.cli.toCommandLineShellGNU { } (
               lib.recursiveUpdate
               {
                 restrict-to = map hostPortToString restrictTo;
@@ -362,7 +362,7 @@ let
       script = with clientCfg; ''
         ${lib.getExe package} \
           client \
-          ${lib.cli.toGNUCommandLineShell { } (
+          ${lib.cli.toCommandLineShellGNU { } (
             lib.recursiveUpdate
             {
               local-to-remote = localToRemote;
