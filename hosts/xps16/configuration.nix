@@ -52,6 +52,10 @@
 
   environment.enableDebugInfo = true;
 
+  environment.systemPackages = with pkgs; [
+    powerstat
+  ];
+
   i18n.extraLocaleSettings = {
     LC_ALL = "en_US.UTF-8";
   };
