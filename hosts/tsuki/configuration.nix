@@ -54,9 +54,18 @@
   networking = {
     hostName = "tsuki";
     hostId = "1cb0971f";
-    networkmanager.enable = true;
-    interfaces.ens18.useDHCP = true;
-    firewall.enable=true;
+    firewall.enable = true;
+  };
+
+  systemd.network = {
+    enable = true;
+    wait-online.anyInterface = true;
+    networks."30-ether" = {
+      matchConfig.Type = "ether";
+      dns = [ "1.1.1.1" "8.8.8.8" ];
+      domains = [ "nani.wtf" ];
+      DHCP = "ipv4";
+    };
   };
 
   users = {
@@ -99,12 +108,11 @@
 
     network = {
       enable = true;
-      flushBeforeStage2 = true;
       ssh = {
         enable = true;
         port = 22;
         authorizedKeys = [
-          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC0aYHsiqfLCA0prSmEi6hZeQPCGxZYR7gp+3U99POUWJyycSVqXMhgVZHT8VEYGf+EZ/y5nL1bvna7ChBwQBzInB2mRW+TCLL3h1w9t/27vTHe3wV+fowTooD/paOErmWFO4yDBEJ3cYFMXowAd3GfvsBSFGPSsvSxghSzWj+kfhIFkXD02LZxn/hBQyCT6irp3Hwx1cBu8ic/l2ln64SLARuEmj4ITaafNC5wD2Gr5Jf3q+T9QtJeFPXSpJD7MtVMJ1VpgpfGBvlEYKggiQjxgu2BXHv1w3KIfyltTwhrcqHvttaJSuR5TreAgQ5+dZHmMr6XX8rFG+HEa8gND6NjGjHrJBxp53qgPtLAmBddvf8xQMYiq6+XST16nlRaAsjU3yr3VqCt7XhJiS2IV8JiIV3dok8nxzDX9sjdZeGchdnAnU6lcxDgnBvAcJRaWHwMCG8Ty9sJ4otgjr5A1GxRBndJIIuKzjpdtsrCAHg/K2zqFoKPJxN/K9zDWKNy0aEy2Akl3LgHF2QIuG5pUOmbyvbF8AoTudaz6Zu6JpVwOb9T9avFJBH4RHQ3mK0faBkrEmnkAg6JnDDMIt0XLALl88rI4kbdkVvJ2kaodvq799TCCw1PwMidgWX63LemWVBx+CL9ebXrsOkOthhMhkeaFXY9Am3Ee7rfD1tq3PGU1w== h7x4"
+          "command=\"systemctl default\" ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC0aYHsiqfLCA0prSmEi6hZeQPCGxZYR7gp+3U99POUWJyycSVqXMhgVZHT8VEYGf+EZ/y5nL1bvna7ChBwQBzInB2mRW+TCLL3h1w9t/27vTHe3wV+fowTooD/paOErmWFO4yDBEJ3cYFMXowAd3GfvsBSFGPSsvSxghSzWj+kfhIFkXD02LZxn/hBQyCT6irp3Hwx1cBu8ic/l2ln64SLARuEmj4ITaafNC5wD2Gr5Jf3q+T9QtJeFPXSpJD7MtVMJ1VpgpfGBvlEYKggiQjxgu2BXHv1w3KIfyltTwhrcqHvttaJSuR5TreAgQ5+dZHmMr6XX8rFG+HEa8gND6NjGjHrJBxp53qgPtLAmBddvf8xQMYiq6+XST16nlRaAsjU3yr3VqCt7XhJiS2IV8JiIV3dok8nxzDX9sjdZeGchdnAnU6lcxDgnBvAcJRaWHwMCG8Ty9sJ4otgjr5A1GxRBndJIIuKzjpdtsrCAHg/K2zqFoKPJxN/K9zDWKNy0aEy2Akl3LgHF2QIuG5pUOmbyvbF8AoTudaz6Zu6JpVwOb9T9avFJBH4RHQ3mK0faBkrEmnkAg6JnDDMIt0XLALl88rI4kbdkVvJ2kaodvq799TCCw1PwMidgWX63LemWVBx+CL9ebXrsOkOthhMhkeaFXY9Am3Ee7rfD1tq3PGU1w== h7x4"
         ];
         hostKeys = [ "/etc/ssh/ssh_host_ed25519_key" ];
       };
@@ -112,17 +120,23 @@
 
     systemd = {
       enable = true;
+      network.enable = true;
+      network.networks = { inherit (config.systemd.network.networks) "30-ether"; };
+      network.wait-online.enable = true;
+      network.wait-online.anyInterface = true;
 
-      contents."/etc/profile".text = ''
-        zfs load-key -a
-        killall zfs
-        exit
-      '';
+      storePaths = with pkgs; [
+        cacert
+        coreutils
+        curl
+      ];
+
+      # services.systemd-networkd.environment."SYSTEMD_LOG_LEVEL" = "debug";
 
       services.notify-remote-disk-unlock = {
         description = "Remote Disk Unlocking Notifier";
         wantedBy = [ "initrd.target" ];
-        after = [ "systemd-networkd.service" ];
+        after = [ "network-online.target" ];
         serviceConfig.Type = "oneshot";
         environment.NIX_SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
         script = ''
