@@ -45,12 +45,16 @@ Build configuration without switching:
 
 ```
 nix build .#nixosConfigurations.tsuki.config.system.build.toplevel -L
+
+nix build .#nixosConfigurations."$(hostname)".config.system.build.toplevel -L
 ```
 
 Check why configuration depends on package:
 
 ```
 NIXPKGS_ALLOW_INSECURE=1 nix why-depends .#nixosConfigurations.tsuki.config.system.build.toplevel .#nixosConfigurations.tsuki.pkgs.suspiciousPackage
+
+NIXPKGS_ALLOW_INSECURE=1 nix why-depends .#nixosConfigurations."$(hostname)".config.system.build.toplevel .#nixosConfigurations."$(hostname)".pkgs.suspiciousPackage
 ```
 
 Re-encrypt sops secrets with new key:
