@@ -24,3 +24,4 @@ jobs:
 
     - name: Nix eval package
       run: nix eval .#nixosConfigurations.${{ matrix.machine }}.config.system.build.toplevel -L
+      timeout-minutes: 10
