@@ -128,6 +128,8 @@ lib.mkIf cfg.enable {
           autoSetupRebase = "always";
         };
 
+        checkout.defaultRemote = "origin";
+
         "color \"branch\"".upstream = "cyan";
         color.ui = "auto";
 
