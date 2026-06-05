@@ -124,7 +124,7 @@
       };
 
       "auth.generic_oauth" = let
-        authServerUrl = config.services.kanidm.serverSettings.origin;
+        authServerUrl = config.services.kanidm.server.settings.origin;
       in {
         enabled = true;
         name = "KaniDM";

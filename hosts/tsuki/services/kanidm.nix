@@ -2,7 +2,7 @@
   cfg = config.services.kanidm;
 in {
   systemd.services.kanidm = let
-    certName = config.services.nginx.virtualHosts.${cfg.serverSettings.domain}.useACMEHost;
+    certName = config.services.nginx.virtualHosts.${cfg.server.settings.domain}.useACMEHost;
   in {
     requires = [ "acme-order-renew-${certName}.service" ];
     serviceConfig.LoadCredential = let
@@ -12,18 +12,18 @@ in {
       "key.pem:${certDir}/key.pem"
     ];
     serviceConfig.BindPaths = [
-      cfg.serverSettings.online_backup.path
+      cfg.server.settings.online_backup.path
     ];
   };
 
   services.kanidm = {
     package = pkgs.kanidm_1_9;
-    enableServer = true;
     # enablePAM = true;
-    serverSettings = let
+    server.settings = let
       credsDir = "/run/credentials/kanidm.service";
     in {
-      origin = "https://${cfg.serverSettings.domain}";
+      enable = true;
+      origin = "https://${cfg.server.settings.domain}";
       domain = "auth.nani.wtf";
       tls_chain = "${credsDir}/fullchain.pem";
       tls_key = "${credsDir}/key.pem";

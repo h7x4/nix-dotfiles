@@ -42,7 +42,7 @@ in {
       };
 
       oauth2 = let
-        authServerUrl = config.services.kanidm.serverSettings.origin;
+        authServerUrl = config.services.kanidm.server.settings.origin;
       in rec {
         baseURL = "${authServerUrl}/oauth2";
         tokenURL = "${authServerUrl}/oauth2/token";
