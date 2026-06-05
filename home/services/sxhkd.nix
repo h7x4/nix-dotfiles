@@ -38,8 +38,8 @@ in
 
       # Monitor
 
-      "XF86MonBrightnessUp"   = "${pkgs.light}/bin/light -A 5";
-      "XF86MonBrightnessDown" = "${pkgs.light}/bin/light -U 5";
+      "XF86MonBrightnessUp"   = "${lib.getExe pkgs.brightnessctl} s +5%";
+      "XF86MonBrightnessDown" = "${lib.getExe pkgs.brightnessctl} s 5%-";
 
       "@Print" = "${pkgs.maim}/bin/maim --hidecursor --nokeyboard --select | ${pkgs.xclip}/bin/xclip -selection clipboard -target image/png -in";
 
