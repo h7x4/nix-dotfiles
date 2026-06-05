@@ -103,7 +103,7 @@ in
   programs.atuin.enable = true;
   programs.bash.enable = true;
   programs.bat.enable = true;
-  programs.beets.enable = true;
+  programs.beets.enable = false; # Broken at the start of 26.05
   programs.bottom.enable = true;
   programs.cargo.enable = true;
   # programs.comma.enable = true;
