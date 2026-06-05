@@ -17,7 +17,7 @@ in {
   };
 
   services.kanidm = {
-    package = pkgs.kanidm_1_9;
+    package = pkgs.kanidm_1_10;
     # enablePAM = true;
     server.settings = let
       credsDir = "/run/credentials/kanidm.service";
