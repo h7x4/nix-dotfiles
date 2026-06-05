@@ -7,20 +7,20 @@ in
     ./auto-update-extensions.nix
   ];
 
-  home.file = let
-    configDir = {
-      "vscode" = "Code";
-      "vscode-insiders" = "Code - Insiders";
-      "vscodium" = "VSCodium";
-    }.${cfg.package.pname};
-    userDir = "${config.xdg.configHome}/${configDir}/User";
-    configFilePath = "${userDir}/settings.json";
-  in lib.mkIf cfg.enable {
-    ${configFilePath} = {
-      target = "${configFilePath}.ro";
-      onChange = ''install -m660 $(realpath "${configFilePath}.ro") "${configFilePath}"'';
-    };
-  };
+  # home.file = let
+  #   configDir = {
+  #     "vscode" = "Code";
+  #     "vscode-insiders" = "Code - Insiders";
+  #     "vscodium" = "VSCodium";
+  #   }.${cfg.package.pname};
+  #   userDir = "${config.xdg.configHome}/${configDir}/User";
+  #   configFilePath = "${userDir}/settings.json";
+  # in lib.mkIf cfg.enable {
+  #   ${configFilePath} = {
+  #     target = "${configFilePath}.ro";
+  #     onChange = ''install -m660 $(realpath "${configFilePath}.ro") "${configFilePath}"'';
+  #   };
+  # };
 
   programs.vscode = {
     package = pkgs.vscodium.overrideAttrs (prev: {
