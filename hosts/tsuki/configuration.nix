@@ -96,9 +96,9 @@
       #       its path before rebuilding once again.
       "/secrets/boot/ntfy_key" = config.sops.secrets."boot/ntfy_key".path;
     };
+
     network = {
       enable = true;
-      udhcpc.enable = true;
       flushBeforeStage2 = true;
       ssh = {
         enable = true;
@@ -108,17 +108,32 @@
         ];
         hostKeys = [ "/etc/ssh/ssh_host_ed25519_key" ];
       };
-      postCommands = ''
-        export NIX_SSL_CERT_FILE='${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt'
-        export NTFY_KEY="$('${lib.getExe' pkgs.coreutils "cat"}' '/secrets/boot/ntfy_key')"
+    };
 
-        '${lib.getExe pkgs.curl}' \
-         -H "Title: tsuki reached ZFS unlocking stage" \
-         -d "Please log in and fix :)" \
-         "https://ntfy.sh/$NTFY_KEY"
+    systemd = {
+      enable = true;
 
-        echo 'zfs load-key -a; killall zfs; exit' >> /root/.profile
+      contents."/etc/profile".text = ''
+        zfs load-key -a
+        killall zfs
+        exit
       '';
+
+      services.notify-remote-disk-unlock = {
+        description = "Remote Disk Unlocking Notifier";
+        wantedBy = [ "initrd.target" ];
+        after = [ "systemd-networkd.service" ];
+        serviceConfig.Type = "oneshot";
+        environment.NIX_SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+        script = ''
+          export NTFY_KEY="$('${lib.getExe' pkgs.coreutils "cat"}' '/secrets/boot/ntfy_key')"
+
+          '${lib.getExe pkgs.curl}' \
+           -H "Title: tsuki reached ZFS unlocking stage" \
+           -d "Please log in and fix :)" \
+           "https://ntfy.sh/$NTFY_KEY"
+        '';
+      };
     };
   };
 
