@@ -361,6 +361,11 @@ lib.mkIf cfg.enable {
       text = lib.fileContents ./scripts/git-author-lines.sh;
     })
     (pkgs.writeShellApplication {
+      name = "git-addr";
+      runtimeInputs = with pkgs; [ cfg.package ];
+      text = lib.fileContents ./scripts/git-addr.sh;
+    })
+    (pkgs.writeShellApplication {
       name = "git-all-commits";
       runtimeInputs = with pkgs; [ cfg.package gnugrep gawk findutils uutils-coreutils-noprefix ];
       text = lib.fileContents ./scripts/git-all-commits.sh;
