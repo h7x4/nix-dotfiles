@@ -7,6 +7,7 @@
     cyme
     czkawka
     difftastic
+    dig
     # diskonaut
     duf
     duff
@@ -61,6 +62,7 @@
     toilet
     tokei
     trippy
+    typos
     unpaper
     unzip
     usbutils
