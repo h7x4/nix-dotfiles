@@ -138,7 +138,7 @@
   };
 
   boot.kernelPackages = pkgs.linuxPackages;
-  boot.zfs.package = pkgs.zfs_2_3;
+  boot.zfs.package = pkgs.zfs_2_4;
   boot.loader = {
     efi.canTouchEfiVariables = true;
     systemd-boot.enable = true;
