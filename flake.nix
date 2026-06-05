@@ -68,6 +68,8 @@
           "ivsc-firmware"
           "ivsc-firmware-unstable"
           "semshi"
+          "steam"
+          "steam-unwrapped"
           "vim-polyglot"
           "vim-trailing-whitespace"
         ];
