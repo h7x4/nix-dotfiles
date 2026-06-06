@@ -63,7 +63,7 @@ in
     ./programs/sqlite.nix
     ./programs/ssh
     ./programs/taskwarrior.nix
-    ./programs/tealdeer
+    ./programs/tealdeer.nix
     ./programs/texlive.nix
     ./programs/thunderbird.nix
     ./programs/tmux
