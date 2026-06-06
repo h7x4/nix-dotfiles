@@ -24,7 +24,17 @@ lib.mkIf cfg.enable {
         signByDefault = true;
       };
 
-      maintenance.enable = true;
+      maintenance = {
+        enable = true;
+        repository-detector = {
+          enable = true;
+          directories = [
+            "${config.home.homeDirectory}/git"
+            "${config.home.homeDirectory}/work"
+            "${config.home.homeDirectory}/pvv"
+           ];
+        };
+      };
 
       lfs.enable = true;
 
@@ -287,37 +297,6 @@ lib.mkIf cfg.enable {
       }) (lib.flatten (lib.attrValues prefixes-per-org));
     })
   ];
-
-  systemd.user.services."git-maintenance@".Service = lib.mkIf cfg.maintenance.enable {
-    ExecStartPre = let
-      repoDirs = lib.escapeShellArgs [
-        "${config.home.homeDirectory}/git"
-        "${config.home.homeDirectory}/work"
-        "${config.home.homeDirectory}/pvv"
-      ];
-
-      script = pkgs.writeShellApplication {
-        name = "discover-git-maintenance-repos";
-        text = ''
-          {
-            echo "[maintenance]"
-            for repoLocation in ${repoDirs}; do
-              for repo in "$repoLocation"/*/.git; do
-                if [ "$(git config get -f "$repo/config" maintenance.skip)" != true ]; then
-                  echo "repo = $('${pkgs.coreutils}/bin/realpath' "''${repo%"/.git"}")"
-                fi
-              done
-            done
-          } > "$1"
-        '';
-      };
-    in "${lib.getExe script} %t/maintenance-repos";
-
-    ExecStart = lib.mkForce ''
-      "${lib.getExe cfg.package}" -c include.path="%t/maintenance-repos" for-each-repo --keep-going --config=maintenance.repo maintenance run --schedule=%i
-    '';
-  };
-
 
   home.packages = [
     (pkgs.writeShellApplication {

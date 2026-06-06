@@ -159,6 +159,7 @@
       colors = ./home/modules/colors.nix;
       direnv-auto-prune = ./home/modules/programs/direnv/auto-prune.nix;
       downloads-sorter = ./home/modules/services/downloads-sorter.nix;
+      git-maintenance-repo-detector = ./home/modules/programs/git/maintenance-repo-detector.nix;
       gpg = ./home/modules/programs/gpg;
       mpd-auto-updater = ./home/modules/services/mpd.nix;
       neovim-auto-clean-swapfiles = ./home/modules/programs/neovim/auto-clean-swapfiles.nix;
