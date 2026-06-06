@@ -3,10 +3,6 @@ let
   cfg = config.programs.vscode;
 in
 {
-  imports = [
-    ./auto-update-extensions.nix
-  ];
-
   # home.file = let
   #   configDir = {
   #     "vscode" = "Code";
@@ -32,6 +28,8 @@ in
         )
       '';
     });
+
+    autoUpdateExtensions.enable = true;
 
     profiles.default = {
       userSettings = let

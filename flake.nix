@@ -167,6 +167,7 @@
       prism-launcher = ./home/modules/programs/prism-launcher;
       shellAliases = ./home/modules/shellAliases.nix;
       systemd-tmpfiles = ./home/modules/systemd-tmpfiles.nix;
+      vscode-auto-extension-updater = ./home/modules/programs/vscode/auto-extension-updater.nix;
     };
 
     homeConfigurations = {
