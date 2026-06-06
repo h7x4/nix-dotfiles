@@ -303,7 +303,9 @@ lib.mkIf cfg.enable {
             echo "[maintenance]"
             for repoLocation in ${repoDirs}; do
               for repo in "$repoLocation"/*/.git; do
-                echo "repo = $('${pkgs.coreutils}/bin/realpath' "''${repo%"/.git"}")"
+                if [ "$(git config get -f "$repo/config" maintenance.skip)" != true ]; then
+                  echo "repo = $('${pkgs.coreutils}/bin/realpath' "''${repo%"/.git"}")"
+                fi
               done
             done
           } > "$1"
